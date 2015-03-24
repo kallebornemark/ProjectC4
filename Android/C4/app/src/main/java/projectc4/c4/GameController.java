@@ -8,32 +8,64 @@ public class GameController {
     private GameGrid gameGrid;
     private int[] size = new int[6];
     private int player;
-    private ClientUI clientUI;
+    private int row, col;
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
         gameGrid = new GameGrid();
         player = 1;
-        clientUI = clientController.getClientUI();
     }
 
-    public void insertTile(int x) {
+    public void newMove(int x) {
         if(size[x] < 7) {
+            row = (gameGrid.getHeight() - 1) - (size[x]);
+            col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, player);
-            clientUI.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + (x + 1), player);
-            //Vinstkoll
-            if(player == 1) {
-                player = 2;
-            }else {
-                player = 1;
-            }
+            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + (x + 1), player);
+            checkOutcome();
         }
     }
 
-
-    public static void main(String[] args) {
-//        GameController con = new GameController();
+    public void changePlayer() {
+        if(player == 1) {
+            player = 2;
+        }else {
+            player = 1;
+        }
     }
 
+    public void checkOutcome() {
+
+
+    }
+
+    public boolean checkHorizontal() {
+        int counter = 1;
+
+        for(int i = col; i < gameGrid.getLength(); i++) {
+
+            if(gameGrid.getElement(row,i+1) != player) {
+                counter = 1;
+                for(int j = i; j >= 0; j--) {
+                    if(gameGrid.getElement(row,j-1) != player) {
+                        return false;
+                    }
+                    else {
+                        counter++;
+                    }
+                    if (counter == 4) {
+                        return true;
+                    }
+                }
+            }
+            else {
+                counter++;
+            }
+            if(counter == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
