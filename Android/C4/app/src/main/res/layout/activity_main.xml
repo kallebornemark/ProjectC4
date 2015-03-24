@@ -8,68 +8,15 @@
 
     <GridLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:columnCount="6"
         android:rowCount="9"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="0dp"
         android:focusableInTouchMode="false"
-        android:id="@+id/grid">
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/button"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_margin="5dp"
-            android:clickable="false" />
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/button2"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_margin="5dp"
-            android:clickable="false" />
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/button3"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_margin="5dp"
-            android:clickable="false" />
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/button4"
-            android:layout_row="0"
-            android:layout_column="3"
-            android:layout_margin="5dp"
-            android:clickable="false" />
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/button5"
-            android:layout_row="0"
-            android:layout_column="4"
-            android:layout_margin="5dp"
-            android:clickable="false" />
-
-        <Button
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:id="@+id/button6"
-            android:layout_row="0"
-            android:layout_column="5"
-            android:layout_margin="5dp"
-            android:clickable="false" />
+        android:id="@+id/gridLayoutCenter"
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:layout_width="45dp"
@@ -407,6 +354,78 @@
             android:layout_column="5"
             android:layout_margin="5dp" />
 
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_marginTop="0dp"
+        android:id="@+id/gridLayoutNorth"
+        android:layout_alignParentBottom="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/gridLayoutCenter">
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/button1"
+            android:layout_row="0"
+            android:layout_column="5"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:text="5" />
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/button2"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:text="0" />
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/button3"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:text="2" />
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/button4"
+            android:layout_row="0"
+            android:layout_column="4"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:text="4" />
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/button5"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:text="1" />
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/button6"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:text="3" />
     </GridLayout>
 
 

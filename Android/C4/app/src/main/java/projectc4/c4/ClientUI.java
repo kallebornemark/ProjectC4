@@ -1,5 +1,6 @@
 package projectc4.c4;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -14,24 +15,17 @@ public class ClientUI {
     private ClientController clientController;
     private TextView[][] textViews = new TextView[7][6];
     private MainActivity mainActivity;
+    private  ArrayList<Button> buttonArrayList = new ArrayList<>();
 
     public ClientUI(ClientController clientController) {
         this.clientController = clientController;
         mainActivity = clientController.getMainActivity();
-    }
-
-    public void columnChooser() {
-        ArrayList<Button> buttonArrayList = new ArrayList<>();
         buttonArrayList = mainActivity.getButtonArrayList();
-
-        buttonArrayList.get(0).setOnClickListener( new Button.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
+    public void drawTile(int pos, int color) {
+        mainActivity.getGrid().getChildAt(pos).setBackgroundColor(color);
+    }
 }
 
 

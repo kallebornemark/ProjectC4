@@ -18,4 +18,19 @@ public class ClientController {
         return mainActivity;
     }
 
+    public void newMove(int column) {
+        System.out.println(column);
+        gameController.newMove(column);
+    }
+
+    public void drawTile(int pos, int player) {
+        if (player == 1) {
+            player = C4Color.RED;
+        } else {
+            player = C4Color.YELLOW;
+        }
+        System.out.println(pos);
+        clientUI.drawTile(pos, player);
+    }
+
 }
