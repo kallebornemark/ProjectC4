@@ -1,7 +1,5 @@
 package projectc4.c4;
 
-import android.graphics.Color;
-import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -15,7 +13,7 @@ public class ClientUI {
     private ClientController clientController;
     private TextView[][] textViews = new TextView[7][6];
     private MainActivity mainActivity;
-    private  ArrayList<Button> buttonArrayList = new ArrayList<>();
+    private ArrayList<Button> buttonArrayList;
 
     public ClientUI(ClientController clientController) {
         this.clientController = clientController;
