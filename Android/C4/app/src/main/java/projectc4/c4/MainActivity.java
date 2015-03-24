@@ -29,8 +29,10 @@ public class MainActivity extends Activity {
             buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //String str = (String)buttonArrayList.get(currentIndex).getText();
-                    clientController.newMove(v.getId());
+                    Button button = (Button)v;
+                    int col = Integer.parseInt(button.getText().toString());
+                    //System.out.println(col);
+                    clientController.newMove(col);
 
                 }
             });
