@@ -17,12 +17,14 @@ public class GameController {
     }
 
     public void newMove(int x) {
-        if(size[x] < 7) {
+        if(size[x] < 6) {
             row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, player);
-            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + (x + 1), player);
-            checkOutcome();
+            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, player);
+            if (checkOutcome()) {
+//                clientController.winner(player);
+            }
         }
     }
 
@@ -34,20 +36,15 @@ public class GameController {
         }
     }
 
-    public void checkOutcome() {
-
-
-    }
-
-    public boolean checkHorizontal() {
+    public boolean checkOutcome() {
         int counter = 1;
 
+        //Check horizontal
         for(int i = col; i < gameGrid.getLength(); i++) {
-
-            if(gameGrid.getElement(row,i+1) != player) {
+            if(i == gameGrid.getLength() ||gameGrid.getElement(row,i+1) != player) {
                 counter = 1;
                 for(int j = i; j >= 0; j--) {
-                    if(gameGrid.getElement(row,j-1) != player) {
+                    if(j == 0 || gameGrid.getElement(row,j-1) != player) {
                         return false;
                     }
                     else {
@@ -65,7 +62,16 @@ public class GameController {
                 return true;
             }
         }
+
+        //Check vertical
+
+
+
+
         return false;
+    }
+
+    public static void main (String[]args){
     }
 
 }
