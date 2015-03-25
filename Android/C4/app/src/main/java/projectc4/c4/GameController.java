@@ -40,10 +40,9 @@ public class GameController {
 
     public boolean checkOutcome() {
         int counter = 1;
-
         //Check horizontal
         for(int i = col; i < gameGrid.getLength(); i++) {
-            if(i == gameGrid.getLength() - 1 || gameGrid.getElement(row,i) != player) {
+            if(i == gameGrid.getLength() - 1 || gameGrid.getElement(row,i+1) != player) {
                 counter = 1;
                 for(int j = i; j >= 0; j--) {
                     if(j == 0 || gameGrid.getElement(row,j-1) != player) {
