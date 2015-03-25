@@ -24,6 +24,11 @@ public class ClientUI {
     public void drawTile(int pos, int color) {
         mainActivity.getGrid().getChildAt(pos).setBackgroundColor(color);
     }
+
+
+    public void winner(String winner) {
+        mainActivity.setTextViewWinner(winner);
+    }
 }
 
 

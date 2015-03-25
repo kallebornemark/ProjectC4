@@ -33,4 +33,13 @@ public class ClientController {
         clientUI.drawTile(pos, player);
     }
 
+    public void winner(int player) {
+        if (player == 1) {
+            clientUI.winner("Spelare 1 vann!");
+        }
+        else {
+            clientUI.winner("Spelare 2 vann!");
+        }
+    }
+
 }

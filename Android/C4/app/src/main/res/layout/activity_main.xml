@@ -428,5 +428,13 @@
             android:text="3" />
     </GridLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewWinner"
+        android:layout_above="@+id/gridLayoutNorth"
+        android:layout_centerHorizontal="true"
+        />
+
 
 </RelativeLayout>

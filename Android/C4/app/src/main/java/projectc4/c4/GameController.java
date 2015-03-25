@@ -23,7 +23,7 @@ public class GameController {
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, player);
             clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, player);
             if (checkOutcome()) {
-               //clientController.winner(player);
+                clientController.winner(player);
                 System.out.println("Winner");
             }
             changePlayer();
