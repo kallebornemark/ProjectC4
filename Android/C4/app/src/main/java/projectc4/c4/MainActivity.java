@@ -10,6 +10,8 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
@@ -79,6 +81,22 @@ public class MainActivity extends Activity {
         buttonArrayList.add(button4);
         buttonArrayList.add(button5);
         buttonArrayList.add(button6);
+
+        TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+        TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+        TextView textViewVs = (TextView)findViewById(R.id.textViewVs);
+
+        textViewVs.setTextColor(C4Color.BLACK);
+        textViewPlayer1.setBackgroundColor(C4Color.RED);
+        textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+        textViewPlayer1.setTextColor(C4Color.WHITE);
+        textViewPlayer2.setTextColor(C4Color.WHITE);
+        textViewPlayer2.setTextColor(C4Color.WHITE);
+
+        Button buttonNewgame = (Button)findViewById(R.id.buttonNewGame);
+        buttonNewgame.setBackgroundColor(C4Color.BLACK);
+        buttonNewgame.setTextColor(C4Color.WHITE);
+
 
     }
 

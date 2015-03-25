@@ -42,6 +42,10 @@ public class ClientController {
         }
     }
 
+    public void draw() {
+        clientUI.winner("Oavgjort");
+    }
+
     public void newGame() {
         gameController.newGame();
         clientUI.newGame();
