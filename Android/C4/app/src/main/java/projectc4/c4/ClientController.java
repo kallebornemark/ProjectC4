@@ -42,4 +42,9 @@ public class ClientController {
         }
     }
 
+    public void newGame() {
+        gameController.newGame();
+        clientUI.newGame();
+    }
+
 }

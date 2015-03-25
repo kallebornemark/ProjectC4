@@ -428,13 +428,28 @@
             android:text="3" />
     </GridLayout>
 
-    <TextView
+    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewWinner"
-        android:layout_above="@+id/gridLayoutNorth"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_alignBottom="@+id/textViewWinner"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewWinner"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:layout_marginRight="15dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Game"
+            android:id="@+id/buttonNewGame"
+            android:enabled="false"
+            android:visibility="invisible" />
+
+    </TableRow>
 
 
 </RelativeLayout>

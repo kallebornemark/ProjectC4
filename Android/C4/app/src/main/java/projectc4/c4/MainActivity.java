@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
         Button button5 = (Button)findViewById(R.id.button5);
         Button button6 = (Button)findViewById(R.id.button6);
 
+
         button1.setBackgroundColor(C4Color.BLACK);
         button2.setBackgroundColor(C4Color.BLACK);
         button3.setBackgroundColor(C4Color.BLACK);
@@ -88,6 +89,27 @@ public class MainActivity extends Activity {
     public void setTextViewWinner(String winner) {
         TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
         textViewWinner.setText(winner);
+        setNewGame();
+    }
+
+    public void setNewGame() {
+        final Button buttonNewGame = (Button)findViewById(R.id.buttonNewGame);
+        buttonNewGame.setEnabled(true);
+        buttonNewGame.setVisibility(View.VISIBLE);
+                for (int i = 0; i < buttonArrayList.size(); i++) {
+                    buttonArrayList.get(i).setEnabled(false);
+                }
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clientController.newGame();
+                buttonNewGame.setEnabled(false);
+                buttonNewGame.setVisibility(View.INVISIBLE);
+                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+                textViewWinner.setText("");
+                clientController.newGame();
+            }
+        });
     }
 
     public ArrayList<Button> getButtonArrayList() {
