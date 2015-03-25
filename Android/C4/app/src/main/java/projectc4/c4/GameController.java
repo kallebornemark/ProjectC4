@@ -9,6 +9,7 @@ public class GameController {
     private int[] size = new int[6];
     private int player;
     private int row, col;
+    private int playedtiles;
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
@@ -17,6 +18,7 @@ public class GameController {
     }
 
     public void newGame() {
+        playedtiles = 0;
         for (int i = 0; i < size.length; i++) {
             size[i] = 0;
         }
@@ -30,9 +32,13 @@ public class GameController {
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, player);
             clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, player);
-            if (checkOutcome()) {
+            playedtiles++;
+            if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(player);
                 System.out.println("Winner");
+            }
+            if (playedtiles == 42) {
+                clientController.draw();
             }
             changePlayer();
         }
@@ -46,37 +52,102 @@ public class GameController {
         }
     }
 
-    public boolean checkOutcome() {
+    public boolean checkHorizontal() {
         int counter = 1;
-        //Check horizontal
-        for(int i = col; i < gameGrid.getLength(); i++) {
-            if(i == gameGrid.getLength() - 1 || gameGrid.getElement(row,i+1) != player) {
+        for (int i = col; i < gameGrid.getLength(); i++) {
+            if (i == gameGrid.getLength() - 1 || gameGrid.getElement(row, i + 1) != player) {
                 counter = 1;
-                for(int j = i; j >= 0; j--) {
-                    if(j == 0 || gameGrid.getElement(row,j-1) != player) {
+                for (int j = i; j >= 0; j--) {
+                    if (j == 0 || gameGrid.getElement(row, j - 1) != player) {
                         return false;
-                    }
-                    else {
+                    } else {
                         counter++;
                     }
                     if (counter == 4) {
                         return true;
                     }
                 }
+            } else {
+                counter++;
             }
-            else {
+            if (counter == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkVertical(){
+        int counter = 1;
+        for(int x = row; x < gameGrid.getHeight(); x++) {
+            if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != player) {
+                counter = 1;
+                for(int y = x; y >= 0; y--) {
+                    if(y == 0 || gameGrid.getElement(y - 1, col) != player) {
+                        return false;
+                    } else {
+                        counter++;
+                    }
+                    if(counter == 4) {
+                        return true;
+                    }
+                }
+            } else {
                 counter++;
             }
             if(counter == 4) {
                 return true;
             }
         }
+        return false;
 
-        //Check vertical
+    }
 
+    public boolean checkDiagonalRight() {
+        int counter = 1;
+        for(int i = col,j = row; i < gameGrid.getLength() && j < gameGrid.getHeight(); i++, j++) {
+            if(i == gameGrid.getLength() - 1 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i + 1) != player) {
+                counter = 1;
+                for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
+                    if(x == 0 || y == 0 || gameGrid.getElement(y - 1, x - 1) != player) {
+                        return false;
+                    }else {
+                        counter++;
+                    }
+                    if(counter == 4) {
+                        return true;
+                    }
+                }
+            }else {
+                counter++;
+            }
+            if(counter == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-
-
+    public boolean checkDiagonalLeft(){
+        int counter = 1;
+        for(int i = col,j = row; i >= 0 && j < gameGrid.getHeight(); i--, j++) {
+            if(i == 0 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i - 1) != player) {
+                counter = 1;
+                for(int x = i, y = j; x < gameGrid.getLength() && y >= 0; x++, y--) {
+                    if(x == gameGrid.getLength() - 1 || y == 0 || gameGrid.getElement(y - 1, x + 1) != player) {
+                        return false;
+                    }else {
+                        counter++;
+                    }if(counter == 4) {
+                        return true;
+                    }
+                }
+            }else {
+                counter++;
+            }if(counter == 4) {
+                return true;
+            }
+        }
         return false;
     }
 
