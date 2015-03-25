@@ -26,6 +26,7 @@ public class GameController {
                //clientController.winner(player);
                 System.out.println("Winner");
             }
+            changePlayer();
         }
     }
 
@@ -42,8 +43,8 @@ public class GameController {
 
         //Check horizontal
         for(int i = col; i < gameGrid.getLength(); i++) {
-            if(i == gameGrid.getLength() || gameGrid.getElement(row,i) != player) {
-                counter = 0;
+            if(i == gameGrid.getLength() - 1 || gameGrid.getElement(row,i) != player) {
+                counter = 1;
                 for(int j = i; j >= 0; j--) {
                     if(j == 0 || gameGrid.getElement(row,j-1) != player) {
                         return false;
