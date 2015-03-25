@@ -9,7 +9,7 @@ public class GameController {
     private int[] size = new int[6];
     private int player;
     private int row, col;
-    private int playedtiles;
+    private int playedTiles;
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
@@ -18,7 +18,7 @@ public class GameController {
     }
 
     public void newGame() {
-        playedtiles = 0;
+        playedTiles = 0;
         for (int i = 0; i < size.length; i++) {
             size[i] = 0;
         }
@@ -32,15 +32,16 @@ public class GameController {
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, player);
             clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, player);
-            playedtiles++;
+            playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(player);
                 System.out.println("Winner");
-            }
-            if (playedtiles == 42) {
+            } else if (playedTiles == 42) {
                 clientController.draw();
+                System.out.println("Draw");
+            } else {
+                changePlayer();
             }
-            changePlayer();
         }
     }
 
@@ -81,22 +82,12 @@ public class GameController {
         int counter = 1;
         for(int x = row; x < gameGrid.getHeight(); x++) {
             if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != player) {
-                counter = 1;
-                for(int y = x; y >= 0; y--) {
-                    if(y == 0 || gameGrid.getElement(y - 1, col) != player) {
-                        return false;
-                    } else {
-                        counter++;
-                    }
-                    if(counter == 4) {
-                        return true;
-                    }
-                }
+                return false;
             } else {
                 counter++;
-            }
-            if(counter == 4) {
-                return true;
+                if (counter == 4) {
+                    return true;
+                }
             }
         }
         return false;
@@ -150,8 +141,4 @@ public class GameController {
         }
         return false;
     }
-
-    public static void main (String[]args){
-    }
-
 }
