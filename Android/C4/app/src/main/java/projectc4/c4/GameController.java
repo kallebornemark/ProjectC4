@@ -53,7 +53,7 @@ public class GameController {
         }
     }
 
-    public boolean checkHorizontal() {
+    private boolean checkHorizontal() {
         int counter = 1;
         for (int i = col; i < gameGrid.getLength(); i++) {
             if (i == gameGrid.getLength() - 1 || gameGrid.getElement(row, i + 1) != player) {
@@ -78,7 +78,7 @@ public class GameController {
         return false;
     }
 
-    public boolean checkVertical(){
+    private boolean checkVertical(){
         int counter = 1;
         for(int x = row; x < gameGrid.getHeight(); x++) {
             if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != player) {
@@ -94,7 +94,7 @@ public class GameController {
 
     }
 
-    public boolean checkDiagonalRight() {
+    private boolean checkDiagonalRight() {
         int counter = 1;
         for(int i = col,j = row; i < gameGrid.getLength() && j < gameGrid.getHeight(); i++, j++) {
             if(i == gameGrid.getLength() - 1 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i + 1) != player) {
@@ -119,7 +119,7 @@ public class GameController {
         return false;
     }
 
-    public boolean checkDiagonalLeft(){
+    private boolean checkDiagonalLeft(){
         int counter = 1;
         for(int i = col,j = row; i >= 0 && j < gameGrid.getHeight(); i--, j++) {
             if(i == 0 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i - 1) != player) {
