@@ -1,6 +1,7 @@
 package projectc4.c4;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,6 +112,20 @@ public class MainActivity extends Activity {
         setNewGame();
     }
 
+    public void highlightPlayer(int  player) {
+        TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+        TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+
+        if (player == 1) {
+            textViewPlayer1.setBackgroundColor(C4Color.REDPRESSED);
+            textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+        }
+        else if (player == 2){
+            textViewPlayer2.setBackgroundColor(C4Color.YELLOWPRESSED);
+            textViewPlayer1.setBackgroundColor(C4Color.RED);
+        }
+    }
+
     public void setNewGame() {
         final Button buttonNewGame = (Button)findViewById(R.id.buttonNewGame);
         buttonNewGame.setEnabled(true);
@@ -131,6 +146,11 @@ public class MainActivity extends Activity {
                 clientController.newGame();
                 TableRow tableRowPlayers = (TableRow)findViewById(R.id.tableRowPlayers);
                 tableRowPlayers.setVisibility(View.VISIBLE);
+
+                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+                textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+                textViewPlayer1.setBackgroundColor(C4Color.RED);
             }
         });
     }

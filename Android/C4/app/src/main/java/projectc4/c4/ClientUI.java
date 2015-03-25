@@ -19,8 +19,6 @@ public class ClientUI {
     public ClientUI(ClientController clientController) {
         this.clientController = clientController;
         mainActivity = clientController.getMainActivity();
-
-
     }
 
     public void drawTile(int pos, int color) {
@@ -42,8 +40,12 @@ public class ClientUI {
         for (int i = 0; i < buttonArrayList.size(); i++) {
             buttonArrayList.get(i).setEnabled(true);
         }
-
     }
+
+    public void highlightPlayer(int player) {
+        mainActivity.highlightPlayer(player);
+    }
+
 }
 
 

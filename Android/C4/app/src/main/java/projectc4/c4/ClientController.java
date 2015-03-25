@@ -24,6 +24,7 @@ public class ClientController {
     }
 
     public void drawTile(int pos, int player) {
+        clientUI.highlightPlayer(player);
         if (player == 1) {
             player = C4Color.RED;
         } else {
