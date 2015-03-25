@@ -16,6 +16,14 @@ public class GameController {
         player = 1;
     }
 
+    public void newGame() {
+        for (int i = 0; i < size.length; i++) {
+            size[i] = 0;
+        }
+        gameGrid.reset();
+        player = 1;
+    }
+
     public void newMove(int x) {
         if(size[x] < 7) {
             row = (gameGrid.getHeight() - 1) - (size[x]);

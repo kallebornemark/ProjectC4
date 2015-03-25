@@ -22,7 +22,7 @@ public class GameGrid {
         return board.length;
     }
 
-    private void reset() {
+    public void reset() {
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[i].length; j++) {
                 board[i][j] = 0;
