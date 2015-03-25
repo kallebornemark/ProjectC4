@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -117,6 +118,8 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < buttonArrayList.size(); i++) {
                     buttonArrayList.get(i).setEnabled(false);
                 }
+        TableRow tableRowPlayers = (TableRow)findViewById(R.id.tableRowPlayers);
+        tableRowPlayers.setVisibility(View.INVISIBLE);
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +129,8 @@ public class MainActivity extends Activity {
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText("");
                 clientController.newGame();
+                TableRow tableRowPlayers = (TableRow)findViewById(R.id.tableRowPlayers);
+                tableRowPlayers.setVisibility(View.VISIBLE);
             }
         });
     }
