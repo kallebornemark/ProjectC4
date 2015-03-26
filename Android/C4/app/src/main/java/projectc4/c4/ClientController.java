@@ -34,13 +34,12 @@ public class ClientController {
         clientUI.drawTile(pos, player);
     }
 
+    public void changeHighlightedPlayer(int player) {
+        clientUI.highlightPlayer(player);
+    }
+
     public void winner(int player) {
-        if (player == 1) {
-            clientUI.winner("Player 1 won!");
-        }
-        else {
-            clientUI.winner("Player 2 won!");
-        }
+        clientUI.winner("Player " + player + " won!");
     }
 
     public void draw() {

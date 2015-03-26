@@ -51,6 +51,7 @@ public class GameController {
         }else {
             player = 1;
         }
+        clientController.changeHighlightedPlayer(player);
     }
 
     private boolean checkHorizontal() {

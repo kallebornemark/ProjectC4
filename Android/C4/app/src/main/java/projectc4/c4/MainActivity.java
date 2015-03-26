@@ -24,20 +24,18 @@ public class MainActivity extends Activity {
     private int currentIndex;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         clientController = new ClientController(this);
         initGraphics(); // get children at
-        for (int i = 0; i < buttonArrayList.size() ; i++) {
+        for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
             buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Button button = (Button)v;
+                    Button button = (Button) v;
                     int col = Integer.parseInt(button.getText().toString());
                     //System.out.println(col);
                     clientController.newMove(col);
@@ -54,7 +52,7 @@ public class MainActivity extends Activity {
         return true;
     }
 
-   public void initGraphics() {
+    public void initGraphics() {
         grd = (GridLayout)findViewById(R.id.gridLayoutCenter); //Länka mitt grid
         //grd.getChildAt(0).setBackgroundColor(C4Color.RED); // get children at
         //grd.getChildAt(1).setBackgroundColor(C4Color.YELLOW);
@@ -89,8 +87,9 @@ public class MainActivity extends Activity {
         TextView textViewVs = (TextView)findViewById(R.id.textViewVs);
 
         textViewVs.setTextColor(C4Color.BLACK);
-        textViewPlayer1.setBackgroundColor(C4Color.RED);
-        textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+//        textViewPlayer1.setBackgroundColor(C4Color.RED);
+//        textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+        highlightPlayer(1);
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
@@ -117,12 +116,12 @@ public class MainActivity extends Activity {
         TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
 
         if (player == 1) {
-            textViewPlayer1.setBackgroundColor(C4Color.REDPRESSED);
-            textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+            textViewPlayer1.setBackgroundColor(C4Color.RED);
+            textViewPlayer2.setBackgroundColor(C4Color.YELLOWPRESSED);
         }
         else if (player == 2){
-            textViewPlayer2.setBackgroundColor(C4Color.YELLOWPRESSED);
-            textViewPlayer1.setBackgroundColor(C4Color.RED);
+            textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+            textViewPlayer1.setBackgroundColor(C4Color.REDPRESSED);
         }
     }
 
@@ -147,10 +146,11 @@ public class MainActivity extends Activity {
                 TableRow tableRowPlayers = (TableRow)findViewById(R.id.tableRowPlayers);
                 tableRowPlayers.setVisibility(View.VISIBLE);
 
-                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
-                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
-                textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
-                textViewPlayer1.setBackgroundColor(C4Color.RED);
+//                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+//                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+//                textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
+//                textViewPlayer1.setBackgroundColor(C4Color.RED);
+                highlightPlayer(1);
             }
         });
     }
