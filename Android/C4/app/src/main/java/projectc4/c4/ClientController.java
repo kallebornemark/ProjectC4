@@ -36,15 +36,15 @@ public class ClientController {
 
     public void winner(int player) {
         if (player == 1) {
-            clientUI.winner("Spelare 1 vann!");
+            clientUI.winner("Player 1 won!");
         }
         else {
-            clientUI.winner("Spelare 2 vann!");
+            clientUI.winner("Player 2 won!");
         }
     }
 
     public void draw() {
-        clientUI.winner("Oavgjort");
+        clientUI.winner("It's a draw!");
     }
 
     public void newGame() {
