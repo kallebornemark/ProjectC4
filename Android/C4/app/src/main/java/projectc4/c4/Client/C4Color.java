@@ -1,4 +1,4 @@
-package projectc4.c4;
+package projectc4.c4.Client;
 
 /**
  * Created by Emil on 2015-03-24.

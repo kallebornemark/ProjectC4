@@ -1,7 +1,6 @@
 package projectc4.c4;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import projectc4.c4.Client.C4Color;
+import projectc4.c4.Client.ClientController;
+import projectc4.c4.R;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
-package projectc4.c4;
+package projectc4.c4.Client;
 
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.TextView;
+import projectc4.c4.MainActivity;
 
 import java.util.ArrayList;
 

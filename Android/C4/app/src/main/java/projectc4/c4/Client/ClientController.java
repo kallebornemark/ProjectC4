@@ -1,4 +1,6 @@
-package projectc4.c4;
+package projectc4.c4.Client;
+
+import projectc4.c4.MainActivity;
 
 /**
  * @author Kalle Bornemark

@@ -1,4 +1,4 @@
-package projectc4.c4;
+package projectc4.c4.Client;
 
 /**
  * @author Jimmy Maksymiw, Erik Sandgren
