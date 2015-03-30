@@ -9,6 +9,8 @@ public class ClientController {
     private GameController gameController;
     private ClientUI clientUI;
     private MainActivity mainActivity;
+    private int player = 1;
+
 
     public ClientController(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -51,6 +53,20 @@ public class ClientController {
     public void newGame() {
         gameController.newGame();
         clientUI.newGame();
+    }
+    /*
+    Lade till setters och getters för player
+     */
+    public int getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(int player) {
+        this.player = player;
+    }
+
+    public String getUsername() {
+        return null;
     }
 
 }

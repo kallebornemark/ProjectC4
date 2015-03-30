@@ -24,10 +24,14 @@ public class GameController {
         }
         gameGrid.reset();
         player = 1;
+        if(clientController.getUsername() == null) {
+            clientController.setPlayer(player);
+        }
     }
 
     public void newMove(int x) {
-        if(size[x] < 7) {
+        //Om nuvarande spelares nummer är lika med ditt spelar-nummer och kollumnen inte är full
+        if(player == clientController.getPlayer() && size[x] < 7) {
             row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, player);
@@ -41,6 +45,9 @@ public class GameController {
                 System.out.println("Draw");
             } else {
                 changePlayer();
+                 if(clientController.getUsername() == null) {
+                    clientController.setPlayer(player);
+                 }
             }
         }
     }
