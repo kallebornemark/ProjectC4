@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import projectc4.c4.Client.C4Color;
@@ -132,8 +131,8 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < buttonArrayList.size(); i++) {
                     buttonArrayList.get(i).setEnabled(false);
                 }
-        TableRow tableRowPlayers = (TableRow)findViewById(R.id.tableRowPlayers);
-        tableRowPlayers.setVisibility(View.INVISIBLE);
+        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
+        relativeLayoutPlayers.setVisibility(View.INVISIBLE);
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,8 +142,8 @@ public class MainActivity extends Activity {
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText("");
                 clientController.newGame();
-                TableRow tableRowPlayers = (TableRow)findViewById(R.id.tableRowPlayers);
-                tableRowPlayers.setVisibility(View.VISIBLE);
+                RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
+                relativeLayoutPlayers.setVisibility(View.VISIBLE);
 
 //                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
 //                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);

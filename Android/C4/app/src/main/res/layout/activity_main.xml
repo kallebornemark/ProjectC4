@@ -459,7 +459,7 @@
         android:layout_alignTop="@+id/tableRow"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
-        android:id="@+id/tableRowPlayers">
+        android:id="@+id/relativeLayoutPlayers">
 
         <TextView
             android:layout_width="wrap_content"
