@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import projectc4.c4.Client.C4Color;
 import projectc4.c4.Client.ClientController;
-import projectc4.c4.R;
 
 import java.util.ArrayList;
 
