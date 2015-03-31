@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="New Local Game"
         android:id="@+id/localGame"
+        android:background="#FFF67E59"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

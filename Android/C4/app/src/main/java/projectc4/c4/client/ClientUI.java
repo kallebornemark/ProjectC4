@@ -1,8 +1,10 @@
 package projectc4.c4.client;
 
+import android.graphics.drawable.Drawable;
 import android.widget.Button;
 import android.widget.TextView;
 import projectc4.c4.MainActivity;
+import projectc4.c4.R;
 import projectc4.c4.util.C4Color;
 
 import java.util.ArrayList;
@@ -22,8 +24,9 @@ public class ClientUI {
         mainActivity = clientController.getMainActivity();
     }
 
-    public void drawTile(int pos, int color) {
-        mainActivity.getGrid().getChildAt(pos).setBackgroundColor(color);
+    public void drawTile(int pos, int player) {
+        mainActivity.drawTile(pos,player);
+        //mainActivity.getGrid().getChildAt(pos).setBackgroundColor(color);
     }
 
     public void winner(String winner) {

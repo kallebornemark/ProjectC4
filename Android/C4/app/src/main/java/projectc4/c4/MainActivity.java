@@ -3,9 +3,13 @@ package projectc4.c4;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -30,7 +34,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         clientController = new ClientController(this);
-        initGraphics(); // get children at
+        initGraphics();
+
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
             buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
@@ -38,15 +43,12 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     Button button = (Button) v;
                     int col = Integer.parseInt(button.getText().toString());
-                    //System.out.println(col);
                     clientController.newMove(col);
-
                 }
             });
         }
     }
 
-    //Test under denna:
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -92,7 +94,6 @@ public class MainActivity extends Activity {
         Button button4 = (Button)findViewById(R.id.button4);
         Button button5 = (Button)findViewById(R.id.button5);
         Button button6 = (Button)findViewById(R.id.button6);
-
 
         button1.setBackgroundColor(C4Color.BLACK);
         button2.setBackgroundColor(C4Color.BLACK);
@@ -149,6 +150,18 @@ public class MainActivity extends Activity {
             textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
             textViewPlayer1.setBackgroundColor(C4Color.REDPRESSED);
         }
+    }
+
+    public void drawTile(int pos, int player) {
+        if (player == 1) {
+            TextView txt = (TextView)grd.getChildAt(pos);
+            txt.setBackground(getDrawable(R.drawable.colorred));
+        }else if (player == 2) {
+            TextView txt = (TextView)grd.getChildAt(pos);
+            txt.setBackground(getDrawable(R.drawable.coloryellow));
+        }
+
+
     }
 
     public void setNewGame() {
