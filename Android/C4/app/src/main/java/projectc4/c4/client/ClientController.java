@@ -18,6 +18,9 @@ public class ClientController {
         this.mainActivity = mainActivity;
         gameController = new GameController(this);
         clientUI = new ClientUI(this);
+    }
+
+    public void connect() {
         client = new Client(this);
         client.connect("localhost", 3450);
     }

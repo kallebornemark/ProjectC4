@@ -65,7 +65,7 @@ public class Client implements Runnable {
 
     public void checkNumberAndSend(int number) {
         if (number == MATCHMAKING || number == LOCAL) {
-            clientController.newGame(number);
+            clientController.newGame();
         } else {
             clientController.newMove(number);
         }
