@@ -35,7 +35,7 @@ public class ClientController {
         } else {
             player = C4Color.YELLOW;
         }
-        System.out.println(pos);
+        System.out.println("pos i drawtile" + pos);
         clientUI.drawTile(pos, player);
     }
 
