@@ -1,5 +1,6 @@
 package projectc4.c4.client;
 import java.util.ArrayList;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -11,6 +12,7 @@ public class GameController {
     private int playerToMakeNextMove;
     private int row, col;
     private int playedTiles;
+    private int gameMode = 0;
     private ArrayList winningTiles = new ArrayList();
 
     public GameController(ClientController clientController) {
@@ -19,7 +21,7 @@ public class GameController {
         playerToMakeNextMove = 1;
     }
 
-    public void newGame() {
+    public void newGame(int gameMode) {
         playedTiles = 0;
         for (int i = 0; i < size.length; i++) {
             size[i] = 0;
@@ -27,10 +29,11 @@ public class GameController {
         gameGrid.reset();
         playerToMakeNextMove = 1;
         winningTiles.clear();
+        this.gameMode = gameMode;
         /*
         Lokalt
          */
-        if(clientController.getUsername() == null) {
+        if(gameMode == LOCAL) {
             clientController.setPlayer(playerToMakeNextMove);
         }
     }
@@ -42,6 +45,7 @@ public class GameController {
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerToMakeNextMove);
             clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerToMakeNextMove);
+            System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerToMakeNextMove);
@@ -54,7 +58,7 @@ public class GameController {
                 /*
                 Lokalt
                  */
-                if(clientController.getUsername() == null) {
+                if(gameMode == LOCAL) {
                     clientController.setPlayer(playerToMakeNextMove);
                 }
             }
@@ -139,9 +143,9 @@ public class GameController {
                     }
                     if(counter == 4) {
                         System.out.println();
-                        for(int n = 0; n < counter; n++) {
-                            winningTiles.add(calculate(y - 1,x - 1) + y+1);
-                            System.out.print(((y) * 6) + x - 1 + y+1 + " ");
+                        for(int n = 0; n <= 21; n+=7) {
+                            winningTiles.add(calculate(y - 1,x - 1) + n);
+                            System.out.print(calculate(y - 1,x - 1) + n + " ");
                         }
                         return true;
                     }
@@ -150,10 +154,11 @@ public class GameController {
                 counter++;
             }
             if(counter == 4) {
-                System.out.println();
-                for(int n = 0, m = 0; n < counter; n++, m += j) {
-                    winningTiles.add(((j) * 6) + i + 1 - m+1);
-                    System.out.print(((j) * 6) + i + 1 - m+1 + " ");
+                System.out.println()
+                ;
+                for(int n = 0; n <= 21; n+=7) {
+                    winningTiles.add(calculate(j + 1,i + 1) - n);
+                    System.out.print(calculate(j + 1,i + 1) - n + " ");
                 }
                 return true;
             }
@@ -172,12 +177,24 @@ public class GameController {
                     }else {
                         counter++;
                     }if(counter == 4) {
+                        System.out.println()
+                        ;
+                        for(int n = 0; n <= 15; n+=5) {
+                            winningTiles.add(calculate(y - 1,x + 1) + n);
+                            System.out.print(calculate(y - 1,x + 1) + n + " ");
+                        }
                         return true;
                     }
                 }
             }else {
                 counter++;
             }if(counter == 4) {
+                System.out.println()
+                ;
+                for(int n = 0; n <= 15; n+=5) {
+                    winningTiles.add(calculate(j + 1,i - 1) - n);
+                    System.out.print(calculate(j + 1,i - 1) - n + " ");
+                }
                 return true;
             }
         }
