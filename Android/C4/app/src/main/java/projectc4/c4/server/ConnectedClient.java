@@ -63,11 +63,11 @@ public class ConnectedClient extends Thread {
             oos = new ObjectOutputStream(socket.getOutputStream());
 
             // Read incoming name
-            incomingName = ois.readUTF();
+//            incomingName = ois.readUTF();
             // Create user object & send back to client
-            validateUser(incomingName);
+//            validateUser(incomingName);
             // Add this connectedClient to connectedClients
-            server.addConnectedClient(incomingName, this);
+//            server.addConnectedClient(incomingName, this);
 
             startCommunication();
         } catch (IOException e) {

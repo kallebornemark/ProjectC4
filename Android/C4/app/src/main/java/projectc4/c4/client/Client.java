@@ -68,6 +68,8 @@ public class Client implements Runnable {
     public void checkNumberAndSend(int number) {
         if (number == MATCHMAKING || number == LOCAL) {
             clientController.newGame();
+        } else if (number == PLAYER1 || number == PLAYER2) {
+            clientController.setPlayer(number);
         } else {
             System.out.println("clientController.newMove(" + number + ")");
             clientController.newMove(number);
@@ -80,10 +82,8 @@ public class Client implements Runnable {
         try {
             while (!Thread.interrupted()) {
                 obj = ois.readObject();
-                if (obj instanceof Integer) {
-                    number = (Integer)obj;
-                    checkNumberAndSend(number);
-                }
+                number = (Integer)obj;
+                checkNumberAndSend(number);
             }
         } catch (Exception e) {}
     }

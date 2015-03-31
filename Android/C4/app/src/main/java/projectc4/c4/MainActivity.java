@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
         Bundle extrasBundle = intentExtras.getExtras();
         if (!extrasBundle.isEmpty()) {
             clientController.connect();
-            clientController.newGame(2, MATCHMAKING);
+            clientController.newGame(1, MATCHMAKING);
         }
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
