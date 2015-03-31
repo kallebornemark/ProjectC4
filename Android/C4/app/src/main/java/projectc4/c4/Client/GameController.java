@@ -24,6 +24,9 @@ public class GameController {
         }
         gameGrid.reset();
         player = 1;
+        /*
+        Lokalt
+         */
         if(clientController.getUsername() == null) {
             clientController.setPlayer(player);
         }
@@ -45,6 +48,9 @@ public class GameController {
                 System.out.println("Draw");
             } else {
                 changePlayer();
+                /*
+                Lokalt
+                 */
                  if(clientController.getUsername() == null) {
                     clientController.setPlayer(player);
                  }
