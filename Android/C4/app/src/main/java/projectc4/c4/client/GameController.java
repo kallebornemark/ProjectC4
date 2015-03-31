@@ -7,7 +7,7 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameController {
     private ClientController clientController;
-    private GameGrid gameGridGrid;
+    private Game gameGrid;
     private int[] size = new int[6];
     private int playerToMakeNextMove;
     private int row, col;
@@ -17,8 +17,9 @@ public class GameController {
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
-        gameGridGrid = new GameGrid();
-        playerToMakeNextMove = 1;
+        gameGrid = new Game();
+        playerToMakeNextMove = PLAYER1;
+
     }
 
     public int getPlayer() {
@@ -30,8 +31,8 @@ public class GameController {
         for (int i = 0; i < size.length; i++) {
             size[i] = 0;
         }
-        gameGridGrid.reset();
-        playerToMakeNextMove = 1;
+        gameGrid.reset();
+        playerToMakeNextMove = PLAYER1;
         winningTiles.clear();
         this.gameMode = gameMode;
         /*
@@ -45,11 +46,11 @@ public class GameController {
     public void newMove(int x) {
         //Om nuvarande spelares nummer är lika med ditt spelar-nummer och kollumnen inte är full
         if(playerToMakeNextMove == clientController.getPlayer() && size[x] < 7) {
-            row = (gameGridGrid.getHeight() - 1) - (size[x]);
+            row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
-            gameGridGrid.setElement((gameGridGrid.getHeight() - 1) - (size[x]++), x, playerToMakeNextMove);
-            clientController.drawTile((((gameGridGrid.getHeight() - 1) - (size[x] - 1)) * 6) + x, playerToMakeNextMove);
-            System.out.println("Calc " + calculate(row, col));
+            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerToMakeNextMove);
+            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerToMakeNextMove);
+            System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerToMakeNextMove);
@@ -71,21 +72,21 @@ public class GameController {
     }
 
     public void changePlayer() {
-        if(playerToMakeNextMove == 1) {
-            playerToMakeNextMove = 2;
+        if(playerToMakeNextMove == PLAYER1) {
+            playerToMakeNextMove = PLAYER2;
         }else {
-            playerToMakeNextMove = 1;
+            playerToMakeNextMove = PLAYER1;
         }
         clientController.changeHighlightedPlayer(playerToMakeNextMove);
     }
 
     private boolean checkHorizontal() {
         int counter = 1;
-        for (int i = col; i < gameGridGrid.getLength(); i++) {
-            if (i == gameGridGrid.getLength() - 1 || gameGridGrid.getElement(row, i + 1) != playerToMakeNextMove) {
+        for (int i = col; i < gameGrid.getLength(); i++) {
+            if (i == gameGrid.getLength() - 1 || gameGrid.getElement(row, i + 1) != playerToMakeNextMove) {
                 counter = 1;
                 for (int j = i; j >= 0; j--) {
-                    if (j == 0 || gameGridGrid.getElement(row, j - 1) != playerToMakeNextMove) {
+                    if (j == 0 || gameGrid.getElement(row, j - 1) != playerToMakeNextMove) {
                         return false;
                     } else {
                         counter++;
@@ -117,8 +118,8 @@ public class GameController {
 
     private boolean checkVertical(){
         int counter = 1;
-        for(int x = row; x < gameGridGrid.getHeight(); x++) {
-            if(x == gameGridGrid.getHeight() - 1 || gameGridGrid.getElement(x + 1, col) != playerToMakeNextMove) {
+        for(int x = row; x < gameGrid.getHeight(); x++) {
+            if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != playerToMakeNextMove) {
                 return false;
             } else {
                 counter++;
@@ -137,11 +138,11 @@ public class GameController {
 
     private boolean checkDiagonalRight() {
         int counter = 1;
-        for(int i = col,j = row; i < gameGridGrid.getLength() && j < gameGridGrid.getHeight(); i++, j++) {
-            if(i == gameGridGrid.getLength() - 1 || j == gameGridGrid.getHeight() -1 || gameGridGrid.getElement(j + 1, i + 1) != playerToMakeNextMove) {
+        for(int i = col,j = row; i < gameGrid.getLength() && j < gameGrid.getHeight(); i++, j++) {
+            if(i == gameGrid.getLength() - 1 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i + 1) != playerToMakeNextMove) {
                 counter = 1;
                 for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
-                    if(x == 0 || y == 0 || gameGridGrid.getElement(y - 1, x - 1) != playerToMakeNextMove) {
+                    if(x == 0 || y == 0 || gameGrid.getElement(y - 1, x - 1) != playerToMakeNextMove) {
                         return false;
                     }else {
                         counter++;
@@ -173,11 +174,11 @@ public class GameController {
 
     private boolean checkDiagonalLeft(){
         int counter = 1;
-        for(int i = col,j = row; i >= 0 && j < gameGridGrid.getHeight(); i--, j++) {
-            if(i == 0 || j == gameGridGrid.getHeight() -1 || gameGridGrid.getElement(j + 1, i - 1) != playerToMakeNextMove) {
+        for(int i = col,j = row; i >= 0 && j < gameGrid.getHeight(); i--, j++) {
+            if(i == 0 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i - 1) != playerToMakeNextMove) {
                 counter = 1;
-                for(int x = i, y = j; x < gameGridGrid.getLength() && y >= 0; x++, y--) {
-                    if(x == gameGridGrid.getLength() - 1 || y == 0 || gameGridGrid.getElement(y - 1, x + 1) != playerToMakeNextMove) {
+                for(int x = i, y = j; x < gameGrid.getLength() && y >= 0; x++, y--) {
+                    if(x == gameGrid.getLength() - 1 || y == 0 || gameGrid.getElement(y - 1, x + 1) != playerToMakeNextMove) {
                         return false;
                     }else {
                         counter++;
