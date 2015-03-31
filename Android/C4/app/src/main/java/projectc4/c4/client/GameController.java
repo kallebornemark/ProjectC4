@@ -7,7 +7,7 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameController {
     private ClientController clientController;
-    private Game gameGrid;
+    private GameGrid gameGrid;
     private int[] size = new int[6];
     private int playerToMakeNextMove;
     private int row, col;
@@ -17,7 +17,7 @@ public class GameController {
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
-        gameGrid = new Game();
+        gameGrid = new GameGrid();
         playerToMakeNextMove = PLAYER1;
 
     }
