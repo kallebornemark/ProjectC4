@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 
@@ -95,13 +96,6 @@ public class MainActivity extends Activity {
         Button button5 = (Button)findViewById(R.id.button5);
         Button button6 = (Button)findViewById(R.id.button6);
 
-        button1.setBackgroundColor(C4Color.BLACK);
-        button2.setBackgroundColor(C4Color.BLACK);
-        button3.setBackgroundColor(C4Color.BLACK);
-        button4.setBackgroundColor(C4Color.BLACK);
-        button5.setBackgroundColor(C4Color.BLACK);
-        button6.setBackgroundColor(C4Color.BLACK);
-
         buttonArrayList.add(button1);
         buttonArrayList.add(button2);
         buttonArrayList.add(button3);
@@ -113,12 +107,13 @@ public class MainActivity extends Activity {
         TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
         TextView textViewVs = (TextView)findViewById(R.id.textViewVs);
 
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/msyi.ttf");
+        textViewPlayer1.setTypeface(type);
+        textViewPlayer2.setTypeface(type);
+
         textViewVs.setTextColor(C4Color.BLACK);
-//        textViewPlayer1.setBackgroundColor(C4Color.RED);
-//        textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
         highlightPlayer(1);
         textViewPlayer1.setTextColor(C4Color.WHITE);
-        textViewPlayer2.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
         Button buttonNewgame = (Button)findViewById(R.id.buttonNewGame);
@@ -143,12 +138,12 @@ public class MainActivity extends Activity {
         TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
 
         if (player == 1) {
-            textViewPlayer1.setBackgroundColor(C4Color.RED);
-            textViewPlayer2.setBackgroundColor(C4Color.YELLOWPRESSED);
+            textViewPlayer1.setBackground(getDrawable(R.drawable.colorred));
+            textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellowpressed));
         }
         else if (player == 2){
-            textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
-            textViewPlayer1.setBackgroundColor(C4Color.REDPRESSED);
+            textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellow));
+            textViewPlayer1.setBackground(getDrawable(R.drawable.colorredpressed));
         }
     }
 
