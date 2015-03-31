@@ -1,5 +1,7 @@
 package projectc4.c4.client;
 
+import java.util.ArrayList;
+
 import projectc4.c4.MainActivity;
 import projectc4.c4.util.C4Color;
 
@@ -38,6 +40,10 @@ public class ClientController {
         clientUI.highlightPlayer(player);
 
         clientUI.drawTile(pos, player);
+    }
+
+    public void highLightTiles(ArrayList pos) {
+        clientUI.highLightTiles(pos);
     }
 
     public void changeHighlightedPlayer(int player) {
