@@ -5,15 +5,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
+import java.util.HashMap;
+import projectc4.c4.util.User;
 /**
  * @author Kalle Bornemark
  */
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Thread server;
-    private ArrayList<ClientHandler> connectedClients;
+    private HashMap<String , ClientHandler> connectedClients;
+    private HashMap<String , User> searchingForGame;
 
     public Server(int port) {
         try {
@@ -29,17 +30,23 @@ public class Server implements Runnable {
         while (!Thread.interrupted()){
             try {
                 Socket socket = serverSocket.accept();
-                connectedClients.add(new ClientHandler(socket));
+//                connectedClients.put(new ClientHandler(socket));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    private void validateUser(String name){
+
+       connectedClients.put()
+    }
+
     private class ClientHandler extends Thread {
         private Socket socket;
         private ObjectInputStream ois;
         private ObjectOutputStream oos;
+        private User user;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -52,6 +59,7 @@ public class Server implements Runnable {
                 }
             } catch (Exception e) {
                 // Hantera om någon dissar
+                e.printStackTrace();
             }
         }
 
@@ -66,4 +74,7 @@ public class Server implements Runnable {
         }
     }
 
+    public static void main(String[] args) {
+        Server server = new Server(3450);
+    }
 }

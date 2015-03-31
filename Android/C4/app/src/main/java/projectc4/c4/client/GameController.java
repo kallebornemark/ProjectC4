@@ -5,7 +5,7 @@ package projectc4.c4.client;
  */
 public class GameController {
     private ClientController clientController;
-    private Game gameGrid;
+    private GameGrid gameGrid;
     private int[] size = new int[6];
     private int player;
     private int row, col;
@@ -13,7 +13,7 @@ public class GameController {
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
-        gameGrid = new Game();
+        gameGrid = new GameGrid();
         player = 1;
     }
 
