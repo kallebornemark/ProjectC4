@@ -1,6 +1,7 @@
-package projectc4.c4.Client;
+package projectc4.c4.clienthej;
 
 import projectc4.c4.MainActivity;
+import projectc4.c4.util.C4Color;
 
 /**
  * @author Kalle Bornemark

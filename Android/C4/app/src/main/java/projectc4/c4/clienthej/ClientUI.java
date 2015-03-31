@@ -1,8 +1,9 @@
-package projectc4.c4.Client;
+package projectc4.c4.clienthej;
 
 import android.widget.Button;
 import android.widget.TextView;
 import projectc4.c4.MainActivity;
+import projectc4.c4.util.C4Color;
 
 import java.util.ArrayList;
 

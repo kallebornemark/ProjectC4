@@ -12,8 +12,8 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import projectc4.c4.Client.C4Color;
-import projectc4.c4.Client.ClientController;
+import projectc4.c4.util.C4Color;
+import projectc4.c4.clienthej.ClientController;
 
 import java.util.ArrayList;
 

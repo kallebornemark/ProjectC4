@@ -1,4 +1,4 @@
-package projectc4.c4.Client;
+package projectc4.c4.clienthej;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
