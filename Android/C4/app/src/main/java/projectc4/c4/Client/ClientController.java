@@ -1,4 +1,4 @@
-package projectc4.c4.clientlol;
+package projectc4.c4.client;
 
 import projectc4.c4.MainActivity;
 import projectc4.c4.util.C4Color;

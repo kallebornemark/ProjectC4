@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import projectc4.c4.util.C4Color;
-import projectc4.c4.clientlol.ClientController;
+import projectc4.c4.client.ClientController;
 
 import java.util.ArrayList;
 
