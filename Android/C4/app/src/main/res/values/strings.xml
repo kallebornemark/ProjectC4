@@ -4,5 +4,6 @@
     <string name="app_name">C4</string>
     <string name="hello_world">ProjectC4</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_menu">MenuActivity</string>
 
 </resources>
