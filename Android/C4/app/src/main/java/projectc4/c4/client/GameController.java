@@ -18,7 +18,8 @@ public class GameController {
     public GameController(ClientController clientController) {
         this.clientController = clientController;
         gameGrid = new Game();
-        playerToMakeNextMove = 1;
+        playerToMakeNextMove = PLAYER1;
+
     }
 
     public int getPlayer() {
@@ -31,7 +32,7 @@ public class GameController {
             size[i] = 0;
         }
         gameGrid.reset();
-        playerToMakeNextMove = 1;
+        playerToMakeNextMove = PLAYER1;
         winningTiles.clear();
         this.gameMode = gameMode;
         /*
@@ -71,10 +72,10 @@ public class GameController {
     }
 
     public void changePlayer() {
-        if(playerToMakeNextMove == 1) {
-            playerToMakeNextMove = 2;
+        if(playerToMakeNextMove == PLAYER1) {
+            playerToMakeNextMove = PLAYER2;
         }else {
-            playerToMakeNextMove = 1;
+            playerToMakeNextMove = PLAYER1;
         }
         clientController.changeHighlightedPlayer(playerToMakeNextMove);
     }
