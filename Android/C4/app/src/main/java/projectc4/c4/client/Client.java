@@ -1,5 +1,7 @@
 package projectc4.c4.client;
 
+import projectc4.c4.util.User;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,6 +17,7 @@ public class Client implements Runnable {
     private String ip;
     private int port;
     private Thread client;
+    private User user;
 
     public void connect(String ip, int port) {
         this.ip = ip;
@@ -32,6 +35,10 @@ public class Client implements Runnable {
         }
     }
 
+    public void setUsername(User user) {
+        this.user = user;
+    }
+
     public void newMove(int player, int value) {
         try {
             oos.writeInt(value);
@@ -41,23 +48,43 @@ public class Client implements Runnable {
         }
     }
 
+    public void requestUsername(String username) {
+        try {
+            oos.writeUTF(username);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void startCommunication() {
+        Object obj;
         try {
             while (!Thread.interrupted()) {
-                // Stuff
+                obj = ois.readObject();
+//                if (obj instanceof )
             }
         } catch (Exception e) {}
     }
 
     public void run() {
+        Object obj;
+        User user;
         try {
             socket = new Socket(ip, port);
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
+
+            // User from server
+            obj = ois.readObject();
+            setUsername((User)obj);
+
             // Start listening
             startCommunication();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e2) {
+            e2.printStackTrace();
         }
     }
 

@@ -4,10 +4,14 @@ package projectc4.c4.util;
  * @author Kalle Bornemark
  */
 public class User {
-    private final String name;
+    private final String username;
     private boolean isPlaying = false;
 
-    public User(String name){
-        this.name = name;
+    public User(String username){
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

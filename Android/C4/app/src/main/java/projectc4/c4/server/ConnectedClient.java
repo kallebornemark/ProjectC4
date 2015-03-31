@@ -1,0 +1,77 @@
+package projectc4.c4.server;
+
+import projectc4.c4.util.User;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+import static projectc4.c4.util.C4Constants.MATCHMAKING;
+
+/**
+ * @author Kalle Bornemark
+ */
+public class ConnectedClient extends Thread {
+    private Socket socket;
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+    private User user;
+    private Server server;
+
+    public ConnectedClient(Server server, Socket socket) {
+        this.socket = socket;
+    }
+
+    private void validateUser(String name){
+        user = new User(name);
+        try {
+            oos.writeObject(user);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startCommunication() {
+        int value;
+        try {
+            while (!Thread.interrupted()) {
+                value = ois.readInt();
+                if (value == MATCHMAKING) {
+                    server.searchForGame(this);
+                }
+            }
+        } catch (Exception e) {
+            // Hantera om någon dissar
+            e.printStackTrace();
+        }
+    }
+
+    public void newGame(int player) {
+        try {
+            oos.writeInt(player);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void run() {
+        String incomingName;
+        try {
+            ois = new ObjectInputStream(socket.getInputStream());
+            oos = new ObjectOutputStream(socket.getOutputStream());
+
+            // Read incoming name
+            incomingName = ois.readUTF();
+            // Create user object & send back to client
+            validateUser(incomingName);
+            // Add this connectedClient to connectedClients
+            server.addConnectedClient(incomingName, this);
+
+            startCommunication();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

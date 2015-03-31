@@ -8,18 +8,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:username=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
 
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:username=".MenuActivity"
             android:label="@string/title_activity_menu" >
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <action android:username="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
+            <category android:username="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
     </application>
