@@ -27,6 +27,18 @@ public class MenuActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Button button2 = (Button)findViewById(R.id.buttonMultiplayer);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("int",1);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

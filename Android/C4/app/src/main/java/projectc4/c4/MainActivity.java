@@ -3,6 +3,7 @@ package projectc4.c4;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -36,6 +37,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         clientController = new ClientController(this);
         initGraphics();
+        Intent intentExtras = getIntent();
+        Bundle extrasBundle = intentExtras.getExtras();
+        if (!extrasBundle.isEmpty()) {
+            clientController.connect();
+        }
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
