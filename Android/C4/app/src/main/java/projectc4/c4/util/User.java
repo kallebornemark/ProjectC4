@@ -1,4 +1,4 @@
-package projectc4.c4.server;
+package projectc4.c4.util;
 
 /**
  * @author Kalle Bornemark
