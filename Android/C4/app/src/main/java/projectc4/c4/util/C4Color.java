@@ -10,4 +10,5 @@ public class C4Color {
     public static final int BLACK = 0xFF716D61;
     public static final int REDPRESSED = 0x40F67E59;
     public static final int YELLOWPRESSED = 0x40ECD06C;
+
 }
