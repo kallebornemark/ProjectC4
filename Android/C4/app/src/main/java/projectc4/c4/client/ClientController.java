@@ -24,7 +24,7 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-        client.connect("localhost", 3450);
+        client.connect("10.1.3.0", 3450);
     }
 
     public MainActivity getMainActivity() {
@@ -34,6 +34,7 @@ public class ClientController {
     public void newMove(int column) {
         System.out.println(column);
         gameController.newMove(column);
+        client.newMove(gameController.getPlayer(), column);
     }
 
     public void drawTile(int pos, int player) {

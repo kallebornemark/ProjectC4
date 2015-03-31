@@ -28,9 +28,11 @@ public class Client implements Runnable {
     public void connect(String ip, int port) {
         this.ip = ip;
         this.port = port;
+        System.out.println("Innan tråden skapas");
         if (client == null) {
             client = new Thread(this);
             client.start();
+            System.out.println("Tråden har startats");
         }
     }
 
@@ -67,6 +69,7 @@ public class Client implements Runnable {
         if (number == MATCHMAKING || number == LOCAL) {
             clientController.newGame();
         } else {
+            System.out.println("clientController.newMove(" + number + ")");
             clientController.newMove(number);
         }
     }
@@ -90,20 +93,22 @@ public class Client implements Runnable {
         User user;
         try {
             socket = new Socket(ip, port);
-            ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
+            ois = new ObjectInputStream(socket.getInputStream());
+            System.out.println("Objectoutputstream skapad");
 
             // User from server
-            obj = ois.readObject();
-            setUsername((User)obj);
+//            obj = ois.readObject();
+//            setUsername((User)obj);
 
             // Start listening
             startCommunication();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e2) {
-            e2.printStackTrace();
+//        } catch (ClassNotFoundException e2) {
+//            e2.printStackTrace();
+//        }
         }
     }
-
 }

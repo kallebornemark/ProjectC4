@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     Button button = (Button) v;
                     int col = Integer.parseInt(button.getText().toString());
+                    System.out.println("onClick i mainactivity: " + col);
                     clientController.newMove(col);
                 }
             });
@@ -116,8 +117,8 @@ public class MainActivity extends Activity {
         TextView textViewVs = (TextView)findViewById(R.id.textViewVs);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/msyi.ttf");
-        textViewPlayer1.setTypeface(type,Typeface.BOLD);
-        textViewPlayer2.setTypeface(type,Typeface.BOLD);
+        textViewPlayer1.setTypeface(type, Typeface.BOLD);
+        textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
         highlightPlayer(1);

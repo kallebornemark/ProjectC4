@@ -21,6 +21,10 @@ public class GameController {
         playerToMakeNextMove = 1;
     }
 
+    public int getPlayer() {
+        return playerToMakeNextMove;
+    }
+
     public void newGame(int gameMode) {
         playedTiles = 0;
         for (int i = 0; i < size.length; i++) {
