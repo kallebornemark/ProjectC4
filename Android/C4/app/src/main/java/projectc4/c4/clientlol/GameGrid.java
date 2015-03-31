@@ -1,4 +1,4 @@
-package projectc4.c4.client;
+package projectc4.c4.clientlol;
 
 /**
  * @author Jimmy Maksymiw, Erik Sandgren
