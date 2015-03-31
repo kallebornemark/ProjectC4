@@ -49,7 +49,7 @@ public class GameController {
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerToMakeNextMove);
-                clientController.highLightTiles(winningTiles);
+//                clientController.highLightTiles(winningTiles);
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();

@@ -62,7 +62,9 @@ public class Server implements Runnable {
         while (!Thread.interrupted()){
             try {
                 Socket socket = serverSocket.accept();
+                System.out.println("1");
                 new ConnectedClient(this, socket).start();
+                System.out.println("2");
 //                connectedClients.put(new ClientHandler(socket));
             } catch (IOException e) {
                 e.printStackTrace();

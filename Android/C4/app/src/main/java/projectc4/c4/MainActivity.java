@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
+import static projectc4.c4.util.C4Constants.*;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class MainActivity extends Activity {
         Bundle extrasBundle = intentExtras.getExtras();
         if (!extrasBundle.isEmpty()) {
             clientController.connect();
+            clientController.newGame(2, MATCHMAKING);
         }
 
         for (int i = 0; i < buttonArrayList.size(); i++) {

@@ -42,9 +42,9 @@ public class ClientController {
         clientUI.drawTile(pos, player);
     }
 
-    public void highLightTiles(ArrayList pos) {
-        clientUI.highLightTiles(pos);
-    }
+//    public void highLightTiles(ArrayList pos) {
+//        clientUI.highLightTiles(pos);
+//    }
 
     public void changeHighlightedPlayer(int player) {
         clientUI.highlightPlayer(player);
@@ -58,11 +58,13 @@ public class ClientController {
         clientUI.winner("It's a draw!");
     }
 
+    // New Local
     public void newGame() {
         gameController.newGame(0);
         clientUI.newGame();
     }
 
+    // New MM
     public void newGame(int player, int gamemode) {
         this.player = player;
         gameController.newGame(gamemode);
