@@ -9,6 +9,7 @@ import projectc4.c4.util.C4Color;
 public class ClientController {
     private GameController gameController;
     private ClientUI clientUI;
+    private Client client;
     private MainActivity mainActivity;
     private int player = 1;
 
@@ -17,6 +18,8 @@ public class ClientController {
         this.mainActivity = mainActivity;
         gameController = new GameController(this);
         clientUI = new ClientUI(this);
+        client = new Client(this);
+        client.connect("localhost", 3450);
     }
 
     public MainActivity getMainActivity() {
@@ -47,12 +50,16 @@ public class ClientController {
     }
 
     public void newGame() {
-        gameController.newGame();
+        gameController.newGame(0);
         clientUI.newGame();
     }
-    /*
-    Lade till setters och getters för player
-     */
+
+    public void newGame(int player, int gamemode) {
+        this.player = player;
+        gameController.newGame(gamemode);
+        clientUI.newGame();
+    }
+
     public int getPlayer() {
         return player;
     }

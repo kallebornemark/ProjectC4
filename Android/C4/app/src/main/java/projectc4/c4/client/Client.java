@@ -1,6 +1,7 @@
 package projectc4.c4.client;
 
 import projectc4.c4.util.User;
+import static projectc4.c4.util.C4Constants.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,6 +19,11 @@ public class Client implements Runnable {
     private int port;
     private Thread client;
     private User user;
+    private ClientController clientController;
+
+    public Client(ClientController clientController) {
+        this.clientController = clientController;
+    }
 
     public void connect(String ip, int port) {
         this.ip = ip;
@@ -57,12 +63,24 @@ public class Client implements Runnable {
         }
     }
 
+    public void checkNumberAndSend(int number) {
+        if (number == MATCHMAKING || number == LOCAL) {
+            clientController.newGame(number);
+        } else {
+            clientController.newMove(number);
+        }
+    }
+
     public void startCommunication() {
         Object obj;
+        int number;
         try {
             while (!Thread.interrupted()) {
                 obj = ois.readObject();
-//                if (obj instanceof )
+                if (obj instanceof Integer) {
+                    number = (Integer)obj;
+                    checkNumberAndSend(number);
+                }
             }
         } catch (Exception e) {}
     }

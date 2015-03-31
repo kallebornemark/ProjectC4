@@ -26,15 +26,6 @@ public class Server implements Runnable {
         }
     }
 
-    public void searchForGame(ConnectedClient connectedClient) {
-        try {
-            searchingForGame.put(connectedClient);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void addToQueue(ConnectedClient connectedClient) {
         try {
             searchingForGame.put(connectedClient);
@@ -47,6 +38,14 @@ public class Server implements Runnable {
         connectedClients.put(name, connectedClient);
     }
 
+    public void addSearchingClient(ConnectedClient connectedClient) {
+        try {
+            searchingForGame.put(connectedClient);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void removeConnectedClient(String name) {
         connectedClients.remove(name);
     }
@@ -56,7 +55,7 @@ public class Server implements Runnable {
         int player1 = rand.nextInt(1)+1;
         int player2 = 3-player1;
         c1.newGame(player1);
-        c1.newGame(player2);
+        c2.newGame(player2);
     }
 
     public void run() {

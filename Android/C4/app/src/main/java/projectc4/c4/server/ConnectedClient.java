@@ -39,7 +39,7 @@ public class ConnectedClient extends Thread {
             while (!Thread.interrupted()) {
                 value = ois.readInt();
                 if (value == MATCHMAKING) {
-                    server.searchForGame(this);
+                    server.addSearchingClient(this);
                 }
             }
         } catch (Exception e) {
