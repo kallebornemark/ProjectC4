@@ -12,6 +12,7 @@ public class SearchQueue implements Runnable {
     private Server server;
 
     public SearchQueue(Server server, int capacity) {
+        this.server = server;
         this.capacity = capacity;
         thread = new Thread(this);
     }
@@ -67,6 +68,9 @@ public class SearchQueue implements Runnable {
     }
 
     public void run() {
+        ConnectedClient c1;
+        ConnectedClient c2;
+        ActiveGame a;
         while (!Thread.interrupted()) {
             try {
                 int nbr = queue.size();
@@ -74,7 +78,12 @@ public class SearchQueue implements Runnable {
                     thread.sleep(500);
                     nbr = queue.size();
                 }
-                server.newGame((ConnectedClient)queue.get(0), (ConnectedClient)queue.get(1));
+                c1 = (ConnectedClient)queue.get(0);
+                c2 = (ConnectedClient)queue.get(1);
+                a = new ActiveGame(server, c1, c2);
+                c1.setActiveGame(a);
+                c2.setActiveGame(a);
+                server.addActiveGame(a);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

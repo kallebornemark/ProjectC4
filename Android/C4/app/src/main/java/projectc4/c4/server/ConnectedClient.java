@@ -18,9 +18,14 @@ public class ConnectedClient extends Thread {
     private ObjectOutputStream oos;
     private User user;
     private Server server;
+    private ActiveGame activeGame;
 
     public ConnectedClient(Server server, Socket socket) {
         this.socket = socket;
+    }
+
+    public void setActiveGame(ActiveGame activeGame) {
+        this.activeGame = activeGame;
     }
 
     private void validateUser(String name){
@@ -40,6 +45,8 @@ public class ConnectedClient extends Thread {
                 value = ois.readInt();
                 if (value == MATCHMAKING) {
                     server.addSearchingClient(this);
+                } else {
+                    activeGame.newMode(this, value);
                 }
             }
         } catch (Exception e) {
@@ -51,6 +58,15 @@ public class ConnectedClient extends Thread {
     public void newGame(int player) {
         try {
             oos.writeInt(player);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void newMove(int column) {
+        try {
+            oos.writeInt(column);
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

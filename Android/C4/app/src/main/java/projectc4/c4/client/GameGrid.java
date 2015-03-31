@@ -3,7 +3,7 @@ package projectc4.c4.client;
 /**
  * @author Jimmy Maksymiw, Erik Sandgren
  */
-public class Game {
+public class GameGrid {
     private int[][] board = new int[7][6];
 
     public int getElement(int i, int j) {

@@ -3,6 +3,7 @@ package projectc4.c4.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class Server implements Runnable {
     private Thread server;
     private HashMap<String , ConnectedClient> connectedClients;
     private SearchQueue searchingForGame;
+    private ArrayList<ActiveGame> activeGames;
 
     public Server(int port) {
         try {
@@ -21,9 +23,14 @@ public class Server implements Runnable {
             server = new Thread(this);
             server.start();
             searchingForGame = new SearchQueue(this, 10);
+            activeGames = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addActiveGame(ActiveGame g) {
+        activeGames.add(g);
     }
 
     public void addToQueue(ConnectedClient connectedClient) {
