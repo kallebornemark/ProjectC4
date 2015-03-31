@@ -108,8 +108,8 @@ public class MainActivity extends Activity {
         TextView textViewVs = (TextView)findViewById(R.id.textViewVs);
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/msyi.ttf");
-        textViewPlayer1.setTypeface(type);
-        textViewPlayer2.setTypeface(type);
+        textViewPlayer1.setTypeface(type,Typeface.BOLD);
+        textViewPlayer2.setTypeface(type,Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
         highlightPlayer(1);
