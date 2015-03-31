@@ -1,4 +1,4 @@
-package projectc4.c4.clientlol;
+package projectc4.c4.client;
 
 import android.widget.Button;
 import android.widget.TextView;
