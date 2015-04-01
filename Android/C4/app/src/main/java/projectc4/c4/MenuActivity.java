@@ -2,7 +2,6 @@ package projectc4.c4;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 import projectc4.c4.client.ClientController;
-
-import static android.view.View.OnClickListener;
 
 
 public class MenuActivity extends Activity {
@@ -25,7 +22,7 @@ public class MenuActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+                Intent intent = new Intent(MenuActivity.this, LocalGameActivity.class);
                 startActivity(intent);
             }
         });

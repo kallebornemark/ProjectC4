@@ -25,7 +25,7 @@ import static projectc4.c4.util.C4Constants.*;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity {
+public class LocalGameActivity extends Activity {
     private GridLayout grd;
     private ArrayList<Button> buttonArrayList = new ArrayList<>();
     private ClientController clientController;
@@ -40,15 +40,7 @@ public class MainActivity extends Activity {
         clientController.setActivity(this);
         clientController.createClientUI();
         initGraphics();
-//        Intent intentExtras = getIntent();
-//        Bundle extrasBundle = intentExtras.getExtras();
-//        if (extrasBundle.getInt("int")==1) {
-//            clientController.connect();
-//            clientController.newGame(PLAYER1, MATCHMAKING);
-//        } else if (extrasBundle.getInt("int")==2) {
-//            System.out.println("Localt game");
-            clientController.newGame();
-//        }
+        clientController.newGame();
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;

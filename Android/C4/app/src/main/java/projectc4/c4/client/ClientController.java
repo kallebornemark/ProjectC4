@@ -1,14 +1,10 @@
 package projectc4.c4.client;
 
-import android.app.Activity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import projectc4.c4.MainActivity;
-import projectc4.c4.MenuActivity;
-import projectc4.c4.MultiplayerActivity;
-import projectc4.c4.util.C4Color;
+import projectc4.c4.LocalGameActivity;
+
 import static projectc4.c4.util.C4Constants.*;
 
 /**
@@ -18,30 +14,19 @@ public class ClientController implements Serializable{
     private GameController gameController;
     private ClientUI clientUI;
     private Client client;
-    private MainActivity mainActivity;
+    private LocalGameActivity localGameActivity;
     private int player;
-    private MenuActivity menuActivity;
-
-    private Activity activity;
-
-//    public ClientController(MainActivity mainActivity) {
-//        this.mainActivity = mainActivity;
-//        gameController = new GameController(this);
-//        clientUI = new ClientUI(this);
-//    }
 
     public ClientController() {
-//        this.menuActivity = menuActivity;
         gameController = new GameController(this);
-
     }
 
     public void createClientUI() {
         clientUI = new ClientUI(this);
     }
 
-    public void setActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public void setActivity(LocalGameActivity localGameActivity) {
+        this.localGameActivity = localGameActivity;
     }
 
     public void connect() {
@@ -49,8 +34,8 @@ public class ClientController implements Serializable{
         client.connect("10.1.3.0", 3450);
     }
 
-    public MainActivity getMainActivity() {
-        return mainActivity;
+    public LocalGameActivity getLocalGameActivity() {
+        return localGameActivity;
     }
 
     public void newMove(int column) {
