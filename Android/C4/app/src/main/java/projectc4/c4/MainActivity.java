@@ -36,17 +36,19 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        clientController = new ClientController(this);
+        clientController = new ClientController();
+        clientController.setActivity(this);
+        clientController.createClientUI();
         initGraphics();
-        Intent intentExtras = getIntent();
-        Bundle extrasBundle = intentExtras.getExtras();
-        if (extrasBundle.getInt("int")==1) {
-            clientController.connect();
-            clientController.newGame(PLAYER1, MATCHMAKING);
-        } else if (extrasBundle.getInt("int")==2) {
-            System.out.println("Localt game");
+//        Intent intentExtras = getIntent();
+//        Bundle extrasBundle = intentExtras.getExtras();
+//        if (extrasBundle.getInt("int")==1) {
+//            clientController.connect();
+//            clientController.newGame(PLAYER1, MATCHMAKING);
+//        } else if (extrasBundle.getInt("int")==2) {
+//            System.out.println("Localt game");
             clientController.newGame();
-        }
+//        }
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;

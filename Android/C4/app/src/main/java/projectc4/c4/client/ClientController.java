@@ -1,26 +1,47 @@
 package projectc4.c4.client;
 
+import android.app.Activity;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import projectc4.c4.MainActivity;
+import projectc4.c4.MenuActivity;
+import projectc4.c4.MultiplayerActivity;
 import projectc4.c4.util.C4Color;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
  */
-public class ClientController {
+public class ClientController implements Serializable{
     private GameController gameController;
     private ClientUI clientUI;
     private Client client;
     private MainActivity mainActivity;
     private int player;
+    private MenuActivity menuActivity;
 
+    private Activity activity;
 
-    public ClientController(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+//    public ClientController(MainActivity mainActivity) {
+//        this.mainActivity = mainActivity;
+//        gameController = new GameController(this);
+//        clientUI = new ClientUI(this);
+//    }
+
+    public ClientController() {
+//        this.menuActivity = menuActivity;
         gameController = new GameController(this);
+
+    }
+
+    public void createClientUI() {
         clientUI = new ClientUI(this);
+    }
+
+    public void setActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     public void connect() {
@@ -68,9 +89,12 @@ public class ClientController {
         clientUI.newGame();
     }
 
+    public void requestGame(int gamemode) {
+        client.requestGame(gamemode);
+    }
+
     // New MM
-    public void newGame(int player, int gamemode) {
-        this.player = player;
+    public void newGame(int gamemode) {
         gameController.newGame(gamemode);
         clientUI.newGame();
     }
@@ -82,9 +106,4 @@ public class ClientController {
     public void setPlayer(int player) {
         this.player = player;
     }
-
-    public String getUsername() {
-        return null;
-    }
-
 }

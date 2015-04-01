@@ -8,44 +8,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
+import static projectc4.c4.util.C4Constants.*;
 import projectc4.c4.client.ClientController;
 
-import static android.view.View.OnClickListener;
 
-
-public class MenuActivity extends Activity {
+public class MultiplayerActivity extends Activity {
     private ClientController clientController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-        this.clientController = new ClientController();
-        Button button = (Button)findViewById(R.id.localGame);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_multiplayer);
 
-        Button button2 = (Button)findViewById(R.id.buttonMultiplayer);
-        button2.setOnClickListener(new View.OnClickListener() {
+        Intent intentThatStartedThisActivity = getIntent();
+        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
+
+        Button buttonFindOpponent = (Button)findViewById(R.id.buttonFindOpponent);
+        buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.connect();
-                Intent intent = new Intent(MenuActivity.this, MultiplayerActivity.class);
-                intent.putExtra("clienController",clientController);
-                startActivity(intent);
+                clientController.requestGame(MATCHMAKING);
+
             }
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_multiplayer, menu);
         return true;
     }
 

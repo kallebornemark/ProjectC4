@@ -67,12 +67,20 @@ public class Client implements Runnable {
 
     public void checkNumberAndSend(int number) {
         if (number == MATCHMAKING) {
-            clientController.newGame();
+            clientController.newGame(number);
         } else if (number == PLAYER1 || number == PLAYER2) {
             clientController.setPlayer(number);
         } else {
             System.out.println("clientController.newMove(" + number + ")");
             clientController.newMove(number);
+        }
+    }
+
+    public void requestGame(int gamemode) {
+        try {
+            oos.writeInt(gamemode);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
