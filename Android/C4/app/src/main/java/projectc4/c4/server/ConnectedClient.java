@@ -46,7 +46,7 @@ public class ConnectedClient extends Thread {
                 if (value == MATCHMAKING) {
                     server.addSearchingClient(this);
                 } else {
-                    activeGame.newMode(this, value);
+                    activeGame.newMove(this, value);
                 }
             }
         } catch (Exception e) {
