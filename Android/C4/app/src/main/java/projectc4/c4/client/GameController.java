@@ -12,8 +12,8 @@ public class GameController {
     private int playerToMakeNextMove;
     private int row, col;
     private int playedTiles;
-    private int gameMode = 0;
-    private ArrayList winningTiles = new ArrayList();
+    private int gameMode;
+    private ArrayList<Integer> winningTiles = new ArrayList<Integer>();
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
@@ -45,7 +45,9 @@ public class GameController {
 
     public void newMove(int x) {
         //Om nuvarande spelares nummer är lika med ditt spelar-nummer och kollumnen inte är full
+        System.out.println("Innan if-satsen i newMove");
         if(playerToMakeNextMove == clientController.getPlayer() && size[x] < 7) {
+            System.out.println("INNE I newMove");
             row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerToMakeNextMove);
@@ -54,7 +56,7 @@ public class GameController {
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerToMakeNextMove);
-//                clientController.highLightTiles(winningTiles);
+                clientController.highLightTiles(winningTiles);
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();

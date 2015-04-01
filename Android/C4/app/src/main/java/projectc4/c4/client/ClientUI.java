@@ -50,6 +50,10 @@ public class ClientUI {
         mainActivity.highlightPlayer(player);
     }
 
+    public void highLightTiles(ArrayList<Integer> pos) {
+        mainActivity.highlightTiles(pos);
+    }
+
 }
 
 

@@ -40,9 +40,12 @@ public class MainActivity extends Activity {
         initGraphics();
         Intent intentExtras = getIntent();
         Bundle extrasBundle = intentExtras.getExtras();
-        if (!extrasBundle.isEmpty()) {
+        if (extrasBundle.getInt("int")==1) {
             clientController.connect();
-            clientController.newGame(1, MATCHMAKING);
+            clientController.newGame(PLAYER1, MATCHMAKING);
+        } else if (extrasBundle.getInt("int")==2) {
+            System.out.println("Localt game");
+            clientController.newGame();
         }
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
@@ -121,7 +124,7 @@ public class MainActivity extends Activity {
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
-        highlightPlayer(1);
+        highlightPlayer(PLAYER1);
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
@@ -146,26 +149,32 @@ public class MainActivity extends Activity {
         TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
         TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
 
-        if (player == 1) {
+        if (player == PLAYER1) {
             textViewPlayer1.setBackground(getDrawable(R.drawable.colorred));
             textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellowpressed));
         }
-        else if (player == 2){
+        else if (player == PLAYER2){
             textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellow));
             textViewPlayer1.setBackground(getDrawable(R.drawable.colorredpressed));
         }
     }
 
     public void drawTile(int pos, int player) {
-        if (player == 1) {
+        if (player == PLAYER1) {
             TextView txt = (TextView)grd.getChildAt(pos);
             txt.setBackground(getDrawable(R.drawable.colorred));
-        }else if (player == 2) {
+        }else if (player == PLAYER2) {
             TextView txt = (TextView)grd.getChildAt(pos);
             txt.setBackground(getDrawable(R.drawable.coloryellow));
         }
 
 
+    }
+
+    public void highlightTiles(ArrayList<Integer> pos) {
+        for (int i = 0; i < pos.size(); i++) {
+            grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorblack));
+        }
     }
 
     public void setNewGame() {
@@ -193,7 +202,7 @@ public class MainActivity extends Activity {
 //                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
 //                textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
 //                textViewPlayer1.setBackgroundColor(C4Color.RED);
-                highlightPlayer(1);
+                highlightPlayer(PLAYER1);
             }
         });
     }

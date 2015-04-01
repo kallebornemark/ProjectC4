@@ -24,6 +24,9 @@ public class MenuActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("int",2);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

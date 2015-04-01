@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import projectc4.c4.MainActivity;
 import projectc4.c4.util.C4Color;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -13,7 +14,7 @@ public class ClientController {
     private ClientUI clientUI;
     private Client client;
     private MainActivity mainActivity;
-    private int player = 1;
+    private int player;
 
 
     public ClientController(MainActivity mainActivity) {
@@ -32,9 +33,11 @@ public class ClientController {
     }
 
     public void newMove(int column) {
-        System.out.println(column);
+        System.out.println("Clientcontrollerns newMove " + column);
         gameController.newMove(column);
-        client.newMove(gameController.getPlayer(), column);
+        if(client != null) {
+            client.newMove(gameController.getPlayer(), column);
+        }
     }
 
     public void drawTile(int pos, int player) {
@@ -43,9 +46,9 @@ public class ClientController {
         clientUI.drawTile(pos, player);
     }
 
-//    public void highLightTiles(ArrayList pos) {
-//        clientUI.highLightTiles(pos);
-//    }
+    public void highLightTiles(ArrayList<Integer> pos) {
+        clientUI.highLightTiles(pos);
+    }
 
     public void changeHighlightedPlayer(int player) {
         clientUI.highlightPlayer(player);
@@ -61,7 +64,7 @@ public class ClientController {
 
     // New Local
     public void newGame() {
-        gameController.newGame(0);
+        gameController.newGame(LOCAL);
         clientUI.newGame();
     }
 
