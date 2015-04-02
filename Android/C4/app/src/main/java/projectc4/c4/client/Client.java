@@ -78,6 +78,7 @@ public class Client implements Runnable{
             System.out.println("Klienten får tillbaks en PLAYER " + number);
             clientController.setPlayer(number);
             clientController.gameIsReady = true;
+            clientController.startGameUI();
         } else {
             System.out.println("clientController.newMove(" + number + ")");
             clientController.newMove(number);

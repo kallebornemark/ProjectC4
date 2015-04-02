@@ -19,6 +19,7 @@ public class MatchmakingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
+        ClientController.getInstance().setMatchmakingActivity(this);
 
         Intent intentThatStartedThisActivity = getIntent();
 //        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
@@ -29,14 +30,14 @@ public class MatchmakingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().requestGame(MATCHMAKING);
-                ClientController.getInstance().gameMode = 1;
-
-                if(ClientController.getInstance().gameIsReady) {
-                    Intent intent = new Intent(MatchmakingActivity.this, LocalGameActivity.class);
-                    startActivity(intent);
-                }
             }
         });
+    }
+
+    public void startGameUI() {
+        ClientController.getInstance().gameMode = 1;
+        Intent intent = new Intent(MatchmakingActivity.this, LocalGameActivity.class);
+        startActivity(intent);
     }
 
 

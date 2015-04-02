@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import projectc4.c4.LocalGameActivity;
+import projectc4.c4.MatchmakingActivity;
 
 import static projectc4.c4.util.C4Constants.*;
 
@@ -16,6 +17,7 @@ public class ClientController {
     private ClientUI clientUI;
     private Client client;
     private LocalGameActivity localGameActivity;
+    private MatchmakingActivity matchmakingActivity;
     private int player;
     public int gameMode;
     public boolean gameIsReady = false;
@@ -48,10 +50,14 @@ public class ClientController {
         this.localGameActivity = localGameActivity;
     }
 
+    public void setMatchmakingActivity(MatchmakingActivity matchmakingActivity) {
+        this.matchmakingActivity = matchmakingActivity;
+    }
+
     public void connect() {
         client = new Client(this);
-//        client.connect("10.2.10.36", 3450);
-        client.connect("10.1.17.111", 3450);
+        client.connect("10.2.10.36", 3450);
+//        client.connect("10.1.17.111", 3450);
     }
 
     public LocalGameActivity getLocalGameActivity() {
@@ -64,6 +70,10 @@ public class ClientController {
         if(client != null) {
             client.newMove(gameController.getPlayer(), column);
         }
+    }
+
+    public void startGameUI() {
+        matchmakingActivity.startGameUI();
     }
 
     public void drawTile(int pos, int player) {
