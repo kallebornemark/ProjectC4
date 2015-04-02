@@ -1,5 +1,5 @@
 package projectc4.c4.client;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import static projectc4.c4.util.C4Constants.*;
 

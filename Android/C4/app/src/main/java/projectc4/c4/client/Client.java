@@ -1,17 +1,11 @@
 package projectc4.c4.client;
 
-import android.content.Intent;
-
-import projectc4.c4.LocalGameActivity;
-import projectc4.c4.MatchmakingActivity;
 import projectc4.c4.util.User;
-import static projectc4.c4.util.C4Constants.*;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -63,7 +57,7 @@ public class Client implements Runnable{
 
     public void requestUsername(String username) {
         try {
-            oos.writeUTF(username);
+            oos.writeObject(username);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();

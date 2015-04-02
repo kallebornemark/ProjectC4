@@ -1,7 +1,5 @@
 package projectc4.c4.client;
 
-import java.io.Serializable;
-
 /**
  * @author Jimmy Maksymiw, Erik Sandgren
  */

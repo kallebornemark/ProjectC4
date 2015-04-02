@@ -1,11 +1,8 @@
 package projectc4.c4.client;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-
 import projectc4.c4.LocalGameActivity;
 import projectc4.c4.MatchmakingActivity;
-
 import static projectc4.c4.util.C4Constants.*;
 
 /**
@@ -56,8 +53,8 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-        client.connect("10.2.10.36", 3450);
-//        client.connect("10.1.17.111", 3450);
+//        client.connect("10.2.10.36", 3450);
+        client.connect("10.1.17.111", 3450);
     }
 
     public LocalGameActivity getLocalGameActivity() {
