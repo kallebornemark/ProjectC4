@@ -54,7 +54,7 @@ public class Client implements Runnable{
 
     public void newMove(int player, int value) {
         try {
-            oos.writeInt(value);
+            oos.writeObject(value);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,6 +87,7 @@ public class Client implements Runnable{
     public void requestGame(int gamemode) {
         try {
             oos.writeObject(gamemode);
+            oos.flush();
             System.out.println("Request game " + gamemode);
         } catch (IOException ex) {
             ex.printStackTrace();
