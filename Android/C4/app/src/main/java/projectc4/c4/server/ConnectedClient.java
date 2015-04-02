@@ -5,14 +5,18 @@ import projectc4.c4.util.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 import static projectc4.c4.util.C4Constants.MATCHMAKING;
+import static projectc4.c4.util.C4Constants.PLAYER1;
+import static projectc4.c4.util.C4Constants.PLAYER2;
 
 /**
  * @author Kalle Bornemark
  */
-public class ConnectedClient extends Thread {
+public class ConnectedClient extends Thread implements Serializable {
+    private static final long serialVersionUID = -4032345715465050L;
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -45,13 +49,21 @@ public class ConnectedClient extends Thread {
             System.out.println("Server: Kommunikationen är startad i ConnectedClient");
             while (!Thread.interrupted()) {
                 System.out.println("Server: Väntar på readInt...");
+
+                // Input int
                 Object obj = ois.readObject();
                 value = (Integer)obj;
+
                 System.out.println("Server: Har fått en int: " + value);
+
                 if (value == MATCHMAKING) {
+                    // If input is a new MM game
+                    System.out.println("Server: New incoming MM game");
                     server.addSearchingClient(this);
                 } else {
+                    // If input is a new move
                     activeGame.newMove(this, value);
+//                    newMove(value);
                 }
             }
         } catch (Exception e) {
@@ -60,10 +72,16 @@ public class ConnectedClient extends Thread {
         }
     }
 
+    /**
+     * Notify the client with a new game.
+     *
+     * @param player Player 1 or 2.
+     */
     public void newGame(int player) {
         try {
-            System.out.println("Server: WriteInt: " + player);
+            System.out.println("Server: newGame(" + player + ")");
             oos.writeObject(player);
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,6 +91,7 @@ public class ConnectedClient extends Thread {
         try {
             oos.writeObject(column);
             oos.flush();
+            System.out.println("Server: newMove(" + column + ") from " + this.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,8 +100,9 @@ public class ConnectedClient extends Thread {
     public void run() {
         String incomingName;
         try {
-            ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
+            ois = new ObjectInputStream(socket.getInputStream());
 
             // Read incoming name
 //            incomingName = ois.readUTF();

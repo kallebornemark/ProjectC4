@@ -16,8 +16,8 @@ public class ClientController {
     private LocalGameActivity localGameActivity;
     private MatchmakingActivity matchmakingActivity;
     private int player;
-    public int gameMode;
-    public boolean gameIsReady = false;
+    private int gameMode;
+//    public boolean gameIsReady = false;
 
     public static void initInstance()
     {
@@ -27,6 +27,14 @@ public class ClientController {
             instance = new ClientController();
             gameController = new GameController(instance);
         }
+    }
+
+    public void setGameMode(int gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public int getGameMode() {
+        return this.gameMode;
     }
 
     public static ClientController getInstance()
@@ -54,19 +62,26 @@ public class ClientController {
     public void connect() {
         client = new Client(this);
 //        client.connect("10.2.10.36", 3450);
-        client.connect("10.1.17.111", 3450);
+//        client.connect("10.1.17.111", 3450);
+        client.connect("192.168.1.57", 3450); //Kalles hemmadator
     }
 
     public LocalGameActivity getLocalGameActivity() {
         return localGameActivity;
     }
 
-    public void newMove(int column) {
+    public void newLocalMove(int column) {
         System.out.println("Clientcontrollerns newMove " + column);
-        gameController.newMove(column);
-        if(client != null) {
-            client.newMove(gameController.getPlayer(), column);
-        }
+        gameController.newLocalMove(column);
+    }
+
+    public void newOutgoingMove(int column) {
+        gameController.newLocalMove(column);
+        client.newMove(gameController.getPlayer(), column);
+    }
+
+    public void newIncomingMove(int column) {
+        gameController.newIncomingMove(column);
     }
 
     public void startGameUI() {
@@ -100,9 +115,15 @@ public class ClientController {
         clientUI.winner("It's a draw!");
     }
 
-    // New Local
+/*    // New Local
     public void newGame() {
         gameController.newGame(LOCAL);
+        clientUI.newGame();
+    }*/
+
+    // New MM
+    public void newGame(int gamemode) {
+        gameController.newGame(gamemode);
         clientUI.newGame();
     }
 
@@ -110,10 +131,12 @@ public class ClientController {
         client.requestGame(gamemode);
     }
 
-    // New MM
-    public void newGame(int gamemode) {
-        gameController.newGame(gamemode);
-        clientUI.newGame();
+    public int getOpponent() {
+        int opponent;
+        if (player == PLAYER1) {
+            return PLAYER2;
+        }
+        return PLAYER1;
     }
 
     public int getPlayer() {
@@ -122,6 +145,7 @@ public class ClientController {
 
     public void setPlayer(int player) {
         this.player = player;
+        System.out.println("Player set to: " + this.player);
     }
 
     public void setCurrentPlayer(int player) {

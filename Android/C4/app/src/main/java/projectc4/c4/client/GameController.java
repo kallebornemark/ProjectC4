@@ -14,13 +14,14 @@ public class GameController {
     private int row, col;
     private int playedTiles;
     private int gameMode;
-    private ArrayList<Integer> winningTiles = new ArrayList<Integer>();
+    private ArrayList<Integer> winningTiles = new ArrayList<>();
+    private int opponent, player;
 
     public GameController(ClientController clientController) {
         this.clientController = clientController;
         gameGrid = new GameGrid();
-        playerToMakeNextMove = PLAYER1;
-
+        opponent = clientController.getOpponent();
+        player = clientController.getPlayer();
     }
 
     public int getPlayer() {
@@ -48,11 +49,11 @@ public class GameController {
         }
     }
 
-    public void newMove(int x) {
-        //Om nuvarande spelares nummer är lika med ditt spelar-nummer och kollumnen inte är full
-        System.out.println("Innan if-satsen i newMove");
+    public void newLocalMove(int x) {
+        // Move from local player
+        System.out.println("GameController - newMove(" + x + ")");
         if(playerToMakeNextMove == clientController.getPlayer() && size[x] < 7) {
-            System.out.println("INNE I newMove");
+            System.out.println("GameController: newMove accepted");
             row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
             gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerToMakeNextMove);
@@ -68,20 +69,42 @@ public class GameController {
                 System.out.println("Draw");
             } else {
                 changePlayer();
-                /*
-                Lokalt
-                 */
-                if(gameMode == LOCAL) {
+                if (gameMode == LOCAL) {
                     clientController.setPlayer(playerToMakeNextMove);
                 }
             }
         }
     }
 
+    public void newIncomingMove(int x) {
+        // Move from MM player
+        System.out.println("GameController - newMove(" + x + ")");
+        if(size[x] < 7) {
+            System.out.println("GameController: newMove accepted");
+            row = (gameGrid.getHeight() - 1) - (size[x]);
+            col = x;
+            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), col, PLAYER2);
+            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, PLAYER2);
+            System.out.println("Calc " + calculate(row,col));
+            playedTiles++;
+            if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
+                clientController.winner(playerToMakeNextMove);
+                clientController.highLightTiles(winningTiles);
+                System.out.println("Winner");
+            } else if (playedTiles == 42) {
+                clientController.draw();
+                System.out.println("Draw");
+            } else {
+                changePlayer();
+            }
+        }
+    }
+
+
     public void changePlayer() {
-        if(playerToMakeNextMove == PLAYER1) {
+        if (playerToMakeNextMove == PLAYER1) {
             playerToMakeNextMove = PLAYER2;
-        }else {
+        } else {
             playerToMakeNextMove = PLAYER1;
         }
         clientController.changeHighlightedPlayer(playerToMakeNextMove);

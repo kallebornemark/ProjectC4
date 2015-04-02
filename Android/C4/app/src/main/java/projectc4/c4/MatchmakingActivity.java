@@ -35,7 +35,7 @@ public class MatchmakingActivity extends Activity {
     }
 
     public void startGameUI() {
-        ClientController.getInstance().gameMode = 1;
+        ClientController.getInstance().setGameMode(MATCHMAKING);
         Intent intent = new Intent(MatchmakingActivity.this, LocalGameActivity.class);
         startActivity(intent);
     }

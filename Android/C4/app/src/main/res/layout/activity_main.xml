@@ -4,7 +4,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:gravity="center_horizontal"
     android:id="@+id/relativeLayout">
 
     <TableRow
@@ -47,7 +46,7 @@
             android:id="@+id/textViewPlayer2"
             android:layout_gravity="left"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentTop="false" android:layout_alignParentEnd="false" android:layout_marginTop="0dp"/>
+            android:layout_alignParentTop="false" android:layout_alignParentEnd="true" android:layout_marginTop="0dp"/>
         <TextView
             android:layout_width="140dp"
             android:layout_height="35dp"
@@ -56,7 +55,7 @@
             android:id="@+id/textViewPlayer1"
             android:textAlignment="center"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="false"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,9 +1,12 @@
 package projectc4.c4.server;
 
+import java.io.Serializable;
+
 /**
  * @author Kalle Bornemark
  */
-public class ActiveGame {
+public class ActiveGame implements Serializable {
+    private static final long serialVersionUID = -403250971215465050L;
     private ConnectedClient c1;
     private ConnectedClient c2;
 

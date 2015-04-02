@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TouchDelegate;
@@ -30,34 +31,49 @@ import java.util.ArrayList;
 public class LocalGameActivity extends Activity {
     private GridLayout grd;
     private ArrayList<Button> buttonArrayList = new ArrayList<>();
+    private ClientController clientController;
     private int currentIndex;
+    private int gameMode;
+    private int player;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ClientController.getInstance().setActivity(this);
-        ClientController.getInstance().createClientUI();
-        initGraphics();
-        if(ClientController.getInstance().gameMode == 1) {
-            ClientController.getInstance().newGame(MATCHMAKING);
-        }else {
-            ClientController.getInstance().newGame();
-        }
+        clientController = ClientController.getInstance();
+        clientController.setActivity(this);
+        clientController.createClientUI();
+        gameMode = clientController.getGameMode();
+        player = clientController.getPlayer();
+        initGraphics(); // !! Viktigt att denna körs innan newGame() som kommer här under !!
+        clientController.newGame(gameMode);
 
-
+        // Set button listeners
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
-            buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Button button = (Button) v;
-                    int col = Integer.parseInt(button.getText().toString());
-                    System.out.println("onClick i mainactivity: " + col);
-                    ClientController.getInstance().newMove(col);
-                }
-            });
+            if (gameMode == LOCAL) {
+                buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Button button = (Button) v;
+                        int col = Integer.parseInt(button.getText().toString());
+//                    System.out.println("onClick i mainactivity: " + col);
+                        clientController.newLocalMove(col);
+                    }
+                });
+            } else {
+                buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Button button = (Button) v;
+                        int col = Integer.parseInt(button.getText().toString());
+//                    System.out.println("onClick i mainactivity: " + col);
+                        clientController.newOutgoingMove(col);
+                    }
+                });
+            }
+
         }
 
         drawRoundedCorners();
@@ -79,10 +95,6 @@ public class LocalGameActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 //if user pressed "yes", then he is allowed to exit from application
                 finish();
-                if(ClientController.getInstance().gameMode == 0) {
-                    ClientController.getInstance().setCurrentPlayer(PLAYER1);
-                    ClientController.getInstance().setPlayer(PLAYER1);
-                }
             }
         });
         builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -135,7 +147,7 @@ public class LocalGameActivity extends Activity {
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
-        highlightPlayer(ClientController.getInstance().getCurrentPlayer());
+        highlightPlayer(player);
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
@@ -156,15 +168,14 @@ public class LocalGameActivity extends Activity {
         setNewGame();
     }
 
-    public void highlightPlayer(int  player) {
+    public void highlightPlayer(int player) {
         TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
         TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
 
         if (player == PLAYER1) {
             textViewPlayer1.setBackground(getDrawable(R.drawable.colorred));
             textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellowpressed));
-        }
-        else if (player == PLAYER2){
+        } else if (player == PLAYER2){
             textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellow));
             textViewPlayer1.setBackground(getDrawable(R.drawable.colorredpressed));
         }
@@ -178,8 +189,6 @@ public class LocalGameActivity extends Activity {
             TextView txt = (TextView)grd.getChildAt(pos);
             txt.setBackground(getDrawable(R.drawable.coloryellow));
         }
-
-
     }
 
     public void highlightTiles(ArrayList<Integer> pos) {
@@ -211,12 +220,12 @@ public class LocalGameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientController.getInstance().newGame();
+                clientController.newGame(LOCAL);
                 buttonNewGame.setEnabled(false);
                 buttonNewGame.setVisibility(View.INVISIBLE);
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText("");
-                ClientController.getInstance().newGame();
+                clientController.newGame(LOCAL);
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
                 highlightPlayer(PLAYER1);

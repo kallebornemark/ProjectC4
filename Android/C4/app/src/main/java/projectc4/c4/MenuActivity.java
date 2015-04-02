@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MyApplication;
+import static projectc4.c4.util.C4Constants.*;
 
 
 public class MenuActivity extends Activity {
@@ -37,7 +38,8 @@ public class MenuActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientController.getInstance().gameMode = 0;
+                ClientController.getInstance().setGameMode(LOCAL);
+                ClientController.getInstance().setPlayer(PLAYER1);
                 Intent intent = new Intent(MenuActivity.this, LocalGameActivity.class);
                 startActivity(intent);
             }

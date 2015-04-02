@@ -71,11 +71,11 @@ public class Client implements Runnable{
         } else if (number == PLAYER1 || number == PLAYER2) {
             System.out.println("Klienten får tillbaks en PLAYER " + number);
             clientController.setPlayer(number);
-            clientController.gameIsReady = true;
+//            clientController.gameIsReady = true;
             clientController.startGameUI();
-        } else {
-            System.out.println("clientController.newMove(" + number + ")");
-            clientController.newMove(number);
+        } else if (number >= 0 && number <= 5) {
+            System.out.println(this.toString() + " får ett inkommande move: " + number);
+            clientController.newIncomingMove(number);
         }
     }
 
@@ -94,7 +94,8 @@ public class Client implements Runnable{
         int number;
         try {
             while (!Thread.interrupted()) {
-                number = (Integer)ois.readObject();
+                obj = ois.readObject();
+                number = (Integer)obj;
                 checkNumberAndSend(number);
             }
         } catch (Exception e) {}
@@ -108,9 +109,9 @@ public class Client implements Runnable{
             System.out.println("Försöker skapa socket...");
             socket = new Socket(ip, port);
             System.out.println("Socket skapad");
+            ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
-            ois = new ObjectInputStream(socket.getInputStream());
             System.out.println("Objectoutputstream skapad");
 
             // User from server
