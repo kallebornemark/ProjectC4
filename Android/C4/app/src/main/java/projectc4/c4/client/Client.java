@@ -75,6 +75,7 @@ public class Client implements Runnable{
             clientController.newGame(number);
         } else if (number == PLAYER1 || number == PLAYER2) {
             clientController.setPlayer(number);
+            clientController.gameIsReady = true;
         } else {
             System.out.println("clientController.newMove(" + number + ")");
             clientController.newMove(number);

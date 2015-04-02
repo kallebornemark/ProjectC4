@@ -18,6 +18,7 @@ public class ClientController {
     private LocalGameActivity localGameActivity;
     private int player;
     public int gameMode;
+    public boolean gameIsReady = false;
 
     public static void initInstance()
     {
@@ -108,5 +109,13 @@ public class ClientController {
 
     public void setPlayer(int player) {
         this.player = player;
+    }
+
+    public void setCurrentPlayer(int player) {
+        gameController.setPlayer(player);
+    }
+
+    public int getCurrentPlayer() {
+       return gameController.getPlayer();
     }
 }

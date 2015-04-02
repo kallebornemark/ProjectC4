@@ -18,6 +18,8 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.apache.http.conn.ClientConnectionOperator;
+
 import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
 import static projectc4.c4.util.C4Constants.*;
@@ -69,6 +71,10 @@ public class LocalGameActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 //if user pressed "yes", then he is allowed to exit from application
                 finish();
+                if(ClientController.getInstance().gameMode == 0) {
+                    ClientController.getInstance().setCurrentPlayer(PLAYER1);
+                    ClientController.getInstance().setPlayer(PLAYER1);
+                }
             }
         });
         builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -121,7 +127,7 @@ public class LocalGameActivity extends Activity {
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
-        highlightPlayer(PLAYER1);
+        highlightPlayer(ClientController.getInstance().getCurrentPlayer());
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
@@ -194,11 +200,6 @@ public class LocalGameActivity extends Activity {
                 ClientController.getInstance().newGame();
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
-
-//                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
-//                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
-//                textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
-//                textViewPlayer1.setBackgroundColor(C4Color.RED);
                 highlightPlayer(PLAYER1);
             }
         });
