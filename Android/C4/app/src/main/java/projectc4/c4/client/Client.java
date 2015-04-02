@@ -1,17 +1,16 @@
 package projectc4.c4.client;
 
 import projectc4.c4.util.User;
-import static projectc4.c4.util.C4Constants.*;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
  */
-public class Client implements Runnable {
+public class Client implements Runnable{
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -49,7 +48,7 @@ public class Client implements Runnable {
 
     public void newMove(int player, int value) {
         try {
-            oos.writeInt(value);
+            oos.writeObject(value);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +57,7 @@ public class Client implements Runnable {
 
     public void requestUsername(String username) {
         try {
-            oos.writeUTF(username);
+            oos.writeObject(username);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,9 +66,13 @@ public class Client implements Runnable {
 
     public void checkNumberAndSend(int number) {
         if (number == MATCHMAKING) {
+            System.out.println("Klienten får tillbaks ett gamemode " + number);
             clientController.newGame(number);
         } else if (number == PLAYER1 || number == PLAYER2) {
+            System.out.println("Klienten får tillbaks en PLAYER " + number);
             clientController.setPlayer(number);
+            clientController.gameIsReady = true;
+            clientController.startGameUI();
         } else {
             System.out.println("clientController.newMove(" + number + ")");
             clientController.newMove(number);
@@ -78,7 +81,9 @@ public class Client implements Runnable {
 
     public void requestGame(int gamemode) {
         try {
-            oos.writeInt(gamemode);
+            oos.writeObject(gamemode);
+            oos.flush();
+            System.out.println("Request game " + gamemode);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -89,7 +94,7 @@ public class Client implements Runnable {
         int number;
         try {
             while (!Thread.interrupted()) {
-                number = ois.readInt();
+                number = (Integer)ois.readObject();
                 checkNumberAndSend(number);
             }
         } catch (Exception e) {}
@@ -98,8 +103,11 @@ public class Client implements Runnable {
     public void run() {
         Object obj;
         User user;
+        System.out.println("Clienttråd börjad");
         try {
+            System.out.println("Försöker skapa socket...");
             socket = new Socket(ip, port);
+            System.out.println("Socket skapad");
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
             ois = new ObjectInputStream(socket.getInputStream());

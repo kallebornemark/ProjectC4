@@ -1,24 +1,42 @@
 package projectc4.c4.client;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-
 import projectc4.c4.LocalGameActivity;
-
+import projectc4.c4.MatchmakingActivity;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
  */
-public class ClientController implements Serializable{
-    private GameController gameController;
+public class ClientController {
+    private static ClientController instance;
+    private static GameController gameController;
     private ClientUI clientUI;
     private Client client;
     private LocalGameActivity localGameActivity;
+    private MatchmakingActivity matchmakingActivity;
     private int player;
+    public int gameMode;
+    public boolean gameIsReady = false;
 
-    public ClientController() {
-        gameController = new GameController(this);
+    public static void initInstance()
+    {
+        if (instance == null)
+        {
+            // Create the instance
+            instance = new ClientController();
+            gameController = new GameController(instance);
+        }
+    }
+
+    public static ClientController getInstance()
+    {
+        // Return the instance
+        return instance;
+    }
+
+    private ClientController() {
+//        gameController = new GameController(this);
     }
 
     public void createClientUI() {
@@ -29,9 +47,14 @@ public class ClientController implements Serializable{
         this.localGameActivity = localGameActivity;
     }
 
+    public void setMatchmakingActivity(MatchmakingActivity matchmakingActivity) {
+        this.matchmakingActivity = matchmakingActivity;
+    }
+
     public void connect() {
         client = new Client(this);
-        client.connect("10.1.3.0", 3450);
+//        client.connect("10.2.10.36", 3450);
+        client.connect("10.1.17.111", 3450);
     }
 
     public LocalGameActivity getLocalGameActivity() {
@@ -44,6 +67,10 @@ public class ClientController implements Serializable{
         if(client != null) {
             client.newMove(gameController.getPlayer(), column);
         }
+    }
+
+    public void startGameUI() {
+        matchmakingActivity.startGameUI();
     }
 
     public void drawTile(int pos, int player) {
@@ -90,5 +117,13 @@ public class ClientController implements Serializable{
 
     public void setPlayer(int player) {
         this.player = player;
+    }
+
+    public void setCurrentPlayer(int player) {
+        gameController.setPlayer(player);
+    }
+
+    public int getCurrentPlayer() {
+       return gameController.getPlayer();
     }
 }

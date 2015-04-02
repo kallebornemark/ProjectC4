@@ -18,6 +18,8 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.apache.http.conn.ClientConnectionOperator;
+
 import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
 import static projectc4.c4.util.C4Constants.*;
@@ -28,7 +30,6 @@ import java.util.ArrayList;
 public class LocalGameActivity extends Activity {
     private GridLayout grd;
     private ArrayList<Button> buttonArrayList = new ArrayList<>();
-    private ClientController clientController;
     private int currentIndex;
 
 
@@ -36,11 +37,15 @@ public class LocalGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        clientController = new ClientController();
-        clientController.setActivity(this);
-        clientController.createClientUI();
+        ClientController.getInstance().setActivity(this);
+        ClientController.getInstance().createClientUI();
         initGraphics();
-        clientController.newGame();
+        if(ClientController.getInstance().gameMode == 1) {
+            ClientController.getInstance().newGame(MATCHMAKING);
+        }else {
+            ClientController.getInstance().newGame();
+        }
+
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
@@ -50,12 +55,10 @@ public class LocalGameActivity extends Activity {
                     Button button = (Button) v;
                     int col = Integer.parseInt(button.getText().toString());
                     System.out.println("onClick i mainactivity: " + col);
-                    clientController.newMove(col);
+                    ClientController.getInstance().newMove(col);
                 }
             });
         }
-
-        drawRoundedCorners();
     }
 
     @Override
@@ -68,6 +71,10 @@ public class LocalGameActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 //if user pressed "yes", then he is allowed to exit from application
                 finish();
+                if(ClientController.getInstance().gameMode == 0) {
+                    ClientController.getInstance().setCurrentPlayer(PLAYER1);
+                    ClientController.getInstance().setPlayer(PLAYER1);
+                }
             }
         });
         builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -120,7 +127,7 @@ public class LocalGameActivity extends Activity {
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
-        highlightPlayer(PLAYER1);
+        highlightPlayer(ClientController.getInstance().getCurrentPlayer());
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
@@ -168,24 +175,9 @@ public class LocalGameActivity extends Activity {
     }
 
     public void highlightTiles(ArrayList<Integer> pos) {
-        for (int i = 0; i < 42; i++) {
-            if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.colorred).getConstantState())) {
-                grd.getChildAt(i).setBackground(getDrawable(R.drawable.colorredpressed));
-            } else if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellow).getConstantState())) {
-                grd.getChildAt(i).setBackground(getDrawable(R.drawable.coloryellowpressed));
-            }
-        }
         for (int i = 0; i < pos.size(); i++) {
-            if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.colorredpressed).getConstantState())) {
-                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorred));
-            } else if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellowpressed).getConstantState())) {
-                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.coloryellow));
-            }
+            grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorblack));
         }
-
-//        for (int i = 0; i < pos.size(); i++) {
-//            grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorblack));
-//        }
     }
 
     public void setNewGame() {
@@ -200,26 +192,17 @@ public class LocalGameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.newGame();
+                ClientController.getInstance().newGame();
                 buttonNewGame.setEnabled(false);
                 buttonNewGame.setVisibility(View.INVISIBLE);
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText("");
-                clientController.newGame();
+                ClientController.getInstance().newGame();
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
-
                 highlightPlayer(PLAYER1);
-
-                drawRoundedCorners();
             }
         });
-    }
-
-    public void drawRoundedCorners() {
-        for (int i = 0; i < 42; i++) {
-            grd.getChildAt(i).setBackground(getDrawable(R.drawable.transparenttile));
-        }
     }
 
     public ArrayList<Button> getButtonArrayList() {

@@ -12,25 +12,32 @@ import static projectc4.c4.util.C4Constants.*;
 import projectc4.c4.client.ClientController;
 
 
-public class MultiplayerActivity extends Activity {
-    private ClientController clientController;
+public class MatchmakingActivity extends Activity {
+//    private ClientController clientController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
+        ClientController.getInstance().setMatchmakingActivity(this);
 
         Intent intentThatStartedThisActivity = getIntent();
-        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
+//        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
+
 
         Button buttonFindOpponent = (Button)findViewById(R.id.buttonFindOpponent);
         buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.requestGame(MATCHMAKING);
-
+                ClientController.getInstance().requestGame(MATCHMAKING);
             }
         });
+    }
+
+    public void startGameUI() {
+        ClientController.getInstance().gameMode = 1;
+        Intent intent = new Intent(MatchmakingActivity.this, LocalGameActivity.class);
+        startActivity(intent);
     }
 
 

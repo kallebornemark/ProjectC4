@@ -8,7 +8,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name="projectc4.c4.client.MyApplication">
+
         <activity
             android:name=".LocalGameActivity"
             android:label="@string/app_name"
@@ -24,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MultiplayerActivity"
+            android:name=".MatchmakingActivity"
             android:label="@string/title_activity_multiplayer" >
         </activity>
     </application>

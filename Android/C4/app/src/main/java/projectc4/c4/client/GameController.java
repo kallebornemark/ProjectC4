@@ -1,4 +1,5 @@
 package projectc4.c4.client;
+
 import java.util.ArrayList;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -24,6 +25,10 @@ public class GameController {
 
     public int getPlayer() {
         return playerToMakeNextMove;
+    }
+
+    public void setPlayer(int player) {
+        this.playerToMakeNextMove = player;
     }
 
     public void newGame(int gameMode) {
