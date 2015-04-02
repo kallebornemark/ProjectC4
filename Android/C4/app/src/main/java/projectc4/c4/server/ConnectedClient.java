@@ -21,6 +21,7 @@ public class ConnectedClient extends Thread {
     private ActiveGame activeGame;
 
     public ConnectedClient(Server server, Socket socket) {
+        this.server = server;
         this.socket = socket;
     }
 
@@ -44,7 +45,8 @@ public class ConnectedClient extends Thread {
             System.out.println("Server: Kommunikationen är startad i ConnectedClient");
             while (!Thread.interrupted()) {
                 System.out.println("Server: Väntar på readInt...");
-                value = (Integer)ois.readObject();
+                Object obj = ois.readObject();
+                value = (Integer)obj;
                 System.out.println("Server: Har fått en int: " + value);
                 if (value == MATCHMAKING) {
                     server.addSearchingClient(this);
@@ -61,7 +63,7 @@ public class ConnectedClient extends Thread {
     public void newGame(int player) {
         try {
             System.out.println("Server: WriteInt: " + player);
-            oos.writeInt(player);
+            oos.writeObject(player);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,7 +71,7 @@ public class ConnectedClient extends Thread {
 
     public void newMove(int column) {
         try {
-            oos.writeInt(column);
+            oos.writeObject(column);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();

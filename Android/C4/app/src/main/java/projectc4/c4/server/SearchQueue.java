@@ -14,16 +14,12 @@ public class SearchQueue implements Runnable {
     public SearchQueue(Server server, int capacity) {
         this.server = server;
         this.capacity = capacity;
-        thread = new Thread(this);
     }
 
     public synchronized void put(ConnectedClient connectedClient) throws InterruptedException {
         while(queue.size() == capacity) {
-            System.out.println("Server: Väntar på att quen blir size " + queue.size() );
             wait();
         }
-
-        System.out.println("Det finns 2 inne... queue.add(connectedClient)");
         queue.add(connectedClient);
         start();
         notify(); // notifyAll() for multiple producer/consumer threads
@@ -58,6 +54,7 @@ public class SearchQueue implements Runnable {
 
     public void start() {
         if (thread == null) {
+            thread = new Thread(this);
             thread.start();
         }
     }
@@ -79,6 +76,7 @@ public class SearchQueue implements Runnable {
                 while (nbr < 2) {
                     thread.sleep(500);
                     nbr = queue.size();
+                    System.out.println("Server: nuvarande i kö: " + nbr);
                 }
                 c1 = (ConnectedClient)queue.get(0);
                 c2 = (ConnectedClient)queue.get(1);
@@ -87,6 +85,8 @@ public class SearchQueue implements Runnable {
                 c1.setActiveGame(a);
                 c2.setActiveGame(a);
                 server.addActiveGame(a);
+                stop();
+                System.out.println("Server: Stoppad searchQueue tråd. kö: " + queue.size());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

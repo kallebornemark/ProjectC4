@@ -98,7 +98,7 @@ public class Client implements Runnable{
         int number;
         try {
             while (!Thread.interrupted()) {
-                number = ois.readInt();
+                number = (Integer)ois.readObject();
                 checkNumberAndSend(number);
             }
         } catch (Exception e) {}
