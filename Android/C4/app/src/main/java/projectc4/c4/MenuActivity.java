@@ -9,15 +9,30 @@ import android.view.View;
 import android.widget.Button;
 
 import projectc4.c4.client.ClientController;
+import projectc4.c4.client.MyApplication;
 
 
 public class MenuActivity extends Activity {
-    private ClientController clientController;
+//    private ClientController clientController;
+    protected MyApplication app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        this.clientController = new ClientController();
+
+        // Get the application instance
+        app = (MyApplication)getApplication();
+
+        // Call a custom application method
+//        app.customAppMethod();
+
+        // Call a custom method in MySingleton
+//        ClientController.getInstance().connect();
+
+        // Read the value of a variable in MySingleton
+//        String singletonVar = ClientController.getInstance().customVar;
+
+//        this.clientController = new ClientController();
         Button button = (Button)findViewById(R.id.localGame);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,9 +46,9 @@ public class MenuActivity extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.connect();
-                Intent intent = new Intent(MenuActivity.this, MultiplayerActivity.class);
-                intent.putExtra("clienController",clientController);
+                ClientController.getInstance().connect();
+                Intent intent = new Intent(MenuActivity.this, MatchmakingActivity.class);
+//                intent.putExtra("clientController",clientController);
                 startActivity(intent);
             }
         });

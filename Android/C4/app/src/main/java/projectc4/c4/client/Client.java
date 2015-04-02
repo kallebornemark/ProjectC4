@@ -6,12 +6,13 @@ import static projectc4.c4.util.C4Constants.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 /**
  * @author Kalle Bornemark
  */
-public class Client implements Runnable {
+public class Client implements Runnable{
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -98,8 +99,11 @@ public class Client implements Runnable {
     public void run() {
         Object obj;
         User user;
+        System.out.println("Clienttråd börjad");
         try {
+            System.out.println("Försöker skapa socket...");
             socket = new Socket(ip, port);
+            System.out.println("Socket skapad");
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
             ois = new ObjectInputStream(socket.getInputStream());

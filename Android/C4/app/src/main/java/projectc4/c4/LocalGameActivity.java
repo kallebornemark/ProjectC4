@@ -28,7 +28,6 @@ import java.util.ArrayList;
 public class LocalGameActivity extends Activity {
     private GridLayout grd;
     private ArrayList<Button> buttonArrayList = new ArrayList<>();
-    private ClientController clientController;
     private int currentIndex;
 
 
@@ -36,11 +35,10 @@ public class LocalGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        clientController = new ClientController();
-        clientController.setActivity(this);
-        clientController.createClientUI();
+        ClientController.getInstance().setActivity(this);
+        ClientController.getInstance().createClientUI();
         initGraphics();
-        clientController.newGame();
+        ClientController.getInstance().newGame();
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
@@ -50,7 +48,7 @@ public class LocalGameActivity extends Activity {
                     Button button = (Button) v;
                     int col = Integer.parseInt(button.getText().toString());
                     System.out.println("onClick i mainactivity: " + col);
-                    clientController.newMove(col);
+                    ClientController.getInstance().newMove(col);
                 }
             });
         }
@@ -183,12 +181,12 @@ public class LocalGameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.newGame();
+                ClientController.getInstance().newGame();
                 buttonNewGame.setEnabled(false);
                 buttonNewGame.setVisibility(View.INVISIBLE);
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText("");
-                clientController.newGame();
+                ClientController.getInstance().newGame();
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
 

@@ -12,8 +12,8 @@ import static projectc4.c4.util.C4Constants.*;
 import projectc4.c4.client.ClientController;
 
 
-public class MultiplayerActivity extends Activity {
-    private ClientController clientController;
+public class MatchmakingActivity extends Activity {
+//    private ClientController clientController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +21,14 @@ public class MultiplayerActivity extends Activity {
         setContentView(R.layout.activity_multiplayer);
 
         Intent intentThatStartedThisActivity = getIntent();
-        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
+//        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
+
 
         Button buttonFindOpponent = (Button)findViewById(R.id.buttonFindOpponent);
         buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.requestGame(MATCHMAKING);
+                ClientController.getInstance().requestGame(MATCHMAKING);
 
             }
         });
