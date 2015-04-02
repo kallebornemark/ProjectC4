@@ -76,10 +76,10 @@ public class SearchQueue implements Runnable {
                 while (nbr < 2) {
                     thread.sleep(500);
                     nbr = queue.size();
-                    System.out.println("Server: nuvarande i kö: " + nbr);
+                    System.out.println("Server: nuvarande i kö: " + queue.size());
                 }
-                c1 = (ConnectedClient)queue.get(0);
-                c2 = (ConnectedClient)queue.get(1);
+                c1 = get();
+                c2 = get();
                 a = new ActiveGame(server, c1, c2);
                 System.out.println("Server: Lägger till ett activeGame");
                 c1.setActiveGame(a);
