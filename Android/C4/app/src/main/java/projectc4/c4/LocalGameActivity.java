@@ -38,7 +38,12 @@ public class LocalGameActivity extends Activity {
         ClientController.getInstance().setActivity(this);
         ClientController.getInstance().createClientUI();
         initGraphics();
-        ClientController.getInstance().newGame();
+        if(ClientController.getInstance().gameMode == 1) {
+            ClientController.getInstance().newGame(MATCHMAKING);
+        }else {
+            ClientController.getInstance().newGame();
+        }
+
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;

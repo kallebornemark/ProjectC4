@@ -17,6 +17,7 @@ public class ClientController {
     private Client client;
     private LocalGameActivity localGameActivity;
     private int player;
+    public int gameMode;
 
     public static void initInstance()
     {

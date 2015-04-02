@@ -29,6 +29,9 @@ public class MatchmakingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().requestGame(MATCHMAKING);
+                ClientController.getInstance().gameMode = 1;
+                Intent intent = new Intent(MatchmakingActivity.this, LocalGameActivity.class);
+                startActivity(intent);
 
             }
         });

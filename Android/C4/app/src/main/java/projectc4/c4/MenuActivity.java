@@ -37,6 +37,7 @@ public class MenuActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ClientController.getInstance().gameMode = 0;
                 Intent intent = new Intent(MenuActivity.this, LocalGameActivity.class);
                 startActivity(intent);
             }

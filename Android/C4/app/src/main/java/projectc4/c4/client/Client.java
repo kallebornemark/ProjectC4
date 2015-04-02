@@ -1,5 +1,9 @@
 package projectc4.c4.client;
 
+import android.content.Intent;
+
+import projectc4.c4.LocalGameActivity;
+import projectc4.c4.MatchmakingActivity;
 import projectc4.c4.util.User;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -80,6 +84,7 @@ public class Client implements Runnable{
     public void requestGame(int gamemode) {
         try {
             oos.writeInt(gamemode);
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
