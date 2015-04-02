@@ -72,8 +72,10 @@ public class Client implements Runnable{
 
     public void checkNumberAndSend(int number) {
         if (number == MATCHMAKING) {
+            System.out.println("Klienten får tillbaks ett gamemode " + number);
             clientController.newGame(number);
         } else if (number == PLAYER1 || number == PLAYER2) {
+            System.out.println("Klienten får tillbaks en PLAYER " + number);
             clientController.setPlayer(number);
             clientController.gameIsReady = true;
         } else {
@@ -84,8 +86,8 @@ public class Client implements Runnable{
 
     public void requestGame(int gamemode) {
         try {
-            oos.writeInt(gamemode);
-
+            oos.writeObject(gamemode);
+            System.out.println("Request game " + gamemode);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

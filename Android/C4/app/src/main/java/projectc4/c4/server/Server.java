@@ -61,6 +61,7 @@ public class Server implements Runnable {
     public void newGame(ConnectedClient c1, ConnectedClient c2) {
         Random rand = new Random();
         int player1 = rand.nextInt(1)+1, player2 = 0;
+        System.out.println("Server: New Game kallas i servern");
         if(player1 == 1) {
             player1 = PLAYER1;
             player2 = PLAYER2;
@@ -68,6 +69,7 @@ public class Server implements Runnable {
             player1 = PLAYER2;
             player2 = PLAYER1;
         }
+        System.out.println("C1 = " + player1 + " och C2 = " + player2);
         c1.newGame(player1);
         c2.newGame(player2);
     }
