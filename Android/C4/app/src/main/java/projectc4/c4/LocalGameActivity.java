@@ -54,6 +54,8 @@ public class LocalGameActivity extends Activity {
                 }
             });
         }
+
+        drawRoundedCorners();
     }
 
     @Override
@@ -166,9 +168,24 @@ public class LocalGameActivity extends Activity {
     }
 
     public void highlightTiles(ArrayList<Integer> pos) {
-        for (int i = 0; i < pos.size(); i++) {
-            grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorblack));
+        for (int i = 0; i < 42; i++) {
+            if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.colorred).getConstantState())) {
+                grd.getChildAt(i).setBackground(getDrawable(R.drawable.colorredpressed));
+            } else if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellow).getConstantState())) {
+                grd.getChildAt(i).setBackground(getDrawable(R.drawable.coloryellowpressed));
+            }
         }
+        for (int i = 0; i < pos.size(); i++) {
+            if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.colorredpressed).getConstantState())) {
+                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorred));
+            } else if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellowpressed).getConstantState())) {
+                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.coloryellow));
+            }
+        }
+
+//        for (int i = 0; i < pos.size(); i++) {
+//            grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorblack));
+//        }
     }
 
     public void setNewGame() {
@@ -192,13 +209,17 @@ public class LocalGameActivity extends Activity {
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
 
-//                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
-//                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
-//                textViewPlayer2.setBackgroundColor(C4Color.YELLOW);
-//                textViewPlayer1.setBackgroundColor(C4Color.RED);
                 highlightPlayer(PLAYER1);
+
+                drawRoundedCorners();
             }
         });
+    }
+
+    public void drawRoundedCorners() {
+        for (int i = 0; i < 42; i++) {
+            grd.getChildAt(i).setBackground(getDrawable(R.drawable.transparenttile));
+        }
     }
 
     public ArrayList<Button> getButtonArrayList() {
