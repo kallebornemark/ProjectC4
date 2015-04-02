@@ -88,6 +88,11 @@ public class ClientController {
     }
 
     public void winner(int player) {
+        if (player == PLAYER1) {
+            player = 1;
+        } else {
+            player = 2;
+        }
         clientUI.winner("Player " + player + " won!");
     }
 

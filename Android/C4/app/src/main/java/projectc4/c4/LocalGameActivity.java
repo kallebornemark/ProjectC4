@@ -59,6 +59,14 @@ public class LocalGameActivity extends Activity {
                 }
             });
         }
+
+        drawRoundedCorners();
+    }
+
+    public void drawRoundedCorners() {
+        for (int i = 0; i < 42; i++) {
+            grd.getChildAt(i).setBackground(getDrawable(R.drawable.transparenttile));
+        }
     }
 
     @Override
@@ -175,8 +183,19 @@ public class LocalGameActivity extends Activity {
     }
 
     public void highlightTiles(ArrayList<Integer> pos) {
+        for (int i = 0; i < 42; i++) {
+            if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.colorred).getConstantState())) {
+                grd.getChildAt(i).setBackground(getDrawable(R.drawable.colorredpressed));
+            } else if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellow).getConstantState())) {
+                grd.getChildAt(i).setBackground(getDrawable(R.drawable.coloryellowpressed));
+            }
+        }
         for (int i = 0; i < pos.size(); i++) {
-            grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorblack));
+            if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.colorredpressed).getConstantState())) {
+                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorred));
+            } else if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellowpressed).getConstantState())) {
+                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.coloryellow));
+            }
         }
     }
 
@@ -201,6 +220,7 @@ public class LocalGameActivity extends Activity {
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
                 highlightPlayer(PLAYER1);
+                drawRoundedCorners();
             }
         });
     }
