@@ -91,13 +91,13 @@
             android:layout_height="fill_parent"
             android:columnCount="6"
             android:rowCount="9"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:focusableInTouchMode="false"
             android:id="@+id/gridLayoutCenter"
-            android:layout_alignParentBottom="false"
             android:orientation="horizontal" android:useDefaultMargins="false"
-            android:layout_gravity="center_horizontal" android:layout_alignParentLeft="false"
-                >
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false">
 
             <TextView
                 android:layout_width="47dp"
@@ -558,6 +558,45 @@
                 android:text="3" android:layout_margin="3dp"/>
         </GridLayout>
     </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relativeLayoutPlayers"
+        android:layout_alignLeft="@+id/relativeLayoutPlayers">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:adjustViewBounds="false"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/c4_profile"
+            android:layout_column="1"
+            android:layout_marginRight="10dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:adjustViewBounds="false"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/c4_settings"
+            android:layout_column="2"
+            android:layout_marginRight="10dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton3"
+            android:adjustViewBounds="false"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/c4_friends"
+            android:layout_column="3"
+            android:layout_marginRight="10dp" />
+
+    </GridLayout>
 
 
 </RelativeLayout>
