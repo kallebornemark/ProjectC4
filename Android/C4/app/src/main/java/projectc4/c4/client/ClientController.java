@@ -143,6 +143,10 @@ public class ClientController {
         }
     }
 
+    public void requestRematch() {
+        client.requestRematch
+    }
+
     public void requestGame(int gamemode) {
         client.requestGame(gamemode);
     }

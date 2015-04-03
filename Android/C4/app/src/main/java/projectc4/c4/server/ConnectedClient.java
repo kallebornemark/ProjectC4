@@ -8,9 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 
-import static projectc4.c4.util.C4Constants.MATCHMAKING;
-import static projectc4.c4.util.C4Constants.PLAYER1;
-import static projectc4.c4.util.C4Constants.PLAYER2;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -23,10 +21,19 @@ public class ConnectedClient extends Thread implements Serializable {
     private User user;
     private Server server;
     private ActiveGame activeGame;
+    private int lastPos;
 
     public ConnectedClient(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
+    }
+    
+    public int getLastPos() {
+        return lastPos;
+    }
+
+    public void setLastPos(int lastPos) {
+        this.lastPos = lastPos;
     }
 
     public void setActiveGame(ActiveGame activeGame) {
@@ -78,6 +85,7 @@ public class ConnectedClient extends Thread implements Serializable {
      * @param player Player 1 or 2.
      */
     public void newGame(int player) {
+        lastPos = player;
         try {
             System.out.println("Server: newGame(" + player + ")");
             oos.writeObject(player);

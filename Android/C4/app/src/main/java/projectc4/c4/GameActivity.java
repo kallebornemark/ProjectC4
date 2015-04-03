@@ -126,8 +126,12 @@ public class GameActivity extends Activity {
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
         Button buttonNewgame = (Button)findViewById(R.id.buttonNewGame);
-        buttonNewgame.setBackgroundColor(C4Color.BLACK);
+        buttonNewgame.setBackgroundColor(C4Color.LIGHTGRAY);
         buttonNewgame.setTextColor(C4Color.WHITE);
+
+        Button buttonRematch = (Button)findViewById(R.id.buttonRematch);
+        buttonRematch.setBackgroundColor(C4Color.LIGHTGRAY);
+        buttonRematch.setTextColor(C4Color.WHITE);
     }
 
     public GridLayout getGrid() {
@@ -200,15 +204,46 @@ public class GameActivity extends Activity {
         });
     }
 
+    public void disableButtons() {
+        for (int i = 0; i < buttonArrayList.size(); i++) {
+            buttonArrayList.get(i).setEnabled(false);
+        }
+        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
+        relativeLayoutPlayers.setVisibility(View.INVISIBLE);
+    }
+
+    public void promptRematch() {
+        final Button buttonRematch = (Button)findViewById(R.id.buttonRematch);
+        buttonRematch.setEnabled(true);
+        buttonRematch.setVisibility(View.VISIBLE);
+        disableButtons();
+        buttonRematch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clientController.requestRematch();
+            }
+        });
+    }
+
+    public void newRematch () {
+        final Button buttonRematch = (Button)findViewById(R.id.buttonRematch);
+        clientController.newGame(MATCHMAKING);
+        buttonRematch.setEnabled(false);
+        buttonRematch.setVisibility(View.INVISIBLE);
+        TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+        textViewWinner.setText("");
+        clientController.newGame(LOCAL);
+        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
+        relativeLayoutPlayers.setVisibility(View.VISIBLE);
+        highlightPlayer(PLAYER1);
+        drawRoundedCorners();
+    }
+
     public void setNewGame() {
         final Button buttonNewGame = (Button)findViewById(R.id.buttonNewGame);
         buttonNewGame.setEnabled(true);
         buttonNewGame.setVisibility(View.VISIBLE);
-                for (int i = 0; i < buttonArrayList.size(); i++) {
-                    buttonArrayList.get(i).setEnabled(false);
-                }
-        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
-        relativeLayoutPlayers.setVisibility(View.INVISIBLE);
+        disableButtons();
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

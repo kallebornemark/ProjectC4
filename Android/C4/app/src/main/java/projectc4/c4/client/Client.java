@@ -125,7 +125,6 @@ public class Client implements Runnable{
             e.printStackTrace();
 //        } catch (ClassNotFoundException e2) {
 //            e2.printStackTrace();
-//        }
         }
     }
 }
