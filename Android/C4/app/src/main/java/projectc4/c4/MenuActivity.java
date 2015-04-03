@@ -2,6 +2,7 @@ package projectc4.c4;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,8 @@ import android.widget.Button;
 
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MyApplication;
+import projectc4.c4.util.C4Color;
+
 import static projectc4.c4.util.C4Constants.*;
 
 
@@ -23,6 +26,7 @@ public class MenuActivity extends Activity {
 
         // Get the application instance
         app = (MyApplication)getApplication();
+        initGraphics();
 
         // Call a custom application method
 //        app.customAppMethod();
@@ -61,6 +65,33 @@ public class MenuActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         return true;
+    }
+
+    public void initGraphics() {
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/msyi.ttf");
+
+        Button button1 = (Button)findViewById(R.id.localGame);
+        Button button2 = (Button)findViewById(R.id.buttonMultiplayer);
+        Button button3 = (Button)findViewById(R.id.buttonSocial);
+        Button button4 = (Button)findViewById(R.id.buttonHow);
+        Button button5 = (Button)findViewById(R.id.buttonHigh);
+        Button button6 = (Button)findViewById(R.id.buttonAbout);
+
+        button1.setTypeface(type,Typeface.BOLD);
+        button2.setTypeface(type,Typeface.BOLD);
+        button3.setTypeface(type,Typeface.BOLD);
+        button4.setTypeface(type,Typeface.BOLD);
+        button5.setTypeface(type,Typeface.BOLD);
+        button6.setTypeface(type,Typeface.BOLD);
+
+        button1.setTextColor(C4Color.WHITE);
+        button2.setTextColor(C4Color.WHITE);
+        button3.setTextColor(C4Color.WHITE);
+        button4.setTextColor(C4Color.WHITE);
+        button5.setTextColor(C4Color.WHITE);
+        button6.setTextColor(C4Color.WHITE);
+
+
     }
 
     @Override

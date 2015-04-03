@@ -29,18 +29,20 @@
             android:layout_height="wrap_content"
             android:text="2 PLAYER LOCAL"
             android:id="@+id/localGame"
-            android:layout_alignBaseline="@+id/button7"
-            android:layout_alignBottom="@+id/button7"
+            android:layout_alignBaseline="@+id/buttonSocial"
+            android:layout_alignBottom="@+id/buttonSocial"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/coloryellow"/>
+            android:layout_marginBottom="10dp"
+            android:textSize="20dp"
+            android:background="@drawable/coloryellow"
+            />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="FIND GAME"
+            android:text="MULTIPLAYER"
             android:id="@+id/buttonMultiplayer"
             android:layout_alignBaseline="@+id/localGame"
             android:layout_alignParentStart="true"
@@ -48,6 +50,7 @@
             android:layout_alignParentLeft="false"
             android:layout_alignParentBottom="false"
             android:layout_below="@+id/localGame"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="35dp"
@@ -57,46 +60,54 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="SOCIAL"
-            android:id="@+id/button"
-            android:layout_above="@+id/button7"
+            android:id="@+id/buttonSocial"
+            android:layout_above="@+id/buttonSocial"
             android:layout_centerHorizontal="true"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/colorblack"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="HIGHSCORE"
-            android:id="@+id/button7"
-            android:layout_alignBaseline="@+id/button9"
-            android:layout_alignBottom="@+id/button9"
+            android:id="@+id/buttonHigh"
+            android:layout_alignBaseline="@+id/buttonAbout"
+            android:layout_alignBottom="@+id/buttonAbout"
             android:layout_alignParentStart="true"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="35dp" />
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/colorblack"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="HOW TO PLAY"
-            android:id="@+id/button8"
+            android:id="@+id/buttonHow"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/colorblack"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="ABOUT PROJECT C4"
-            android:id="@+id/button9"
-            android:layout_alignBaseline="@+id/button8"
-            android:layout_alignBottom="@+id/button8"
+            android:id="@+id/buttonAbout"
+            android:layout_alignBaseline="@+id/buttonHow"
+            android:layout_alignBottom="@+id/buttonHow"
             android:layout_alignParentStart="true"
+            android:textSize="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:background="@drawable/colorblack"/>
 
     </LinearLayout>
 
