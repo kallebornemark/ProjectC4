@@ -1,8 +1,13 @@
 package projectc4.c4.client;
 
 import java.util.ArrayList;
+
+import android.content.Context;
+import android.widget.Button;
 import projectc4.c4.LocalGameActivity;
 import projectc4.c4.MatchmakingActivity;
+import projectc4.c4.util.C4Color;
+
 import static projectc4.c4.util.C4Constants.*;
 
 /**
@@ -11,7 +16,6 @@ import static projectc4.c4.util.C4Constants.*;
 public class ClientController {
     private static ClientController instance;
     private static GameController gameController;
-    private ClientUI clientUI;
     private Client client;
     private LocalGameActivity localGameActivity;
     private MatchmakingActivity matchmakingActivity;
@@ -45,10 +49,6 @@ public class ClientController {
 
     private ClientController() {
 //        gameController = new GameController(this);
-    }
-
-    public void createClientUI() {
-        clientUI = new ClientUI(this);
     }
 
     public void setActivity(LocalGameActivity localGameActivity) {
@@ -92,19 +92,21 @@ public class ClientController {
     }
 
     public void drawTile(int pos, int player) {
-        clientUI.changeHighlight();
-        System.out.println("Drawtile: changeHighlight()");
+//        changeHighlightedPlayer(player);
+//        System.out.println("Drawtile: changeHighlight()");
 
-        clientUI.drawTile(pos, player);
+
+        localGameActivity.drawTile(pos, player);
         System.out.println("Drawtile: drawTile(" + pos + "," + player+")");
     }
 
     public void highLightTiles(ArrayList<Integer> pos) {
-        clientUI.highLightTiles(pos);
+        localGameActivity.highlightTiles(pos);
     }
 
+
     public void changeHighlightedPlayer(int player) {
-        clientUI.highlightPlayer(player);
+        localGameActivity.highlightPlayer(player);
     }
 
     public void winner(int player) {
@@ -113,11 +115,11 @@ public class ClientController {
         } else {
             player = 2;
         }
-        clientUI.winner("Player " + player + " won!");
+        localGameActivity.setTextViewWinner("Player " + player + " won!");
     }
 
     public void draw() {
-        clientUI.winner("It's a draw!");
+        localGameActivity.setTextViewWinner("It's a draw!");
     }
 
 /*    // New Local
@@ -129,7 +131,17 @@ public class ClientController {
     // New MM
     public void newGame(int gamemode) {
         gameController.newGame(gamemode);
-        clientUI.newGame();
+
+        for (int i = 0; i < 42; i++) {
+            localGameActivity.getGrid().getChildAt(i).setBackgroundColor(C4Color.WHITE);
+        }
+
+        ArrayList<Button> buttonArrayList;
+        buttonArrayList = localGameActivity.getButtonArrayList();
+
+        for (int i = 0; i < buttonArrayList.size(); i++) {
+            buttonArrayList.get(i).setEnabled(true);
+        }
     }
 
     public void requestGame(int gamemode) {

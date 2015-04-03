@@ -3,24 +3,16 @@ package projectc4.c4;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TouchDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import org.apache.http.conn.ClientConnectionOperator;
 
 import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
@@ -33,7 +25,6 @@ public class LocalGameActivity extends Activity {
     private GridLayout grd;
     private ArrayList<Button> buttonArrayList = new ArrayList<>();
     private ClientController clientController;
-    private int currentIndex;
     private int gameMode;
 
 
@@ -43,7 +34,6 @@ public class LocalGameActivity extends Activity {
         setContentView(R.layout.activity_main);
         clientController = ClientController.getInstance();
         clientController.setActivity(this);
-        clientController.createClientUI();
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
         initGraphics(); // !! Viktigt att denna körs innan newGame() som kommer här under !!
@@ -51,13 +41,11 @@ public class LocalGameActivity extends Activity {
 
         // Set button listeners
         for (int i = 0; i < buttonArrayList.size(); i++) {
-            currentIndex = i;
             buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Button button = (Button) v;
                     int col = Integer.parseInt(button.getText().toString());
-//                    System.out.println("onClick i mainactivity: " + col);
                     clientController.newMove(col);
                 }
             });
@@ -147,77 +135,70 @@ public class LocalGameActivity extends Activity {
         return this.grd;
     }
 
-    public void setTextViewWinner(String winner) {
-        TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-        textViewWinner.setText(winner);
-        setNewGame();
-    }
-
-    public void highlightPlayer(int player) {
-        TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
-        TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
-
-        if (player == PLAYER1) {
-            textViewPlayer1.setBackground(getDrawable(R.drawable.colorred));
-            textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellowpressed));
-        } else if (player == PLAYER2){
-            textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellow));
-            textViewPlayer1.setBackground(getDrawable(R.drawable.colorredpressed));
-        }
-    }
-
-    public void changeHighlight() {
-        TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
-        TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
-        System.out.println("Player TextView's set");
-        Drawable red = getDrawable(R.drawable.colorred);
-        Drawable redpressed = getDrawable(R.drawable.colorredpressed);
-        Drawable yellow = getDrawable(R.drawable.coloryellow);
-        Drawable yellowpressed = getDrawable(R.drawable.coloryellowpressed);
-        System.out.println("Temp colorvariables set");
-
-        if (textViewPlayer1.getBackground().getConstantState().equals(red)) {
-            textViewPlayer1.setBackground(redpressed);
-            System.out.println("Player 1 red -> redpressed");
-        } else if (textViewPlayer1.getBackground().getConstantState().equals(redpressed)) {
-            textViewPlayer1.setBackground(red);
-            System.out.println("Player 1 repressed -> red");
-        }
-
-        if (textViewPlayer2.getBackground().getConstantState().equals(yellow)) {
-            textViewPlayer2.setBackground(yellowpressed);
-            System.out.println("Player 2 yellow -> yellowpressed");
-        } else if (textViewPlayer2.getBackground().getConstantState().equals(yellowpressed)) {
-            textViewPlayer2.setBackground(yellow);
-            System.out.println("Player 2 yellowpressed -> yellow");
-        }
-    }
-
-    public void drawTile(int pos, int player) {
-        if (player == PLAYER1) {
-            TextView txt = (TextView)grd.getChildAt(pos);
-            txt.setBackground(getDrawable(R.drawable.colorred));
-        }else if (player == PLAYER2) {
-            TextView txt = (TextView)grd.getChildAt(pos);
-            txt.setBackground(getDrawable(R.drawable.coloryellow));
-        }
-    }
-
-    public void highlightTiles(ArrayList<Integer> pos) {
-        for (int i = 0; i < 42; i++) {
-            if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.colorred).getConstantState())) {
-                grd.getChildAt(i).setBackground(getDrawable(R.drawable.colorredpressed));
-            } else if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellow).getConstantState())) {
-                grd.getChildAt(i).setBackground(getDrawable(R.drawable.coloryellowpressed));
+    public void setTextViewWinner(final String winner) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+                textViewWinner.setText(winner);
+                setNewGame();
             }
-        }
-        for (int i = 0; i < pos.size(); i++) {
-            if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.colorredpressed).getConstantState())) {
-                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorred));
-            } else if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellowpressed).getConstantState())) {
-                grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.coloryellow));
+        });
+    }
+
+    public void highlightPlayer(final int player) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+
+                if (player == PLAYER1) {
+                    textViewPlayer1.setBackground(getDrawable(R.drawable.colorred));
+                    textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellowpressed));
+                } else if (player == PLAYER2){
+                    textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellow));
+                    textViewPlayer1.setBackground(getDrawable(R.drawable.colorredpressed));
+                }
             }
-        }
+        });
+    }
+
+    public void drawTile(final int pos, final int player) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (player == PLAYER1) {
+                    TextView txt = (TextView)grd.getChildAt(pos);
+                    txt.setBackground(getDrawable(R.drawable.colorred));
+                }else if (player == PLAYER2) {
+                    TextView txt = (TextView)grd.getChildAt(pos);
+                    txt.setBackground(getDrawable(R.drawable.coloryellow));
+                }
+            }
+        });
+    }
+
+    public void highlightTiles(final ArrayList<Integer> pos) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 42; i++) {
+                    if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.colorred).getConstantState())) {
+                        grd.getChildAt(i).setBackground(getDrawable(R.drawable.colorredpressed));
+                    } else if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellow).getConstantState())) {
+                        grd.getChildAt(i).setBackground(getDrawable(R.drawable.coloryellowpressed));
+                    }
+                }
+                for (int i = 0; i < pos.size(); i++) {
+                    if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.colorredpressed).getConstantState())) {
+                        grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorred));
+                    } else if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellowpressed).getConstantState())) {
+                        grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.coloryellow));
+                    }
+                }
+            }
+        });
     }
 
     public void setNewGame() {
