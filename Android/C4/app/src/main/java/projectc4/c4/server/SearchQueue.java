@@ -41,7 +41,7 @@ public class SearchQueue implements Runnable {
 
     public synchronized void remove(ConnectedClient connectedClient) throws InterruptedException {
         while(queue.isEmpty()) {
-            thread.wait();
+            wait();
         }
 
         ConnectedClient item = (ConnectedClient) queue.remove();

@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -34,28 +33,12 @@ public class Server implements Runnable {
         activeGames.add(g);
     }
 
-    public void addToQueue(ConnectedClient connectedClient) {
-        try {
-            searchingForGame.put(connectedClient);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addConnectedClient(String name, ConnectedClient connectedClient) {
-        connectedClients.put(name, connectedClient);
-    }
-
     public void addSearchingClient(ConnectedClient connectedClient) {
         try {
             searchingForGame.put(connectedClient);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public void removeConnectedClient(String name) {
-        connectedClients.remove(name);
     }
 
     public void newGame(ConnectedClient c1, ConnectedClient c2) {
@@ -76,7 +59,6 @@ public class Server implements Runnable {
                 System.out.println("serversocket accepted");
                 new ConnectedClient(this, socket).start();
                 System.out.println("ny connectedclient skapad");
-//                connectedClients.put(new ClientHandler(socket));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -84,6 +66,6 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) {
-        Server server = new Server(3450);
+        new Server(3450);
     }
 }
