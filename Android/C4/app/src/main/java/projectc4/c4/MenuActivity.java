@@ -52,8 +52,9 @@ public class MenuActivity extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientController.getInstance().connect();
-                Intent intent = new Intent(MenuActivity.this, MatchmakingActivity.class);
+            //    ClientController.getInstance().connect();
+               // Intent intent = new Intent(MenuActivity.this, MatchmakingActivity.class);
+                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
 //                intent.putExtra("clientController",clientController);
                 startActivity(intent);
             }
