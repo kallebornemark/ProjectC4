@@ -28,18 +28,18 @@ public class ActiveGame implements Serializable {
     }
 
     public void swapPos(ConnectedClient cc) {
-        if (cc.getLastPos() == PLAYER1) {
-            cc.setLastPos(PLAYER2);
-        } else if (cc.getLastPos() == PLAYER2) {
-            cc.setLastPos(PLAYER1);
+        if (cc.getStartPos() == PLAYER1) {
+            cc.setStartPos(PLAYER2);
+        } else if (cc.getStartPos() == PLAYER2) {
+            cc.setStartPos(PLAYER1);
         }
     }
 
     public void rematch() {
         swapPos(c1);
-        c1.newGame(c1.getLastPos());
+        c1.newGame(c1.getStartPos());
         swapPos(c2);
-        c2.newGame(c2.getLastPos());
+        c2.newGame(c2.getStartPos());
     }
 
     public void setReady(ConnectedClient connectedClient) {
@@ -62,20 +62,24 @@ public class ActiveGame implements Serializable {
         if (rematchListener != null) {
             rematchListener.interrupt();
             rematchListener = null;
-            c1isReady = false;
-            c2isReady = false;
         }
     }
 
     private class RematchListener implements Runnable {
         public void run() {
-            while (!Thread.interrupted()) {
-
-
-                if (c1isReady && c2isReady) {
-                    rematch();
-                    stopRematchListener();
+            try {
+                while (!Thread.interrupted()) {
+                    System.out.println("ActiveGame: One player ready for rematch, waiting for second...");
+                    if (c1isReady && c2isReady) {
+                        System.out.println("ActiveGame: Two players ready for rematch - starting!");
+                        rematch();
+                        stopRematchListener();
+                    }
+                    rematchListener.sleep(500);
                 }
+            } catch (InterruptedException e) {
+                c1isReady = false;
+                c2isReady = false;
             }
         }
     }

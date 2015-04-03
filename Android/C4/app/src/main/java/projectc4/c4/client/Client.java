@@ -56,6 +56,15 @@ public class Client implements Runnable{
         }
     }
 
+    public void requestRematch() {
+        try {
+            oos.writeObject(REMATCH);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void requestUsername(String username) {
         try {
             oos.writeObject(username);

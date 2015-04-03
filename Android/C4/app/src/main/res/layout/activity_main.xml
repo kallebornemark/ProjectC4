@@ -8,19 +8,22 @@
 
     <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:layout_centerHorizontal="true" android:id="@+id/tableRow2" android:layout_below="@+id/imageView"
-              android:layout_marginTop="20dp">
+              android:layout_marginTop="20dp"
+              android:layout_alignParentEnd="true">
         <TextView style="@style/Base.TextAppearance.AppCompat.Headline" android:layout_width="wrap_content"
                   android:layout_height="wrap_content" android:id="@+id/textViewRematch"
                   android:layout_marginRight="15dp"/>
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="New Game"
-                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"/>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rematch?"
+                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
+            />
     </TableRow>
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:id="@+id/tableRow"
-        android:layout_below="@+id/imageView" android:layout_marginTop="20dp">
+        android:layout_below="@+id/imageView" android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:layout_width="wrap_content"

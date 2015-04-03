@@ -21,19 +21,19 @@ public class ConnectedClient extends Thread implements Serializable {
     private User user;
     private Server server;
     private ActiveGame activeGame;
-    private int lastPos;
+    private int startPos;
 
     public ConnectedClient(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
     }
     
-    public int getLastPos() {
-        return lastPos;
+    public int getStartPos() {
+        return startPos;
     }
 
-    public void setLastPos(int lastPos) {
-        this.lastPos = lastPos;
+    public void setStartPos(int startPos) {
+        this.startPos = startPos;
     }
 
     public void setActiveGame(ActiveGame activeGame) {
@@ -64,13 +64,17 @@ public class ConnectedClient extends Thread implements Serializable {
                 System.out.println("Server: Har fått en int: " + value);
 
                 if (value == MATCHMAKING) {
-                    // If input is a new MM game
+                    // New incoming MM game
                     System.out.println("Server: New incoming MM game");
                     server.addSearchingClient(this);
-                } else {
-                    // If input is a new move
+
+                } else if (value >= 0 && value <= 5) {
+                    // New incoming move
                     activeGame.newMove(this, value);
-//                    newMove(value);
+
+                } else if (value == REMATCH) {
+                    // Requested rematch
+                    activeGame.setReady(this);
                 }
             }
         } catch (Exception e) {
@@ -85,7 +89,7 @@ public class ConnectedClient extends Thread implements Serializable {
      * @param player Player 1 or 2.
      */
     public void newGame(int player) {
-        lastPos = player;
+        startPos = player;
         try {
             System.out.println("Server: newGame(" + player + ")");
             oos.writeObject(player);

@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class SearchQueue implements Runnable {
     private LinkedList queue = new LinkedList();
     private int capacity;
-    private Thread thread;
+    private Thread searchQueueListener;
     private Server server;
 
     public SearchQueue(Server server, int capacity) {
@@ -53,16 +53,16 @@ public class SearchQueue implements Runnable {
     }
 
     public void start() {
-        if (thread == null) {
-            thread = new Thread(this);
-            thread.start();
+        if (searchQueueListener == null) {
+            searchQueueListener = new Thread(this);
+            searchQueueListener.start();
         }
     }
 
     public void stop() {
-        if (thread != null) {
-            thread.interrupt();
-            thread = null;
+        if (searchQueueListener != null) {
+            searchQueueListener.interrupt();
+            searchQueueListener = null;
         }
     }
 
@@ -74,7 +74,7 @@ public class SearchQueue implements Runnable {
             try {
                 int nbr = queue.size();
                 while (nbr < 2) {
-                    thread.sleep(500);
+                    searchQueueListener.sleep(500);
                     nbr = queue.size();
                     System.out.println("Server: nuvarande i kö: " + queue.size());
                 }

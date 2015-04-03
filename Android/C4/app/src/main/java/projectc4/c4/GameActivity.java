@@ -144,7 +144,8 @@ public class GameActivity extends Activity {
             public void run() {
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText(winner);
-                setNewGame();
+//                setNewGame();
+                promptRematch();
             }
         });
     }
@@ -232,10 +233,10 @@ public class GameActivity extends Activity {
         buttonRematch.setVisibility(View.INVISIBLE);
         TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
         textViewWinner.setText("");
-        clientController.newGame(LOCAL);
+        clientController.newGame(MATCHMAKING);
         RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
         relativeLayoutPlayers.setVisibility(View.VISIBLE);
-        highlightPlayer(PLAYER1);
+        highlightPlayer(clientController.getPlayerTurn());
         drawRoundedCorners();
     }
 
