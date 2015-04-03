@@ -19,7 +19,7 @@
             android:id="@+id/imageView2"
             android:src="@drawable/c4_logo"
             android:adjustViewBounds="true"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="30dp" />
@@ -67,7 +67,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/colorblack"/>
+            android:background="@drawable/colororange"/>
 
         <Button
             android:layout_width="fill_parent"
@@ -94,7 +94,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/colorblack"/>
+            android:background="@drawable/colorlightgray"/>
 
         <Button
             android:layout_width="fill_parent"
@@ -107,7 +107,7 @@
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/colorblack"/>
+            android:background="@drawable/colorlightgray"/>
 
     </LinearLayout>
 
