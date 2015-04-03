@@ -12,7 +12,7 @@
         android:name="projectc4.c4.client.MyApplication">
 
         <activity
-            android:name=".LocalGameActivity"
+            android:name=".GameActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

@@ -21,7 +21,7 @@ import static projectc4.c4.util.C4Constants.*;
 import java.util.ArrayList;
 
 
-public class LocalGameActivity extends Activity {
+public class GameActivity extends Activity {
     private GridLayout grd;
     private ArrayList<Button> buttonArrayList = new ArrayList<>();
     private ClientController clientController;

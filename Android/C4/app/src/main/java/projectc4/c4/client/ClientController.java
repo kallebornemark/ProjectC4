@@ -2,9 +2,8 @@ package projectc4.c4.client;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.widget.Button;
-import projectc4.c4.LocalGameActivity;
+import projectc4.c4.GameActivity;
 import projectc4.c4.MatchmakingActivity;
 import projectc4.c4.util.C4Color;
 
@@ -17,7 +16,7 @@ public class ClientController {
     private static ClientController instance;
     private static GameController gameController;
     private Client client;
-    private LocalGameActivity localGameActivity;
+    private GameActivity gameActivity;
     private MatchmakingActivity matchmakingActivity;
     private int player = PLAYER1;
     private int gameMode;
@@ -51,8 +50,8 @@ public class ClientController {
 //        gameController = new GameController(this);
     }
 
-    public void setActivity(LocalGameActivity localGameActivity) {
-        this.localGameActivity = localGameActivity;
+    public void setActivity(GameActivity gameActivity) {
+        this.gameActivity = gameActivity;
     }
 
     public void setMatchmakingActivity(MatchmakingActivity matchmakingActivity) {
@@ -68,8 +67,8 @@ public class ClientController {
 
     }
 
-    public LocalGameActivity getLocalGameActivity() {
-        return localGameActivity;
+    public GameActivity getGameActivity() {
+        return gameActivity;
     }
 
     public void newMove(int column) {
@@ -96,17 +95,17 @@ public class ClientController {
 //        System.out.println("Drawtile: changeHighlight()");
 
 
-        localGameActivity.drawTile(pos, player);
+        gameActivity.drawTile(pos, player);
         System.out.println("Drawtile: drawTile(" + pos + "," + player+")");
     }
 
     public void highLightTiles(ArrayList<Integer> pos) {
-        localGameActivity.highlightTiles(pos);
+        gameActivity.highlightTiles(pos);
     }
 
 
     public void changeHighlightedPlayer(int player) {
-        localGameActivity.highlightPlayer(player);
+        gameActivity.highlightPlayer(player);
     }
 
     public void winner(int player) {
@@ -115,11 +114,11 @@ public class ClientController {
         } else {
             player = 2;
         }
-        localGameActivity.setTextViewWinner("Player " + player + " won!");
+        gameActivity.setTextViewWinner("Player " + player + " won!");
     }
 
     public void draw() {
-        localGameActivity.setTextViewWinner("It's a draw!");
+        gameActivity.setTextViewWinner("It's a draw!");
     }
 
 /*    // New Local
@@ -133,11 +132,11 @@ public class ClientController {
         gameController.newGame(gamemode);
 
         for (int i = 0; i < 42; i++) {
-            localGameActivity.getGrid().getChildAt(i).setBackgroundColor(C4Color.WHITE);
+            gameActivity.getGrid().getChildAt(i).setBackgroundColor(C4Color.WHITE);
         }
 
         ArrayList<Button> buttonArrayList;
-        buttonArrayList = localGameActivity.getButtonArrayList();
+        buttonArrayList = gameActivity.getButtonArrayList();
 
         for (int i = 0; i < buttonArrayList.size(); i++) {
             buttonArrayList.get(i).setEnabled(true);

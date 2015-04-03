@@ -2,7 +2,6 @@ package projectc4.c4;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +35,7 @@ public class MatchmakingActivity extends Activity {
 
     public void startGameUI() {
         ClientController.getInstance().setGameMode(MATCHMAKING);
-        Intent intent = new Intent(MatchmakingActivity.this, LocalGameActivity.class);
+        Intent intent = new Intent(MatchmakingActivity.this, GameActivity.class);
         startActivity(intent);
     }
 

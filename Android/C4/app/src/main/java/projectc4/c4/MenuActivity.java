@@ -43,7 +43,7 @@ public class MenuActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().setGameMode(LOCAL);
-                Intent intent = new Intent(MenuActivity.this, LocalGameActivity.class);
+                Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 startActivity(intent);
             }
         });
