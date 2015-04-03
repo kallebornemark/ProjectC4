@@ -15,7 +15,7 @@ public class ClientController {
     private Client client;
     private LocalGameActivity localGameActivity;
     private MatchmakingActivity matchmakingActivity;
-    private int player;
+    private int player = PLAYER1;
     private int gameMode;
 //    public boolean gameIsReady = false;
 
@@ -63,24 +63,27 @@ public class ClientController {
         client = new Client(this);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.17.111", 3450);
-        client.connect("192.168.1.57", 3450); //Kalles hemmadator
+//        client.connect("192.168.1.57", 3450); //Kalles hemmadator
+        client.connect("10.1.3.0", 3450); //Kalles laptop
+
     }
 
     public LocalGameActivity getLocalGameActivity() {
         return localGameActivity;
     }
 
-    public void newLocalMove(int column) {
-        System.out.println("Clientcontrollerns newMove " + column);
-        gameController.newLocalMove(column);
-    }
-
-    public void newOutgoingMove(int column) {
-        gameController.newLocalMove(column);
-        client.newMove(gameController.getPlayer(), column);
+    public void newMove(int column) {
+        if (player == getPlayerTurn()) {
+            System.out.println("Clientcontrollerns newLocalMove " + column);
+            gameController.newMove(column);
+            if (gameMode == MATCHMAKING) {
+                client.newMove(column);
+            }
+        }
     }
 
     public void newIncomingMove(int column) {
+        System.out.println("Clientcontrollerns newIncomingMove " + column);
         gameController.newIncomingMove(column);
     }
 
@@ -89,9 +92,11 @@ public class ClientController {
     }
 
     public void drawTile(int pos, int player) {
-        clientUI.highlightPlayer(player);
+        clientUI.changeHighlight();
+        System.out.println("Drawtile: changeHighlight()");
 
         clientUI.drawTile(pos, player);
+        System.out.println("Drawtile: drawTile(" + pos + "," + player+")");
     }
 
     public void highLightTiles(ArrayList<Integer> pos) {
@@ -148,11 +153,11 @@ public class ClientController {
         System.out.println("Player set to: " + this.player);
     }
 
-    public void setCurrentPlayer(int player) {
-        gameController.setPlayer(player);
+    public void setPlayerTurn(int player) {
+        gameController.setPlayerTurn(player);
     }
 
-    public int getCurrentPlayer() {
-       return gameController.getPlayer();
+    public int getPlayerTurn() {
+       return gameController.getPlayerTurn();
     }
 }

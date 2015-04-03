@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 
@@ -34,7 +35,6 @@ public class LocalGameActivity extends Activity {
     private ClientController clientController;
     private int currentIndex;
     private int gameMode;
-    private int player;
 
 
     @Override
@@ -44,36 +44,23 @@ public class LocalGameActivity extends Activity {
         clientController = ClientController.getInstance();
         clientController.setActivity(this);
         clientController.createClientUI();
+        System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
-        player = clientController.getPlayer();
         initGraphics(); // !! Viktigt att denna körs innan newGame() som kommer här under !!
         clientController.newGame(gameMode);
 
         // Set button listeners
         for (int i = 0; i < buttonArrayList.size(); i++) {
             currentIndex = i;
-            if (gameMode == LOCAL) {
-                buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Button button = (Button) v;
-                        int col = Integer.parseInt(button.getText().toString());
+            buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button button = (Button) v;
+                    int col = Integer.parseInt(button.getText().toString());
 //                    System.out.println("onClick i mainactivity: " + col);
-                        clientController.newLocalMove(col);
-                    }
-                });
-            } else {
-                buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Button button = (Button) v;
-                        int col = Integer.parseInt(button.getText().toString());
-//                    System.out.println("onClick i mainactivity: " + col);
-                        clientController.newOutgoingMove(col);
-                    }
-                });
-            }
-
+                    clientController.newMove(col);
+                }
+            });
         }
 
         drawRoundedCorners();
@@ -97,7 +84,7 @@ public class LocalGameActivity extends Activity {
                 finish();
             }
         });
-        builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //if user select "No", just cancel this dialog and continue with app
@@ -147,15 +134,13 @@ public class LocalGameActivity extends Activity {
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
-        highlightPlayer(player);
+        highlightPlayer(clientController.getPlayerTurn());
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
         Button buttonNewgame = (Button)findViewById(R.id.buttonNewGame);
         buttonNewgame.setBackgroundColor(C4Color.BLACK);
         buttonNewgame.setTextColor(C4Color.WHITE);
-
-
     }
 
     public GridLayout getGrid() {
@@ -178,6 +163,33 @@ public class LocalGameActivity extends Activity {
         } else if (player == PLAYER2){
             textViewPlayer2.setBackground(getDrawable(R.drawable.coloryellow));
             textViewPlayer1.setBackground(getDrawable(R.drawable.colorredpressed));
+        }
+    }
+
+    public void changeHighlight() {
+        TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+        TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+        System.out.println("Player TextView's set");
+        Drawable red = getDrawable(R.drawable.colorred);
+        Drawable redpressed = getDrawable(R.drawable.colorredpressed);
+        Drawable yellow = getDrawable(R.drawable.coloryellow);
+        Drawable yellowpressed = getDrawable(R.drawable.coloryellowpressed);
+        System.out.println("Temp colorvariables set");
+
+        if (textViewPlayer1.getBackground().getConstantState().equals(red)) {
+            textViewPlayer1.setBackground(redpressed);
+            System.out.println("Player 1 red -> redpressed");
+        } else if (textViewPlayer1.getBackground().getConstantState().equals(redpressed)) {
+            textViewPlayer1.setBackground(red);
+            System.out.println("Player 1 repressed -> red");
+        }
+
+        if (textViewPlayer2.getBackground().getConstantState().equals(yellow)) {
+            textViewPlayer2.setBackground(yellowpressed);
+            System.out.println("Player 2 yellow -> yellowpressed");
+        } else if (textViewPlayer2.getBackground().getConstantState().equals(yellowpressed)) {
+            textViewPlayer2.setBackground(yellow);
+            System.out.println("Player 2 yellowpressed -> yellow");
         }
     }
 

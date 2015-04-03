@@ -91,7 +91,7 @@ public class ConnectedClient extends Thread implements Serializable {
         try {
             oos.writeObject(column);
             oos.flush();
-            System.out.println("Server: newMove(" + column + ") from " + this.toString());
+            System.out.println("Server: CC " + this.toString() + " sending a new move: " + column);
         } catch (IOException e) {
             e.printStackTrace();
         }

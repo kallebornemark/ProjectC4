@@ -48,6 +48,10 @@ public class ClientUI {
         localGameActivity.highlightPlayer(player);
     }
 
+    public void changeHighlight() {
+        localGameActivity.changeHighlight();
+    }
+
     public void highLightTiles(ArrayList<Integer> pos) {
         localGameActivity.highlightTiles(pos);
     }

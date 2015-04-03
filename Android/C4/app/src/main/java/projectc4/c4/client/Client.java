@@ -46,10 +46,11 @@ public class Client implements Runnable{
         this.user = user;
     }
 
-    public void newMove(int player, int value) {
+    public void newMove(int value) {
         try {
             oos.writeObject(value);
             oos.flush();
+            System.out.println("Client sending new move: " + value);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +71,7 @@ public class Client implements Runnable{
             clientController.newGame(number);
         } else if (number == PLAYER1 || number == PLAYER2) {
             System.out.println("Klienten får tillbaks en PLAYER " + number);
-            clientController.setPlayer(number);
+            clientController.setPlayerTurn(number);
 //            clientController.gameIsReady = true;
             clientController.startGameUI();
         } else if (number >= 0 && number <= 5) {

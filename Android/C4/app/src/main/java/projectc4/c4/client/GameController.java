@@ -10,7 +10,7 @@ public class GameController {
     private ClientController clientController;
     private GameGrid gameGrid;
     private int[] size = new int[6];
-    private int playerToMakeNextMove;
+    private int playerTurn;
     private int row, col;
     private int playedTiles;
     private int gameMode;
@@ -18,18 +18,19 @@ public class GameController {
     private int opponent, player;
 
     public GameController(ClientController clientController) {
+        playerTurn = PLAYER1;
         this.clientController = clientController;
         gameGrid = new GameGrid();
         opponent = clientController.getOpponent();
         player = clientController.getPlayer();
     }
 
-    public int getPlayer() {
-        return playerToMakeNextMove;
+    public int getPlayerTurn() {
+        return playerTurn;
     }
 
-    public void setPlayer(int player) {
-        this.playerToMakeNextMove = player;
+    public void setPlayerTurn(int player) {
+        this.playerTurn = player;
     }
 
     public void newGame(int gameMode) {
@@ -38,30 +39,29 @@ public class GameController {
             size[i] = 0;
         }
         gameGrid.reset();
-        playerToMakeNextMove = PLAYER1;
         winningTiles.clear();
         this.gameMode = gameMode;
         /*
         Lokalt
          */
         if(gameMode == LOCAL) {
-            clientController.setPlayer(playerToMakeNextMove);
+            setPlayerTurn(PLAYER1);
         }
     }
 
-    public void newLocalMove(int x) {
+    public void newMove(int x) {
         // Move from local player
         System.out.println("GameController - newMove(" + x + ")");
-        if(playerToMakeNextMove == clientController.getPlayer() && size[x] < 7) {
+        if(playerTurn == clientController.getPlayer() && size[x] < 7) {
             System.out.println("GameController: newMove accepted");
             row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
-            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerToMakeNextMove);
-            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerToMakeNextMove);
+            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerTurn);
+            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
-                clientController.winner(playerToMakeNextMove);
+                clientController.winner(playerTurn);
                 clientController.highLightTiles(winningTiles);
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
@@ -70,25 +70,26 @@ public class GameController {
             } else {
                 changePlayer();
                 if (gameMode == LOCAL) {
-                    clientController.setPlayer(playerToMakeNextMove);
+                    clientController.setPlayer(playerTurn);
                 }
             }
         }
     }
 
     public void newIncomingMove(int x) {
-        // Move from MM player
-        System.out.println("GameController - newMove(" + x + ")");
+        // Move from local player
+        System.out.println("GameController - newIncomingMove(" + x + ")");
         if(size[x] < 7) {
-            System.out.println("GameController: newMove accepted");
+            System.out.println("GameController: newIncomingMove accepted");
             row = (gameGrid.getHeight() - 1) - (size[x]);
             col = x;
-            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), col, PLAYER2);
-            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, PLAYER2);
+            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerTurn);
+            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+            System.out.println("GameController - newIncomingMove: DrawTile by " + playerTurn);
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
-                clientController.winner(playerToMakeNextMove);
+                clientController.winner(playerTurn);
                 clientController.highLightTiles(winningTiles);
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
@@ -102,21 +103,21 @@ public class GameController {
 
 
     public void changePlayer() {
-        if (playerToMakeNextMove == PLAYER1) {
-            playerToMakeNextMove = PLAYER2;
+        if (playerTurn == PLAYER1) {
+            playerTurn = PLAYER2;
         } else {
-            playerToMakeNextMove = PLAYER1;
+            playerTurn = PLAYER1;
         }
-        clientController.changeHighlightedPlayer(playerToMakeNextMove);
+        clientController.changeHighlightedPlayer(playerTurn);
     }
 
     private boolean checkHorizontal() {
         int counter = 1;
         for (int i = col; i < gameGrid.getLength(); i++) {
-            if (i == gameGrid.getLength() - 1 || gameGrid.getElement(row, i + 1) != playerToMakeNextMove) {
+            if (i == gameGrid.getLength() - 1 || gameGrid.getElement(row, i + 1) != playerTurn) {
                 counter = 1;
                 for (int j = i; j >= 0; j--) {
-                    if (j == 0 || gameGrid.getElement(row, j - 1) != playerToMakeNextMove) {
+                    if (j == 0 || gameGrid.getElement(row, j - 1) != playerTurn) {
                         return false;
                     } else {
                         counter++;
@@ -149,7 +150,7 @@ public class GameController {
     private boolean checkVertical(){
         int counter = 1;
         for(int x = row; x < gameGrid.getHeight(); x++) {
-            if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != playerToMakeNextMove) {
+            if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != playerTurn) {
                 return false;
             } else {
                 counter++;
@@ -169,10 +170,10 @@ public class GameController {
     private boolean checkDiagonalRight() {
         int counter = 1;
         for(int i = col,j = row; i < gameGrid.getLength() && j < gameGrid.getHeight(); i++, j++) {
-            if(i == gameGrid.getLength() - 1 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i + 1) != playerToMakeNextMove) {
+            if(i == gameGrid.getLength() - 1 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i + 1) != playerTurn) {
                 counter = 1;
                 for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
-                    if(x == 0 || y == 0 || gameGrid.getElement(y - 1, x - 1) != playerToMakeNextMove) {
+                    if(x == 0 || y == 0 || gameGrid.getElement(y - 1, x - 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;
@@ -205,10 +206,10 @@ public class GameController {
     private boolean checkDiagonalLeft(){
         int counter = 1;
         for(int i = col,j = row; i >= 0 && j < gameGrid.getHeight(); i--, j++) {
-            if(i == 0 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i - 1) != playerToMakeNextMove) {
+            if(i == 0 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i - 1) != playerTurn) {
                 counter = 1;
                 for(int x = i, y = j; x < gameGrid.getLength() && y >= 0; x++, y--) {
-                    if(x == gameGrid.getLength() - 1 || y == 0 || gameGrid.getElement(y - 1, x + 1) != playerToMakeNextMove) {
+                    if(x == gameGrid.getLength() - 1 || y == 0 || gameGrid.getElement(y - 1, x + 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;
