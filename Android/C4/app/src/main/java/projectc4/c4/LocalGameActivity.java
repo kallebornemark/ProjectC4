@@ -50,7 +50,6 @@ public class LocalGameActivity extends Activity {
                 }
             });
         }
-
         drawRoundedCorners();
     }
 
