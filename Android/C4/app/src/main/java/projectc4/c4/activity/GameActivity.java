@@ -1,4 +1,4 @@
-package projectc4.c4;
+package projectc4.c4.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +14,7 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import projectc4.c4.R;
 import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
 import static projectc4.c4.util.C4Constants.*;

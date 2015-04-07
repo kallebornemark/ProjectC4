@@ -1,4 +1,4 @@
-package projectc4.c4;
+package projectc4.c4.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import static projectc4.c4.util.C4Constants.*;
+
+import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 
 

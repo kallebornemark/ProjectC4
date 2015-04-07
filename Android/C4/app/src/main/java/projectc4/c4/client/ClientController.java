@@ -3,8 +3,8 @@ package projectc4.c4.client;
 import java.util.ArrayList;
 
 import android.widget.Button;
-import projectc4.c4.GameActivity;
-import projectc4.c4.MatchmakingActivity;
+import projectc4.c4.activity.GameActivity;
+import projectc4.c4.activity.MatchmakingActivity;
 import projectc4.c4.util.C4Color;
 
 import static projectc4.c4.util.C4Constants.*;

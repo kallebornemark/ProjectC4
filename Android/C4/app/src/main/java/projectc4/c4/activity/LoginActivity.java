@@ -1,4 +1,4 @@
-package projectc4.c4;
+package projectc4.c4.activity;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+import projectc4.c4.R;
 
 
 public class LoginActivity extends Activity {
