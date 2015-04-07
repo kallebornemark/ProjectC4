@@ -3,6 +3,7 @@ package projectc4.c4.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -72,6 +73,8 @@ public class GameActivity extends Activity {
                 finish();
             }
         });
+
+
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -270,6 +273,12 @@ public class GameActivity extends Activity {
         return this.buttonArrayList;
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

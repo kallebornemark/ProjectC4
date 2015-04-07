@@ -110,12 +110,19 @@ public class ClientController {
     }
 
     public void winner(int player) {
-        if (player == PLAYER1) {
-            player = 1;
-        } else {
-            player = 2;
+        if(gameMode == LOCAL) {
+            if (player == PLAYER1) {
+                gameActivity.setTextViewWinner("Player 1 won!");
+            } else {
+                gameActivity.setTextViewWinner("Player 2 won!");
+            }
+        }else if(gameMode == MATCHMAKING) {
+            if (player == PLAYER1) {
+                gameActivity.setTextViewWinner("You won!");
+            } else {
+                gameActivity.setTextViewWinner("You lost!");
+            }
         }
-        gameActivity.setTextViewWinner("Player " + player + " won!");
     }
 
     public void draw() {

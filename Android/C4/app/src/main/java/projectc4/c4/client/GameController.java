@@ -47,6 +47,7 @@ public class GameController {
         if(gameMode == LOCAL) {
             setPlayerTurn(PLAYER1);
             clientController.setPlayer(PLAYER1);
+            clientController.changeHighlightedPlayer(PLAYER1);
         }
     }
 

@@ -46,6 +46,7 @@ public class MenuActivity extends Activity {
                 ClientController.getInstance().setGameMode(LOCAL);
                 Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
             }
         });
 
@@ -63,6 +64,7 @@ public class MenuActivity extends Activity {
                 ClientController.getInstance().connect();
                 Intent intent = new Intent(MenuActivity.this, MatchmakingActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
             }
         });
     }
