@@ -145,8 +145,11 @@ public class GameActivity extends Activity {
             public void run() {
                 TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
                 textViewWinner.setText(winner);
-//                setNewGame();
-                promptRematch();
+                if (gameMode == MATCHMAKING) {
+                    promptRematch();
+                } else if (gameMode == LOCAL) {
+                    setNewGame();
+                }
             }
         });
     }
