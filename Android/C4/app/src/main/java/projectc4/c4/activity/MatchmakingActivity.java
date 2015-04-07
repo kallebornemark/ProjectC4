@@ -2,11 +2,14 @@ package projectc4.c4.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+
 import static projectc4.c4.util.C4Constants.*;
 
 import projectc4.c4.R;
@@ -21,21 +24,33 @@ public class MatchmakingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
         ClientController.getInstance().setMatchmakingActivity(this);
-
+        initGraphics();
         Intent intentThatStartedThisActivity = getIntent();
 //        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");
 
 
-        Button buttonFindOpponent = (Button)findViewById(R.id.buttonFindOpponent);
+        final Button buttonFindOpponent = (Button)findViewById(R.id.buttonFindOpponent);
         buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().requestGame(MATCHMAKING);
+                final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBarLarge);
+                progressBar.setEnabled(true);
+                progressBar.setVisibility(View.VISIBLE);
+                buttonFindOpponent.setEnabled(false);
+                buttonFindOpponent.setBackground(getDrawable(R.drawable.colorredpressed));
             }
         });
     }
-
+    private void initGraphics() {
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/msyi.ttf");
+        Button button = (Button)findViewById(R.id.buttonFindOpponent);
+        button.setTypeface(type, Typeface.BOLD);
+    }
     public void startGameUI() {
+//        final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBarLarge);
+//        progressBar.setEnabled(false);
+//        progressBar.setVisibility(View.INVISIBLE);
         ClientController.getInstance().setGameMode(MATCHMAKING);
         Intent intent = new Intent(MatchmakingActivity.this, GameActivity.class);
         startActivity(intent);
