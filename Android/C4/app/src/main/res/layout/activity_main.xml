@@ -85,8 +85,8 @@
         android:src="@drawable/c4_logo"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_alignParentTop="false" android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true" android:layout_marginTop="30dp"/>
+        android:layout_alignParentTop="false"
+        android:adjustViewBounds="true" android:layout_marginTop="15dp"/>
     <RelativeLayout
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
             android:layout_alignParentRight="false" android:id="@+id/gamegrid" android:layout_centerHorizontal="true"
             >
         <GridLayout
-                android:layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:columnCount="6"
             android:rowCount="9"
@@ -574,14 +574,14 @@
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/relativeLayoutPlayers"
-        android:layout_alignLeft="@+id/relativeLayoutPlayers">
+        android:id="@+id/iconButtons"
+        android:layout_below="@+id/relativeLayoutPlayers" android:layout_alignStart="@+id/gamegrid"
+        android:layout_alignParentStart="false" android:layout_alignParentEnd="false" android:alpha="50">
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton"
+            android:id="@+id/iconProfile"
             android:adjustViewBounds="false"
             android:layout_marginTop="20dp"
             android:background="@drawable/c4_profile"
@@ -591,7 +591,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton2"
+            android:id="@+id/iconSettings"
             android:adjustViewBounds="false"
             android:layout_marginTop="20dp"
             android:background="@drawable/c4_settings"
@@ -601,7 +601,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton3"
+            android:id="@+id/iconFriends"
             android:adjustViewBounds="false"
             android:layout_marginTop="20dp"
             android:background="@drawable/c4_friends"
