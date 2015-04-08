@@ -22,35 +22,6 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/relativeLayoutPlayers"
-        android:id="@+id/endOfGame"
-        android:layout_marginTop="7dp">
-
-        <Button
-
-            android:text="New Game"
-            android:id="@+id/buttonNewGame"
-            android:enabled="false"
-            android:layout_width="140dp"
-            android:layout_height="35dp"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentEnd="false"
-
-            android:visibility="invisible"/>
-
-        <Button android:layout_width="140dp" android:layout_height="35dp" android:text="Rematch"
-                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
-                android:gravity="center_vertical|center_horizontal"
-                android:textAlignment="center"
-                android:textSize="20dp"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:id="@+id/iconButtonsRL"
         android:layout_marginTop="6dp"
@@ -209,6 +180,37 @@
 
                 />
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relativeLayoutPlayers"
+        android:id="@+id/endOfGame"
+        android:layout_marginTop="7dp">
+
+        <Button
+
+            android:text="New Game"
+            android:id="@+id/buttonNewGame"
+            android:enabled="false"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentEnd="false"
+
+            android:visibility="invisible"
+            android:padding="0dp"/>
+
+        <Button android:layout_width="140dp" android:layout_height="35dp" android:text="Rematch"
+                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
+                android:gravity="center_vertical|center_horizontal"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:padding="0dp"/>
     </RelativeLayout>
 
     <GridLayout
