@@ -110,7 +110,7 @@ public class ClientController {
     }
 
     public void winner(int player) {
-        if(gameMode == LOCAL) {
+        /*if(gameMode == LOCAL) {
             if (player == PLAYER1) {
                 gameActivity.setTextViewWinner("Player 1 won!");
             } else {
@@ -122,6 +122,12 @@ public class ClientController {
             } else {
                 gameActivity.setTextViewWinner("You lost!");
             }
+        }*/
+
+        if (gameMode == MATCHMAKING) {
+            gameActivity.promptRematch();
+        } else if (gameMode == LOCAL) {
+            gameActivity.setNewGame();
         }
     }
 

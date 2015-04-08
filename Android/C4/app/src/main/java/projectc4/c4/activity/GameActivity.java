@@ -130,11 +130,13 @@ public class GameActivity extends Activity {
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
         Button buttonNewgame = (Button)findViewById(R.id.buttonNewGame);
-        buttonNewgame.setBackgroundColor(C4Color.LIGHTGRAY);
+        buttonNewgame.setBackground(getDrawable(R.drawable.altbutton));
+        buttonNewgame.setTypeface(type, Typeface.BOLD);
         buttonNewgame.setTextColor(C4Color.WHITE);
 
         Button buttonRematch = (Button)findViewById(R.id.buttonRematch);
-        buttonRematch.setBackgroundColor(C4Color.LIGHTGRAY);
+        buttonNewgame.setBackground(getDrawable(R.drawable.altbutton));
+        buttonNewgame.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
     }
 
@@ -146,12 +148,23 @@ public class GameActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-                textViewWinner.setText(winner);
-                if (gameMode == MATCHMAKING) {
-                    promptRematch();
-                } else if (gameMode == LOCAL) {
-                    setNewGame();
+//                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+//                textViewWinner.setText(winner);
+
+            }
+        });
+    }
+
+    public void highlightWinner(final int winner) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
+                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
+                if (winner == PLAYER1) {
+//                    textViewPlayer1.setBackground(getDrawable(R.id.winner));
+                } else if (winner == PLAYER2) {
+//                    textViewPlayer2.setBackground(getDrawable(R.id.winner));
                 }
             }
         });
@@ -216,8 +229,8 @@ public class GameActivity extends Activity {
         for (int i = 0; i < buttonArrayList.size(); i++) {
             buttonArrayList.get(i).setEnabled(false);
         }
-        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
-        relativeLayoutPlayers.setVisibility(View.INVISIBLE);
+//        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
+//        relativeLayoutPlayers.setVisibility(View.INVISIBLE);
     }
 
     public void promptRematch() {
@@ -238,8 +251,8 @@ public class GameActivity extends Activity {
         clientController.newGame(MATCHMAKING);
         buttonRematch.setEnabled(false);
         buttonRematch.setVisibility(View.INVISIBLE);
-        TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-        textViewWinner.setText("");
+//        TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+//        textViewWinner.setText("");
         clientController.newGame(MATCHMAKING);
         RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
         relativeLayoutPlayers.setVisibility(View.VISIBLE);
@@ -258,8 +271,8 @@ public class GameActivity extends Activity {
                 clientController.newGame(LOCAL);
                 buttonNewGame.setEnabled(false);
                 buttonNewGame.setVisibility(View.INVISIBLE);
-                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-                textViewWinner.setText("");
+//                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+//                textViewWinner.setText("");
                 clientController.newGame(LOCAL);
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);

@@ -6,41 +6,105 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     android:id="@+id/relativeLayout">
 
-    <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true" android:id="@+id/tableRow2" android:layout_below="@+id/imageView"
-              android:layout_marginTop="20dp"
-              android:layout_alignParentEnd="true">
-        <TextView style="@style/Base.TextAppearance.AppCompat.Headline" android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" android:id="@+id/textViewRematch"
-                  android:layout_marginRight="15dp"/>
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rematch?"
-                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
-            />
-    </TableRow>
-    <TableRow
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/c4_logo_noline"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="true"
+        android:maxWidth="200dp"/>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:id="@+id/tableRow"
-        android:layout_below="@+id/imageView" android:layout_marginTop="20dp"
-        android:layout_alignParentEnd="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewWinner"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
-            android:layout_marginRight="15dp" />
+        android:layout_below="@+id/relativeLayoutPlayers"
+        android:id="@+id/endOfGame"
+        android:layout_marginTop="7dp">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
             android:text="New Game"
             android:id="@+id/buttonNewGame"
             android:enabled="false"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentEnd="false"
+
             android:visibility="invisible"/>
 
-    </TableRow>
+        <Button android:layout_width="140dp" android:layout_height="35dp" android:text="Rematch"
+                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
+                android:gravity="center_vertical|center_horizontal"
+                android:textAlignment="center"
+                android:textSize="20dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:id="@+id/iconButtonsRL"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="11dp">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconButtons"
+            android:layout_alignParentStart="false" android:layout_alignParentEnd="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentLeft="false"
+            >
+
+            <ImageButton
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/iconProfile"
+                android:adjustViewBounds="false"
+                android:background="@drawable/c4_profile"
+                android:layout_column="1"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:cropToPadding="false"
+                />
+
+            <ImageButton
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/iconSettings"
+                android:adjustViewBounds="false"
+                android:background="@drawable/c4_settings"
+                android:layout_column="2"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:cropToPadding="false"
+                />
+
+            <ImageButton
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/iconFriends"
+                android:adjustViewBounds="false"
+                android:background="@drawable/c4_friends"
+                android:layout_column="3"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:cropToPadding="false"
+                />
+
+        </GridLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -48,26 +112,72 @@
         android:layout_gravity="center_horizontal"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
-        android:id="@+id/relativeLayoutPlayers" android:layout_below="@+id/imageView" android:layout_marginTop="20dp">
+        android:id="@+id/relativeLayoutPlayers" android:layout_below="@+id/iconButtonsRL"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="-6dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewPlayer1"
+            android:layout_marginLeft="-14dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/redStar"
+                android:src="@drawable/c4_star_red"
+                android:layout_alignRight="@+id/textViewPlayer1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxWidth="20dp"
+                android:alpha="50"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/yellowStar"
+                android:src="@drawable/c4_star_yellow"
+                android:layout_alignRight="@+id/textViewPlayer2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxWidth="20dp"
+                android:alpha="50"
+                />
+        </LinearLayout>
 
         <TextView
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:text="PLAYER 2"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:id="@+id/textViewPlayer2"
             android:layout_gravity="left"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentTop="false" android:layout_alignParentEnd="true" android:layout_marginTop="0dp"/>
+            android:layout_alignParentTop="false" android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="6dp"/>
         <TextView
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:text="PLAYER 1"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:id="@+id/textViewPlayer1"
             android:textAlignment="center"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentEnd="false"/>
+            android:layout_alignParentEnd="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="6dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,539 +185,504 @@
             android:id="@+id/textViewVs"
             android:singleLine="false"
             style="@style/Base.TextAppearance.AppCompat.Title"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+            android:layout_centerHorizontal="true"
+            android:textSize="15dp"
+            android:layout_marginTop="7dp"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/c4_logo"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentTop="false"
-        android:adjustViewBounds="true" android:layout_marginTop="15dp"/>
-    <RelativeLayout
-            android:gravity="center_horizontal"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="false" android:layout_alignParentEnd="false"
-            android:layout_marginTop="50dp"
-            android:layout_below="@+id/relativeLayoutPlayers"
-            android:layout_alignParentTop="false" android:layout_alignWithParentIfMissing="false"
-            android:layout_alignParentBottom="true" android:layout_alignParentLeft="false"
-            android:layout_alignParentRight="false" android:id="@+id/gamegrid" android:layout_centerHorizontal="true"
-            >
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:columnCount="6"
-            android:rowCount="9"
-            android:layout_alignParentBottom="true"
-            android:focusableInTouchMode="false"
-            android:id="@+id/gridLayoutCenter"
-            android:orientation="horizontal" android:useDefaultMargins="false"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentTop="false">
+            android:layout_below="@+id/textViewPlayer1"
+            android:layout_marginTop="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="7dp">
 
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView7"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@drawable/colorblack"
+                android:id="@+id/line"
+                android:layout_alignParentStart="false"
+                android:layout_above="@+id/gridLayoutCenter"
+                android:layout_alignParentEnd="false"
 
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView8"
-                android:layout_row="1"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView9"
-                android:layout_row="1"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView10"
-                android:layout_row="1"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView11"
-                android:layout_row="1"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView12"
-                android:layout_row="1"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView13"
-                android:layout_row="2"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView14"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView15"
-                android:layout_row="2"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView16"
-                android:layout_row="2"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView17"
-                android:layout_row="2"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView18"
-                android:layout_row="2"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView19"
-                android:layout_row="3"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView20"
-                android:layout_row="3"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView21"
-                android:layout_row="3"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView22"
-                android:layout_row="3"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView23"
-                android:layout_row="3"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView24"
-                android:layout_row="3"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView25"
-                android:layout_row="4"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView26"
-                android:layout_row="4"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView27"
-                android:layout_row="4"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView28"
-                android:layout_row="4"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView29"
-                android:layout_row="4"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView30"
-                android:layout_row="4"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView31"
-                android:layout_row="5"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView32"
-                android:layout_row="5"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView33"
-                android:layout_row="5"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView34"
-                android:layout_row="5"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView35"
-                android:layout_row="5"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView36"
-                android:layout_row="5"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView37"
-                android:layout_row="6"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView38"
-                android:layout_row="6"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView39"
-                android:layout_row="6"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView40"
-                android:layout_row="6"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView41"
-                android:layout_row="6"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView42"
-                android:layout_row="6"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView"
-                android:layout_row="7"
-                android:layout_column="0"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView43"
-                android:layout_row="7"
-                android:layout_column="1"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView44"
-                android:layout_row="7"
-                android:layout_column="2"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView45"
-                android:layout_row="7"
-                android:layout_column="3"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView46"
-                android:layout_row="7"
-                android:layout_column="4"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-            <TextView
-                android:layout_width="47dp"
-                android:layout_height="40dp"
-                android:id="@+id/textView47"
-                android:layout_row="7"
-                android:layout_column="5"
-                android:layout_margin="3dp" android:enabled="false" android:nestedScrollingEnabled="false"
-                    />
-
-        </GridLayout>
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/gridLayoutNorth"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/gridLayoutCenter"
-            android:layout_alignTop="@+id/gridLayoutCenter"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentTop="false" android:layout_alignParentRight="false"
-            android:layout_centerHorizontal="true">
-
-            <Button
-                android:layout_width="47dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/button1"
-                android:layout_row="0"
-                android:layout_column="5"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/transparent"
-                android:clickable="true"
-                android:text="5" android:layout_margin="3dp"/>
-
-            <Button
-                android:layout_width="47dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/button2"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:clickable="true"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/transparent"
-                android:text="0" android:layout_margin="3dp"/>
-
-            <Button
-                android:layout_width="47dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/button3"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/transparent"
-                android:clickable="true"
-                android:text="2" android:layout_margin="3dp"/>
-
-            <Button
-                android:layout_width="47dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/button4"
-                android:layout_row="0"
-                android:layout_column="4"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/transparent"
-                android:clickable="true"
-                android:text="4" android:layout_margin="3dp"/>
-
-            <Button
-                android:layout_width="47dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/button5"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/transparent"
-                android:clickable="true"
-                android:text="1" android:layout_margin="3dp"/>
-
-            <Button
-                android:layout_width="47dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/button6"
-                android:layout_row="0"
-                android:layout_column="3"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:textColor="@android:color/transparent"
-                android:text="3" android:layout_margin="3dp"/>
-        </GridLayout>
+                />
+        </LinearLayout>
     </RelativeLayout>
 
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/iconButtons"
-        android:layout_below="@+id/relativeLayoutPlayers" android:layout_alignStart="@+id/gamegrid"
-        android:layout_alignParentStart="false" android:layout_alignParentEnd="false" android:alpha="50">
+        android:columnCount="6"
+        android:rowCount="9"
+        android:layout_alignParentBottom="true"
+        android:focusableInTouchMode="false"
+        android:id="@+id/gridLayoutCenter"
+        android:orientation="horizontal" android:useDefaultMargins="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconProfile"
-            android:adjustViewBounds="false"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/c4_profile"
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView7"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView8"
+            android:layout_row="1"
             android:layout_column="1"
-            android:layout_marginRight="10dp" />
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconSettings"
-            android:adjustViewBounds="false"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/c4_settings"
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView9"
+            android:layout_row="1"
             android:layout_column="2"
-            android:layout_marginRight="10dp" />
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconFriends"
-            android:adjustViewBounds="false"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/c4_friends"
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView10"
+            android:layout_row="1"
             android:layout_column="3"
-            android:layout_marginRight="10dp" />
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
 
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView11"
+            android:layout_row="1"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView12"
+            android:layout_row="1"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView13"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView14"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView15"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView16"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView17"
+            android:layout_row="2"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView18"
+            android:layout_row="2"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView19"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView20"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView21"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView22"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView23"
+            android:layout_row="3"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView24"
+            android:layout_row="3"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView25"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView26"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView27"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView28"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView29"
+            android:layout_row="4"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView30"
+            android:layout_row="4"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView31"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView32"
+            android:layout_row="5"
+            android:layout_column="1"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView33"
+            android:layout_row="5"
+            android:layout_column="2"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView34"
+            android:layout_row="5"
+            android:layout_column="3"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView35"
+            android:layout_row="5"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView36"
+            android:layout_row="5"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView37"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView38"
+            android:layout_row="6"
+            android:layout_column="1"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView39"
+            android:layout_row="6"
+            android:layout_column="2"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView40"
+            android:layout_row="6"
+            android:layout_column="3"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView41"
+            android:layout_row="6"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView42"
+            android:layout_row="6"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView43"
+            android:layout_row="7"
+            android:layout_column="1"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView44"
+            android:layout_row="7"
+            android:layout_column="2"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView45"
+            android:layout_row="7"
+            android:layout_column="3"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView46"
+            android:layout_row="7"
+            android:layout_column="4"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+        <TextView
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:id="@+id/textView47"
+            android:layout_row="7"
+            android:layout_column="5"
+            android:layout_margin="2dp" android:enabled="false" android:nestedScrollingEnabled="false"
+                />
+
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/gridLayoutNorth"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/gridLayoutCenter"
+        android:layout_alignTop="@+id/gridLayoutCenter"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false" android:layout_alignParentRight="false"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/button1"
+            android:layout_row="0"
+            android:layout_column="5"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/transparent"
+            android:clickable="true"
+            android:text="5" android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/button2"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:clickable="true"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/transparent"
+            android:text="0" android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/button3"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/transparent"
+            android:clickable="true"
+            android:text="2" android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/button4"
+            android:layout_row="0"
+            android:layout_column="4"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/transparent"
+            android:clickable="true"
+            android:text="4" android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/button5"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/transparent"
+            android:clickable="true"
+            android:text="1" android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/button6"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:textColor="@android:color/transparent"
+            android:text="3" android:layout_margin="2dp"/>
     </GridLayout>
 
 
