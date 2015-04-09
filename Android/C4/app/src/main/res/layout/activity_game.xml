@@ -17,14 +17,14 @@
         android:layout_alignParentStart="false"
         android:layout_alignParentEnd="false"
         android:layout_centerHorizontal="true"
-        android:maxWidth="200dp"/>
+        android:maxWidth="300dp"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:id="@+id/iconButtonsRL"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="11dp">
 
         <GridLayout
@@ -39,8 +39,8 @@
             >
 
             <ImageButton
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
                 android:id="@+id/iconProfile"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_profile"
@@ -51,8 +51,8 @@
                 />
 
             <ImageButton
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
                 android:id="@+id/iconSettings"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_settings"
@@ -63,8 +63,8 @@
                 />
 
             <ImageButton
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
                 android:id="@+id/iconFriends"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_friends"
