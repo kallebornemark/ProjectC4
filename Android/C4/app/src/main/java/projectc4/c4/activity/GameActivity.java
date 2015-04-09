@@ -16,6 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import projectc4.c4.R;
+import projectc4.c4.client.GameController;
+import projectc4.c4.client.GameGridAnimation;
+import projectc4.c4.client.GameGridForeground;
+import projectc4.c4.client.GameGridView;
 import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
 import static projectc4.c4.util.C4Constants.*;
@@ -24,8 +28,6 @@ import java.util.ArrayList;
 
 
 public class GameActivity extends Activity {
-    private GridLayout grd;
-    private ArrayList<Button> buttonArrayList = new ArrayList<>();
     private ClientController clientController;
     private int gameMode;
 
@@ -35,31 +37,22 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         clientController = ClientController.getInstance();
+
+        GameGridView gameGridView = (GameGridView)findViewById(R.id.gameGridView);
+        gameGridView.setFocusable(true);
+        gameGridView.addViews((GameGridAnimation)findViewById(R.id.gameGridAnimation), (GameGridForeground)findViewById(R.id.gameGridForeground));
+        clientController.setGamecontroller(new GameController(clientController, gameGridView));
+
+
+
         clientController.setActivity(this);
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
         initGraphics(); // !! Viktigt att denna körs innan newGame() som kommer här under !!
         clientController.newGame(gameMode);
 
-        // Set button listeners
-        for (int i = 0; i < buttonArrayList.size(); i++) {
-            buttonArrayList.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Button button = (Button) v;
-                    int col = Integer.parseInt(button.getText().toString());
-                    clientController.newMove(col);
-                }
-            });
-        }
-        drawRoundedCorners();
     }
 
-    public void drawRoundedCorners() {
-        for (int i = 0; i < 42; i++) {
-            grd.getChildAt(i).setBackground(getDrawable(R.drawable.transparenttile));
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -95,26 +88,8 @@ public class GameActivity extends Activity {
     }
 
     public void initGraphics() {
-        grd = (GridLayout)findViewById(R.id.gridLayoutCenter); //Länka mitt grid
-        //grd.getChildAt(0).setBackgroundColor(C4Color.RED); // get children at
-        //grd.getChildAt(1).setBackgroundColor(C4Color.YELLOW);
-        //grd.getChildAt(39).setBackgroundColor(C4Color.YELLOW);
         RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
         relativeLayout.setBackgroundColor(C4Color.WHITE);
-
-        Button button1 = (Button)findViewById(R.id.button1);
-        Button button2 = (Button)findViewById(R.id.button2);
-        Button button3 = (Button)findViewById(R.id.button3);
-        Button button4 = (Button)findViewById(R.id.button4);
-        Button button5 = (Button)findViewById(R.id.button5);
-        Button button6 = (Button)findViewById(R.id.button6);
-
-        buttonArrayList.add(button1);
-        buttonArrayList.add(button2);
-        buttonArrayList.add(button3);
-        buttonArrayList.add(button4);
-        buttonArrayList.add(button5);
-        buttonArrayList.add(button6);
 
         TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
         TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
@@ -140,10 +115,6 @@ public class GameActivity extends Activity {
         buttonRematch.setTextColor(C4Color.WHITE);
     }
 
-    public GridLayout getGrid() {
-        return this.grd;
-    }
-
     public void setTextViewWinner(final String winner) {
         runOnUiThread(new Runnable() {
             @Override
@@ -151,21 +122,6 @@ public class GameActivity extends Activity {
 //                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
 //                textViewWinner.setText(winner);
 
-            }
-        });
-    }
-
-    public void highlightWinner(final int winner) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView textViewPlayer1 = (TextView)findViewById(R.id.textViewPlayer1);
-                TextView textViewPlayer2 = (TextView)findViewById(R.id.textViewPlayer2);
-                if (winner == PLAYER1) {
-//                    textViewPlayer1.setBackground(getDrawable(R.id.winner));
-                } else if (winner == PLAYER2) {
-//                    textViewPlayer2.setBackground(getDrawable(R.id.winner));
-                }
             }
         });
     }
@@ -188,56 +144,11 @@ public class GameActivity extends Activity {
         });
     }
 
-    public void drawTile(final int pos, final int player) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (player == PLAYER1) {
-                    TextView txt = (TextView)grd.getChildAt(pos);
-                    txt.setBackground(getDrawable(R.drawable.colorred));
-                }else if (player == PLAYER2) {
-                    TextView txt = (TextView)grd.getChildAt(pos);
-                    txt.setBackground(getDrawable(R.drawable.coloryellow));
-                }
-            }
-        });
-    }
-
-    public void highlightTiles(final ArrayList<Integer> pos) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 42; i++) {
-                    if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.colorred).getConstantState())) {
-                        grd.getChildAt(i).setBackground(getDrawable(R.drawable.colorredpressed));
-                    } else if (grd.getChildAt(i).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellow).getConstantState())) {
-                        grd.getChildAt(i).setBackground(getDrawable(R.drawable.coloryellowpressed));
-                    }
-                }
-                for (int i = 0; i < pos.size(); i++) {
-                    if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.colorredpressed).getConstantState())) {
-                        grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.colorred));
-                    } else if (grd.getChildAt(pos.get(i)).getBackground().getConstantState().equals(getDrawable(R.drawable.coloryellowpressed).getConstantState())) {
-                        grd.getChildAt(pos.get(i)).setBackground(getDrawable(R.drawable.coloryellow));
-                    }
-                }
-            }
-        });
-    }
-
-    public void disableButtons() {
-        for (int i = 0; i < buttonArrayList.size(); i++) {
-            buttonArrayList.get(i).setEnabled(false);
-        }
-//        RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
-//        relativeLayoutPlayers.setVisibility(View.INVISIBLE);
-    }
 
     public void promptRematch() {
         final Button buttonRematch = (Button)findViewById(R.id.buttonRematch);
         buttonRematch.setEnabled(true);
         buttonRematch.setVisibility(View.VISIBLE);
-        disableButtons();
         buttonRematch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,14 +168,12 @@ public class GameActivity extends Activity {
         RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
         relativeLayoutPlayers.setVisibility(View.VISIBLE);
         highlightPlayer(clientController.getPlayerTurn());
-        drawRoundedCorners();
     }
 
     public void setNewGame() {
         final Button buttonNewGame = (Button)findViewById(R.id.buttonNewGame);
         buttonNewGame.setEnabled(true);
         buttonNewGame.setVisibility(View.VISIBLE);
-        disableButtons();
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,13 +186,8 @@ public class GameActivity extends Activity {
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
                 highlightPlayer(PLAYER1);
-                drawRoundedCorners();
             }
         });
-    }
-
-    public ArrayList<Button> getButtonArrayList() {
-        return this.buttonArrayList;
     }
 
 
