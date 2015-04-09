@@ -99,6 +99,7 @@ public class GameGridForeground extends View {
                             System.out.println("onTouchEvent: touchPosX: " + touchPosX + "    -    col = " + (col));
 //                            clickedCol = col;
 //                            gameGridView.randomAnimation(col);
+                            System.out.println("gameController.newMove(col): " + col);
                             gameController.newMove(col);
 //                            performClick();
                             break;

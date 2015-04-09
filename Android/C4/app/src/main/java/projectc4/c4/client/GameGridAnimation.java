@@ -98,6 +98,7 @@ public class GameGridAnimation extends View {
                 if (currentPosY >= rowStop*(sideOfTile+ gridSpacing) + offsetY ){
                     currentPosY = rowStop*(sideOfTile+ gridSpacing)+ offsetY;
                     animateNewMove = false;
+                    gameGridView.updateDisplay();
 //                    gameGridView.setElement(rowStop, colStart, player);
                 }
                 updateDisplay();
