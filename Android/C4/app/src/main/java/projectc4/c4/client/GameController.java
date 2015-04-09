@@ -55,11 +55,11 @@ public class GameController {
         System.out.println("GameController - newMove(" + x + ")");
         if(playerTurn == clientController.getPlayer() && size[x] < 7) {
             System.out.println("GameController: newMove accepted");
-            row = (gameGridView.getBoardWidth() - 1) - (size[x]);
+            row = (gameGridView.getBoardHeight() - 1) - (size[x]);
             col = x;
 
 
-            gameGridView.setElement((gameGridView.getBoardWidth() - 1) - (size[x]++), x, playerTurn);
+            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (size[x]++), x, playerTurn);
 //            clientController.drawTile((((gameGridView.getBoardWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
 
 

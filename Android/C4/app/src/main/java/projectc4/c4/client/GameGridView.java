@@ -29,9 +29,6 @@ public class GameGridView extends View {
     private GameGridAnimation gameGridAnimation;
     private GameGridForeground gameGridForeground;
 
-//    Todo ändra till konstanter
-//    private int colorPlayer1 = 0xFFF67E59, colorPlayer2 = 0xFFECD06C;
-
     private int gridSpacing = 10;
     private int sideOfTile;
     private int offsetX;
@@ -153,12 +150,11 @@ public class GameGridView extends View {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
 
-                //Todo sätta dit rätt konstanter för färger
                 if (gameBoard[row][col] == 0) {
                     paint.setColor(LIGHTGRAY);
                 } else if (gameBoard[row][col] == PLAYER1) {
                     paint.setColor(RED);
-                } else if (gameBoard[row][col] == 2) {
+                } else if (gameBoard[row][col] == PLAYER2) {
                     paint.setColor(YELLOW);
                 }
 

@@ -2,18 +2,20 @@ package projectc4.c4.client;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+import static projectc4.c4.util.C4Color.*;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Jimmy Maksymiw
  */
 public class GameGridAnimation extends View {
 
-    //Todo byta ut till konstanter
-    private int colorPlayer1 = 0xFFF67E59, colorPlayer2 = 0xFFECD06C;
+//    private int colorPlayer1 = 0xFFF67E59, colorPlayer2 = 0xFFECD06C;
 
 
     private GameGridView gameGridView;
@@ -69,13 +71,9 @@ public class GameGridAnimation extends View {
 
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
-        if (player == 1) {
-            paint.setColor(colorPlayer1);
-        } else if (player == 2) {
-            paint.setColor(colorPlayer2);
-        }
 
         if (animatePointer) {
+            paint.setColor(Color.BLUE);
             rect = new RectF(pointerPos-(sideOfTile/2), offsetY-sideOfTile, (sideOfTile + pointerPos)-(sideOfTile/2), offsetY);
             canvas.drawRoundRect(rect, 20, 20, paint);
 
@@ -83,11 +81,10 @@ public class GameGridAnimation extends View {
 
         } else if (animateNewMove) {
 
-            //Todo sätta dit rätt konstanter för färger eller skicka in en färg och sätta som player för att slippa if-sats.
-            if (player == 1) {
-                paint.setColor(colorPlayer1);
-            } else if (player == 2) {
-                paint.setColor(colorPlayer2);
+            if (player == PLAYER1) {
+                paint.setColor(RED);
+            } else if (player == PLAYER2) {
+                paint.setColor(YELLOW);
             }
             //Todo uträkning i temporära variabler istället
             rect = new RectF(col, currentPosY, (sideOfTile + col), (sideOfTile + currentPosY));
