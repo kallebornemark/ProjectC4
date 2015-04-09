@@ -70,6 +70,7 @@ public class GameGridView extends View {
 
     public void reset() {
         gameBoard = new int[7][6];
+        updateDisplay();
     }
 
     //För testning
