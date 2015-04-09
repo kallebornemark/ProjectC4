@@ -34,13 +34,14 @@ public class MatchmakingFragment extends Fragment {
         ClientController.getInstance().setMatchmakingFragment(this);
         initGraphics();
         final Button buttonFindOpponent = (Button)view.findViewById(R.id.buttonFindOpponent);
+        final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge);
         buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().requestGame(MATCHMAKING);
-//                final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge);
-//                progressBar.setEnabled(true);
-//                progressBar.setVisibility(View.VISIBLE);
+
+                progressBar.setEnabled(true);
+                progressBar.setVisibility(View.VISIBLE);
                 buttonFindOpponent.setEnabled(false);
                 buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
             }
