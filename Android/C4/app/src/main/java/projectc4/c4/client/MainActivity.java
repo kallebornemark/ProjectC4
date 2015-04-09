@@ -68,6 +68,8 @@ public class MainActivity extends FragmentActivity{
                 if (fm.getBackStackEntryCount() > 0) {
                     fm.popBackStack();
 
+                }else {
+                    finish();
                 }
             }
         });

@@ -38,9 +38,9 @@ public class MatchmakingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().requestGame(MATCHMAKING);
-                final ProgressBar progressBar = (ProgressBar)v.findViewById(R.id.progressBarLarge);
-                progressBar.setEnabled(true);
-                progressBar.setVisibility(View.VISIBLE);
+//                final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge);
+//                progressBar.setEnabled(true);
+//                progressBar.setVisibility(View.VISIBLE);
                 buttonFindOpponent.setEnabled(false);
                 buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
             }
@@ -62,6 +62,7 @@ public class MatchmakingFragment extends Fragment {
 //        final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBarLarge);
 //        progressBar.setEnabled(false);
 //        progressBar.setVisibility(View.INVISIBLE);
+
         ClientController.getInstance().setGameMode(MATCHMAKING);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
