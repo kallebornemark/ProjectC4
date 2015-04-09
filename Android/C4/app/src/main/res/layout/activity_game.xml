@@ -1,0 +1,238 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:id="@+id/relativeLayout">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/c4_logo_noline"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="true"
+        android:maxWidth="200dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:id="@+id/iconButtonsRL"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="11dp">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iconButtons"
+            android:layout_alignParentStart="false" android:layout_alignParentEnd="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentLeft="false"
+            >
+
+            <ImageButton
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/iconProfile"
+                android:adjustViewBounds="false"
+                android:background="@drawable/c4_profile"
+                android:layout_column="1"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:cropToPadding="false"
+                />
+
+            <ImageButton
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/iconSettings"
+                android:adjustViewBounds="false"
+                android:background="@drawable/c4_settings"
+                android:layout_column="2"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:cropToPadding="false"
+                />
+
+            <ImageButton
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/iconFriends"
+                android:adjustViewBounds="false"
+                android:background="@drawable/c4_friends"
+                android:layout_column="3"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:cropToPadding="false"
+                />
+
+        </GridLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:id="@+id/relativeLayoutPlayers" android:layout_below="@+id/iconButtonsRL"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="-6dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewPlayer1"
+            android:layout_marginLeft="-14dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/redStar"
+                android:src="@drawable/c4_star_red"
+                android:layout_alignRight="@+id/textViewPlayer1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxWidth="20dp"
+                android:alpha="50"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/yellowStar"
+                android:src="@drawable/c4_star_yellow"
+                android:layout_alignRight="@+id/textViewPlayer2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxWidth="20dp"
+                android:alpha="50"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:text="PLAYER 2"
+            android:textSize="20dp"
+            android:id="@+id/textViewPlayer2"
+            android:layout_gravity="left"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentTop="false" android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="6dp"/>
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:text="PLAYER 1"
+            android:textSize="20dp"
+            android:id="@+id/textViewPlayer1"
+            android:textAlignment="center"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentEnd="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="6dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vs"
+            android:id="@+id/textViewVs"
+            android:singleLine="false"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_centerHorizontal="true"
+            android:textSize="15dp"
+            android:layout_marginTop="7dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewPlayer1"
+            android:layout_marginTop="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="7dp">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@drawable/colorblack"
+                android:id="@+id/line"
+                android:layout_alignParentStart="false"
+                android:layout_above="@+id/gridLayoutCenter"
+                android:layout_alignParentEnd="false"
+
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relativeLayoutPlayers"
+        android:id="@+id/endOfGame"
+        android:layout_marginTop="7dp">
+
+
+
+        <Button android:layout_width="140dp" android:layout_height="35dp" android:text="Rematch"
+                android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
+                android:gravity="center_vertical|center_horizontal"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:padding="0dp"/>
+    </RelativeLayout>
+
+    <projectc4.c4.client.GameGridView
+        android:id="@+id/gameGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayoutPlayers" />
+
+    <projectc4.c4.client.GameGridAnimation
+        android:id="@+id/gameGridAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/gameGridView" />
+
+    <projectc4.c4.client.GameGridForeground
+        android:id="@+id/gameGridForeground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayoutPlayers" />
+    <Button
+
+        android:text="New Game"
+        android:id="@+id/buttonNewGame"
+        android:enabled="false"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignParentEnd="false"
+
+        android:visibility="invisible"
+        android:padding="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relativeLayoutPlayers"
+        android:layout_marginTop="7dp" />
+
+</RelativeLayout>

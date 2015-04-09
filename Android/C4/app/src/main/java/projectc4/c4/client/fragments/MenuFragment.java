@@ -1,11 +1,10 @@
-package projectc4.c4.client;
+package projectc4.c4.client.fragments;
 
 
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -16,10 +15,7 @@ import android.widget.Button;
 
 
 import projectc4.c4.R;
-import projectc4.c4.activity.GameActivity;
 import projectc4.c4.util.C4Color;
-
-import static projectc4.c4.util.C4Constants.LOCAL;
 
 public class MenuFragment extends Fragment {
 

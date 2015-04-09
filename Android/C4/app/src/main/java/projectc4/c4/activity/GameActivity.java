@@ -3,7 +3,6 @@ package projectc4.c4.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,8 +22,6 @@ import projectc4.c4.util.C4Color;
 import projectc4.c4.client.ClientController;
 import static projectc4.c4.util.C4Constants.*;
 
-import java.util.ArrayList;
-
 
 public class GameActivity extends Activity {
     private ClientController clientController;
@@ -35,7 +31,7 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         clientController = ClientController.getInstance();
 
         GameGridForeground gameGridForeground = (GameGridForeground)findViewById(R.id.gameGridForeground);
