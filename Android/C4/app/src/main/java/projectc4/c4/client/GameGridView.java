@@ -143,7 +143,7 @@ public class GameGridView extends View {
 
         RectF rect = new RectF(offsetX - gridSpacing, offsetY - gridSpacing, offsetX + (gameBoard[0].length * (sideOfTile + gridSpacing)), offsetY + (gameBoard.length * (sideOfTile + gridSpacing)));
         //Todo sätta rätt gridspacingfärg
-        paint.setColor(Color.DKGRAY);
+        paint.setColor(BLACK);
         canvas.drawRoundRect(rect, 20, 20, paint);
         System.out.println("____________________________________________________________________________________");
         System.out.println("STORLEK:\nwidth: " + getWidth() + "\nHeight: " + getHeight() + "\nsideOfTile: " + sideOfTile + "\noffsetX: " + offsetX + "\noffsetY: " + offsetY);

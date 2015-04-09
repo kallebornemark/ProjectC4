@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import static projectc4.c4.util.C4Color.*;
 
 /**
  * @author Jimmy Maksymiw
@@ -141,7 +142,7 @@ public class GameGridForeground extends View {
                     paint.setStyle(Paint.Style.STROKE);
 
                     //Todo sätta rätt gridspacingfärg
-                    paint.setColor(Color.DKGRAY);
+                    paint.setColor(BLACK);
                     //Todo uträkning i temporära variabler istället
                     RectF rectF = new RectF(posX-(gridSpacing /2), posY-(gridSpacing /2), (sideOfTile + posX)+(gridSpacing /2), (sideOfTile + posY)+(gridSpacing /2));
                     canvas.drawRoundRect(rectF, 20, 20, paint);
