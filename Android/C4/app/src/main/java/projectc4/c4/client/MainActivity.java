@@ -27,7 +27,7 @@ public class MainActivity extends FragmentActivity{
 
         if (savedInstanceState == null) {
             this.menuFragment = new MenuFragment();
-            getFragmentManager().beginTransaction().add(R.id.container, menuFragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().add(R.id.container, menuFragment, "menu").addToBackStack(null).commit();
 
         }
     }
@@ -64,13 +64,14 @@ public class MainActivity extends FragmentActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 FragmentManager fm = getFragmentManager();
-//                fm.beginTransaction().replace(R.id.container, menuFragment).commit();
-                if (fm.getBackStackEntryCount() > 0) {
+                if (fm.findFragmentById(R.id.container) instanceof MenuFragment) {
+                    finish();
+                }else if (fm.getBackStackEntryCount() > 0) {
                     fm.popBackStack();
-
                 }else {
                     finish();
                 }
+
             }
         });
 
