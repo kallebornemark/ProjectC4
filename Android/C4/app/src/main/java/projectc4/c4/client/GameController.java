@@ -53,7 +53,7 @@ public class GameController {
     public void newMove(int x) {
         // Move from local player
         System.out.println("GameController - newMove(" + x + ")");
-        if(playerTurn == clientController.getPlayer() && size[x] < 8) {
+        if(playerTurn == clientController.getPlayer() && size[x] < gameGridView.getBoardHeight()) {
             System.out.println("GameController: newMove accepted");
             row = (gameGridView.getBoardHeight() - 1) - (size[x]);
             col = x;

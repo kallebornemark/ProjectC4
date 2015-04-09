@@ -54,6 +54,7 @@ public class MenuActivity extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                // Intent intent = new Intent(MenuActivity.this, MatchmakingActivity.class);
 //                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);       // <-------- BACKUPS EMILS!
 //                intent.putExtra("clientController",clientController);

@@ -1,11 +1,9 @@
 package projectc4.c4.client;
 
-import java.util.ArrayList;
 
 import projectc4.c4.activity.GameActivity;
-import projectc4.c4.activity.MatchmakingActivity;
 import projectc4.c4.client.fragments.GameFragment;
-import projectc4.c4.util.C4Color;
+import projectc4.c4.client.fragments.MatchmakingFragment;
 
 import static projectc4.c4.util.C4Constants.*;
 
@@ -16,11 +14,10 @@ public class ClientController {
     private static ClientController instance;
     private GameController gameController;
     private Client client;
-    private GameActivity gameActivity;
-    private MatchmakingActivity matchmakingActivity;
     private int player = PLAYER1;
     private int gameMode;
     private GameFragment gameFragment;
+    private MatchmakingFragment matchmakingFragment;
 //    public boolean gameIsReady = false;
 
     public static void initInstance()
@@ -59,8 +56,8 @@ public class ClientController {
         this.gameFragment = gameFragment;
     }
 
-    public void setMatchmakingActivity(MatchmakingActivity matchmakingActivity) {
-        this.matchmakingActivity = matchmakingActivity;
+    public void setMatchmakingFragment(MatchmakingFragment matchmakingFragment) {
+        this.matchmakingFragment = matchmakingFragment;
     }
 
     public void connect() {
@@ -71,10 +68,6 @@ public class ClientController {
 //        client.connect("10.1.3.0", 3450);     // Kalles laptop
         client.connect("172.20.10.2", 3450);    // Kalles laptop #2
 
-    }
-
-    public GameActivity getGameActivity() {
-        return gameActivity;
     }
 
     public void newMove(int column) {
@@ -93,7 +86,7 @@ public class ClientController {
     }
 
     public void startGameUI() {
-        matchmakingActivity.startGameUI();
+        matchmakingFragment.startGameUI();
     }
 
     public void drawTile(int pos, int player) {
