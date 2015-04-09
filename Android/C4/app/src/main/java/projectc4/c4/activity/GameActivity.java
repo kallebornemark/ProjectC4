@@ -180,12 +180,12 @@ public class GameActivity extends Activity {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                clientController.newGame(LOCAL);
+                clientController.newGame(LOCAL);
                 buttonNewGame.setEnabled(false);
                 buttonNewGame.setVisibility(View.INVISIBLE);
 //                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
 //                textViewWinner.setText("");
-                clientController.newGame(LOCAL);
+//                clientController.newGame(LOCAL);
                 RelativeLayout relativeLayoutPlayers = (RelativeLayout)findViewById(R.id.relativeLayoutPlayers);
                 relativeLayoutPlayers.setVisibility(View.VISIBLE);
                 highlightPlayer(PLAYER1);

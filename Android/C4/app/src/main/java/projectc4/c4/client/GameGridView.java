@@ -185,7 +185,6 @@ public class GameGridView extends View {
             gameGridAnimation.animatePointer(pointerPos);
         }
         if (pointerPos < tmpPos-15 || pointerPos > tmpPos+15 ){
-            System.out.println("WAAH?");
             gameGridAnimation.animatePointer(pointerPos);
             tmpPos = pointerPos;
         }
