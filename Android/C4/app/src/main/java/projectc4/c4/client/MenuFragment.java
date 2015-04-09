@@ -38,6 +38,8 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
 
+        // Init listeners
+
         Button buttonLocalGame = (Button)view.findViewById(R.id.localGame);
         buttonLocalGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,7 @@ public class MenuFragment extends Fragment {
 
 
         // InitGraphcs
+
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
         Button button1 = (Button)view.findViewById(R.id.localGame);
