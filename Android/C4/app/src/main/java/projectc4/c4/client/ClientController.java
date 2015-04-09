@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import projectc4.c4.activity.GameActivity;
 import projectc4.c4.activity.MatchmakingActivity;
+import projectc4.c4.client.fragments.GameFragment;
 import projectc4.c4.util.C4Color;
 
 import static projectc4.c4.util.C4Constants.*;
@@ -19,6 +20,7 @@ public class ClientController {
     private MatchmakingActivity matchmakingActivity;
     private int player = PLAYER1;
     private int gameMode;
+    private GameFragment gameFragment;
 //    public boolean gameIsReady = false;
 
     public static void initInstance()
@@ -53,8 +55,8 @@ public class ClientController {
 //        gameController = new GameController(this);
     }
 
-    public void setActivity(GameActivity gameActivity) {
-        this.gameActivity = gameActivity;
+    public void setFragment(GameFragment gameFragment) {
+        this.gameFragment = gameFragment;
     }
 
     public void setMatchmakingActivity(MatchmakingActivity matchmakingActivity) {
@@ -100,7 +102,7 @@ public class ClientController {
 
 
 //        gameActivity.drawTile(pos, player);
-        System.out.println("Drawtile: drawTile(" + pos + "," + player+")");
+        System.out.println("Drawtile: drawTile(" + pos + "," + player + ")");
     }
 
 //    public void highLightTiles(ArrayList<Integer> pos) {
@@ -109,7 +111,7 @@ public class ClientController {
 
 
     public void changeHighlightedPlayer(int player) {
-        gameActivity.highlightPlayer(player);
+        gameFragment.highlightPlayer(player);
     }
 
     public void winner(int player) {
@@ -128,14 +130,14 @@ public class ClientController {
         }*/
 
         if (gameMode == MATCHMAKING) {
-            gameActivity.promptRematch();
+            gameFragment.promptRematch();
         } else if (gameMode == LOCAL) {
-            gameActivity.setNewGame();
+            gameFragment.setNewGame();
         }
     }
 
     public void draw() {
-        gameActivity.setTextViewWinner("It's a draw!");
+        gameFragment.setTextViewWinner("It's a draw!");
     }
 
 /*    // New Local

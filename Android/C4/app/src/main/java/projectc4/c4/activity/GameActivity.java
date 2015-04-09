@@ -44,7 +44,7 @@ public class GameActivity extends Activity {
 
 
 
-        clientController.setActivity(this);
+//        clientController.setFragment(this);
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
         initGraphics(); // !! Viktigt att denna körs innan newGame() som kommer här under !!

@@ -15,12 +15,17 @@ import android.widget.Button;
 
 
 import projectc4.c4.R;
+import projectc4.c4.client.ClientController;
 import projectc4.c4.util.C4Color;
+
+import static projectc4.c4.util.C4Constants.LOCAL;
 
 public class MenuFragment extends Fragment {
 
-    public MenuFragment() {
+    private GameFragment gameFragment;
 
+    public MenuFragment() {
+        this.gameFragment = new GameFragment();
     }
 
     @Override
@@ -40,10 +45,10 @@ public class MenuFragment extends Fragment {
         buttonLocalGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ClientController.getInstance().setGameMode(LOCAL);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, new GameFragment());
-                transaction.commit();
+                transaction.replace(R.id.container, gameFragment).commit();
 
             }
         });
