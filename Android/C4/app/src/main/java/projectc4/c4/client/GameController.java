@@ -9,7 +9,7 @@ import static projectc4.c4.util.C4Constants.*;
 public class GameController {
     private ClientController clientController;
     private GameGridView gameGridView;
-    private int[] size = new int[6];
+    private int[] size = new int[7];
     private int playerTurn;
     private int row, col;
     private int playedTiles;
@@ -53,7 +53,7 @@ public class GameController {
     public void newMove(int x) {
         // Move from local player
         System.out.println("GameController - newMove(" + x + ")");
-        if(playerTurn == clientController.getPlayer() && size[x] < 7) {
+        if(playerTurn == clientController.getPlayer() && size[x] < 8) {
             System.out.println("GameController: newMove accepted");
             row = (gameGridView.getBoardHeight() - 1) - (size[x]);
             col = x;

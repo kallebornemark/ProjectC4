@@ -19,11 +19,7 @@ import projectc4.c4.client.GameGridAnimation;
 import projectc4.c4.client.GameGridForeground;
 import projectc4.c4.client.GameGridView;
 import projectc4.c4.util.C4Color;
-
-import static projectc4.c4.util.C4Constants.LOCAL;
-import static projectc4.c4.util.C4Constants.MATCHMAKING;
-import static projectc4.c4.util.C4Constants.PLAYER1;
-import static projectc4.c4.util.C4Constants.PLAYER2;
+import static projectc4.c4.util.C4Constants.*;
 
 
 /**

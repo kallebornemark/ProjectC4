@@ -22,7 +22,7 @@ public class GameGridView extends View {
 //    gameGridView.addViews((GameGridAnimation)findViewById(R.id.gameGridAnimation), (GameGridForeground)findViewById(R.id.gameGridForeground));
 
 
-    private int[][] gameBoard = new int[7][6];
+    private int[][] gameBoard = new int[6][7];
 
 
     // För att nå GameGridAnimation & GameGridForeground
@@ -69,7 +69,7 @@ public class GameGridView extends View {
     }
 
     public void reset() {
-        gameBoard = new int[7][6];
+        gameBoard = new int[6][7];
         updateDisplay();
     }
 
