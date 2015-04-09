@@ -2,7 +2,6 @@ package projectc4.c4.client;
 
 import java.util.ArrayList;
 
-import android.widget.Button;
 import projectc4.c4.activity.GameActivity;
 import projectc4.c4.activity.MatchmakingActivity;
 import projectc4.c4.util.C4Color;
@@ -14,7 +13,7 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class ClientController {
     private static ClientController instance;
-    private static GameController gameController;
+    private GameController gameController;
     private Client client;
     private GameActivity gameActivity;
     private MatchmakingActivity matchmakingActivity;
@@ -28,8 +27,12 @@ public class ClientController {
         {
             // Create the instance
             instance = new ClientController();
-            gameController = new GameController(instance);
+//            gameController = new GameController(instance);
         }
+    }
+
+    public void setGamecontroller(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public void setGameMode(int gameMode) {
@@ -96,13 +99,13 @@ public class ClientController {
 //        System.out.println("Drawtile: changeHighlight()");
 
 
-        gameActivity.drawTile(pos, player);
+//        gameActivity.drawTile(pos, player);
         System.out.println("Drawtile: drawTile(" + pos + "," + player+")");
     }
 
-    public void highLightTiles(ArrayList<Integer> pos) {
-        gameActivity.highlightTiles(pos);
-    }
+//    public void highLightTiles(ArrayList<Integer> pos) {
+//        gameActivity.highlightTiles(pos);
+//    }
 
 
     public void changeHighlightedPlayer(int player) {
@@ -145,16 +148,16 @@ public class ClientController {
     public void newGame(int gamemode) {
         gameController.newGame(gamemode);
 
-        for (int i = 0; i < 42; i++) {
-            gameActivity.getGrid().getChildAt(i).setBackgroundColor(C4Color.WHITE);
-        }
+//        for (int i = 0; i < 42; i++) {
+//            gameActivity.getGrid().getChildAt(i).setBackgroundColor(C4Color.WHITE);
+//        }
 
-        ArrayList<Button> buttonArrayList;
-        buttonArrayList = gameActivity.getButtonArrayList();
+//        ArrayList<Button> buttonArrayList;
+//        buttonArrayList = gameActivity.getButtonArrayList();
 
-        for (int i = 0; i < buttonArrayList.size(); i++) {
-            buttonArrayList.get(i).setEnabled(true);
-        }
+//        for (int i = 0; i < buttonArrayList.size(); i++) {
+//            buttonArrayList.get(i).setEnabled(true);
+//        }
     }
 
     public void requestRematch() {
