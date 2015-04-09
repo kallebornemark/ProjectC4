@@ -76,13 +76,13 @@ public class ClientController {
     }
 
     public void newMove(int column) {
-        if (player == getPlayerTurn()) {
-            System.out.println("Clientcontrollerns newLocalMove " + column);
-            gameController.newMove(column);
-            if (gameMode == MATCHMAKING) {
+//        if (player == getPlayerTurn()) {
+//            System.out.println("Clientcontrollerns newLocalMove " + column);
+//            gameController.newMove(column);
+//            if (gameMode == MATCHMAKING) {
                 client.newMove(column);
-            }
-        }
+//            }
+//        }
     }
 
     public void newIncomingMove(int column) {

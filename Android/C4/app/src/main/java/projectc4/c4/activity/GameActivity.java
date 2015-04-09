@@ -38,10 +38,13 @@ public class GameActivity extends Activity {
         setContentView(R.layout.activity_main);
         clientController = ClientController.getInstance();
 
+        GameGridForeground gameGridForeground = (GameGridForeground)findViewById(R.id.gameGridForeground);
         GameGridView gameGridView = (GameGridView)findViewById(R.id.gameGridView);
         gameGridView.setFocusable(true);
-        gameGridView.addViews((GameGridAnimation)findViewById(R.id.gameGridAnimation), (GameGridForeground)findViewById(R.id.gameGridForeground));
-        clientController.setGamecontroller(new GameController(clientController, gameGridView));
+        gameGridView.addViews((GameGridAnimation)findViewById(R.id.gameGridAnimation),gameGridForeground);
+        GameController gameController = new GameController(clientController, gameGridView);
+        clientController.setGamecontroller(gameController);
+        gameGridForeground.setGameController(gameController);
 
 
 

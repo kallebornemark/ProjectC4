@@ -86,6 +86,9 @@ public class GameController {
                     clientController.setPlayer(playerTurn);
                 }
             }
+            if(gameMode == MATCHMAKING) {
+                clientController.newMove(x);
+            }
         }
     }
 

@@ -23,6 +23,7 @@ public class GameGridForeground extends View {
     private int gridSpacing;
     private int rows;
     private int cols;
+    private GameController gameController;
 //    private int clickedCol = - 1;
 
     public GameGridForeground(Context context) {
@@ -97,7 +98,8 @@ public class GameGridForeground extends View {
                         if (touchPosX >= offsetX + gridSpacing + ((gridSpacing + sideOfTile) * col) && touchPosX <= offsetX + gridSpacing + sideOfTile + ((sideOfTile + gridSpacing) * col)) {
                             System.out.println("onTouchEvent: touchPosX: " + touchPosX + "    -    col = " + (col));
 //                            clickedCol = col;
-                            gameGridView.randomAnimation(col);
+//                            gameGridView.randomAnimation(col);
+                            gameController.newMove(col);
 //                            performClick();
                             break;
                         }
@@ -153,6 +155,10 @@ public class GameGridForeground extends View {
     public void paintForeground(){
         this.backgroundPainted = true;
         updateDisplay();
+    }
+    
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
     }
 
     @Override

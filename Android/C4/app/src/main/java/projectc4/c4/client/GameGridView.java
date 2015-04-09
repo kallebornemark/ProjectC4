@@ -100,10 +100,12 @@ public class GameGridView extends View {
 
     public void setElement(int row, int col, int player) {
         this.gameBoard[row][col] = player;
-        updateDisplay();
+        gameGridAnimation.animateNewMove(col, row, player);
     }
 
-    private void updateDisplay() {
+
+
+    public void updateDisplay() {
         this.post(new Runnable() {
             public void run() {
                 superInvalidate();
