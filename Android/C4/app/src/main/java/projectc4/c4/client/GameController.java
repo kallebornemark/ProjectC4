@@ -15,15 +15,13 @@ public class GameController {
     private int playedTiles;
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
-    private int opponent, player;
 
-    public GameController(ClientController clientController) {
+    public GameController(ClientController clientController, GameGridView gameGridView) {
         playerTurn = PLAYER1;
         this.clientController = clientController;
         //Todo fixa implementering
 //        gameGridView = new GameGrid();
-        opponent = clientController.getOpponent();
-        player = clientController.getPlayer();
+        this.gameGridView = gameGridView;
     }
 
     public int getPlayerTurn() {
@@ -59,13 +57,25 @@ public class GameController {
             System.out.println("GameController: newMove accepted");
             row = (gameGridView.getWidth() - 1) - (size[x]);
             col = x;
+
+
             gameGridView.setElement((gameGridView.getWidth() - 1) - (size[x]++), x, playerTurn);
-            clientController.drawTile((((gameGridView.getWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+//            clientController.drawTile((((gameGridView.getWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+
+
+
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerTurn);
-                clientController.highLightTiles(winningTiles);
+
+                /*
+                    TODO Göra om highlighttiles metoden
+                 */
+//                clientController.highLightTiles(winningTiles);
+
+
+
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();
@@ -86,8 +96,12 @@ public class GameController {
             System.out.println("GameController: newIncomingMove accepted");
             row = (gameGridView.getHeight() - 1) - (size[x]);
             col = x;
+
+
             gameGridView.setElement((gameGridView.getHeight() - 1) - (size[x]++), x, playerTurn);
-            clientController.drawTile((((gameGridView.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+//            clientController.drawTile((((gameGridView.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+
+
             System.out.println("GameController - newIncomingMove: DrawTile by " + playerTurn);
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
