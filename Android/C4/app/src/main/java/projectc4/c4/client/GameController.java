@@ -8,21 +8,20 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameController {
     private ClientController clientController;
-    private GameGrid gameGrid;
+    private GameGridView gameGridView;
     private int[] size = new int[6];
     private int playerTurn;
     private int row, col;
     private int playedTiles;
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
-    private int opponent, player;
 
-    public GameController(ClientController clientController) {
+    public GameController(ClientController clientController, GameGridView gameGridView) {
         playerTurn = PLAYER1;
         this.clientController = clientController;
-        gameGrid = new GameGrid();
-        opponent = clientController.getOpponent();
-        player = clientController.getPlayer();
+        //Todo fixa implementering
+//        gameGridView = new GameGrid();
+        this.gameGridView = gameGridView;
     }
 
     public int getPlayerTurn() {
@@ -38,7 +37,7 @@ public class GameController {
         for (int i = 0; i < size.length; i++) {
             size[i] = 0;
         }
-        gameGrid.reset();
+        gameGridView.reset();
         winningTiles.clear();
         this.gameMode = gameMode;
         /*
@@ -56,15 +55,27 @@ public class GameController {
         System.out.println("GameController - newMove(" + x + ")");
         if(playerTurn == clientController.getPlayer() && size[x] < 7) {
             System.out.println("GameController: newMove accepted");
-            row = (gameGrid.getHeight() - 1) - (size[x]);
+            row = (gameGridView.getWidth() - 1) - (size[x]);
             col = x;
-            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerTurn);
-            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+
+
+            gameGridView.setElement((gameGridView.getWidth() - 1) - (size[x]++), x, playerTurn);
+//            clientController.drawTile((((gameGridView.getWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+
+
+
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerTurn);
-                clientController.highLightTiles(winningTiles);
+
+                /*
+                    TODO Göra om highlighttiles metoden
+                 */
+//                clientController.highLightTiles(winningTiles);
+
+
+
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();
@@ -75,6 +86,9 @@ public class GameController {
                     clientController.setPlayer(playerTurn);
                 }
             }
+            if(gameMode == MATCHMAKING) {
+                clientController.newMove(x);
+            }
         }
     }
 
@@ -83,16 +97,20 @@ public class GameController {
         System.out.println("GameController - newIncomingMove(" + x + ")");
         if(size[x] < 7) {
             System.out.println("GameController: newIncomingMove accepted");
-            row = (gameGrid.getHeight() - 1) - (size[x]);
+            row = (gameGridView.getHeight() - 1) - (size[x]);
             col = x;
-            gameGrid.setElement((gameGrid.getHeight() - 1) - (size[x]++), x, playerTurn);
-            clientController.drawTile((((gameGrid.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+
+
+            gameGridView.setElement((gameGridView.getHeight() - 1) - (size[x]++), x, playerTurn);
+//            clientController.drawTile((((gameGridView.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+
+
             System.out.println("GameController - newIncomingMove: DrawTile by " + playerTurn);
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerTurn);
-                clientController.highLightTiles(winningTiles);
+//                clientController.highLightTiles(winningTiles);
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();
@@ -115,11 +133,11 @@ public class GameController {
 
     private boolean checkHorizontal() {
         int counter = 1;
-        for (int i = col; i < gameGrid.getLength(); i++) {
-            if (i == gameGrid.getLength() - 1 || gameGrid.getElement(row, i + 1) != playerTurn) {
+        for (int i = col; i < gameGridView.getWidth(); i++) {
+            if (i == gameGridView.getWidth() - 1 || gameGridView.getElement(row, i + 1) != playerTurn) {
                 counter = 1;
                 for (int j = i; j >= 0; j--) {
-                    if (j == 0 || gameGrid.getElement(row, j - 1) != playerTurn) {
+                    if (j == 0 || gameGridView.getElement(row, j - 1) != playerTurn) {
                         return false;
                     } else {
                         counter++;
@@ -151,8 +169,8 @@ public class GameController {
 
     private boolean checkVertical(){
         int counter = 1;
-        for(int x = row; x < gameGrid.getHeight(); x++) {
-            if(x == gameGrid.getHeight() - 1 || gameGrid.getElement(x + 1, col) != playerTurn) {
+        for(int x = row; x < gameGridView.getHeight(); x++) {
+            if(x == gameGridView.getHeight() - 1 || gameGridView.getElement(x + 1, col) != playerTurn) {
                 return false;
             } else {
                 counter++;
@@ -171,11 +189,11 @@ public class GameController {
 
     private boolean checkDiagonalRight() {
         int counter = 1;
-        for(int i = col,j = row; i < gameGrid.getLength() && j < gameGrid.getHeight(); i++, j++) {
-            if(i == gameGrid.getLength() - 1 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i + 1) != playerTurn) {
+        for(int i = col,j = row; i < gameGridView.getWidth() && j < gameGridView.getHeight(); i++, j++) {
+            if(i == gameGridView.getWidth() - 1 || j == gameGridView.getHeight() -1 || gameGridView.getElement(j + 1, i + 1) != playerTurn) {
                 counter = 1;
                 for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
-                    if(x == 0 || y == 0 || gameGrid.getElement(y - 1, x - 1) != playerTurn) {
+                    if(x == 0 || y == 0 || gameGridView.getElement(y - 1, x - 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;
@@ -207,11 +225,11 @@ public class GameController {
 
     private boolean checkDiagonalLeft(){
         int counter = 1;
-        for(int i = col,j = row; i >= 0 && j < gameGrid.getHeight(); i--, j++) {
-            if(i == 0 || j == gameGrid.getHeight() -1 || gameGrid.getElement(j + 1, i - 1) != playerTurn) {
+        for(int i = col,j = row; i >= 0 && j < gameGridView.getHeight(); i--, j++) {
+            if(i == 0 || j == gameGridView.getHeight() -1 || gameGridView.getElement(j + 1, i - 1) != playerTurn) {
                 counter = 1;
-                for(int x = i, y = j; x < gameGrid.getLength() && y >= 0; x++, y--) {
-                    if(x == gameGrid.getLength() - 1 || y == 0 || gameGrid.getElement(y - 1, x + 1) != playerTurn) {
+                for(int x = i, y = j; x < gameGridView.getWidth() && y >= 0; x++, y--) {
+                    if(x == gameGridView.getWidth() - 1 || y == 0 || gameGridView.getElement(y - 1, x + 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;
