@@ -55,12 +55,12 @@ public class GameController {
         System.out.println("GameController - newMove(" + x + ")");
         if(playerTurn == clientController.getPlayer() && size[x] < 7) {
             System.out.println("GameController: newMove accepted");
-            row = (gameGridView.getWidth() - 1) - (size[x]);
+            row = (gameGridView.getBoardHeight() - 1) - (size[x]);
             col = x;
 
 
-            gameGridView.setElement((gameGridView.getWidth() - 1) - (size[x]++), x, playerTurn);
-//            clientController.drawTile((((gameGridView.getWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (size[x]++), x, playerTurn);
+//            clientController.drawTile((((gameGridView.getBoardWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
 
 
 
@@ -97,12 +97,12 @@ public class GameController {
         System.out.println("GameController - newIncomingMove(" + x + ")");
         if(size[x] < 7) {
             System.out.println("GameController: newIncomingMove accepted");
-            row = (gameGridView.getHeight() - 1) - (size[x]);
+            row = (gameGridView.getBoardHeight() - 1) - (size[x]);
             col = x;
 
 
-            gameGridView.setElement((gameGridView.getHeight() - 1) - (size[x]++), x, playerTurn);
-//            clientController.drawTile((((gameGridView.getHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (size[x]++), x, playerTurn);
+//            clientController.drawTile((((gameGridView.getBoardHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
 
 
             System.out.println("GameController - newIncomingMove: DrawTile by " + playerTurn);
@@ -133,8 +133,8 @@ public class GameController {
 
     private boolean checkHorizontal() {
         int counter = 1;
-        for (int i = col; i < gameGridView.getWidth(); i++) {
-            if (i == gameGridView.getWidth() - 1 || gameGridView.getElement(row, i + 1) != playerTurn) {
+        for (int i = col; i < gameGridView.getBoardWidth(); i++) {
+            if (i == gameGridView.getBoardWidth() - 1 || gameGridView.getElement(row, i + 1) != playerTurn) {
                 counter = 1;
                 for (int j = i; j >= 0; j--) {
                     if (j == 0 || gameGridView.getElement(row, j - 1) != playerTurn) {
@@ -169,8 +169,8 @@ public class GameController {
 
     private boolean checkVertical(){
         int counter = 1;
-        for(int x = row; x < gameGridView.getHeight(); x++) {
-            if(x == gameGridView.getHeight() - 1 || gameGridView.getElement(x + 1, col) != playerTurn) {
+        for(int x = row; x < gameGridView.getBoardHeight(); x++) {
+            if(x == gameGridView.getBoardHeight() - 1 || gameGridView.getElement(x + 1, col) != playerTurn) {
                 return false;
             } else {
                 counter++;
@@ -189,8 +189,8 @@ public class GameController {
 
     private boolean checkDiagonalRight() {
         int counter = 1;
-        for(int i = col,j = row; i < gameGridView.getWidth() && j < gameGridView.getHeight(); i++, j++) {
-            if(i == gameGridView.getWidth() - 1 || j == gameGridView.getHeight() -1 || gameGridView.getElement(j + 1, i + 1) != playerTurn) {
+        for(int i = col,j = row; i < gameGridView.getBoardWidth() && j < gameGridView.getBoardHeight(); i++, j++) {
+            if(i == gameGridView.getBoardWidth() - 1 || j == gameGridView.getBoardHeight() -1 || gameGridView.getElement(j + 1, i + 1) != playerTurn) {
                 counter = 1;
                 for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
                     if(x == 0 || y == 0 || gameGridView.getElement(y - 1, x - 1) != playerTurn) {
@@ -225,11 +225,11 @@ public class GameController {
 
     private boolean checkDiagonalLeft(){
         int counter = 1;
-        for(int i = col,j = row; i >= 0 && j < gameGridView.getHeight(); i--, j++) {
-            if(i == 0 || j == gameGridView.getHeight() -1 || gameGridView.getElement(j + 1, i - 1) != playerTurn) {
+        for(int i = col,j = row; i >= 0 && j < gameGridView.getBoardHeight(); i--, j++) {
+            if(i == 0 || j == gameGridView.getBoardHeight() -1 || gameGridView.getElement(j + 1, i - 1) != playerTurn) {
                 counter = 1;
-                for(int x = i, y = j; x < gameGridView.getWidth() && y >= 0; x++, y--) {
-                    if(x == gameGridView.getWidth() - 1 || y == 0 || gameGridView.getElement(y - 1, x + 1) != playerTurn) {
+                for(int x = i, y = j; x < gameGridView.getBoardWidth() && y >= 0; x++, y--) {
+                    if(x == gameGridView.getBoardWidth() - 1 || y == 0 || gameGridView.getElement(y - 1, x + 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;

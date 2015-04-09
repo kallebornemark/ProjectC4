@@ -190,20 +190,7 @@
         android:id="@+id/endOfGame"
         android:layout_marginTop="7dp">
 
-        <Button
 
-            android:text="New Game"
-            android:id="@+id/buttonNewGame"
-            android:enabled="false"
-            android:layout_width="140dp"
-            android:layout_height="35dp"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentEnd="false"
-
-            android:visibility="invisible"
-            android:padding="0dp"/>
 
         <Button android:layout_width="140dp" android:layout_height="35dp" android:text="Rematch"
                 android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
@@ -230,6 +217,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayoutPlayers" />
+    <Button
 
+        android:text="New Game"
+        android:id="@+id/buttonNewGame"
+        android:enabled="false"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignParentEnd="false"
+
+        android:visibility="invisible"
+        android:padding="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relativeLayoutPlayers"
+        android:layout_marginTop="7dp" />
 
 </RelativeLayout>

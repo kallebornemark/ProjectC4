@@ -7,8 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
-
 import java.util.Random;
+import static projectc4.c4.util.C4Color.*;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Jimmy Maksymiw
@@ -27,9 +28,6 @@ public class GameGridView extends View {
     // För att nå GameGridAnimation & GameGridForeground
     private GameGridAnimation gameGridAnimation;
     private GameGridForeground gameGridForeground;
-
-    //Todo ändra till konstanter
-    private int colorPlayer1 = 0xFFF67E59, colorPlayer2 = 0xFFECD06C;
 
     private int gridSpacing = 10;
     private int sideOfTile;
@@ -72,6 +70,7 @@ public class GameGridView extends View {
 
     public void reset() {
         gameBoard = new int[7][6];
+        updateDisplay();
     }
 
     //För testning
@@ -152,13 +151,12 @@ public class GameGridView extends View {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
 
-                //Todo sätta dit rätt konstanter för färger
                 if (gameBoard[row][col] == 0) {
-                    paint.setColor(0xFFa59484);
-                } else if (gameBoard[row][col] == 1) {
-                    paint.setColor(colorPlayer1);
-                } else if (gameBoard[row][col] == 2) {
-                    paint.setColor(colorPlayer2);
+                    paint.setColor(LIGHTGRAY);
+                } else if (gameBoard[row][col] == PLAYER1) {
+                    paint.setColor(RED);
+                } else if (gameBoard[row][col] == PLAYER2) {
+                    paint.setColor(YELLOW);
                 }
 
                 int posX = (col * (sideOfTile + gridSpacing)) + offsetX;
@@ -187,7 +185,6 @@ public class GameGridView extends View {
             gameGridAnimation.animatePointer(pointerPos);
         }
         if (pointerPos < tmpPos-15 || pointerPos > tmpPos+15 ){
-            System.out.println("WAAH?");
             gameGridAnimation.animatePointer(pointerPos);
             tmpPos = pointerPos;
         }
