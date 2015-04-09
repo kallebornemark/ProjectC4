@@ -23,7 +23,7 @@ public class MatchmakingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
-        ClientController.getInstance().setMatchmakingActivity(this);
+//        ClientController.getInstance().setMatchmakingFragment(this);
         initGraphics();
         Intent intentThatStartedThisActivity = getIntent();
 //        this.clientController = (ClientController)intentThatStartedThisActivity.getSerializableExtra("clientController");

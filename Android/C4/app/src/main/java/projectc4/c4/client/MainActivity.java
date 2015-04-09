@@ -4,6 +4,7 @@ package projectc4.c4.client;
 
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 
@@ -17,6 +18,7 @@ import projectc4.c4.client.fragments.MenuFragment;
 
 public class MainActivity extends FragmentActivity{
     private MenuFragment menuFragment;
+    private GameFragment gameFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,8 @@ public class MainActivity extends FragmentActivity{
 
         if (savedInstanceState == null) {
             this.menuFragment = new MenuFragment();
-            getFragmentManager().beginTransaction().add(R.id.container, menuFragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.container, menuFragment).addToBackStack(null).commit();
+
         }
     }
 
@@ -60,7 +63,12 @@ public class MainActivity extends FragmentActivity{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getFragmentManager().beginTransaction().replace(R.id.container, menuFragment).commit();
+                FragmentManager fm = getFragmentManager();
+//                fm.beginTransaction().replace(R.id.container, menuFragment).commit();
+                if (fm.getBackStackEntryCount() > 0) {
+                    fm.popBackStack();
+
+                }
             }
         });
 
@@ -74,6 +82,16 @@ public class MainActivity extends FragmentActivity{
         });
         AlertDialog alert=builder.create();
         alert.show();
+    }
+
+
+
+    public GameFragment getGameFragment() {
+        return gameFragment;
+    }
+    
+    public void setGameFragment(GameFragment gameFragment) {
+        this.gameFragment = gameFragment;
     }
 
 }

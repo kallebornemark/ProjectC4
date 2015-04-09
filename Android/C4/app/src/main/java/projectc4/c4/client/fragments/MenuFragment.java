@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
+import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
 
 import static projectc4.c4.util.C4Constants.LOCAL;
@@ -46,9 +47,10 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientController.getInstance().setGameMode(LOCAL);
+
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, gameFragment).commit();
+                transaction.replace(R.id.container, gameFragment).addToBackStack(null).commit();
 
             }
         });
@@ -57,7 +59,9 @@ public class MenuFragment extends Fragment {
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack(null).commit();
             }
         });
 
