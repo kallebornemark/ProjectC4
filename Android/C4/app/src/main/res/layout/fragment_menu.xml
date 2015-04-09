@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="projectc4.c4.activity.MenuActivity"
+    android:background="#FFFFFCED"
+    android:id="@+id/fragmentMenu">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/c4_logo"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="2 PLAYER LOCAL"
+            android:id="@+id/localGame"
+            android:layout_alignBaseline="@+id/buttonSocial"
+            android:layout_alignBottom="@+id/buttonSocial"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20dp"
+            android:background="@drawable/coloryellow"
+            />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="MULTIPLAYER"
+            android:id="@+id/buttonMultiplayer"
+            android:layout_alignBaseline="@+id/localGame"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/localGame"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/colorred"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="SOCIAL"
+            android:id="@+id/buttonSocial"
+            android:layout_above="@+id/buttonSocial"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/colororange"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="HIGHSCORE"
+            android:id="@+id/buttonHigh"
+            android:layout_alignBaseline="@+id/buttonAbout"
+            android:layout_alignBottom="@+id/buttonAbout"
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/colorblack"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="HOW TO PLAY"
+            android:id="@+id/buttonHow"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/colorlightgray"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="ABOUT PROJECT C4"
+            android:id="@+id/buttonAbout"
+            android:layout_alignBaseline="@+id/buttonHow"
+            android:layout_alignBottom="@+id/buttonHow"
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/colorlightgray"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
