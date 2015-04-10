@@ -9,7 +9,7 @@ import static projectc4.c4.util.C4Constants.*;
 public class GameController {
     private ClientController clientController;
     private GameGridView gameGridView;
-    private int[] size = new int[7];
+    private int[] colSize;
     private int playerTurn;
     private int row, col;
     private int playedTiles;
@@ -19,9 +19,8 @@ public class GameController {
     public GameController(ClientController clientController, GameGridView gameGridView) {
         playerTurn = PLAYER1;
         this.clientController = clientController;
-        //Todo fixa implementering
-//        gameGridView = new GameGrid();
         this.gameGridView = gameGridView;
+        this.colSize = new int[gameGridView.getBoardWidth()];
     }
 
     public int getPlayerTurn() {
@@ -34,8 +33,8 @@ public class GameController {
 
     public void newGame(int gameMode) {
         playedTiles = 0;
-        for (int i = 0; i < size.length; i++) {
-            size[i] = 0;
+        for (int i = 0; i < colSize.length; i++) {
+            colSize[i] = 0;
         }
         gameGridView.reset();
         winningTiles.clear();
@@ -53,14 +52,13 @@ public class GameController {
     public void newMove(int x) {
         // Move from local player
         System.out.println("GameController - newMove(" + x + ")");
-        if(playerTurn == clientController.getPlayer() && size[x] < gameGridView.getBoardHeight()) {
+        if(playerTurn == clientController.getPlayer() && colSize[x] < gameGridView.getBoardHeight()) {
             System.out.println("GameController: newMove accepted");
-            row = (gameGridView.getBoardHeight() - 1) - (size[x]);
+            row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
             col = x;
 
 
-            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (size[x]++), x, playerTurn);
-//            clientController.drawTile((((gameGridView.getBoardWidth() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
 
 
 
@@ -95,14 +93,13 @@ public class GameController {
     public void newIncomingMove(int x) {
         // Move from local player
         System.out.println("GameController - newIncomingMove(" + x + ")");
-        if(size[x] < 7) {
+        if(colSize[x] < 7) {
             System.out.println("GameController: newIncomingMove accepted");
-            row = (gameGridView.getBoardHeight() - 1) - (size[x]);
+            row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
             col = x;
 
 
-            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (size[x]++), x, playerTurn);
-//            clientController.drawTile((((gameGridView.getBoardHeight() - 1) - (size[x]-1)) * 6) + x, playerTurn);
+            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
 
 
             System.out.println("GameController - newIncomingMove: DrawTile by " + playerTurn);
@@ -110,7 +107,6 @@ public class GameController {
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
                 clientController.winner(playerTurn);
-//                clientController.highLightTiles(winningTiles);
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();
