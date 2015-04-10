@@ -1,7 +1,6 @@
 package projectc4.c4.client;
 
 
-import projectc4.c4.activity.GameActivity;
 import projectc4.c4.client.fragments.GameFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
 
@@ -11,24 +10,12 @@ import static projectc4.c4.util.C4Constants.*;
  * @author Kalle Bornemark
  */
 public class ClientController {
-    private static ClientController instance;
     private GameController gameController;
     private Client client;
     private int player = PLAYER1;
     private int gameMode;
     private GameFragment gameFragment;
     private MatchmakingFragment matchmakingFragment;
-//    public boolean gameIsReady = false;
-
-    public static void initInstance()
-    {
-        if (instance == null)
-        {
-            // Create the instance
-            instance = new ClientController();
-//            gameController = new GameController(instance);
-        }
-    }
 
     public void setGamecontroller(GameController gameController) {
         this.gameController = gameController;
@@ -42,15 +29,6 @@ public class ClientController {
         return this.gameMode;
     }
 
-    public static ClientController getInstance()
-    {
-        // Return the instance
-        return instance;
-    }
-
-    private ClientController() {
-//        gameController = new GameController(this);
-    }
 
     public void setFragment(GameFragment gameFragment) {
         this.gameFragment = gameFragment;
@@ -67,6 +45,7 @@ public class ClientController {
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("10.1.3.0", 3450);     // Kalles laptop
 //        client.connect("172.20.10.2", 3450);    // Kalles laptop #2
+        client.connect("10.2.25.13", 3450);
 
     }
 
@@ -90,17 +69,8 @@ public class ClientController {
     }
 
     public void drawTile(int pos, int player) {
-//        changeHighlightedPlayer(player);
-//        System.out.println("Drawtile: changeHighlight()");
-
-
-//        gameActivity.drawTile(pos, player);
         System.out.println("Drawtile: drawTile(" + pos + "," + player + ")");
     }
-
-//    public void highLightTiles(ArrayList<Integer> pos) {
-//        gameActivity.highlightTiles(pos);
-//    }
 
 
     public void changeHighlightedPlayer(int player) {
@@ -108,20 +78,6 @@ public class ClientController {
     }
 
     public void winner(int player) {
-        /*if(gameMode == LOCAL) {
-            if (player == PLAYER1) {
-                gameActivity.setTextViewWinner("Player 1 won!");
-            } else {
-                gameActivity.setTextViewWinner("Player 2 won!");
-            }
-        }else if(gameMode == MATCHMAKING) {
-            if (player == PLAYER1) {
-                gameActivity.setTextViewWinner("You won!");
-            } else {
-                gameActivity.setTextViewWinner("You lost!");
-            }
-        }*/
-
         if (gameMode == MATCHMAKING) {
             gameFragment.promptRematch();
         } else if (gameMode == LOCAL) {
@@ -133,26 +89,8 @@ public class ClientController {
         gameFragment.setTextViewWinner("It's a draw!");
     }
 
-/*    // New Local
-    public void newGame() {
-        gameController.newGame(LOCAL);
-        clientUI.newGame();
-    }*/
-
-    // New MM
     public void newGame(int gamemode) {
         gameController.newGame(gamemode);
-
-//        for (int i = 0; i < 42; i++) {
-//            gameActivity.getGrid().getChildAt(i).setBackgroundColor(C4Color.WHITE);
-//        }
-
-//        ArrayList<Button> buttonArrayList;
-//        buttonArrayList = gameActivity.getButtonArrayList();
-
-//        for (int i = 0; i < buttonArrayList.size(); i++) {
-//            buttonArrayList.get(i).setEnabled(true);
-//        }
     }
 
     public void requestRematch() {
@@ -186,5 +124,9 @@ public class ClientController {
 
     public int getPlayerTurn() {
        return gameController.getPlayerTurn();
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }

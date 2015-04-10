@@ -23,12 +23,6 @@ import static projectc4.c4.util.C4Constants.LOCAL;
 
 public class MenuFragment extends Fragment {
 
-    private GameFragment gameFragment;
-
-    public MenuFragment() {
-        this.gameFragment = new GameFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +40,11 @@ public class MenuFragment extends Fragment {
         buttonLocalGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientController.getInstance().setGameMode(LOCAL);
-
+                ((MainActivity)getActivity()).getClientController().setGameMode(LOCAL);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.container, gameFragment).addToBackStack(null).commit();
-
+                transaction.replace(R.id.container, ((MainActivity)getActivity()).getGameFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -60,10 +52,10 @@ public class MenuFragment extends Fragment {
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientController.getInstance().connect();
+                ((MainActivity)getActivity()).getClientController().connect();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.container, ((MainActivity)getActivity()).getMatchmakingFragment()).addToBackStack(null).commit();
             }
         });
 

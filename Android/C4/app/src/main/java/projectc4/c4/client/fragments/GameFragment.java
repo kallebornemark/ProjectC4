@@ -18,6 +18,7 @@ import projectc4.c4.client.GameController;
 import projectc4.c4.client.GameGridAnimation;
 import projectc4.c4.client.GameGridForeground;
 import projectc4.c4.client.GameGridView;
+import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -32,19 +33,15 @@ import static projectc4.c4.util.C4Constants.*;
 
     @Override
 
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            final View view = inflater.inflate(R.layout.fragment_game, container, false);
-            this.view = view;
-
-        clientController = ClientController.getInstance();
-
-        GameGridForeground gameGridForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
-        GameGridView gameGridView = (GameGridView)view.findViewById(R.id.gameGridView);
-        gameGridView.setFocusable(true);
-        gameGridView.addViews((GameGridAnimation)view.findViewById(R.id.gameGridAnimation),gameGridForeground);
-        GameController gameController = new GameController(clientController, gameGridView);
-        clientController.setGamecontroller(gameController);
-        gameGridForeground.setGameController(gameController);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_game, container, false);
+        this.view = view;
+        GameGridView ggView = (GameGridView)view.findViewById(R.id.gameGridView);
+        GameGridAnimation ggAnimation = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
+        GameGridForeground ggForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
+        GameController gameController = new GameController(((MainActivity)getActivity()).getClientController(),ggView, ggAnimation, ggForeground);
+        ggForeground.setGameController(gameController);
+        ((MainActivity)getActivity()).getClientController().setGamecontroller(gameController);
 
         clientController.setFragment(this);
         System.out.println(clientController.getPlayerTurn());
@@ -54,12 +51,11 @@ import static projectc4.c4.util.C4Constants.*;
         clientController.newGame(gameMode);
 
 
-
-        return view;
-        }
+    return view;
+    }
 
     public void initGraphics(View view) {
-        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.relativeLayout);
+        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.gameFragment);
         relativeLayout.setBackgroundColor(C4Color.WHITE);
 
         TextView textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);

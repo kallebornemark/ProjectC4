@@ -9,6 +9,8 @@ import static projectc4.c4.util.C4Constants.*;
 public class GameController {
     private ClientController clientController;
     private GameGridView gameGridView;
+    private GameGridAnimation gameGridAnimation;
+    private GameGridForeground gameGridForeground;
     private int[] colSize;
     private int playerTurn;
     private int row, col;
@@ -16,10 +18,14 @@ public class GameController {
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
 
-    public GameController(ClientController clientController, GameGridView gameGridView) {
+    public GameController(ClientController clientController, GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
         playerTurn = PLAYER1;
         this.clientController = clientController;
         this.gameGridView = gameGridView;
+        this.gameGridAnimation = gameGridAnimation;
+        this.gameGridForeground = gameGridForeground;
+        this.gameGridView.setFocusable(true);
+        this.gameGridView.addViews(this.gameGridAnimation, this.gameGridForeground);
         this.colSize = new int[gameGridView.getBoardWidth()];
     }
 
