@@ -42,7 +42,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="MULTIPLAYER"
+            android:text="PLAY ONLINE"
             android:id="@+id/buttonMultiplayer"
             android:layout_alignBaseline="@+id/localGame"
             android:layout_alignParentStart="true"
@@ -53,13 +53,13 @@
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/colorred"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="SOCIAL"
+            android:text="SETTINGS"
             android:id="@+id/buttonSocial"
             android:layout_above="@+id/buttonSocial"
             android:layout_centerHorizontal="true"
@@ -72,23 +72,10 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="HIGHSCORE"
+            android:text="HOW TO PLAY"
             android:id="@+id/buttonHigh"
             android:layout_alignBaseline="@+id/buttonAbout"
             android:layout_alignBottom="@+id/buttonAbout"
-            android:layout_alignParentStart="true"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="35dp"
-            android:background="@drawable/colorblack"/>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="HOW TO PLAY"
-            android:id="@+id/buttonHow"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
@@ -107,7 +94,7 @@
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/colorlightgray"/>
+            android:background="@drawable/colorblack"/>
 
     </LinearLayout>
 

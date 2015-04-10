@@ -83,22 +83,13 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        Button buttonHow = (Button)view.findViewById(R.id.buttonHow);
+        Button buttonHow = (Button)view.findViewById(R.id.buttonAbout);
         buttonHow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-
-        Button buttonAbout = (Button)view.findViewById(R.id.buttonAbout);
-        buttonAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
 
         // InitGraphcs
 
@@ -107,21 +98,18 @@ public class MenuFragment extends Fragment {
         Button button1 = (Button)view.findViewById(R.id.localGame);
         Button button2 = (Button)view.findViewById(R.id.buttonMultiplayer);
         Button button3 = (Button)view.findViewById(R.id.buttonSocial);
-        Button button4 = (Button)view.findViewById(R.id.buttonHow);
         Button button5 = (Button)view.findViewById(R.id.buttonHigh);
         Button button6 = (Button)view.findViewById(R.id.buttonAbout);
 
         button1.setTypeface(type,Typeface.BOLD);
         button2.setTypeface(type,Typeface.BOLD);
         button3.setTypeface(type,Typeface.BOLD);
-        button4.setTypeface(type,Typeface.BOLD);
         button5.setTypeface(type,Typeface.BOLD);
         button6.setTypeface(type,Typeface.BOLD);
 
         button1.setTextColor(C4Color.WHITE);
         button2.setTextColor(C4Color.WHITE);
         button3.setTextColor(C4Color.WHITE);
-        button4.setTextColor(C4Color.WHITE);
         button5.setTextColor(C4Color.WHITE);
         button6.setTextColor(C4Color.WHITE);
 
