@@ -28,7 +28,7 @@ public class GameGridAnimation extends View {
     private int sideOfTile;
     private int gridSpacing;
     private int col;
-    private int player;
+    private int player = PLAYER2;
     private int rowStop;
     private int currentPosY;
     private int colStart;
@@ -73,19 +73,22 @@ public class GameGridAnimation extends View {
         Paint paint = new Paint();
 
         if (animatePointer) {
-            paint.setColor(Color.BLUE);
+            if (player == PLAYER1) {
+                paint.setColor(YELLOW);
+            } else if (player == PLAYER2) {
+                paint.setColor(RED);
+            }
             rect = new RectF(pointerPos-(sideOfTile/2), offsetY-sideOfTile, (sideOfTile + pointerPos)-(sideOfTile/2), offsetY);
             canvas.drawRoundRect(rect, 20, 20, paint);
-
             animatePointer = false;
 
         } else if (animateNewMove) {
-
             if (player == PLAYER1) {
                 paint.setColor(RED);
             } else if (player == PLAYER2) {
                 paint.setColor(YELLOW);
             }
+
             //Todo uträkning i temporära variabler istället
             rect = new RectF(col, currentPosY, (sideOfTile + col), (sideOfTile + currentPosY));
             canvas.drawRoundRect(rect, 20, 20, paint);

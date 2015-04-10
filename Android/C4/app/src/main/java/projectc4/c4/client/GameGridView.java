@@ -16,14 +16,7 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameGridView extends View {
 
-//    läggs in i onCreate
-//    gameGridView = (GameGridView)findViewById(R.id.gameGridView);
-//    gameGridView.setFocusable(true);
-//    gameGridView.addViews((GameGridAnimation)findViewById(R.id.gameGridAnimation), (GameGridForeground)findViewById(R.id.gameGridForeground));
-
-
     private int[][] gameBoard = new int[6][7];
-
 
     // För att nå GameGridAnimation & GameGridForeground
     private GameGridAnimation gameGridAnimation;
