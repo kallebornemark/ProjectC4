@@ -41,7 +41,7 @@ public class ConnectedClient extends Thread implements Serializable {
     }
 
     private void validateUser(String name){
-        user = new User(name);
+        User user = server.validateUser(name);
         try {
             oos.writeObject(user);
             oos.flush();
@@ -52,30 +52,47 @@ public class ConnectedClient extends Thread implements Serializable {
 
     private void startCommunication() {
         int value;
+        String username;
         try {
             System.out.println("Server: Kommunikationen är startad i ConnectedClient");
             while (!Thread.interrupted()) {
-                System.out.println("Server: Väntar på readInt...");
-
-                // Input int
+                System.out.println("Server communication started");
                 Object obj = ois.readObject();
-                value = (Integer)obj;
 
-                System.out.println("Server: Har fått en int: " + value);
+                if (obj instanceof Integer) {
+                    value = (Integer)obj;
 
-                if (value == MATCHMAKING) {
-                    // New incoming MM game
-                    System.out.println("Server: New incoming MM game");
-                    server.addSearchingClient(this);
+                    if (value == MATCHMAKING) {
+                        // New incoming MM game
+                        System.out.println("Server: New incoming MM game");
+                        server.addSearchingClient(this);
 
-                } else if (value >= 0 && value <= 20) {
-                    // New incoming move
-                    activeGame.newMove(this, value);
+                    } else if (value >= 0 && value <= 20) {
+                        // New incoming move
+                        activeGame.newMove(this, value);
 
-                } else if (value == REMATCH) {
-                    // Requested rematch
-                    activeGame.setReady(this);
+                    } else if (value == REMATCH) {
+                        // Requested rematch
+                        activeGame.setReady(this);
+                    }
+                    System.out.println("Server: Har fått en int: " + value);
+
+                } else if (obj instanceof String) {
+                    username = (String)obj;
+
+                    // Check if user is online
+                    if (server.isUserOnline(username)) {
+
+                        // Check if user is registered
+                        user = server.validateUser(username);
+                        server.addUser(user);
+
+                        // Send back user to client
+                        oos.writeObject(user);
+                        oos.flush();
+                    }
                 }
+
             }
         } catch (Exception e) {
             // Hantera om någon dissar

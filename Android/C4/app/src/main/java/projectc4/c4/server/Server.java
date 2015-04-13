@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import projectc4.c4.util.User;
+
 /**
  * @author Kalle Bornemark
  */
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Thread server;
-    private HashMap<String , ConnectedClient> connectedClients;
+    private HashMap<String , User> userHashMap;
+    private HashMap<String, ConnectedClient> connectedClientHashMap;
     private SearchQueue searchingForGame;
     private ArrayList<ActiveGame> activeGames;
 
@@ -27,6 +30,24 @@ public class Server implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addUser(User user) {
+        userHashMap.put(user.getUsername(), user);
+    }
+
+    public User validateUser(String name) {
+        if (userHashMap.containsKey(name)) {
+            return userHashMap.get(name);
+        } else {
+            User user = new User(name);
+            addUser(user);
+            return user;
+        }
+    }
+
+    public boolean isUserOnline(String name) {
+        return userHashMap.containsKey(name);
     }
 
     public void addActiveGame(ActiveGame g) {
@@ -56,9 +77,9 @@ public class Server implements Runnable {
         while (!Thread.interrupted()){
             try {
                 Socket socket = serverSocket.accept();
-                System.out.println("serversocket accepted");
+                System.out.println("Serversocket accepted");
                 new ConnectedClient(this, socket).start();
-                System.out.println("ny connectedclient skapad");
+                System.out.println("Ny connectedclient skapad");
             } catch (IOException e) {
                 e.printStackTrace();
             }

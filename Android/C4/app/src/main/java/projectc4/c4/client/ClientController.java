@@ -3,6 +3,7 @@ package projectc4.c4.client;
 
 import projectc4.c4.client.fragments.GameFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
+import projectc4.c4.util.User;
 
 import static projectc4.c4.util.C4Constants.*;
 
@@ -42,10 +43,10 @@ public class ClientController {
         client = new Client(this);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.17.111", 3450);
-//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("10.1.3.0", 3450);     // Kalles laptop
 //        client.connect("172.20.10.2", 3450);    // Kalles laptop #2
-        client.connect("10.2.25.13", 3450);
+//        client.connect("10.2.25.13", 3450);
 
     }
 
@@ -129,5 +130,13 @@ public class ClientController {
 
     public GameController getGameController() {
         return gameController;
+    }
+
+    public void requestUsername(String username) {
+        client.requestUsername(username);
+    }
+
+    public User getUser() {
+        return client.getUser();
     }
 }

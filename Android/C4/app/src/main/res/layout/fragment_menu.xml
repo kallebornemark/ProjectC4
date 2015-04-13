@@ -11,7 +11,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -20,9 +21,7 @@
             android:src="@drawable/c4_logo"
             android:adjustViewBounds="true"
             android:layout_marginBottom="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp" />
+            />
 
         <Button
             android:layout_width="fill_parent"
@@ -32,8 +31,6 @@
             android:layout_alignBaseline="@+id/buttonSocial"
             android:layout_alignBottom="@+id/buttonSocial"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:textSize="20dp"
             android:background="@drawable/coloryellow"
@@ -51,8 +48,6 @@
             android:layout_alignParentBottom="false"
             android:layout_below="@+id/localGame"
             android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginBottom="50dp"
             android:background="@drawable/colorred"/>
 
@@ -64,8 +59,6 @@
             android:layout_above="@+id/buttonSocial"
             android:layout_centerHorizontal="true"
             android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/colororange"/>
 
@@ -78,8 +71,6 @@
             android:layout_alignBottom="@+id/buttonAbout"
             android:layout_alignParentStart="true"
             android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/colorlightgray"/>
 
@@ -92,8 +83,6 @@
             android:layout_alignBottom="@+id/buttonHow"
             android:layout_alignParentStart="true"
             android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/colorblack"/>
 
     </LinearLayout>

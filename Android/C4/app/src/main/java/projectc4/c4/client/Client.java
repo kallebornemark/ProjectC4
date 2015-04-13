@@ -25,6 +25,7 @@ public class Client implements Runnable{
     }
 
     public void connect(String ip, int port) {
+        user = null;
         this.ip = ip;
         this.port = port;
         System.out.println("Innan tråden skapas");
@@ -65,13 +66,27 @@ public class Client implements Runnable{
         }
     }
 
-    public void requestUsername(String username) {
+    public synchronized void requestUsername(String username) {
+        Object obj;
         try {
             oos.writeObject(username);
             oos.flush();
+
+            // Wait for server response (blocking!)
+            obj = ois.readObject();
+            if (obj instanceof User) {
+                user = (User)obj;
+                System.out.println("Client: User set to " + user.getUsername());
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e2) {
+            e2.printStackTrace();
         }
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void checkNumberAndSend(int number) {
@@ -104,9 +119,15 @@ public class Client implements Runnable{
         int number;
         try {
             while (!Thread.interrupted()) {
+                System.out.println("Client communication started");
                 obj = ois.readObject();
-                number = (Integer)obj;
-                checkNumberAndSend(number);
+
+                if (obj instanceof Integer) {
+                    number = (Integer)obj;
+                    System.out.println("Client: New incoming int: " + number);
+                    checkNumberAndSend(number);
+
+                }
             }
         } catch (Exception e) {}
     }
