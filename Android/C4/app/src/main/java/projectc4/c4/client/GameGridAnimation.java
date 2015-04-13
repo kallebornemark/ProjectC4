@@ -31,7 +31,6 @@ public class GameGridAnimation extends View {
     private int player = PLAYER2;
     private int rowStop;
     private int currentPosY;
-    private int colStart;
     private int pointerPos;
 
     public GameGridAnimation(Context context) {
@@ -116,7 +115,6 @@ public class GameGridAnimation extends View {
 
 
     public void animateNewMove(int colStart, int rowStop, int player){
-        this.colStart = colStart;
         this.col = ((colStart) * (sideOfTile + gridSpacing)) + offsetX;
         this.rowStop = rowStop;
         this.player = player;
@@ -130,8 +128,7 @@ public class GameGridAnimation extends View {
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
         int w = MeasureSpec.getSize(widthMeasuredSpec);
         int h = MeasureSpec.getSize(heightMeasuredSpec);
-
-
+        System.out.println("ggAnimation - w: " + w + " h: " + h );
         setMeasuredDimension(w, h);
     }
 }

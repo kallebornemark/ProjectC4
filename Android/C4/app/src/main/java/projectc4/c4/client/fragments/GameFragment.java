@@ -51,7 +51,7 @@ import static projectc4.c4.util.C4Constants.*;
     }
 
     public void initGraphics(View view) {
-        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.gameFragment);
+        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.fragment_game);
         relativeLayout.setBackgroundColor(C4Color.WHITE);
 
         TextView textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
