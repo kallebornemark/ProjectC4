@@ -16,7 +16,7 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameGridView extends View {
 
-    private int[][] gameBoard = new int[6][7];
+    private int[][] gameBoard;
 
     // För att nå GameGridAnimation & GameGridForeground
     private GameGridAnimation gameGridAnimation;
