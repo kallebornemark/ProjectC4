@@ -84,7 +84,7 @@ public class ClientController {
     }
 
     public void draw() {
-        gameFragment.setTextViewWinner("It's a draw!");
+//        gameFragment.setTextViewWinner("It's a draw!");
         highlightWinnerPlayerStar(DRAW);
         changeHighlightedPlayer(DRAW);
         enableGameButton();

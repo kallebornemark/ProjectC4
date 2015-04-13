@@ -79,16 +79,17 @@ import static projectc4.c4.util.C4Constants.*;
 
     }
 
-    public void setTextViewWinner(final String winner) {
+    // Används inte längre eftersom vi inte visar vinnaren med text
+
+    /*public void setTextViewWinner(final String winner) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-//                textViewWinner.setText(enableGameButton);
-
+                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
+                textViewWinner.setText(enableGameButton);
             }
         });
-    }
+    }*/
 
     public void highlightPlayer(final int player) {
         getActivity().runOnUiThread(new Runnable() {
@@ -116,12 +117,14 @@ import static projectc4.c4.util.C4Constants.*;
             @Override
             public void run() {
                 final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
+                buttonRematch.getBackground().setAlpha(255);
                 buttonRematch.setEnabled(true);
                 buttonRematch.setVisibility(View.VISIBLE);
                 buttonRematch.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         clientController.requestRematch();
+                        buttonRematch.getBackground().setAlpha(40);
                     }
                 });
             }
@@ -157,19 +160,6 @@ import static projectc4.c4.util.C4Constants.*;
         ivYellowStar.setVisibility(View.INVISIBLE);
     }
 
-    public void newRematch () {
-        final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
-        clientController.newGame(MATCHMAKING);
-        buttonRematch.setEnabled(false);
-        buttonRematch.setVisibility(View.INVISIBLE);
-//        TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-//        textViewWinner.setText("");
-        clientController.newGame(MATCHMAKING);
-        RelativeLayout relativeLayoutPlayers = (RelativeLayout)view.findViewById(R.id.relativeLayoutPlayers);
-        relativeLayoutPlayers.setVisibility(View.VISIBLE);
-        highlightPlayer(clientController.getPlayerTurn());
-    }
-
     public void setNewGame() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -184,9 +174,6 @@ import static projectc4.c4.util.C4Constants.*;
                         clientController.newGame(LOCAL);
                         buttonNewGame.setEnabled(false);
                         buttonNewGame.setVisibility(View.INVISIBLE);
-//                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-//                textViewWinner.setText("");
-//                clientController.newGame(LOCAL);
                         RelativeLayout relativeLayoutPlayers = (RelativeLayout)view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
                         highlightPlayer(PLAYER1);
