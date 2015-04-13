@@ -1,7 +1,5 @@
 package projectc4.c4.client.fragments;
 
-
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
 import projectc4.c4.R;
-import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
 
@@ -29,14 +25,32 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
+        // init buttons
+        Button buttonLocalGame = (Button)view.findViewById(R.id.localGame);
+        Button buttonMultiplayer = (Button)view.findViewById(R.id.buttonMultiplayer);
+        Button buttonSocial = (Button)view.findViewById(R.id.buttonSocial);
+        Button buttonHighscore = (Button)view.findViewById(R.id.buttonHigh);
+        Button buttonHow = (Button)view.findViewById(R.id.buttonAbout);
+
+        // InitGraphcs
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
+
+        buttonLocalGame.setTypeface(type,Typeface.BOLD);
+        buttonMultiplayer.setTypeface(type,Typeface.BOLD);
+        buttonSocial.setTypeface(type,Typeface.BOLD);
+        buttonHighscore.setTypeface(type,Typeface.BOLD);
+        buttonHow.setTypeface(type,Typeface.BOLD);
+
+        buttonLocalGame.setTextColor(C4Color.WHITE);
+        buttonMultiplayer.setTextColor(C4Color.WHITE);
+        buttonSocial.setTextColor(C4Color.WHITE);
+        buttonHighscore.setTextColor(C4Color.WHITE);
+        buttonHow.setTextColor(C4Color.WHITE);
 
         // Init listeners
-
-        Button buttonLocalGame = (Button)view.findViewById(R.id.localGame);
         buttonLocalGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +62,6 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        Button buttonMultiplayer = (Button)view.findViewById(R.id.buttonMultiplayer);
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +72,6 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        Button buttonSocial = (Button)view.findViewById(R.id.buttonSocial);
         buttonSocial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +79,6 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        Button buttonHighscore = (Button)view.findViewById(R.id.buttonHigh);
         buttonHighscore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,36 +86,12 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        Button buttonHow = (Button)view.findViewById(R.id.buttonAbout);
         buttonHow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-
-        // InitGraphcs
-
-        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
-
-        Button button1 = (Button)view.findViewById(R.id.localGame);
-        Button button2 = (Button)view.findViewById(R.id.buttonMultiplayer);
-        Button button3 = (Button)view.findViewById(R.id.buttonSocial);
-        Button button5 = (Button)view.findViewById(R.id.buttonHigh);
-        Button button6 = (Button)view.findViewById(R.id.buttonAbout);
-
-        button1.setTypeface(type,Typeface.BOLD);
-        button2.setTypeface(type,Typeface.BOLD);
-        button3.setTypeface(type,Typeface.BOLD);
-        button5.setTypeface(type,Typeface.BOLD);
-        button6.setTypeface(type,Typeface.BOLD);
-
-        button1.setTextColor(C4Color.WHITE);
-        button2.setTextColor(C4Color.WHITE);
-        button3.setTextColor(C4Color.WHITE);
-        button5.setTextColor(C4Color.WHITE);
-        button6.setTextColor(C4Color.WHITE);
-
         return view;
     }
 }
