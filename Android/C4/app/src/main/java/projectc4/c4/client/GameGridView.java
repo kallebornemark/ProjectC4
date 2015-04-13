@@ -2,12 +2,9 @@ package projectc4.c4.client;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
-import java.util.Random;
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -22,7 +19,6 @@ public class GameGridView extends View {
     private GameGridAnimation gameGridAnimation;
     private GameGridForeground gameGridForeground;
 
-    private int gridSpacing = 10;
     private int sideOfTile;
     private int offsetX;
     private int offsetY;
@@ -74,23 +70,6 @@ public class GameGridView extends View {
         updateDisplay();
     }
 
-    //För testning
-    public void setRandom() {
-        Random rnd = new Random();
-        int[][] tmp = this.gameBoard;
-        for (int i = 0; i < tmp.length; i++) {
-            for (int j = 0; j < tmp[i].length; j++) {
-                tmp[i][j] = rnd.nextInt(3);
-            }
-        }
-        setDisplay(tmp);
-    }
-
-    public void setDisplay(int[][] board) {
-        this.gameBoard = board;
-        updateDisplay();
-    }
-
     public void setElement(int row, int col, int player) {
         this.gameBoard[row][col] = player;
         gameGridAnimation.animateNewMove(col, row, player);
@@ -112,23 +91,25 @@ public class GameGridView extends View {
 
     private void calculateSize() {
         // Räkna ut passande storlek för brickan
-        sideOfTile = Math.min((((getWidth() - gridSpacing) / gameBoard[0].length) - gridSpacing),
-                (((getHeight() - gridSpacing) / gameBoard.length) - gridSpacing));
+        sideOfTile = Math.min((((getWidth() - GRIDSPACING) / gameBoard[0].length) - GRIDSPACING),
+                (((getHeight() - GRIDSPACING) / gameBoard.length) - GRIDSPACING));
 
         // Rita gameBoard mitt i canvasen i x-led
-        offsetX = (getWidth() - (gameBoard[0].length * (sideOfTile + gridSpacing) - gridSpacing)) / 2;
+        offsetX = (getWidth() - (gameBoard[0].length * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
 
         // Rita gameBoard längst ner på canvasen i y-led
-        offsetY = (getHeight() - (gameBoard.length * (sideOfTile + gridSpacing)));
+        offsetY = (getHeight() - (gameBoard.length * (sideOfTile + GRIDSPACING)));
 
         //Todo sätta dessa automatiskt utan att få nullpointer på smidigt sätt?
         //Skicka vidare uträkningen till GameGridAnimation & GameGridForeground
-        if ((gameGridAnimation!=null) && (gameGridForeground!=null)) {
-            gameGridForeground.setSize(offsetX, offsetY, sideOfTile, gridSpacing, gameBoard.length, gameBoard[0].length);
-            gameGridAnimation.setSize(offsetX, offsetY, sideOfTile, gridSpacing);
+        if ((gameGridAnimation!=null)) {
+            gameGridForeground.setSize(offsetX, offsetY, sideOfTile, gameBoard.length, gameBoard[0].length);
+            gameGridAnimation.setSize(offsetX, offsetY, sideOfTile);
             setGameGridForeground();
         }
     }
+
+
 
     protected void onDraw(Canvas canvas) {
         calculateSize();
@@ -144,8 +125,8 @@ public class GameGridView extends View {
                     paint.setColor(YELLOW);
                 }
 
-                int posX = (col * (sideOfTile + gridSpacing)) + offsetX;
-                int posY = (row * (sideOfTile + gridSpacing)) + offsetY;
+                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
                 canvas.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
             }
         }

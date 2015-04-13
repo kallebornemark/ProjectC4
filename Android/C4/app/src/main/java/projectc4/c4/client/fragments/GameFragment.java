@@ -65,8 +65,10 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
-        textViewPlayer1.setText(clientController.getUser().getUsername());
-        textViewPlayer2.setText(clientController.getOpponentName());
+        if (gameMode==MATCHMAKING){
+            textViewPlayer1.setText(clientController.getUser().getUsername());
+            textViewPlayer2.setText(clientController.getOpponentName());
+        }
 
         Button buttonNewgame = (Button)view.findViewById(R.id.buttonNewGame);
         buttonNewgame.setBackground(getActivity().getDrawable(R.drawable.altbutton));

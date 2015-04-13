@@ -3,15 +3,14 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import static projectc4.c4.util.C4Color.*;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Jimmy Maksymiw
@@ -24,7 +23,6 @@ public class GameGridForeground extends View {
     private int offsetX;
     private int offsetY;
     private int sideOfTile;
-    private int gridSpacing;
     private int rows;
     private int cols;
     private GameController gameController;
@@ -50,11 +48,10 @@ public class GameGridForeground extends View {
         this.gameController = gameController;
     }
 
-    public void setSize(int offsetX, int offsetY, int sideOfTile, int  gridSpacing, int rows, int cols){
+    public void setSize(int offsetX, int offsetY, int sideOfTile, int rows, int cols){
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.sideOfTile = sideOfTile;
-        this.gridSpacing = gridSpacing;
         this.rows = rows;
         this.cols = cols;
     }
@@ -71,6 +68,7 @@ public class GameGridForeground extends View {
         super.invalidate();
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (backgroundPainted) {
@@ -86,14 +84,14 @@ public class GameGridForeground extends View {
             Canvas canvas = new Canvas(bitmap);
             paint = new Paint();
             paint.setColor(BLACK);
-            canvas.drawRoundRect(offsetX - gridSpacing, offsetY - gridSpacing, offsetX + (cols * (sideOfTile + gridSpacing)), offsetY + (rows * (sideOfTile + gridSpacing)), 20, 20, paint);
+            canvas.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
 
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
 
-                    int posX = (col * (sideOfTile + gridSpacing)) + offsetX;
-                    int posY = (row * (sideOfTile + gridSpacing)) + offsetY;
+                    int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                    int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
 
                     canvas.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
                 }
@@ -107,12 +105,12 @@ public class GameGridForeground extends View {
         int action = event.getActionMasked();
         float touchPosY;
         float touchPosX;
-        int x = offsetX + gridSpacing;
-        int x2 = getWidth() - offsetX - gridSpacing;
-        int y = offsetY - gridSpacing - sideOfTile;
+        int x = offsetX + GRIDSPACING;
+        int x2 = getWidth() - offsetX - GRIDSPACING;
+        int y = offsetY - GRIDSPACING - sideOfTile;
         switch(action) {
             case MotionEvent.ACTION_DOWN:
-                //Todo ???
+                //Todo Ändra position på markör
                 break;
             case MotionEvent.ACTION_MOVE:
                 touchPosX = event.getX();
@@ -121,7 +119,6 @@ public class GameGridForeground extends View {
 //                    System.out.println("ACTION_MOVE: x: " + event.getX() + "    -    y: " + event.getY());
                     gameGridView.animatePointer((int)touchPosX);
                 }
-
                 break;
             case MotionEvent.ACTION_UP:
 
@@ -135,7 +132,7 @@ public class GameGridForeground extends View {
                     //Kollar igenom alla kolumner efter klick.
                     for (int col = 0; col < this.cols; col++) {
                         //Om x positionen är i just denna kulumnen körs performClick och bricka läggs.
-                        if (touchPosX >= offsetX + gridSpacing + ((gridSpacing + sideOfTile) * col) && touchPosX <= offsetX + gridSpacing + sideOfTile + ((sideOfTile + gridSpacing) * col)) {
+                        if (touchPosX >= offsetX + GRIDSPACING + ((GRIDSPACING + sideOfTile) * col) && touchPosX <= offsetX + GRIDSPACING + sideOfTile + ((sideOfTile + GRIDSPACING) * col)) {
 //                            System.out.println("onTouchEvent: touchPosX: " + touchPosX + "    -    col = " + (col));
 //                            System.out.println("gameController.newOutgoingMove(col): " + col);
                             gameController.newMove(col, false);
@@ -148,10 +145,9 @@ public class GameGridForeground extends View {
                 break;
 
             case MotionEvent.ACTION_CANCEL:
-                //Todo ???
+                //Todo ta bort markör eller?
                 break;
         }
-
         return true;
     }
 

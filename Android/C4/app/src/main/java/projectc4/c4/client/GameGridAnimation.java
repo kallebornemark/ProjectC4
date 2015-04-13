@@ -2,7 +2,6 @@ package projectc4.c4.client;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -15,18 +14,13 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameGridAnimation extends View {
 
-//    private int colorPlayer1 = 0xFFF67E59, colorPlayer2 = 0xFFECD06C;
-
-
     private GameGridView gameGridView;
 
-    private RectF rect = null;
     private boolean animateNewMove = false;
     private boolean animatePointer = false;
     private int offsetX;
     private int offsetY;
     private int sideOfTile;
-    private int gridSpacing;
     private int col;
     private int player = PLAYER2;
     private int rowStop;
@@ -49,11 +43,10 @@ public class GameGridAnimation extends View {
         this.gameGridView = gameGridView;
     }
 
-    public void setSize(int offsetX, int offsetY, int sideOfTile, int  gridSpacing){
+    public void setSize(int offsetX, int offsetY, int sideOfTile){
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.sideOfTile = sideOfTile;
-        this.gridSpacing = gridSpacing;
     }
 
     private void updateDisplay() {
@@ -71,6 +64,7 @@ public class GameGridAnimation extends View {
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
 
+        RectF rect;
         if (animatePointer) {
             if (player == PLAYER1) {
                 paint.setColor(YELLOW);
@@ -88,14 +82,13 @@ public class GameGridAnimation extends View {
                 paint.setColor(YELLOW);
             }
 
-            //Todo uträkning i temporära variabler istället
             rect = new RectF(col, currentPosY, (sideOfTile + col), (sideOfTile + currentPosY));
             canvas.drawRoundRect(rect, 20, 20, paint);
 
-            if (currentPosY < rowStop*(sideOfTile+ gridSpacing) + offsetY  ){
+            if (currentPosY < rowStop*(sideOfTile+ GRIDSPACING) + offsetY  ){
                 currentPosY+=25;
-                if (currentPosY >= rowStop*(sideOfTile+ gridSpacing) + offsetY ){
-                    currentPosY = rowStop*(sideOfTile+ gridSpacing)+ offsetY;
+                if (currentPosY >= rowStop*(sideOfTile+ GRIDSPACING) + offsetY ){
+                    currentPosY = rowStop*(sideOfTile+ GRIDSPACING)+ offsetY;
                     animateNewMove = false;
                     gameGridView.updateDisplay();
 //                    gameGridView.setElement(rowStop, colStart, player);
@@ -115,7 +108,7 @@ public class GameGridAnimation extends View {
 
 
     public void animateNewMove(int colStart, int rowStop, int player){
-        this.col = ((colStart) * (sideOfTile + gridSpacing)) + offsetX;
+        this.col = ((colStart) * (sideOfTile + GRIDSPACING)) + offsetX;
         this.rowStop = rowStop;
         this.player = player;
         this.currentPosY = offsetY-(sideOfTile/2);
