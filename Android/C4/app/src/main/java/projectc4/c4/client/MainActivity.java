@@ -23,6 +23,7 @@ public class MainActivity extends FragmentActivity{
     private MenuFragment menuFragment;
     private GameFragment gameFragment;
     private ClientController clientController;
+    private GameController gameController;
     private MatchmakingFragment matchmakingFragment;
     private LoginFragment loginFragment;
 
@@ -36,11 +37,13 @@ public class MainActivity extends FragmentActivity{
         if (savedInstanceState == null) {
 
             clientController = new ClientController();
+            gameController = new GameController(clientController);
+            clientController.setGameController(gameController);
 
             this.menuFragment = new MenuFragment();
-            this.gameFragment = new GameFragment();
-            this.matchmakingFragment = new MatchmakingFragment();
-            this.loginFragment = new LoginFragment();
+//            this.gameFragment = new GameFragment();
+//            this.matchmakingFragment = new MatchmakingFragment();
+//            this.loginFragment = new LoginFragment();
 
             getFragmentManager().beginTransaction().replace(R.id.container, menuFragment).addToBackStack(null).commit();
 

@@ -29,14 +29,17 @@ public class GameGridView extends View {
 
     public GameGridView(Context context) {
         super(context);
+        init();
     }
 
     public GameGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public GameGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
     }
 
     public void addViews(GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
@@ -47,6 +50,11 @@ public class GameGridView extends View {
         this.gameGridForeground = gameGridForeground;
         gameGridAnimation.addView(this);
         gameGridForeground.addView(this);
+    }
+
+    public void init() {
+        gameBoard = new int[6][7];
+        updateDisplay();
     }
 
     public int getElement(int i, int j) {

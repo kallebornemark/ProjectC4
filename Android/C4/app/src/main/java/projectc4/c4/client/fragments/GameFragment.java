@@ -1,5 +1,6 @@
 package projectc4.c4.client.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -31,7 +32,6 @@ import static projectc4.c4.util.C4Constants.*;
     private View view;
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         clientController = ((MainActivity)getActivity()).getClientController();
         final View view = inflater.inflate(R.layout.fragment_game, container, false);
@@ -39,9 +39,7 @@ import static projectc4.c4.util.C4Constants.*;
         GameGridView ggView = (GameGridView)view.findViewById(R.id.gameGridView);
         GameGridAnimation ggAnimation = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
         GameGridForeground ggForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
-        GameController gameController = new GameController(clientController,ggView, ggAnimation, ggForeground);
-        clientController.setGameController(gameController);
-        ggForeground.setGameController(gameController);
+        clientController.getGameController().setViews(ggView, ggAnimation, ggForeground);
 
         clientController.setFragment(this);
         System.out.println(clientController.getPlayerTurn());
@@ -49,9 +47,7 @@ import static projectc4.c4.util.C4Constants.*;
         initGraphics(view);
 
         clientController.newGame(gameMode);
-
-
-    return view;
+        return view;
     }
 
     public void initGraphics(View view) {
