@@ -74,11 +74,12 @@ public class GameController {
                 clientController.winner(playerTurn);
 
                 /*
-                    TODO Göra om highlighttiles metoden
+                    TODO Göra om highlightTiles-metoden
                  */
-//                clientController.highLightTiles(winningTiles);
+//                clientController.highlightTiles(winningTiles);
 
-
+                // Put a star next to the player who won
+                clientController.highlightWinnerPlayer(playerTurn);
 
                 System.out.println("Winner");
             } else if (playedTiles == 42) {

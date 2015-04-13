@@ -122,47 +122,6 @@
 
         </GridLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textViewPlayer1"
-            android:layout_marginLeft="-14dp"
-            android:layout_marginTop="13dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/redStar"
-                android:src="@drawable/c4_star_red"
-                android:layout_alignRight="@+id/textViewPlayer1"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:maxWidth="20dp"
-                android:alpha="50"
-                android:visibility="invisible"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="13dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/yellowStar"
-                android:src="@drawable/c4_star_yellow"
-                android:layout_alignRight="@+id/textViewPlayer2"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:maxWidth="20dp"
-                android:alpha="50"
-                android:visibility="invisible"/>
-        </LinearLayout>
-
         <TextView
             android:layout_width="140dp"
             android:layout_height="35dp"
@@ -218,6 +177,45 @@
                 android:layout_alignParentEnd="false"
 
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewPlayer1"
+            android:layout_marginLeft="-14dp"
+            android:layout_marginTop="13dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/redStar"
+                android:src="@drawable/c4_star_red"
+                android:layout_alignRight="@+id/textViewPlayer1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxWidth="20dp"
+                android:alpha="50"
+                android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="13dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/yellowStar"
+                android:src="@drawable/c4_star_yellow"
+                android:layout_alignRight="@+id/textViewPlayer2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxWidth="20dp"
+                android:alpha="50"
+                android:visibility="invisible"/>
         </LinearLayout>
 
     </RelativeLayout>

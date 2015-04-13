@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -124,6 +125,27 @@ import static projectc4.c4.util.C4Constants.*;
         });
     }
 
+    public void highlightWinnerPlayer(int player) {
+        ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+        ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+        if (player == PLAYER1) {
+            ivRedStar.setEnabled(true);
+            ivRedStar.setVisibility(View.VISIBLE);
+        } else if (player == PLAYER2) {
+            ivYellowStar.setEnabled(true);
+            ivYellowStar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void dehighlightWinners() {
+        ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+        ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+        ivRedStar.setEnabled(false);
+        ivRedStar.setVisibility(View.INVISIBLE);
+        ivYellowStar.setEnabled(true);
+        ivYellowStar.setVisibility(View.INVISIBLE);
+    }
+
     public void newRematch () {
         final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
         clientController.newGame(MATCHMAKING);
@@ -144,6 +166,7 @@ import static projectc4.c4.util.C4Constants.*;
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dehighlightWinners();
                 clientController.newGame(LOCAL);
                 buttonNewGame.setEnabled(false);
                 buttonNewGame.setVisibility(View.INVISIBLE);
