@@ -57,22 +57,20 @@ public class GameController {
     }
 
     public void newMove(int x) {
-        // Move from local player
         System.out.println("GameController - newMove(" + x + ")");
-        if(playerTurn == clientController.getPlayer() && colSize[x] < gameGridView.getBoardHeight()) {
+        if (playerTurn == clientController.getPlayer() && colSize[x] < gameGridView.getBoardHeight()) {
             System.out.println("GameController: newMove accepted");
             row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
             col = x;
 
-
             gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
-
-
 
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
+
+            // Check if somebody won
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
-                clientController.winner(playerTurn);
+                clientController.enableGameButton();
 
                 /*
                     TODO Göra om highlightTiles-metoden
@@ -80,7 +78,7 @@ public class GameController {
 //                clientController.highlightTiles(winningTiles);
 
                 // Put a star next to the player who won
-                clientController.highlightWinnerPlayer(playerTurn);
+                clientController.highlightWinnerPlayerStar(playerTurn);
 
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
@@ -101,7 +99,7 @@ public class GameController {
     public void newIncomingMove(int x) {
         // Move from local player
         System.out.println("GameController - newIncomingMove(" + x + ")");
-        if(colSize[x] < 7) {
+        if (colSize[x] < 7) {
             System.out.println("GameController: newIncomingMove accepted");
             row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
             col = x;
@@ -114,7 +112,7 @@ public class GameController {
             System.out.println("Calc " + calculate(row,col));
             playedTiles++;
             if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
-                clientController.winner(playerTurn);
+                clientController.enableGameButton();
                 System.out.println("Winner");
             } else if (playedTiles == 42) {
                 clientController.draw();

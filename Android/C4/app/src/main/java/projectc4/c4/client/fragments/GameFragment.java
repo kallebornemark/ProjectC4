@@ -87,7 +87,7 @@ import static projectc4.c4.util.C4Constants.*;
             @Override
             public void run() {
 //                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-//                textViewWinner.setText(winner);
+//                textViewWinner.setText(enableGameButton);
 
             }
         });
@@ -106,6 +106,9 @@ import static projectc4.c4.util.C4Constants.*;
                 } else if (player == PLAYER2) {
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                     textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                } else if (player == DRAW) {
+                    textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                 }
             }
         });
@@ -123,7 +126,7 @@ import static projectc4.c4.util.C4Constants.*;
         });
     }
 
-    public void highlightWinnerPlayer(int player) {
+    public void highlightWinnerPlayerStar(int player) {
         ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
         ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
         if (player == PLAYER1) {
@@ -132,6 +135,9 @@ import static projectc4.c4.util.C4Constants.*;
         } else if (player == PLAYER2) {
             ivYellowStar.setEnabled(true);
             ivYellowStar.setVisibility(View.VISIBLE);
+        } else if (player == DRAW) {
+            highlightWinnerPlayerStar(PLAYER1);
+            highlightWinnerPlayerStar(PLAYER2);
         }
     }
 

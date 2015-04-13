@@ -50,13 +50,7 @@ public class ClientController {
     }
 
     public void newMove(int column) {
-//        if (player == getPlayerTurn()) {
-//            System.out.println("Clientcontrollerns newLocalMove " + column);
-//            gameController.newMove(column);
-//            if (gameMode == MATCHMAKING) {
-                client.newMove(column);
-//            }
-//        }
+        client.newMove(column);
     }
 
     public void newIncomingMove(int column) {
@@ -77,11 +71,11 @@ public class ClientController {
         gameFragment.highlightPlayer(player);
     }
 
-    public void highlightWinnerPlayer(int player) {
-        gameFragment.highlightWinnerPlayer(player);
+    public void highlightWinnerPlayerStar(int player) {
+        gameFragment.highlightWinnerPlayerStar(player);
     }
 
-    public void winner(int player) {
+    public void enableGameButton() {
         if (gameMode == MATCHMAKING) {
             gameFragment.promptRematch();
         } else if (gameMode == LOCAL) {
@@ -91,6 +85,9 @@ public class ClientController {
 
     public void draw() {
         gameFragment.setTextViewWinner("It's a draw!");
+        highlightWinnerPlayerStar(DRAW);
+        changeHighlightedPlayer(DRAW);
+        enableGameButton();
     }
 
     public void newGame(int gamemode) {

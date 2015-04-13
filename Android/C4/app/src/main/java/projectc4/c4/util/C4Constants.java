@@ -9,4 +9,5 @@ public class C4Constants {
     public static final int REMATCH = -3;
     public static final int PLAYER1 = -10;
     public static final int PLAYER2 = -20;
+    public static final int DRAW = -15;
 }
