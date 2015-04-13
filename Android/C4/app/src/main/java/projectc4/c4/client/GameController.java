@@ -1,5 +1,7 @@
 package projectc4.c4.client;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -18,15 +20,20 @@ public class GameController {
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
 
-    public GameController(ClientController clientController, GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
+    public GameController(ClientController clientController) {
         playerTurn = PLAYER1;
         this.clientController = clientController;
+        this.colSize = new int[7];
+    }
+
+    public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
         this.gameGridView = gameGridView;
         this.gameGridAnimation = gameGridAnimation;
         this.gameGridForeground = gameGridForeground;
+        gameGridForeground.setGameController(this);
         this.gameGridView.setFocusable(true);
         this.gameGridView.addViews(this.gameGridAnimation, this.gameGridForeground);
-        this.colSize = new int[gameGridView.getBoardWidth()];
+//        this.colSize = new int[gameGridView.getBoardWidth()];
     }
 
     public int getPlayerTurn() {
@@ -43,7 +50,7 @@ public class GameController {
         for (int i = 0; i < colSize.length; i++) {
             colSize[i] = 0;
         }
-        gameGridView.reset();
+//        gameGridView.reset();
         winningTiles.clear();
         this.gameMode = gameMode;
         /*
@@ -59,7 +66,7 @@ public class GameController {
     public void newMove(int x, boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < gameGridView.getBoardHeight()) {
-            if ( (gameMode == LOCAL && playerTurn == clientController.getPlayer()) || (gameMode == MATCHMAKING) ) {
+            if (isIncoming || ( playerTurn == clientController.getPlayer() )) {
 
                 row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
                 col = x;
