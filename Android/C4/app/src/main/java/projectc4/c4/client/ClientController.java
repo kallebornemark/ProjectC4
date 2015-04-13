@@ -49,13 +49,13 @@ public class ClientController {
 
     }
 
-    public void newMove(int column) {
+    public void newOutgoingMove(int column) {
         client.newMove(column);
     }
 
     public void newIncomingMove(int column) {
         System.out.println("Clientcontrollerns newIncomingMove " + column);
-        gameController.newIncomingMove(column);
+        gameController.newMove(column, true);
     }
 
     public void startGameUI() {
