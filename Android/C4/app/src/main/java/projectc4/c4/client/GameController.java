@@ -1,7 +1,5 @@
 package projectc4.c4.client;
 
-import android.view.View;
-
 import java.util.ArrayList;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -19,11 +17,13 @@ public class GameController {
     private int playedTiles;
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
+    private boolean gameIsActive;
 
     public GameController(ClientController clientController) {
         playerTurn = PLAYER1;
         this.clientController = clientController;
         this.colSize = new int[7];
+        gameIsActive = true;
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
@@ -46,16 +46,18 @@ public class GameController {
     }
 
     public void newGame(int gameMode) {
+        if (gameGridView != null) {
+            gameGridView.reset();
+
+        }
+        gameIsActive = true;
         playedTiles = 0;
         for (int i = 0; i < colSize.length; i++) {
             colSize[i] = 0;
         }
-//        gameGridView.reset();
         winningTiles.clear();
         this.gameMode = gameMode;
-        /*
-        Lokalt
-         */
+
         if(gameMode == LOCAL) {
             setPlayerTurn(PLAYER1);
             clientController.setPlayer(PLAYER1);
@@ -66,7 +68,7 @@ public class GameController {
     public void newMove(int x, boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < gameGridView.getBoardHeight()) {
-            if (isIncoming || ( playerTurn == clientController.getPlayer() )) {
+            if ((isIncoming || ( playerTurn == clientController.getPlayer()) && gameIsActive)) {
 
                 row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
                 col = x;
@@ -78,6 +80,7 @@ public class GameController {
 
                 // Check if somebody won
                 if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
+                    gameIsActive = false;
                     clientController.enableGameButton();
 
                     /*

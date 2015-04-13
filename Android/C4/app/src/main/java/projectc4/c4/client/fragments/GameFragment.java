@@ -76,7 +76,7 @@ import static projectc4.c4.util.C4Constants.*;
         buttonRematch.setBackground(getActivity().getDrawable(R.drawable.altbutton));
         buttonRematch.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
-        
+
     }
 
     public void setTextViewWinner(final String winner) {
