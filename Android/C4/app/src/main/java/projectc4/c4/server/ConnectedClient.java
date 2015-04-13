@@ -27,6 +27,10 @@ public class ConnectedClient extends Thread implements Serializable {
         this.server = server;
         this.socket = socket;
     }
+
+    public User getUser() {
+        return user;
+    }
     
     public int getStartPos() {
         return startPos;
@@ -40,23 +44,12 @@ public class ConnectedClient extends Thread implements Serializable {
         this.activeGame = activeGame;
     }
 
-    private void validateUser(String name){
-        User user = server.validateUser(name);
-        try {
-            oos.writeObject(user);
-            oos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void startCommunication() {
         int value;
         String username;
         try {
-            System.out.println("Server: Kommunikationen är startad i ConnectedClient");
+            System.out.println("ConnectedClient: Communication started");
             while (!Thread.interrupted()) {
-                System.out.println("Server communication started");
                 Object obj = ois.readObject();
 
                 if (obj instanceof Integer) {
@@ -79,24 +72,31 @@ public class ConnectedClient extends Thread implements Serializable {
 
                 } else if (obj instanceof String) {
                     username = (String)obj;
+                    System.out.println("Server: Username recieved: " + username);
 
                     // Check if user is online
-                    if (server.isUserOnline(username)) {
-
+                    if (!server.isUserOnline(username)) {
+                        System.out.println("Server: No users with username '" + username + "' online, validating...");
                         // Check if user is registered
                         user = server.validateUser(username);
+                        System.out.println("Server: User set to " + user.getUsername());
                         server.addUser(user);
+                        server.addConnectedClient(this);
 
                         // Send back user to client
                         oos.writeObject(user);
                         oos.flush();
+                    } else {
+                        System.out.println("Server: Client named " + username + " already online!");
                     }
                 }
 
             }
         } catch (Exception e) {
             // Hantera om någon dissar
-            e.printStackTrace();
+            System.out.println("Server: Client '" + user.getUsername() + "' disconnected");
+            server.removeConnectedClient(this);
+            System.out.println("Server: Client '" + user.getUsername() + "' removed from connected client list");
         }
     }
 
@@ -105,11 +105,15 @@ public class ConnectedClient extends Thread implements Serializable {
      *
      * @param player Player 1 or 2.
      */
-    public void newGame(int player) {
+    public void newGame(int player, String opponentName) {
         startPos = player;
         try {
             System.out.println("Server: newGame(" + player + ")");
             oos.writeObject(player);
+            oos.flush();
+
+            // Send opponent name
+            oos.writeObject(opponentName);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,19 +131,13 @@ public class ConnectedClient extends Thread implements Serializable {
     }
 
     public void run() {
-        String incomingName;
         try {
+            // Start streams
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
             ois = new ObjectInputStream(socket.getInputStream());
 
-            // Read incoming name
-//            incomingName = ois.readUTF();
-            // Create user object & send back to client
-//            validateUser(incomingName);
-            // Add this connectedClient to connectedClients
-//            server.addConnectedClient(incomingName, this);
-
+            // Start listening to inputstream
             startCommunication();
         } catch (IOException e) {
             e.printStackTrace();

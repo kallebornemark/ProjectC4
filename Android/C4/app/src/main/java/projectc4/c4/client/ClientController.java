@@ -2,6 +2,7 @@ package projectc4.c4.client;
 
 
 import projectc4.c4.client.fragments.GameFragment;
+import projectc4.c4.client.fragments.LoginFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
 import projectc4.c4.util.User;
 
@@ -17,6 +18,8 @@ public class ClientController {
     private int gameMode;
     private GameFragment gameFragment;
     private MatchmakingFragment matchmakingFragment;
+    private LoginFragment loginFragment;
+    private String opponentName;
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
@@ -31,12 +34,16 @@ public class ClientController {
     }
 
 
-    public void setFragment(GameFragment gameFragment) {
+    public void setGameFragment(GameFragment gameFragment) {
         this.gameFragment = gameFragment;
     }
 
     public void setMatchmakingFragment(MatchmakingFragment matchmakingFragment) {
         this.matchmakingFragment = matchmakingFragment;
+    }
+
+    public void setLoginFragment(LoginFragment loginFragment) {
+        this.loginFragment = loginFragment;
     }
 
     public void connect() {
@@ -138,5 +145,17 @@ public class ClientController {
 
     public User getUser() {
         return client.getUser();
+    }
+
+    public void goToMatchmaking() {
+        loginFragment.goToMatchmaking();
+    }
+
+    public void setOpponentName(String opponentName) {
+        this.opponentName = opponentName;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
     }
 }

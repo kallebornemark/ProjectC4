@@ -65,12 +65,12 @@ public class MenuFragment extends Fragment {
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).getClientController().connect();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.container, new LoginFragment()).addToBackStack(null).commit();
 
-                /*((MainActivity)getActivity()).getClientController().connect();
-                FragmentManager fragmentManager = getFragmentManager();
+                /*FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack(null).commit();*/
             }

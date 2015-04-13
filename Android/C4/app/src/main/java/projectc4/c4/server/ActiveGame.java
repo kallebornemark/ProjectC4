@@ -37,9 +37,9 @@ public class ActiveGame implements Serializable {
 
     public void rematch() {
         swapPos(c1);
-        c1.newGame(c1.getStartPos());
+        c1.newGame(c1.getStartPos(), c2.getUser().getUsername());
         swapPos(c2);
-        c2.newGame(c2.getStartPos());
+        c2.newGame(c2.getStartPos(), c1.getUser().getUsername());
     }
 
     public void setReady(ConnectedClient connectedClient) {

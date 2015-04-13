@@ -21,6 +21,8 @@ public class Server implements Runnable {
     private ArrayList<ActiveGame> activeGames;
 
     public Server(int port) {
+        userHashMap = new HashMap<>();
+        connectedClientHashMap = new HashMap<>();
         try {
             serverSocket = new ServerSocket(port);
             server = new Thread(this);
@@ -36,6 +38,14 @@ public class Server implements Runnable {
         userHashMap.put(user.getUsername(), user);
     }
 
+    public void addConnectedClient(ConnectedClient connectedClient) {
+        connectedClientHashMap.put(connectedClient.getUser().getUsername(), connectedClient);
+    }
+
+    public void removeConnectedClient(ConnectedClient connectedClient) {
+        connectedClientHashMap.remove(connectedClient.getUser().getUsername());
+    }
+
     public User validateUser(String name) {
         if (userHashMap.containsKey(name)) {
             return userHashMap.get(name);
@@ -47,7 +57,7 @@ public class Server implements Runnable {
     }
 
     public boolean isUserOnline(String name) {
-        return userHashMap.containsKey(name);
+        return connectedClientHashMap.containsKey(name);
     }
 
     public void addActiveGame(ActiveGame g) {
@@ -69,8 +79,8 @@ public class Server implements Runnable {
         player2 = -30 - player1;
         System.out.println("Server: New Game kallas i servern");
         System.out.println("C1 = " + player1 + " och C2 = " + player2);
-        c1.newGame(player1);
-        c2.newGame(player2);
+        c1.newGame(player1, c2.getUser().getUsername());
+        c2.newGame(player2, c1.getUser().getUsername());
     }
 
     public void run() {

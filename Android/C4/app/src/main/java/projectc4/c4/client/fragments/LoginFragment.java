@@ -34,6 +34,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         clientController = ((MainActivity)getActivity()).getClientController();
+        clientController.setLoginFragment(this);
 
         initComponents();
         styleComponents();
@@ -54,17 +55,18 @@ public class LoginFragment extends Fragment {
     }
 
     public void initListeners() {
+        // Login Button
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clientController.requestUsername(etUsername.getText().toString());
-
-                if (clientController.getUser() != null) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.container, new LoginFragment()).addToBackStack(null).commit();
-                }
             }
         });
+    }
+
+    public void goToMatchmaking() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack(null).commit();
     }
 }

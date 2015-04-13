@@ -1,5 +1,7 @@
 package projectc4.c4.client;
 
+import android.os.AsyncTask;
+
 import projectc4.c4.util.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -66,22 +68,12 @@ public class Client implements Runnable{
         }
     }
 
-    public synchronized void requestUsername(String username) {
-        Object obj;
+    public void requestUsername(String username) {
         try {
             oos.writeObject(username);
             oos.flush();
-
-            // Wait for server response (blocking!)
-            obj = ois.readObject();
-            if (obj instanceof User) {
-                user = (User)obj;
-                System.out.println("Client: User set to " + user.getUsername());
-            }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e2) {
-            e2.printStackTrace();
         }
     }
 
@@ -117,9 +109,10 @@ public class Client implements Runnable{
     public void startCommunication() {
         Object obj;
         int number;
+        String opponentName;
         try {
+            System.out.println("Client communication started");
             while (!Thread.interrupted()) {
-                System.out.println("Client communication started");
                 obj = ois.readObject();
 
                 if (obj instanceof Integer) {
@@ -127,6 +120,13 @@ public class Client implements Runnable{
                     System.out.println("Client: New incoming int: " + number);
                     checkNumberAndSend(number);
 
+                } else if (obj instanceof User) {
+                    user = (User)obj;
+                    System.out.println("Client: User set to " + user.getUsername());
+                    clientController.goToMatchmaking();
+                } else if (obj instanceof String) {
+                    opponentName = (String)obj;
+                    clientController.setOpponentName(opponentName);
                 }
             }
         } catch (Exception e) {}

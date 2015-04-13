@@ -1,6 +1,5 @@
 package projectc4.c4.client.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
-import projectc4.c4.client.GameController;
 import projectc4.c4.client.GameGridAnimation;
 import projectc4.c4.client.GameGridForeground;
 import projectc4.c4.client.GameGridView;
@@ -41,7 +39,7 @@ import static projectc4.c4.util.C4Constants.*;
         GameGridForeground ggForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
         clientController.getGameController().setViews(ggView, ggAnimation, ggForeground);
 
-        clientController.setFragment(this);
+        clientController.setGameFragment(this);
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
         initGraphics(view);
@@ -66,6 +64,9 @@ import static projectc4.c4.util.C4Constants.*;
         highlightPlayer(clientController.getPlayerTurn());
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
+
+        textViewPlayer1.setText(clientController.getUser().getUsername());
+        textViewPlayer2.setText(clientController.getOpponentName());
 
         Button buttonNewgame = (Button)view.findViewById(R.id.buttonNewGame);
         buttonNewgame.setBackground(getActivity().getDrawable(R.drawable.altbutton));
