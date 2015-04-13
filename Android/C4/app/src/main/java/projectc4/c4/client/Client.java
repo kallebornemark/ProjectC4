@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -159,9 +158,13 @@ public class Client implements Runnable, Serializable {
         if (obj instanceof Integer) {
             number = (Integer)obj;
             checkNumberAndSend(number);
+        } else if (obj instanceof String) {
+            // Login attempt failed on server side, display error in login fragment
+            clientController.loginErrorMessage((String) obj);
+        }
 
+        else if (obj instanceof int[][]){
             //Powerup spawn
-        } else if (obj instanceof int[][]){
             int[][] gameBoard = (int[][])obj;
             clientController.getGameController().setPowerups(gameBoard);
             System.out.println("Skickat powerups");
@@ -219,7 +222,7 @@ public class Client implements Runnable, Serializable {
             // Start listening
             startCommunication();
         } catch (IOException e) {
-            clientController.serverOffline();
+            clientController.loginErrorMessage("Server offline");
             disconnect();
 //        } catch (ClassNotFoundException e2) {
 //            e2.printStackTrace();

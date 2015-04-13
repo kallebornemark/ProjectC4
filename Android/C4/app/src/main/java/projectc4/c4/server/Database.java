@@ -7,12 +7,12 @@ import java.sql.*;
 /**
  * @author Kalle Bornemark
  */
-public class SQLiteJDBC {
+public class Database {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
 
-    public SQLiteJDBC() {
+    public Database() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:app/src/main/java/projectc4/c4/server/db/c4_database.db");
@@ -34,22 +34,29 @@ public class SQLiteJDBC {
         }
     }
 
-    public User attemptLogin(String username, String password) {
+    public String[] attemptLogin(String username, String password) {
+        String[] res = new String[5];
         try {
-            resultSet = statement.executeQuery("select * from User where (username = '" + username + "' and password = '" + password + "');");
+            resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
             if (resultSet.next()) {
-                System.out.println("User and password exists in database, creating user and sending back to client");
-
-                String firstname = resultSet.getString("firstname");
-                String lastname = resultSet.getString("lastname");
-                double elo = resultSet.getDouble("elo");
-
-                return new User(username, firstname, lastname, elo);
+                resultSet = statement.executeQuery("select * from User where (username = '" + username + "' and password = '" + password + "')");
+                if (resultSet.next()) {
+                    System.out.println("User and password matches database, login accepted.\nSending back string-array to server");
+                    res[0] = username;
+                    res[1] = resultSet.getString("firstname");
+                    res[2] = resultSet.getString("lastname");
+                    res[3] = Double.toString(resultSet.getDouble("elo"));
+                } else {
+                    res[4] = "Wrong password for user: " + username;
+                }
+            } else {
+                res[4] = "No such user: " + username;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return res;
     }
 
     public void setFirstname(String username, String firstname) {

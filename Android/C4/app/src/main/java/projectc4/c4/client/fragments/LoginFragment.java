@@ -94,12 +94,12 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    public void serverOffline() {
+    public void loginErrorMessage(final String msg) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 TextView error = (TextView)view.findViewById(R.id.textViewError);
-                error.setText("SERVER OFFLINE");
+                error.setText(msg);
                 final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge2);
                 progressBar.setVisibility(view.INVISIBLE);
             }

@@ -56,6 +56,35 @@ public class ConnectedClient extends Thread implements Serializable {
         return activeGame;
     }
 
+    public void validateUser(String username, String password) {
+        try {
+            // Check if username is online
+            if (!server.isUserOnline(username)) {
+                System.out.println("Server: No users with username '" + username + "' online, validating...");
+
+                // Check if username is registered
+                String[] res = server.attemptLogin(username, password);
+                if (res[4] == null) {
+                    User returnUser = new User(res[0], res[1], res[2], Double.parseDouble(res[3]));
+                    oos.writeObject(returnUser);
+                    oos.flush();
+                    this.username = username;
+                    server.addConnectedClient(this);
+                } else {
+                    String error = res[4];
+                    oos.writeObject(error);
+                    oos.flush();
+                }
+            } else {
+                oos.writeObject("User " + username + " already online!");
+                oos.flush();
+                System.out.println("Server: User " + username + " already online!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void startCommunication() {
         int value;
         String username, password;
@@ -109,27 +138,13 @@ public class ConnectedClient extends Thread implements Serializable {
 //                    System.out.println("Server: User-object updated");
                 }
                 else if (obj instanceof String) {
-                    User user;
                     username = (String)obj;
                     System.out.println("Server: Username recieved: " + username);
                     obj = ois.readObject();
                     password = (String)obj;
                     System.out.println("Server: Password recieved: " + password);
 
-
-                    // Check if username is online
-                    if (!server.isUserOnline(username)) {
-                        System.out.println("Server: No users with username '" + username + "' online, validating...");
-                        // Check if username is registered
-                        user = server.attemptLogin(username, password);
-                        server.addConnectedClient(this);
-
-                        // Send back username to client
-                        oos.writeObject(user);
-                        oos.flush();
-                    } else {
-                        System.out.println("Server: Client named " + username + " already online!");
-                    }
+                    validateUser(username, password);
                 }
 
             }

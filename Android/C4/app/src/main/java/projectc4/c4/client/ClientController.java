@@ -46,8 +46,8 @@ public class ClientController {
         this.client = c;
     }
 
-    public void serverOffline() {
-        loginFragment.serverOffline();
+    public void loginErrorMessage(String msg) {
+        loginFragment.loginErrorMessage(msg);
     }
 
     public void cancelTimer() {

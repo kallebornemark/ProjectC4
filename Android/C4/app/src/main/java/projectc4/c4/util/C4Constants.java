@@ -6,6 +6,7 @@ package projectc4.c4.util;
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class C4Constants {
+    public static final int LOGINFAILED = 30;
     public static final int EMPTYMOVE = 20;
     public static final int GRIDSPACING = 10;
     public static final int LOCAL = -1;

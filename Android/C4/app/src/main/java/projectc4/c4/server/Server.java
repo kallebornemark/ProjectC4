@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
-import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -21,12 +20,12 @@ public class Server implements Runnable {
     private Thread server;
     private HashMap<String, ConnectedClient> connectedClientHashMap;
     private SearchQueue searchingForGame;
-    private SQLiteJDBC database;
+    private Database database;
 //    private ArrayList<ActiveGame> activeGames; // används inte just nu
 
     public Server(int port) {
         connectedClientHashMap = new HashMap<>();
-        database = new SQLiteJDBC();
+        database = new Database();
         try {
             serverSocket = new ServerSocket(port);
             server = new Thread(this);
@@ -50,7 +49,7 @@ public class Server implements Runnable {
         connectedClientHashMap.remove(connectedClient.getUsername());
     }
 
-    public synchronized User attemptLogin(String name, String password) {
+    public synchronized String[] attemptLogin(String name, String password) {
         return database.attemptLogin(name, password);
     }
 
