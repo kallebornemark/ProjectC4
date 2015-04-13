@@ -34,6 +34,7 @@ public class GameController {
     }
 
     public void setPlayerTurn(int player) {
+        System.out.println("Sätter player i gameController");
         this.playerTurn = player;
     }
 

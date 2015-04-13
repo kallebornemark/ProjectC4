@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
+import projectc4.c4.client.MainActivity;
 
 import static projectc4.c4.util.C4Constants.MATCHMAKING;
 
@@ -21,22 +22,24 @@ import static projectc4.c4.util.C4Constants.MATCHMAKING;
  */
 public class MatchmakingFragment extends Fragment {
     private View view;
-    private GameFragment gameFragment;
+    private ClientController clientController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.clientController = ((MainActivity)getActivity()).getClientController();
         View view = inflater.inflate(R.layout.fragment_matchmaking, container, false);
         this.view = view;
 
-//        ClientController.getInstance().setMatchmakingFragment(this);
         initGraphics();
         final Button buttonFindOpponent = (Button)view.findViewById(R.id.buttonFindOpponent);
         final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge);
+        clientController.setMatchmakingFragment(this);
+
         buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ClientController.getInstance().requestGame(MATCHMAKING);
+                clientController.requestGame(MATCHMAKING);
 
                 progressBar.setEnabled(true);
                 progressBar.setVisibility(View.VISIBLE);
@@ -62,12 +65,12 @@ public class MatchmakingFragment extends Fragment {
 //        progressBar.setEnabled(false);
 //        progressBar.setVisibility(View.INVISIBLE);
         System.out.println("startGameUI");
-//        ClientController.getInstance().setGameMode(MATCHMAKING);
+        clientController.setGameMode(MATCHMAKING);
+        clientController.newGame(MATCHMAKING);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        this.gameFragment = (GameFragment)fragmentManager.findFragmentByTag("gameFragment");
-        System.out.println("GÖr transaktion");
-        transaction.replace(R.id.container, gameFragment).addToBackStack(null).commit();
+        System.out.println("Gör transaktion");
+        transaction.replace(R.id.container, ((MainActivity)getActivity()).getGameFragment()).addToBackStack(null).commit();
         System.out.println("Har gjort transaktion");
 
 

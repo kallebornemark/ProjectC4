@@ -17,7 +17,7 @@ public class ClientController {
     private GameFragment gameFragment;
     private MatchmakingFragment matchmakingFragment;
 
-    public void setGamecontroller(GameController gameController) {
+    public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
 

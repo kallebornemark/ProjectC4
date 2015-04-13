@@ -1,8 +1,6 @@
 package projectc4.c4.client.fragments;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,9 +38,9 @@ import static projectc4.c4.util.C4Constants.*;
         GameGridView ggView = (GameGridView)view.findViewById(R.id.gameGridView);
         GameGridAnimation ggAnimation = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
         GameGridForeground ggForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
-        GameController gameController = new GameController(((MainActivity)getActivity()).getClientController(),ggView, ggAnimation, ggForeground);
+        GameController gameController = new GameController(clientController,ggView, ggAnimation, ggForeground);
+        clientController.setGameController(gameController);
         ggForeground.setGameController(gameController);
-        ((MainActivity)getActivity()).getClientController().setGamecontroller(gameController);
 
         clientController.setFragment(this);
         System.out.println(clientController.getPlayerTurn());
