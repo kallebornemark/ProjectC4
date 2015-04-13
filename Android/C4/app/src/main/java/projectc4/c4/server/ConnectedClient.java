@@ -68,7 +68,7 @@ public class ConnectedClient extends Thread implements Serializable {
                     System.out.println("Server: New incoming MM game");
                     server.addSearchingClient(this);
 
-                } else if (value >= 0 && value <= 5) {
+                } else if (value >= 0 && value <= 20) {
                     // New incoming move
                     activeGame.newMove(this, value);
 

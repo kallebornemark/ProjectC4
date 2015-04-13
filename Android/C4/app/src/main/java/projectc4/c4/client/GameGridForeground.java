@@ -137,8 +137,8 @@ public class GameGridForeground extends View {
                         //Om x positionen är i just denna kulumnen körs performClick och bricka läggs.
                         if (touchPosX >= offsetX + gridSpacing + ((gridSpacing + sideOfTile) * col) && touchPosX <= offsetX + gridSpacing + sideOfTile + ((sideOfTile + gridSpacing) * col)) {
 //                            System.out.println("onTouchEvent: touchPosX: " + touchPosX + "    -    col = " + (col));
-//                            System.out.println("gameController.newMove(col): " + col);
-                            gameController.newMove(col);
+//                            System.out.println("gameController.newOutgoingMove(col): " + col);
+                            gameController.newMove(col, false);
                             break;
                         }
                     }
@@ -159,7 +159,7 @@ public class GameGridForeground extends View {
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
         int w = MeasureSpec.getSize(widthMeasuredSpec);
         int h = MeasureSpec.getSize(heightMeasuredSpec);
-        System.out.println("w: " + w + " h: " + h );
+        System.out.println("ggForeground - w: " + w + " h: " + h );
         setMeasuredDimension(w, h);
     }
 }

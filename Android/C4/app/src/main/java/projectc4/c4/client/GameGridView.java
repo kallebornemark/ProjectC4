@@ -16,7 +16,7 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameGridView extends View {
 
-    private int[][] gameBoard = new int[6][7];
+    private int[][] gameBoard;
 
     // För att nå GameGridAnimation & GameGridForeground
     private GameGridAnimation gameGridAnimation;
@@ -29,14 +29,17 @@ public class GameGridView extends View {
 
     public GameGridView(Context context) {
         super(context);
+        init();
     }
 
     public GameGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public GameGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
     }
 
     public void addViews(GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
@@ -47,6 +50,11 @@ public class GameGridView extends View {
         this.gameGridForeground = gameGridForeground;
         gameGridAnimation.addView(this);
         gameGridForeground.addView(this);
+    }
+
+    public void init() {
+        gameBoard = new int[6][7];
+        updateDisplay();
     }
 
     public int getElement(int i, int j) {
@@ -76,13 +84,6 @@ public class GameGridView extends View {
             }
         }
         setDisplay(tmp);
-    }
-
-    //För testning
-    public void setRandomBoard() {
-        Random rnd = new Random();
-        gameBoard = new int[rnd.nextInt(6) + 5][rnd.nextInt(6) + 5];
-        updateDisplay();
     }
 
     public void setDisplay(int[][] board) {
@@ -131,16 +132,7 @@ public class GameGridView extends View {
 
     protected void onDraw(Canvas canvas) {
         calculateSize();
-
         Paint paint = new Paint();
-
-        RectF rect = new RectF(offsetX - gridSpacing, offsetY - gridSpacing, offsetX + (gameBoard[0].length * (sideOfTile + gridSpacing)), offsetY + (gameBoard.length * (sideOfTile + gridSpacing)));
-        //Todo sätta rätt gridspacingfärg
-        paint.setColor(BLACK);
-        canvas.drawRoundRect(rect, 20, 20, paint);
-        System.out.println("____________________________________________________________________________________");
-        System.out.println("STORLEK:\nwidth: " + getWidth() + "\nHeight: " + getHeight() + "\nsideOfTile: " + sideOfTile + "\noffsetX: " + offsetX + "\noffsetY: " + offsetY);
-
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
 
@@ -154,9 +146,7 @@ public class GameGridView extends View {
 
                 int posX = (col * (sideOfTile + gridSpacing)) + offsetX;
                 int posY = (row * (sideOfTile + gridSpacing)) + offsetY;
-                //Todo uträkning i temporära variabler istället
-                rect = new RectF(posX, posY, (sideOfTile + posX), (sideOfTile + posY));
-                canvas.drawRoundRect(rect, 20, 20, paint);
+                canvas.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
             }
         }
     }
@@ -183,25 +173,11 @@ public class GameGridView extends View {
         }
     }
 
-
-    //För testning
-    public void randomAnimation() {
-        Random rnd = new Random();
-        gameGridAnimation.animateNewMove(rnd.nextInt(gameBoard[0].length), rnd.nextInt(gameBoard.length), rnd.nextInt(2) + 1);
-    }
-
-    public void randomAnimation(int col) {
-        System.out.println("random animation col: " + col);
-        tmpPos = -1;
-        Random rnd = new Random();
-        gameGridAnimation.animateNewMove(col, rnd.nextInt(gameBoard.length), rnd.nextInt(2) + 1);
-    }
-
     @Override
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
         int w = MeasureSpec.getSize(widthMeasuredSpec);
         int h = MeasureSpec.getSize(heightMeasuredSpec);
-        System.out.println("w: " + w + " h: " + h );
+        System.out.println("ggView - w: " + w + " h: " + h );
         setMeasuredDimension(w, h);
     }
 }

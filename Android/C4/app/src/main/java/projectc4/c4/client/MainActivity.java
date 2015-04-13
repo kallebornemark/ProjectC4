@@ -14,20 +14,43 @@ import android.view.MenuItem;
 
 import projectc4.c4.R;
 import projectc4.c4.client.fragments.GameFragment;
+import projectc4.c4.client.fragments.LoginFragment;
+import projectc4.c4.client.fragments.MatchmakingFragment;
 import projectc4.c4.client.fragments.MenuFragment;
 
 public class MainActivity extends FragmentActivity{
+
     private MenuFragment menuFragment;
     private GameFragment gameFragment;
+    private ClientController clientController;
+    private GameController gameController;
+    private MatchmakingFragment matchmakingFragment;
+    private LoginFragment loginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         if (savedInstanceState == null) {
+
+            clientController = new ClientController();
+            gameController = new GameController(clientController);
+            clientController.setGameController(gameController);
+
             this.menuFragment = new MenuFragment();
-            getFragmentManager().beginTransaction().add(R.id.container, menuFragment, "menu").addToBackStack(null).commit();
+//            this.gameFragment = new GameFragment();
+//            this.matchmakingFragment = new MatchmakingFragment();
+//            this.loginFragment = new LoginFragment();
+
+            getFragmentManager().beginTransaction().replace(R.id.container, menuFragment).addToBackStack(null).commit();
+
+//            getFragmentManager().beginTransaction().add(R.id.container, menuFragment, "menu");
+//            getFragmentManager().beginTransaction().add(R.id.container, gameFragment, "game");
+//            getFragmentManager().beginTransaction().add(R.id.container, matchmakingFragment, "matchmaking");
+//            getFragmentManager().beginTransaction().add(R.id.container, loginFragment, "login");
 
         }
     }
@@ -99,12 +122,26 @@ public class MainActivity extends FragmentActivity{
         }
     }
 
-
-
     public GameFragment getGameFragment() {
         return gameFragment;
     }
-    
+
+    public MenuFragment getMenuFragment() {
+        return menuFragment;
+    }
+
+    public MatchmakingFragment getMatchmakingFragment() {
+        return matchmakingFragment;
+    }
+
+    public LoginFragment getLoginFragment() {
+        return loginFragment;
+    }
+
+    public ClientController getClientController() {
+        return clientController;
+    }
+
     public void setGameFragment(GameFragment gameFragment) {
         this.gameFragment = gameFragment;
     }
