@@ -261,8 +261,13 @@
             android:layout_centerInParent="true"
             android:padding="0dp"/>
 
-        <Button android:layout_width="140dp" android:layout_height="35dp" android:text="Rematch"
-            android:id="@+id/buttonRematch" android:enabled="false" android:visibility="invisible"
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:text="Rematch"
+            android:id="@+id/buttonRematch"
+            android:enabled="false"
+            android:visibility="invisible"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="20dp"
             android:textAlignment="center"

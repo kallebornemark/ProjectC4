@@ -159,7 +159,7 @@ public class GameGridForeground extends View {
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
         int w = MeasureSpec.getSize(widthMeasuredSpec);
         int h = MeasureSpec.getSize(heightMeasuredSpec);
-        System.out.println("w: " + w + " h: " + h );
+        System.out.println("ggForeground - w: " + w + " h: " + h );
         setMeasuredDimension(w, h);
     }
 }

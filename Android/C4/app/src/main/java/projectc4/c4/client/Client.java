@@ -83,7 +83,7 @@ public class Client implements Runnable{
             clientController.setPlayerTurn(number);
 //            clientController.gameIsReady = true;
             clientController.startGameUI();
-        } else if (number >= 0 && number <= 5) {
+        } else if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
             clientController.newIncomingMove(number);
         }

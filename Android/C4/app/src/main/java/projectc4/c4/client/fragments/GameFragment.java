@@ -73,9 +73,10 @@ import static projectc4.c4.util.C4Constants.*;
         buttonNewgame.setTextColor(C4Color.WHITE);
 
         Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
-        buttonNewgame.setBackground(getActivity().getDrawable(R.drawable.altbutton));
-        buttonNewgame.setTypeface(type, Typeface.BOLD);
+        buttonRematch.setBackground(getActivity().getDrawable(R.drawable.altbutton));
+        buttonRematch.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
+        
     }
 
     public void setTextViewWinner(final String winner) {
@@ -111,30 +112,40 @@ import static projectc4.c4.util.C4Constants.*;
     }
 
     public void promptRematch() {
-        final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
-        buttonRematch.setEnabled(true);
-        buttonRematch.setVisibility(View.VISIBLE);
-        buttonRematch.setOnClickListener(new View.OnClickListener() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                clientController.requestRematch();
+            public void run() {
+                final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
+                buttonRematch.setEnabled(true);
+                buttonRematch.setVisibility(View.VISIBLE);
+                buttonRematch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clientController.requestRematch();
+                    }
+                });
             }
         });
     }
 
-    public void highlightWinnerPlayerStar(int player) {
-        ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
-        ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
-        if (player == PLAYER1) {
-            ivRedStar.setEnabled(true);
-            ivRedStar.setVisibility(View.VISIBLE);
-        } else if (player == PLAYER2) {
-            ivYellowStar.setEnabled(true);
-            ivYellowStar.setVisibility(View.VISIBLE);
-        } else if (player == DRAW) {
-            highlightWinnerPlayerStar(PLAYER1);
-            highlightWinnerPlayerStar(PLAYER2);
-        }
+    public void highlightWinnerPlayerStar(final int player) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+                if (player == PLAYER1) {
+                    ivRedStar.setEnabled(true);
+                    ivRedStar.setVisibility(View.VISIBLE);
+                } else if (player == PLAYER2) {
+                    ivYellowStar.setEnabled(true);
+                    ivYellowStar.setVisibility(View.VISIBLE);
+                } else if (player == DRAW) {
+                    highlightWinnerPlayerStar(PLAYER1);
+                    highlightWinnerPlayerStar(PLAYER2);
+                }
+            }
+        });
     }
 
     public void dehighlightWinners() {
@@ -160,26 +171,28 @@ import static projectc4.c4.util.C4Constants.*;
     }
 
     public void setNewGame() {
-        final Button buttonNewGame = (Button)view.findViewById(R.id.buttonNewGame);
-        buttonNewGame.setEnabled(true);
-        buttonNewGame.setVisibility(View.VISIBLE);
-        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                dehighlightWinners();
-                clientController.newGame(LOCAL);
-                buttonNewGame.setEnabled(false);
-                buttonNewGame.setVisibility(View.INVISIBLE);
+            public void run() {
+                final Button buttonNewGame = (Button)view.findViewById(R.id.buttonNewGame);
+                buttonNewGame.setEnabled(true);
+                buttonNewGame.setVisibility(View.VISIBLE);
+                buttonNewGame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dehighlightWinners();
+                        clientController.newGame(LOCAL);
+                        buttonNewGame.setEnabled(false);
+                        buttonNewGame.setVisibility(View.INVISIBLE);
 //                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
 //                textViewWinner.setText("");
 //                clientController.newGame(LOCAL);
-                RelativeLayout relativeLayoutPlayers = (RelativeLayout)view.findViewById(R.id.relativeLayoutPlayers);
-                relativeLayoutPlayers.setVisibility(View.VISIBLE);
-                highlightPlayer(PLAYER1);
+                        RelativeLayout relativeLayoutPlayers = (RelativeLayout)view.findViewById(R.id.relativeLayoutPlayers);
+                        relativeLayoutPlayers.setVisibility(View.VISIBLE);
+                        highlightPlayer(PLAYER1);
+                    }
+                });
             }
         });
     }
-
-
-
 }
