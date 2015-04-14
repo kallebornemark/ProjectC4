@@ -1,15 +1,14 @@
 package projectc4.c4.client.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -28,6 +27,7 @@ import static projectc4.c4.util.C4Constants.*;
     private ClientController clientController;
     private int gameMode;
     private View view;
+    private ImageButton buttonGameProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +42,9 @@ import static projectc4.c4.util.C4Constants.*;
         clientController.setGameFragment(this);
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
+
         initGraphics(view);
+        initListeners();
 
         clientController.newGame(gameMode);
         return view;
@@ -80,6 +82,21 @@ import static projectc4.c4.util.C4Constants.*;
         buttonRematch.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
 
+        buttonGameProfile = (ImageButton)view.findViewById(R.id.iconProfile);
+    }
+
+    public void initListeners() {
+        // In-game profile button
+        buttonGameProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(android.R.id.content, new GameProfileFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     // Används inte längre eftersom vi inte visar vinnaren med text
