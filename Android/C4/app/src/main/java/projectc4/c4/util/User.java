@@ -1,6 +1,7 @@
 package projectc4.c4.util;
 
 import java.io.Serializable;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -44,7 +45,15 @@ public class User implements Serializable {
      * @param result The result which counter should be increased.
      */
     public void newGameResult(int result) {
-        gameResults[result]++;
+        int res;
+        if (result == WIN) {
+            res = 1;
+        } else if (result == LOSS) {
+            res = 2;
+        } else {
+            res = 3;
+        }
+        gameResults[res]++;
         gameResults[0]++;
     }
 

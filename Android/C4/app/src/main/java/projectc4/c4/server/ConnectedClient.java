@@ -68,7 +68,7 @@ public class ConnectedClient extends Thread implements Serializable {
                         // Requested rematch
                         activeGame.setReady(this);
                     } else if (value == WIN || value == LOSS || value == DRAW) {
-
+                        server.updateUser(user.getUsername(), value);
                     }
                     System.out.println("Server: Har fått en int: " + value);
 

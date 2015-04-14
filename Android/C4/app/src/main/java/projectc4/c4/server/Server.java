@@ -38,6 +38,10 @@ public class Server implements Runnable {
         userHashMap.put(user.getUsername(), user);
     }
 
+    public void updateUser(String username, int result) {
+        userHashMap.get(username).newGameResult(result);
+    }
+
     public void addConnectedClient(ConnectedClient connectedClient) {
         connectedClientHashMap.put(connectedClient.getUser().getUsername(), connectedClient);
     }
