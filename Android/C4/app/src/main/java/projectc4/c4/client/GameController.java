@@ -112,7 +112,9 @@ public class GameController {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
 
             // Somebody won
-            timer.cancel();
+            if(timer != null) {
+                timer.cancel();
+            }
             gameIsActive = false;
             clientController.enableGameButton();
 
@@ -132,6 +134,9 @@ public class GameController {
 
             // Regular move without any particular outcome
             changePlayer(isIncoming);
+        if (gameMode == LOCAL) {
+            clientController.setPlayer(playerTurn);
+        }
 
         }
     }
@@ -143,9 +148,6 @@ public class GameController {
             playerTurn = PLAYER1;
         }
         clientController.changeHighlightedPlayer(playerTurn);
-        if (gameMode == LOCAL) {
-            clientController.setPlayer(playerTurn);
-        }
         if(isIncoming) {
             startTimer();
         }
