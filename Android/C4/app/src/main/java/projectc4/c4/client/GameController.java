@@ -112,7 +112,9 @@ public class GameController {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
 
             // Somebody won
-            timer.cancel();
+            if(timer != null) {
+                timer.cancel();
+            }
             gameIsActive = false;
             clientController.enableGameButton();
 
