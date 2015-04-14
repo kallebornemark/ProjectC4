@@ -1,6 +1,9 @@
 package projectc4.c4.client;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static projectc4.c4.util.C4Constants.*;
 
 /**
@@ -18,6 +21,8 @@ public class GameController {
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
     private boolean gameIsActive;
+    private Timer timer;
+    private int time;
 
     public GameController(ClientController clientController) {
         playerTurn = PLAYER1;
@@ -65,6 +70,22 @@ public class GameController {
         }
     }
 
+    public void startTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        time = 7;
+        timer = new Timer(); //Kanske slösar minne
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            public void run() {
+                toDO();
+            }
+        }, 0, 1000);
+
+
+}
+
     public void newMove(int x, boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < gameGridView.getBoardHeight()) {
@@ -76,7 +97,7 @@ public class GameController {
                 playedTiles++;
 
                 // Check if somebody won or if the game is drawn
-                checkOutcome();
+                checkOutcome(isIncoming);
 
                 // Send the move to opponent if it's an online game
                 if (gameMode == MATCHMAKING && !isIncoming) {
@@ -87,10 +108,11 @@ public class GameController {
         }
     }
 
-    public void checkOutcome() {
+    public void checkOutcome(boolean isIncoming) {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
 
             // Somebody won
+            timer.cancel();
             gameIsActive = false;
             clientController.enableGameButton();
 
@@ -99,7 +121,7 @@ public class GameController {
 
             // Put a star next to the player who won
             clientController.highlightWinnerPlayerStar(playerTurn);
-            clientController.updateUser(playerTurn);
+//            clientController.updateUser(playerTurn);
 
         } else if (playedTiles == 42) {
 
@@ -109,21 +131,24 @@ public class GameController {
         } else {
 
             // Regular move without any particular outcome
-            changePlayer();
-            if (gameMode == LOCAL) {
-                clientController.setPlayer(playerTurn);
-            }
+            changePlayer(isIncoming);
 
         }
     }
 
-    public void changePlayer() {
+    public void changePlayer(boolean isIncoming) {
         if (playerTurn == PLAYER1) {
             playerTurn = PLAYER2;
         } else {
             playerTurn = PLAYER1;
         }
         clientController.changeHighlightedPlayer(playerTurn);
+        if (gameMode == LOCAL) {
+            clientController.setPlayer(playerTurn);
+        }
+        if(isIncoming) {
+            startTimer();
+        }
     }
 
     private boolean checkHorizontal() {
@@ -256,5 +281,15 @@ public class GameController {
     private int calculate(int row, int col) {
         int value = (row * 6) + col;
         return value;
+    }
+
+    public void toDO() {
+        System.out.println(time--);
+        if (time == 0) {
+            System.out.println("TIDEN SLUT");
+            timer.cancel();
+            changePlayer(false);
+            clientController.newOutgoingMove(EMPTYMOVE);
+        }
     }
 }
