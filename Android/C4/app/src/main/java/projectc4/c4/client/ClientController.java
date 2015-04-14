@@ -183,4 +183,8 @@ public class ClientController {
             client.updateOpponent(DRAW);
         }
     }
+
+    public void increaseProgressBar(int time) {
+        gameFragment.increaseProgressBar(time);
+    }
 }

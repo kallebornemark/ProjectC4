@@ -74,7 +74,7 @@ public class GameController {
         if (timer != null) {
             timer.cancel();
         }
-        time = 7;
+        time = 30;
         timer = new Timer(); //Kanske slösar minne
         timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -148,9 +148,11 @@ public class GameController {
             playerTurn = PLAYER1;
         }
         clientController.changeHighlightedPlayer(playerTurn);
-        if(isIncoming) {
+        if (isIncoming) {
             startTimer();
-        }
+        }else if (timer != null) {
+            timer.cancel();
+        }clientController.increaseProgressBar(0);
     }
 
     private boolean checkHorizontal() {
@@ -286,7 +288,7 @@ public class GameController {
     }
 
     public void toDO() {
-        System.out.println(time--);
+        clientController.increaseProgressBar(--time);
         if (time == 0) {
             System.out.println("TIDEN SLUT");
             timer.cancel();

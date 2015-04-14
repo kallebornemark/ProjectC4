@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ import static projectc4.c4.util.C4Constants.*;
     private ClientController clientController;
     private int gameMode;
     private View view;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +67,9 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
+
         if (gameMode==MATCHMAKING){
+            progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
             textViewPlayer1.setText(clientController.getUser().getUsername());
             textViewPlayer2.setText(clientController.getOpponentName());
         }
@@ -167,6 +171,15 @@ import static projectc4.c4.util.C4Constants.*;
             }
         });
 
+    }
+
+    public void increaseProgressBar(final int time) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setProgress(time);
+            }
+        });
     }
 
     public void setNewGame() {
