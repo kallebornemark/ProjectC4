@@ -8,5 +8,9 @@
     <string name="title_activity_multiplayer">MultiplayerActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string-array name="theme">Settings
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
 
 </resources>

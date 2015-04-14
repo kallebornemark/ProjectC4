@@ -31,24 +31,24 @@ public class MenuFragment extends Fragment {
         // init buttons
         Button buttonLocalGame = (Button)view.findViewById(R.id.localGame);
         Button buttonMultiplayer = (Button)view.findViewById(R.id.buttonMultiplayer);
-        Button buttonSocial = (Button)view.findViewById(R.id.buttonSocial);
-        Button buttonHighscore = (Button)view.findViewById(R.id.buttonHigh);
-        Button buttonHow = (Button)view.findViewById(R.id.buttonAbout);
+        Button buttonSettings = (Button)view.findViewById(R.id.buttonSocial);
+        Button buttonHowToPlay = (Button)view.findViewById(R.id.buttonHigh);
+        Button buttonAbout = (Button)view.findViewById(R.id.buttonAbout);
 
         // InitGraphcs
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
         buttonLocalGame.setTypeface(type,Typeface.BOLD);
         buttonMultiplayer.setTypeface(type,Typeface.BOLD);
-        buttonSocial.setTypeface(type,Typeface.BOLD);
-        buttonHighscore.setTypeface(type,Typeface.BOLD);
-        buttonHow.setTypeface(type,Typeface.BOLD);
+        buttonSettings.setTypeface(type, Typeface.BOLD);
+        buttonHowToPlay.setTypeface(type, Typeface.BOLD);
+        buttonAbout.setTypeface(type, Typeface.BOLD);
 
         buttonLocalGame.setTextColor(C4Color.WHITE);
         buttonMultiplayer.setTextColor(C4Color.WHITE);
-        buttonSocial.setTextColor(C4Color.WHITE);
-        buttonHighscore.setTextColor(C4Color.WHITE);
-        buttonHow.setTextColor(C4Color.WHITE);
+        buttonSettings.setTextColor(C4Color.WHITE);
+        buttonHowToPlay.setTextColor(C4Color.WHITE);
+        buttonAbout.setTextColor(C4Color.WHITE);
 
         // Init listeners
         buttonLocalGame.setOnClickListener(new View.OnClickListener() {
@@ -76,24 +76,33 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        buttonSocial.setOnClickListener(new View.OnClickListener() {
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                transaction.replace(R.id.container, new SettingsFragment()).addToBackStack(null).commit();
             }
         });
 
-        buttonHighscore.setOnClickListener(new View.OnClickListener() {
+        buttonHowToPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                transaction.replace(R.id.container, new HowToPlayFragment()).addToBackStack(null).commit();
             }
         });
 
-        buttonHow.setOnClickListener(new View.OnClickListener() {
+        buttonAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                transaction.replace(R.id.container, new AboutFragment()).addToBackStack(null).commit();
             }
         });
         return view;
