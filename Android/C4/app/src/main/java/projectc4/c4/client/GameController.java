@@ -72,36 +72,13 @@ public class GameController {
 
                 row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
                 col = x;
-
                 gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
-
-                System.out.println("Calc " + calculate(row,col));
                 playedTiles++;
 
-                // Check if somebody won
-                if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
-                    gameIsActive = false;
-                    clientController.enableGameButton();
+                // Check if somebody won or if the game is drawn
+                checkOutcome();
 
-                    /*
-                        TODO Göra om highlightTiles-metoden
-                     */
-    //                clientController.highlightTiles(winningTiles);
-
-                    // Put a star next to the player who won
-                    clientController.highlightWinnerPlayerStar(playerTurn);
-
-                } else if (playedTiles == 42) {
-                    // Draw
-                    clientController.draw();
-                    System.out.println("Draw");
-                } else {
-                    // Regular Move
-                    changePlayer();
-                    if (gameMode == LOCAL) {
-                        clientController.setPlayer(playerTurn);
-                    }
-                }
+                // Send the move to opponent if it's an online game
                 if (gameMode == MATCHMAKING && !isIncoming) {
                     clientController.newOutgoingMove(x);
                 }
@@ -110,33 +87,35 @@ public class GameController {
         }
     }
 
-    /*public void newIncomingMove(int x) {
-        // Move from local player
-        System.out.println("GameController - newIncomingMove(" + x + ")");
-        if (colSize[x] < 7) {
-            System.out.println("GameController: newIncomingMove accepted");
-            row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
-            col = x;
+    public void checkOutcome() {
+        if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
 
+            // Somebody won
+            gameIsActive = false;
+            clientController.enableGameButton();
 
-            gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
+//            TODO Göra om highlightTiles-metoden
+//            clientController.highlightTiles(winningTiles);
 
+            // Put a star next to the player who won
+            clientController.highlightWinnerPlayerStar(playerTurn);
+            clientController.updateUser(playerTurn);
 
-            System.out.println("GameController - newIncomingMove: DrawTile by " + playerTurn);
-            System.out.println("Calc " + calculate(row,col));
-            playedTiles++;
-            if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
-                clientController.enableGameButton();
-                System.out.println("Winner");
-            } else if (playedTiles == 42) {
-                clientController.draw();
-                System.out.println("Draw");
-            } else {
-                changePlayer();
+        } else if (playedTiles == 42) {
+
+            // Draw
+            clientController.draw();
+
+        } else {
+
+            // Regular move without any particular outcome
+            changePlayer();
+            if (gameMode == LOCAL) {
+                clientController.setPlayer(playerTurn);
             }
-        }
-    }*/
 
+        }
+    }
 
     public void changePlayer() {
         if (playerTurn == PLAYER1) {
