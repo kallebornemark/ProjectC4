@@ -155,12 +155,18 @@ import static projectc4.c4.util.C4Constants.*;
     }
 
     public void dehighlightWinners() {
-        ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
-        ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
-        ivRedStar.setEnabled(false);
-        ivRedStar.setVisibility(View.INVISIBLE);
-        ivYellowStar.setEnabled(true);
-        ivYellowStar.setVisibility(View.INVISIBLE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+                ivRedStar.setEnabled(false);
+                ivRedStar.setVisibility(View.INVISIBLE);
+                ivYellowStar.setEnabled(false);
+                ivYellowStar.setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
 
     public void setNewGame() {
