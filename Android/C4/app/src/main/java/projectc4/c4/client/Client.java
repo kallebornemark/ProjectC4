@@ -81,6 +81,15 @@ public class Client implements Runnable{
         return user;
     }
 
+    public void updateOpponent(int result) {
+        try {
+            oos.writeObject(result);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void checkNumberAndSend(int number) {
         if (number == MATCHMAKING) {
             System.out.println("Klienten får tillbaks ett gamemode " + number);

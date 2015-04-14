@@ -158,4 +158,25 @@ public class ClientController {
     public String getOpponentName() {
         return opponentName;
     }
+
+    /**
+     * Updates the winner's User object's game result statistics.
+     *
+     * @param playerTurn The winner (PLAYER1 if local player, PLAYER2 if opponent)
+     * @param draw Whether or not it's a draw.
+     */
+    public void updateUser(int playerTurn, boolean draw) {
+        if (!draw) {
+            if (playerTurn == player) {
+                getUser().newGameResult(WIN);
+                client.updateOpponent(LOSS);
+            } else {
+                getUser().newGameResult(LOSS);
+                client.updateOpponent(WIN);
+            }
+        } else {
+            getUser().newGameResult(DRAW);
+            client.updateOpponent(DRAW);
+        }
+    }
 }
