@@ -1,6 +1,8 @@
 package projectc4.c4.client.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
