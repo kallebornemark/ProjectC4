@@ -14,6 +14,7 @@ public class GameController {
     private GameGridView gameGridView;
     private GameGridAnimation gameGridAnimation;
     private GameGridForeground gameGridForeground;
+    private int[][] gameBoard;
     private int[] colSize;
     private int playerTurn;
     private int row, col;
@@ -25,20 +26,42 @@ public class GameController {
     private int time;
 
     public GameController(ClientController clientController) {
-        playerTurn = PLAYER1;
+        this.playerTurn = PLAYER1;
         this.clientController = clientController;
-        this.colSize = new int[7];
-        gameIsActive = true;
+        this.gameIsActive = true;
+    }
+
+    public int getBoardWidth() {
+        return gameBoard[1].length;
+    }
+
+    public int getBoardHeight() {
+        return gameBoard.length;
+    }
+
+    public void setElement(int row, int col, int player) {
+        this.gameBoard[row][col] = player;
+    }
+
+    public int getElement(int i, int j) {
+        return gameBoard[i][j];
+    }
+
+    public void resetGameBoard() {
+        this.gameBoard = new int[6][7];
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
         this.gameGridView = gameGridView;
-        this.gameGridAnimation = gameGridAnimation;
-        this.gameGridForeground = gameGridForeground;
-        gameGridForeground.setGameController(this);
+        this.gameGridView.setGameController(this);
         this.gameGridView.setFocusable(true);
-        this.gameGridView.addViews(this.gameGridAnimation, this.gameGridForeground);
-//        this.colSize = new int[gameGridView.getBoardWidth()];
+
+        this.gameGridAnimation = gameGridAnimation;
+        this.gameGridAnimation.setGameController(this);
+
+        this.gameGridForeground = gameGridForeground;
+        this.gameGridForeground.setGameController(this);
+
     }
 
     public int getPlayerTurn() {
@@ -51,10 +74,13 @@ public class GameController {
     }
 
     public void newGame(int gameMode) {
+        resetGameBoard();
         if (gameGridView != null) {
-            gameGridView.reset();
-
+            gameGridView.newGame();
         }
+
+        gameBoard = new int[6][7];
+        colSize = new int[getBoardWidth()];
         gameIsActive = true;
         playedTiles = 0;
         for (int i = 0; i < colSize.length; i++) {
@@ -88,12 +114,16 @@ public class GameController {
 
     public void newMove(int x, boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
-        if (colSize[x] < gameGridView.getBoardHeight()) {
+        if (colSize[x] < getBoardHeight()) {
             if ((isIncoming || ( playerTurn == clientController.getPlayer()) && gameIsActive)) {
 
-                row = (gameGridView.getBoardHeight() - 1) - (colSize[x]);
+                row = (getBoardHeight() - 1) - (colSize[x]);
                 col = x;
-                gameGridView.setElement((gameGridView.getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
+
+                System.out.println("GC - col: " + col + " row: " + row + " player: " + playerTurn);
+                gameGridView.newMove((getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
+
+//                System.out.println("Calc " + calculate(row,col))
                 playedTiles++;
 
                 // Check if somebody won or if the game is drawn
@@ -157,11 +187,11 @@ public class GameController {
 
     private boolean checkHorizontal() {
         int counter = 1;
-        for (int i = col; i < gameGridView.getBoardWidth(); i++) {
-            if (i == gameGridView.getBoardWidth() - 1 || gameGridView.getElement(row, i + 1) != playerTurn) {
+        for (int i = col; i < getBoardWidth(); i++) {
+            if (i == getBoardWidth() - 1 || getElement(row, i + 1) != playerTurn) {
                 counter = 1;
                 for (int j = i; j >= 0; j--) {
-                    if (j == 0 || gameGridView.getElement(row, j - 1) != playerTurn) {
+                    if (j == 0 || getElement(row, j - 1) != playerTurn) {
                         return false;
                     } else {
                         counter++;
@@ -193,8 +223,8 @@ public class GameController {
 
     private boolean checkVertical(){
         int counter = 1;
-        for(int x = row; x < gameGridView.getBoardHeight(); x++) {
-            if(x == gameGridView.getBoardHeight() - 1 || gameGridView.getElement(x + 1, col) != playerTurn) {
+        for(int x = row; x < getBoardHeight(); x++) {
+            if(x == getBoardHeight() - 1 || getElement(x + 1, col) != playerTurn) {
                 return false;
             } else {
                 counter++;
@@ -213,11 +243,11 @@ public class GameController {
 
     private boolean checkDiagonalRight() {
         int counter = 1;
-        for(int i = col,j = row; i < gameGridView.getBoardWidth() && j < gameGridView.getBoardHeight(); i++, j++) {
-            if(i == gameGridView.getBoardWidth() - 1 || j == gameGridView.getBoardHeight() -1 || gameGridView.getElement(j + 1, i + 1) != playerTurn) {
+        for(int i = col,j = row; i < getBoardWidth() && j < getBoardHeight(); i++, j++) {
+            if(i == getBoardWidth() - 1 || j == getBoardHeight() -1 || getElement(j + 1, i + 1) != playerTurn) {
                 counter = 1;
                 for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
-                    if(x == 0 || y == 0 || gameGridView.getElement(y - 1, x - 1) != playerTurn) {
+                    if(x == 0 || y == 0 || getElement(y - 1, x - 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;
@@ -249,11 +279,11 @@ public class GameController {
 
     private boolean checkDiagonalLeft(){
         int counter = 1;
-        for(int i = col,j = row; i >= 0 && j < gameGridView.getBoardHeight(); i--, j++) {
-            if(i == 0 || j == gameGridView.getBoardHeight() -1 || gameGridView.getElement(j + 1, i - 1) != playerTurn) {
+        for(int i = col,j = row; i >= 0 && j < getBoardHeight(); i--, j++) {
+            if(i == 0 || j == getBoardHeight() -1 || getElement(j + 1, i - 1) != playerTurn) {
                 counter = 1;
-                for(int x = i, y = j; x < gameGridView.getBoardWidth() && y >= 0; x++, y--) {
-                    if(x == gameGridView.getBoardWidth() - 1 || y == 0 || gameGridView.getElement(y - 1, x + 1) != playerTurn) {
+                for(int x = i, y = j; x < getBoardWidth() && y >= 0; x++, y--) {
+                    if(x == getBoardWidth() - 1 || y == 0 || getElement(y - 1, x + 1) != playerTurn) {
                         return false;
                     }else {
                         counter++;

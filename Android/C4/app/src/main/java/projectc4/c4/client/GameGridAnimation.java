@@ -14,13 +14,23 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameGridAnimation extends View {
 
+    //Todo ta bort denna och allt som har med denna att göra
     private GameGridView gameGridView;
 
+    private GameController gameController;
     private boolean animateNewMove = false;
     private boolean animatePointer = false;
     private int offsetX;
     private int offsetY;
     private int sideOfTile;
+
+    private int width;
+    private int height;
+
+    //Todo bara hämta rows/cols från Gameconroller, ej sätta som instansvariabler.
+    private int rows;
+    private int cols;
+
     private int col;
     private int player = PLAYER2;
     private int rowStop;
@@ -37,6 +47,10 @@ public class GameGridAnimation extends View {
 
     public GameGridAnimation(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public void addView(GameGridView gameGridView){
@@ -90,7 +104,7 @@ public class GameGridAnimation extends View {
                 if (currentPosY >= rowStop*(sideOfTile+ GRIDSPACING) + offsetY ){
                     currentPosY = rowStop*(sideOfTile+ GRIDSPACING)+ offsetY;
                     animateNewMove = false;
-                    gameGridView.updateDisplay();
+//                    gameGridView.updateDisplay();
 //                    gameGridView.setElement(rowStop, colStart, player);
                 }
                 updateDisplay();
@@ -119,9 +133,23 @@ public class GameGridAnimation extends View {
 
     @Override
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
-        int w = MeasureSpec.getSize(widthMeasuredSpec);
-        int h = MeasureSpec.getSize(heightMeasuredSpec);
-        System.out.println("ggAnimation - w: " + w + " h: " + h );
-        setMeasuredDimension(w, h);
+        width = MeasureSpec.getSize(widthMeasuredSpec);
+        height = MeasureSpec.getSize(heightMeasuredSpec);
+
+        rows = gameController.getBoardHeight();
+        cols = gameController.getBoardWidth();
+
+        // Räkna ut passande storlek för brickan
+        sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
+                (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+
+        // Rita gameBoard mitt i canvasen i x-led
+        offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
+
+        // Rita gameBoard längst ner på canvasen i y-led
+        offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+
+        System.out.println("GGA - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
+        setMeasuredDimension(width, height);
     }
 }
