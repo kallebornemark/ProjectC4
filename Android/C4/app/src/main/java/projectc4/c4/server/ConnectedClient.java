@@ -43,6 +43,11 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
+        user.setActiveGame(activeGame);
+    }
+
+    public ActiveGame getActiveGame() {
+        return activeGame;
     }
 
     private void startCommunication() {
@@ -74,6 +79,8 @@ public class ConnectedClient extends Thread implements Serializable {
                     }
                     System.out.println("Server: Har fått en int: " + value);
 
+
+                    // Hantera Users
                 } else if (obj instanceof String) {
                     username = (String)obj;
                     System.out.println("Server: Username recieved: " + username);

@@ -1,5 +1,7 @@
 package projectc4.c4.util;
 
+import projectc4.c4.server.ActiveGame;
+
 import java.io.Serializable;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -12,11 +14,16 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private int elo;
+    private ActiveGame activeGame;
 
     public User(String username){
         elo = 0;
         this.username = username;
         gameResults = new int[4];
+    }
+
+    public void setActiveGame(ActiveGame activeGame) {
+        this.activeGame = activeGame;
     }
 
     public int getElo() {
@@ -56,14 +63,18 @@ public class User implements Serializable {
      */
     public void newGameResult(int result) {
         int res;
+        System.out.println("Attempting to calculate elo");
         if (result == WIN) {
             res = 1;
-
+            elo += Elo.calculateElo(getElo(), activeGame.getGameInfo().getOpponentElo());
         } else if (result == LOSS) {
             res = 2;
+            elo -= Elo.calculateElo(getElo(), activeGame.getGameInfo().getOpponentElo());
+
         } else {
             res = 3;
         }
+        System.out.println("Elo calculated");
         gameResults[res]++;
         gameResults[0]++;
     }

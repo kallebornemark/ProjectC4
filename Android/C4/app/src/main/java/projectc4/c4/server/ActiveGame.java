@@ -15,11 +15,24 @@ public class ActiveGame implements Serializable {
     private ConnectedClient c2;
     private Thread rematchListener;
     private boolean c1isReady = false, c2isReady = false;
+    private GameInfo gameInfo;
+    private Server server;
 
     public ActiveGame(Server server, ConnectedClient c1, ConnectedClient c2) {
+        this.server = server;
         this.c1 = c1;
         this.c2 = c2;
+        c1.getUser().setActiveGame(this);
+        c2.getUser().setActiveGame(this);
         server.newGame(c1, c2);
+    }
+
+    public GameInfo getGameInfo() {
+        return gameInfo;
+    }
+
+    public void setGameInfo(GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
     }
 
     public void newMove(ConnectedClient sender, int column) {
@@ -40,11 +53,10 @@ public class ActiveGame implements Serializable {
 
     public void rematch() {
         // Swap start positions
-        System.out.println("Before swap: " + c2.getStartPos());
-        System.out.println("Before swap: " + c1.getStartPos());
-        swapPos(c1);
-        swapPos(c2);
-        System.out.println("After swap: " + c2.getStartPos());
+//        System.out.println("Before swap: " + c2.getStartPos());
+//        System.out.println("Before swap: " + c1.getStartPos());
+
+        /*System.out.println("After swap: " + c2.getStartPos());
         System.out.println("After swap: " + c1.getStartPos());
 
         // Send new GameInfo objects
@@ -53,8 +65,15 @@ public class ActiveGame implements Serializable {
         System.out.println("New GameInfo to C1: Startpos: " + c1.getStartPos());
         System.out.println("New GameInfo to C2: Startpos: " + c2.getStartPos());
 
+        c1.setGameInfo(gameInfoC1);
+        c2.setActiveGame(gameInfoC1);
+
         c1.newGame(gameInfoC1);
-        c2.newGame(gameInfoC2);
+        c2.newGame(gameInfoC2);*/
+
+        swapPos(c1);
+        swapPos(c2);
+        server.newGame(c1, c2);
     }
 
     public void setReady(ConnectedClient connectedClient) {

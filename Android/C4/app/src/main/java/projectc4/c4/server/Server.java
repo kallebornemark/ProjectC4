@@ -83,16 +83,26 @@ public class Server implements Runnable {
         player1 = (rand.nextInt(1)+1)*(-10);
         player2 = -30 - player1;
         System.out.println("Server: New Game kallas i servern");
-        System.out.println("C1 = " + player1 + " och C2 = " + player2);
+        System.out.println("Server: C1 = " + player1 + " och C2 = " + player2);
 
         c1.setStartPos(player1);
+        System.out.println("Server: c1 startpos set to " + player1);
         c2.setStartPos(player2);
+        System.out.println("Server: c2 startpos set to " + player2);
 
         GameInfo gameInfoC1 = new GameInfo(player1,c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo());
         GameInfo gameInfoC2 = new GameInfo(player2,c1.getUser().getUsername(),c2.getUser().getElo(), c1.getUser().getElo());
+        System.out.println("New GameInfo objects created");
+
+//        c1.getActiveGame().setGameInfo(gameInfoC1);
+        System.out.println("GameInfo set to " + gameInfoC1 + " in c1");
+//        c2.getActiveGame().setGameInfo(gameInfoC2);
+        System.out.println("GameInfo set to " + gameInfoC2 + " in c1");
 
         c1.newGame(gameInfoC1);
+        System.out.println("c1.newGame()");
         c2.newGame(gameInfoC2);
+        System.out.println("c2.newGame()");
     }
 
     public void run() {
