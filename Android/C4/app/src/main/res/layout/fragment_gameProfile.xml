@@ -10,7 +10,44 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="300dp" android:background="@drawable/popupscreen"
-            android:layout_marginLeft="24dp" android:layout_marginRight="24dp" android:layout_centerVertical="true">
+            android:layout_marginLeft="24dp" android:layout_marginRight="24dp" android:layout_centerVertical="true"
+            android:id="@+id/popupPlayer1">
+
+
+
+        <TextView
+                android:layout_width="140dp"
+                android:layout_height="35dp"
+                android:text="PLAYER 1"
+                android:textSize="20dp"
+                android:id="@+id/tvGameProfilePlayer1"
+                android:textAlignment="center"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_alignParentEnd="false"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="6dp" android:layout_centerHorizontal="true" android:visibility="visible"
+                android:background="@drawable/colorred"/>
+
+        <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@drawable/colorlightgray"
+                android:id="@+id/line"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentEnd="false"
+
+                android:layout_below="@+id/tvGameProfilePlayer1" android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp" android:layout_marginRight="25dp"/>
+
+        <TextView
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/tvStatsPlayer1"
+                android:layout_centerVertical="true" android:layout_alignStart="@+id/line"
+                android:layout_below="@+id/line" android:layout_marginTop="15dp"/>
+
     </RelativeLayout>
 
 </RelativeLayout>

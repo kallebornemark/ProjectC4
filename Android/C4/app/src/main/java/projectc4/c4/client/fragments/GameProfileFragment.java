@@ -23,7 +23,7 @@ import projectc4.c4.util.C4Color;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         clientController = ((MainActivity)getActivity()).getClientController();
-        final View view = inflater.inflate(R.layout.fragment_gameprofile, container, false);
+        final View view = inflater.inflate(R.layout.fragment_gameProfile, container, false);
         this.view = view;
 
         initGraphics(view);
@@ -61,7 +61,6 @@ import projectc4.c4.util.C4Color;
                 fragmentTransaction.commit();
             }
         });*/
-
     }
 
     public void setPlayerStats(final String text) {
