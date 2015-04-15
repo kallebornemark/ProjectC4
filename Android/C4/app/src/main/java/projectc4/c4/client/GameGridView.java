@@ -16,6 +16,7 @@ public class GameGridView extends View {
     private GameController gameController;
 
     private boolean paintNewGame = true;
+    private boolean paintnewMove = false;
     private int sideOfTile;
     private int offsetX;
     private int offsetY;
@@ -77,12 +78,12 @@ public class GameGridView extends View {
 
     public void newMove(int row, int col, int player) {
         paintNewGame = false;
+        paintnewMove = true;
         if (player == PLAYER1) {
             paint.setColor(RED);
         } else if (player == PLAYER2) {
             paint.setColor(YELLOW);
         }
-        System.out.println("GGW - col: " + col + " row: " + row + " player: " + player);
         int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
         int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
         c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
@@ -93,11 +94,12 @@ public class GameGridView extends View {
 
 
     protected void onDraw(Canvas canvas) {
-        if (paintNewGame){
+        if (paintNewGame && gameController != null){
             resetGameBoard();
             canvas.drawBitmap(bitmap, 0, 0, paint);
-        } else {
+        } else if (paintnewMove) {
             canvas.drawBitmap(bitmap, 0, 0, paint);
+            paintnewMove = false;
         }
     }
 
@@ -110,18 +112,18 @@ public class GameGridView extends View {
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
         width = MeasureSpec.getSize(widthMeasuredSpec);
         height = MeasureSpec.getSize(heightMeasuredSpec);
+        if (gameController != null) {
+            // Räkna ut passande storlek för brickan
+            sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
+                    (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
 
-        // Räkna ut passande storlek för brickan
-        sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
-                (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+            // Rita gameBoard mitt i canvasen i x-led
+            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
 
-        // Rita gameBoard mitt i canvasen i x-led
-        offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
-
-        // Rita gameBoard längst ner på canvasen i y-led
-        offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
-
-        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
+            // Rita gameBoard längst ner på canvasen i y-led
+            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+        }
+//        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }
 }

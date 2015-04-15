@@ -47,6 +47,10 @@ public class GameController {
         return gameBoard[i][j];
     }
 
+    public Timer getTimer() {
+        return timer;
+    }
+
     public void resetGameBoard() {
         this.gameBoard = new int[6][7];
     }
@@ -102,6 +106,7 @@ public class GameController {
         }
         time = 30;
         timer = new Timer(); //Kanske slösar minne
+        System.out.println("TIMER STARTAD");
         timer.scheduleAtFixedRate(new TimerTask() {
 
             public void run() {
@@ -180,9 +185,12 @@ public class GameController {
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
             startTimer();
-        }else if (timer != null) {
+        } if(!isIncoming && gameMode == MATCHMAKING) {
+            clientController.increaseProgressBar(0);
+        }
+        if (!isIncoming && timer != null) {
             timer.cancel();
-        }clientController.increaseProgressBar(0);
+        }
     }
 
     private boolean checkHorizontal() {
@@ -315,6 +323,10 @@ public class GameController {
     private int calculate(int row, int col) {
         int value = (row * 6) + col;
         return value;
+    }
+
+    public void cancelTimer() {
+        timer.cancel();
     }
 
     public void toDO() {

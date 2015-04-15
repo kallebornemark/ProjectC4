@@ -285,6 +285,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:max="30"
-        android:progress="30"/>
+        android:progress="30"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

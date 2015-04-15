@@ -67,6 +67,6 @@ public class LoginFragment extends Fragment {
     public void goToMatchmaking() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack(null).commit();
+        transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
     }
 }

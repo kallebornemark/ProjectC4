@@ -17,6 +17,7 @@ import projectc4.c4.client.fragments.GameFragment;
 import projectc4.c4.client.fragments.LoginFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
 import projectc4.c4.client.fragments.MenuFragment;
+import static projectc4.c4.util.C4Constants.*;
 
 public class MainActivity extends FragmentActivity{
 
@@ -45,7 +46,7 @@ public class MainActivity extends FragmentActivity{
 //            this.matchmakingFragment = new MatchmakingFragment();
 //            this.loginFragment = new LoginFragment();
 
-            getFragmentManager().beginTransaction().replace(R.id.container, menuFragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.container, menuFragment).addToBackStack("Menu").commit();
 
 //            getFragmentManager().beginTransaction().add(R.id.container, menuFragment, "menu");
 //            getFragmentManager().beginTransaction().add(R.id.container, gameFragment, "game");
@@ -88,14 +89,13 @@ public class MainActivity extends FragmentActivity{
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     FragmentManager fm = getFragmentManager();
-                    if (fm.findFragmentById(R.id.container) instanceof MenuFragment) {
-                        finish();
-                    } else if (fm.getBackStackEntryCount() > 0) {
-                        fm.popBackStack();
+                    if (clientController.getGameMode() == LOCAL) {
+                        fm.popBackStackImmediate("Menu", 0);
+                    } else if (clientController.getGameMode() == MATCHMAKING) {
+                        fm.popBackStackImmediate("Matchmaking", 0);
                     } else {
-                        finish();
+                        fm.popBackStack();
                     }
-
                 }
             });
 

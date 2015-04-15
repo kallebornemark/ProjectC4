@@ -142,19 +142,20 @@ public class GameGridForeground extends View {
         width = MeasureSpec.getSize(widthMeasuredSpec);
         height = MeasureSpec.getSize(heightMeasuredSpec);
 
-        rows = gameController.getBoardHeight();
-        cols = gameController.getBoardWidth();
+        if (gameController != null) {
+            rows = gameController.getBoardHeight();
+            cols = gameController.getBoardWidth();
 
-        // Räkna ut passande storlek för brickan
-        sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
-                (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+            // Räkna ut passande storlek för brickan
+            sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
+                    (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
 
-        // Rita gameBoard mitt i canvasen i x-led
-        offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
+            // Rita gameBoard mitt i canvasen i x-led
+            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
 
-        // Rita gameBoard längst ner på canvasen i y-led
-        offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
-
+            // Rita gameBoard längst ner på canvasen i y-led
+            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+        }
         System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }

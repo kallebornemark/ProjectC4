@@ -70,7 +70,8 @@ public class MatchmakingFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         System.out.println("Gör transaktion");
-        transaction.replace(R.id.container, new GameFragment()).commit();
+//        fragmentManager.popBackStack();
+        transaction.replace(R.id.container, new GameFragment()).addToBackStack("multi-game").commit();
         System.out.println("Har gjort transaktion");
 
 
