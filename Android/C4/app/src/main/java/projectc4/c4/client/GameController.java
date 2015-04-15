@@ -153,12 +153,13 @@ public class GameController {
 
             // Put a star next to the player who won
             clientController.highlightWinnerPlayerStar(playerTurn);
-//            clientController.updateUser(playerTurn);
+            clientController.updateUser(playerTurn, false);
 
         } else if (playedTiles == 42) {
 
             // Draw
             clientController.draw();
+            clientController.updateUser(playerTurn, true);
 
         } else {
 

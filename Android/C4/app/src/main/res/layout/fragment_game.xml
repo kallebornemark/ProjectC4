@@ -42,7 +42,7 @@
             android:layout_alignParentRight="false"
             android:layout_alignParentLeft="false"
             android:layout_alignLeft="@+id/textViewPlayer1"
-            android:layout_marginLeft="7dp">
+            android:layout_marginLeft="7dp" android:visibility="invisible">
 
             <ImageButton
                 android:layout_width="20dp"
@@ -100,7 +100,7 @@
             android:layout_alignParentLeft="false"
             android:layout_marginTop="0dp"
             android:layout_alignLeft="@+id/textViewPlayer2"
-            android:layout_marginLeft="7dp">
+            android:layout_marginLeft="7dp" android:visibility="invisible">
 
             <ImageButton
                 android:layout_width="20dp"

@@ -22,6 +22,9 @@ import projectc4.c4.client.GameGridForeground;
 import projectc4.c4.client.GameGridView;
 import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
+
+import java.util.Enumeration;
+
 import static projectc4.c4.util.C4Constants.*;
 
 
@@ -74,7 +77,7 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
 
-        if (gameMode==MATCHMAKING){
+        if (gameMode == MATCHMAKING){
             progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
             textViewPlayer1.setText(clientController.getUser().getUsername());
             textViewPlayer2.setText(clientController.getOpponentName());
@@ -91,20 +94,31 @@ import static projectc4.c4.util.C4Constants.*;
         buttonRematch.setTextColor(C4Color.WHITE);
 
         buttonGameProfile = (ImageButton)view.findViewById(R.id.iconProfile);
+        GridLayout glIcons1 = (GridLayout)view.findViewById(R.id.iconButtons);
+        GridLayout glIcons2 = (GridLayout)view.findViewById(R.id.iconButtons2);
+
+            if (gameMode == MATCHMAKING) {
+                glIcons1.setEnabled(true);
+                glIcons1.setVisibility(View.VISIBLE);
+                glIcons2.setEnabled(true);
+                glIcons2.setVisibility(View.VISIBLE);
+            }
     }
 
     public void initListeners() {
         // In-game profile button
-        buttonGameProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(android.R.id.content, new GameProfileFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+        if (gameMode == MATCHMAKING) {
+            buttonGameProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GameProfileFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+        }
     }
 
     // Används inte längre eftersom vi inte visar vinnaren med text
