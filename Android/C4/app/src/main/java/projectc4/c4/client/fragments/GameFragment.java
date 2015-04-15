@@ -59,6 +59,7 @@ import static projectc4.c4.util.C4Constants.*;
         return view;
     }
 
+
     public void initGraphics(View view) {
         RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.fragment_game);
         relativeLayout.setBackgroundColor(C4Color.WHITE);
@@ -79,6 +80,7 @@ import static projectc4.c4.util.C4Constants.*;
 
         if (gameMode == MATCHMAKING){
             progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
+            progressBar.setVisibility(view.VISIBLE);
             textViewPlayer1.setText(clientController.getUser().getUsername());
             textViewPlayer2.setText(clientController.getOpponentName());
         }
@@ -103,6 +105,14 @@ import static projectc4.c4.util.C4Constants.*;
                 glIcons2.setEnabled(true);
                 glIcons2.setVisibility(View.VISIBLE);
             }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if(clientController.getGameController().getTimer() != null)
+           clientController.cancelTimer();
+        System.out.println("DESTROY VIEW");
+        super.onDestroyView();
     }
 
     public void initListeners() {

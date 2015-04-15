@@ -31,7 +31,7 @@
             android:id="@+id/textViewTap"
             android:layout_gravity="center_horizontal"
             android:textColor="#FF716D61"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginBottom="20dp" />
 
         <ImageView
@@ -49,7 +49,7 @@
             android:id="@+id/textViewSwipe"
             android:layout_gravity="center_horizontal"
             android:textColor="#FF716D61"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginBottom="20dp" />
 
         <ImageView
@@ -59,6 +59,68 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/c4_star_yellow"
             android:layout_marginBottom="20dp" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@drawable/colorblack"
+            android:id="@+id/line"
+            android:layout_alignParentStart="false"
+            android:layout_above="@+id/gridLayoutCenter"
+            android:layout_alignParentEnd="false"
+            android:layout_marginBottom="20dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="YOU / PLAYER ONE"
+                android:id="@+id/textViewPlayer1"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FF716D61"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OPPONENT / PLAYER TWO"
+                android:id="@+id/textViewPlayer2"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FF716D61"
+                android:textSize="16sp"
+                android:layout_marginTop="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="end"
+            >
+
+            <View
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/colorred" />
+
+            <View
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/coloryellow"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

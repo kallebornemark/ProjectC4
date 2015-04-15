@@ -4,11 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -23,14 +25,17 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
 
-        final Button button = (Button)view.findViewById(R.id.button);
+        TextView emil = (TextView)view.findViewById(R.id.emil);
+        TextView kalle = (TextView)view.findViewById(R.id.kalle);
+        TextView jimmy = (TextView)view.findViewById(R.id.jimmy);
+        TextView erik = (TextView)view.findViewById(R.id.erik);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              button.setText("Emil är bäst");
-            }
-        });
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
+
+        emil.setTypeface(type,Typeface.BOLD);
+        kalle.setTypeface(type,Typeface.BOLD);
+        jimmy.setTypeface(type,Typeface.BOLD);
+        erik.setTypeface(type,Typeface.BOLD);
 
         return view;
     }

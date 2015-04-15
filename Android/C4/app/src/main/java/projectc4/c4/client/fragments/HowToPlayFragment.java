@@ -21,10 +21,15 @@ public class HowToPlayFragment extends Fragment{
 
         TextView textViewTap = (TextView)view.findViewById(R.id.textViewTap);
         TextView textViewSwipe = (TextView)view.findViewById(R.id.textViewSwipe);
+        TextView textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
+        TextView textViewPlayer2 = (TextView)view.findViewById(R.id.textViewPlayer2);
+
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
         textViewTap.setTypeface(type, Typeface.BOLD);
         textViewSwipe.setTypeface(type, Typeface.BOLD);
+        textViewPlayer2.setTypeface(type, Typeface.BOLD);
+        textViewPlayer1.setTypeface(type, Typeface.BOLD);
 
         return view;
     }
