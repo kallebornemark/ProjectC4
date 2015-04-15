@@ -180,9 +180,12 @@ public class GameController {
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
             startTimer();
-        }else if (timer != null) {
+        } if(!isIncoming && gameMode == MATCHMAKING) {
+            clientController.increaseProgressBar(0);
+        }
+        if (timer != null) {
             timer.cancel();
-        }clientController.increaseProgressBar(0);
+        }
     }
 
     private boolean checkHorizontal() {
