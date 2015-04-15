@@ -33,21 +33,19 @@ public class GameGridAnimation extends View {
     private Runnable animator = new Runnable() {
         @Override
         public void run() {
-//            boolean needNewFrame = false;
             boolean needNewFrame = true;
-            long now = AnimationUtils.currentAnimationTimeMillis();
 
             if (needNewFrame) {
                 if (pointerPos > getHeight()){
                     pointerPos = 0;
                 } else {
-                    pointerPos +=4;
+                    pointerPos +=20;
                 }
                 System.out.println("inne i runnable");
-                postDelayed(this, 1000);
+                postDelayed(this, 15);
+                invalidate();
 
             }
-            invalidate();
         }
     };
 
@@ -87,7 +85,8 @@ public class GameGridAnimation extends View {
         this.rowStop = row;
         this.col = col;
         animateNewMove = true;
-        invalidate();
+        removeCallbacks(animator);
+        post(animator);
     }
 
     private void drawTile(Canvas canvas){
@@ -105,10 +104,10 @@ public class GameGridAnimation extends View {
 
     protected void onDraw(Canvas canvas) {
         if (animateNewMove) {
+            canvas.save();
 //            drawTile(canvas);
             testAnimation(canvas);
-            removeCallbacks(animator);
-            post(animator);
+            canvas.restore();
         }
     }
 
