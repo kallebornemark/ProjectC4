@@ -30,7 +30,7 @@ public class SettingsFragment extends Fragment {
 
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.theme, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setPopupBackgroundDrawable(getActivity().getDrawable(R.drawable.colorred));
+        spinner.setPopupBackgroundDrawable(getActivity().getDrawable(R.drawable.colorlightgray));
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

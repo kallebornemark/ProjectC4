@@ -11,6 +11,9 @@
     <string-array name="theme">Settings
         <item>Light</item>
         <item>Dark</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Cyan</item>
     </string-array>
 
 </resources>
