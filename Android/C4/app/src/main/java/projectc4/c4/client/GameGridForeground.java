@@ -20,6 +20,7 @@ public class GameGridForeground extends View {
     private int sideOfTile;
     private int width;
     private int height;
+    private int pointerCol = -1;
 
     //Todo bara hämta rows/cols från Gameconroller, ej sätta som instansvariabler.
     private int rows;
@@ -79,7 +80,6 @@ public class GameGridForeground extends View {
         }
         paint = new Paint();
         canvas.drawBitmap(bitmap, 0, 0, paint);
-
     }
 
     public void paintForeground(){
@@ -89,50 +89,46 @@ public class GameGridForeground extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked();
-        float touchPosY;
-        float touchPosX;
-        int x = offsetX + GRIDSPACING;
-        int x2 = getWidth() - offsetX - GRIDSPACING;
-        int y = offsetY - GRIDSPACING - sideOfTile;
-        switch(action) {
-            case MotionEvent.ACTION_DOWN:
-                //Todo Ändra position på markör
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touchPosX = event.getX();
-                touchPosY = event.getY();
-                if (touchPosX >= x && touchPosX <= x2 && touchPosY >= y) {
-//                    System.out.println("ACTION_MOVE: x: " + event.getX() + "    -    y: " + event.getY());
-//                    gameGridView.animatePointer((int)touchPosX);
-                }
-                break;
-            case MotionEvent.ACTION_UP:
+        float touchPosX = event.getX();
+        float touchPosY = event.getY();
+        int x = offsetX;
+        int x2 = width - offsetX;
+        int y = offsetY - sideOfTile;
+        if (touchPosX >= x && touchPosX <= x2 && touchPosY >= y) {
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    System.out.println("ACTION_DOWN: - x: " + touchPosX + " y: " + touchPosY);
 
-                touchPosX = event.getX();
-                touchPosY = event.getY();
+                    int tmpPoniterCol = (int) (touchPosX / (width / gameController.getBoardWidth()));
+                    pointerCol = tmpPoniterCol;
+                    gameController.changePointerpos(pointerCol);
 
-//                System.out.println("ACTION_UP: x: " + touchPosX + "    -    y: " + touchPosY);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    System.out.println("ACTION_MOVE: - x: " + touchPosX + " y: " + touchPosY);
 
-                //kontrollerar att klicket är på själva spelbrädet eller en sideofTile över.
-                if (touchPosX >= x && touchPosX <= x2 && touchPosY >= y) {
-                    //Kollar igenom alla kolumner efter klick.
-                    for (int col = 0; col < gameController.getBoardWidth(); col++) {
-                        //Om x positionen är i just denna kulumnen körs performClick och bricka läggs.
-                        if (touchPosX >= offsetX + GRIDSPACING + ((GRIDSPACING + sideOfTile) * col) && touchPosX <= offsetX + GRIDSPACING + sideOfTile + ((sideOfTile + GRIDSPACING) * col)) {
-//                            System.out.println("onTouchEvent: touchPosX: " + touchPosX + "    -    col = " + (col));
-//                            System.out.println("gameController.newOutgoingMove(col): " + col);
-                            gameController.newMove(col, false);
-                            break;
-                        }
+                    tmpPoniterCol = (int)(touchPosX / (width / gameController.getBoardWidth()));
+
+                    System.out.println("tmp col: " + tmpPoniterCol);
+                    if (tmpPoniterCol != pointerCol){
+                        pointerCol = tmpPoniterCol;
+                        gameController.changePointerpos(pointerCol);
                     }
-                } else {
-//                    System.out.println("onTouchEvent: width: " + getWidth() + "    -    touchPosX: " + touchPosX + "    -    touchPosy: " + touchPosY);
-                }
-                break;
 
-            case MotionEvent.ACTION_CANCEL:
-                //Todo ta bort markör eller?
-                break;
+                    break;
+                case MotionEvent.ACTION_UP:
+                    System.out.println("ACTION_UP - x: " + touchPosX + " y: " + touchPosY);
+
+                    int newMoveCol = (int) (touchPosX / (width / gameController.getBoardWidth()));
+                    gameController.newMove(newMoveCol, false);
+
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    System.out.println("ACTION_CANCEL - x: " + touchPosX + " y: " + touchPosY);
+
+                    //Todo ta bort markör eller?
+                    break;
+            }
         }
         return true;
     }
@@ -158,5 +154,26 @@ public class GameGridForeground extends View {
         }
         System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
+    }
+
+
+    public class ShowPointer extends View {
+
+
+        public ShowPointer(Context context) {
+            super(context);
+        }
+
+        public ShowPointer(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public ShowPointer(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+
+
+
     }
 }

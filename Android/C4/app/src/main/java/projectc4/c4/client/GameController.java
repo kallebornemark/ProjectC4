@@ -77,6 +77,11 @@ public class GameController {
         this.playerTurn = player;
     }
 
+
+    public void changePointerpos(int pointerCol) {
+        gameGridAnimation.animatePointer(pointerCol);
+    }
+
     public void newGame(int gameMode) {
         resetGameBoard();
         if (gameGridView != null) {

@@ -1,11 +1,16 @@
 package projectc4.c4.client;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+
+import projectc4.c4.R;
+
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -13,9 +18,6 @@ import static projectc4.c4.util.C4Constants.*;
  * @author Jimmy Maksymiw
  */
 public class GameGridAnimation extends View {
-
-    //Todo ta bort denna och allt som har med denna att göra
-    private GameGridView gameGridView;
 
     private GameController gameController;
     private boolean animateNewMove = false;
@@ -27,41 +29,38 @@ public class GameGridAnimation extends View {
     private int width;
     private int height;
 
-    //Todo bara hämta rows/cols från Gameconroller, ej sätta som instansvariabler.
-    private int rows;
-    private int cols;
-
     private int col;
     private int player = PLAYER2;
     private int rowStop;
     private int currentPosY;
     private int pointerPos;
+    private Paint paint;
+    private Bitmap pointerRed;
 
     public GameGridAnimation(Context context) {
         super(context);
+        init();
     }
 
     public GameGridAnimation(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public GameGridAnimation(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+
+    public void init(){
+        paint = new Paint();
+        pointerRed = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow);
     }
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
 
-    public void addView(GameGridView gameGridView){
-        this.gameGridView = gameGridView;
-    }
-
-    public void setSize(int offsetX, int offsetY, int sideOfTile){
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.sideOfTile = sideOfTile;
-    }
 
     private void updateDisplay() {
         this.post(new Runnable() {
@@ -76,17 +75,10 @@ public class GameGridAnimation extends View {
     }
 
     protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint();
-
         RectF rect;
+
         if (animatePointer) {
-            if (player == PLAYER1) {
-                paint.setColor(YELLOW);
-            } else if (player == PLAYER2) {
-                paint.setColor(RED);
-            }
-            rect = new RectF(pointerPos-(sideOfTile/2), offsetY-sideOfTile, (sideOfTile + pointerPos)-(sideOfTile/2), offsetY);
-            canvas.drawRoundRect(rect, 20, 20, paint);
+            canvas.drawBitmap(pointerRed, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);
             animatePointer = false;
 
         } else if (animateNewMove) {
@@ -114,8 +106,8 @@ public class GameGridAnimation extends View {
 
     }
 
-    public void animatePointer(int pointerPos){
-        this.pointerPos = pointerPos;
+    public void animatePointer(int pointerCol){
+        this.pointerPos = offsetX+(pointerCol*(GRIDSPACING+sideOfTile))+((sideOfTile/2)-(pointerRed.getWidth()/2));
         this.animatePointer = true;
         updateDisplay();
     }
@@ -136,9 +128,6 @@ public class GameGridAnimation extends View {
         width = MeasureSpec.getSize(widthMeasuredSpec);
         height = MeasureSpec.getSize(heightMeasuredSpec);
         if (gameController != null) {
-            rows = gameController.getBoardHeight();
-            cols = gameController.getBoardWidth();
-
             // Räkna ut passande storlek för brickan
             sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
                     (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
