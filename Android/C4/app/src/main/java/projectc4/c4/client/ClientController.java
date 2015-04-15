@@ -33,6 +33,9 @@ public class ClientController {
         return this.gameMode;
     }
 
+    public void cancelTimer() {
+        gameController.cancelTimer();
+    }
 
     public void setGameFragment(GameFragment gameFragment) {
         this.gameFragment = gameFragment;
