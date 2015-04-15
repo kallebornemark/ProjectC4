@@ -11,6 +11,13 @@ public class User implements Serializable {
     private int[] gameResults;
     private String firstName;
     private String lastName;
+    private int elo;
+
+    public User(String username){
+        elo = 0;
+        this.username = username;
+        gameResults = new int[4];
+    }
 
     public int getElo() {
         return elo;
@@ -18,13 +25,6 @@ public class User implements Serializable {
 
     public void setElo(int elo) {
         this.elo = elo;
-    }
-
-    private int elo;
-
-    public User(String username){
-        this.username = username;
-        gameResults = new int[4];
     }
 
     public String getUsername() {

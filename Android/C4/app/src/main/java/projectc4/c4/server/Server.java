@@ -85,8 +85,11 @@ public class Server implements Runnable {
         System.out.println("Server: New Game kallas i servern");
         System.out.println("C1 = " + player1 + " och C2 = " + player2);
 
+        c1.setStartPos(player1);
+        c2.setStartPos(player2);
+
         GameInfo gameInfoC1 = new GameInfo(player1,c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo());
-        GameInfo gameInfoC2 = new GameInfo(player2,c1.getUser().getUsername(),c1.getUser().getElo(), c1.getUser().getElo());
+        GameInfo gameInfoC2 = new GameInfo(player2,c1.getUser().getUsername(),c2.getUser().getElo(), c1.getUser().getElo());
 
         c1.newGame(gameInfoC1);
         c2.newGame(gameInfoC2);

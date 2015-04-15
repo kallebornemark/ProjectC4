@@ -1,9 +1,12 @@
 package projectc4.c4.util;
 
+import java.io.Serializable;
+
 /**
  * Created by Emil on 2015-04-15.
  */
-public class GameInfo {
+public class GameInfo implements Serializable {
+    private static final long serialVersionUID = -403280971345465050L;
     private int playerTurn;
     private String opponentUserName;
     private int elo;

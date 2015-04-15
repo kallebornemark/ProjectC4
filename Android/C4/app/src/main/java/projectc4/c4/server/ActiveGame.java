@@ -40,12 +40,18 @@ public class ActiveGame implements Serializable {
 
     public void rematch() {
         // Swap start positions
+        System.out.println("Before swap: " + c2.getStartPos());
+        System.out.println("Before swap: " + c1.getStartPos());
         swapPos(c1);
         swapPos(c2);
+        System.out.println("After swap: " + c2.getStartPos());
+        System.out.println("After swap: " + c1.getStartPos());
 
         // Send new GameInfo objects
         GameInfo gameInfoC1 = new GameInfo(c1.getStartPos(), c2.getUser().getUsername(), c1.getUser().getElo(), c2.getUser().getElo());
         GameInfo gameInfoC2 = new GameInfo(c2.getStartPos(), c1.getUser().getUsername(), c2.getUser().getElo(), c1.getUser().getElo());
+        System.out.println("New GameInfo to C1: Startpos: " + c1.getStartPos());
+        System.out.println("New GameInfo to C2: Startpos: " + c2.getStartPos());
 
         c1.newGame(gameInfoC1);
         c2.newGame(gameInfoC2);

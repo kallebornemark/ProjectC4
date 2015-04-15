@@ -129,7 +129,7 @@ public class Client implements Runnable{
                 } else if (obj instanceof GameInfo) {
                     gameInfo = (GameInfo)obj;
                     clientController.setGameInfo(gameInfo);
-                    clientController.newGame(MATCHMAKING);
+                    clientController.setPlayerTurn(gameInfo.getPlayerTurn());
                     clientController.startGameUI();
                 }
             }

@@ -40,6 +40,7 @@ import projectc4.c4.util.C4Color;
 
         tvGameProfilePlayer1.setTypeface(type, Typeface.BOLD);
         tvGameProfilePlayer1.setTextColor(C4Color.WHITE);
+
         tvGameProfilePlayer1.setText(clientController.getUser().getUsername());
 
         tvStatsPlayer1.setTypeface(type, Typeface.BOLD);
