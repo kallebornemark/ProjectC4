@@ -163,21 +163,26 @@ public class GameController {
 
             // Put a star next to the player who won
             clientController.highlightWinnerPlayerStar(playerTurn);
-            clientController.updateUser(playerTurn, false);
+
+            if (gameMode == MATCHMAKING) {
+                clientController.updateUser(playerTurn, false);
+            }
 
         } else if (playedTiles == 42) {
 
             // Draw
             clientController.draw();
-            clientController.updateUser(playerTurn, true);
+            if (gameMode == MATCHMAKING) {
+                clientController.updateUser(playerTurn, true);
+            }
 
         } else {
 
             // Regular move without any particular outcome
             changePlayer(isIncoming);
-        if (gameMode == LOCAL) {
-            clientController.setPlayer(playerTurn);
-        }
+            if (gameMode == LOCAL) {
+                clientController.setPlayer(playerTurn);
+            }
 
         }
     }

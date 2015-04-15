@@ -9,24 +9,25 @@ import static projectc4.c4.util.C4Constants.*;
  * @author Kalle Bornemark
  */
 public class User implements Serializable {
+    private static final long serialVersionUID = -253471345465050L;
     private final String username;
     private int[] gameResults;
     private String firstName;
     private String lastName;
-    private int elo;
-    private ActiveGame activeGame;
+    private double elo;
+//    private ActiveGame activeGame;
 
     public User(String username){
-        elo = 0;
         this.username = username;
         gameResults = new int[4];
+        elo = 0;
     }
 
-    public void setActiveGame(ActiveGame activeGame) {
+    /*public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
-    }
+    }*/
 
-    public int getElo() {
+    public double getElo() {
         return elo;
     }
 
@@ -61,22 +62,22 @@ public class User implements Serializable {
      * 3 = Games drawn
      * @param result The result which counter should be increased.
      */
-    public void newGameResult(int result) {
+    public void newGameResult(int result, double opponentElo) {
+        System.out.println("New game result inc, current ELO: " + elo + ", opponent ELO: " + opponentElo);
         int res;
-        System.out.println("Attempting to calculate elo");
         if (result == WIN) {
             res = 1;
-            elo += Elo.calculateElo(getElo(), activeGame.getGameInfo().getOpponentElo());
+            elo += Elo.calculateElo(elo, opponentElo);
         } else if (result == LOSS) {
             res = 2;
-            elo -= Elo.calculateElo(getElo(), activeGame.getGameInfo().getOpponentElo());
-
+            elo -= Elo.calculateElo(elo, opponentElo);
         } else {
             res = 3;
         }
-        System.out.println("Elo calculated");
         gameResults[res]++;
         gameResults[0]++;
+
+        System.out.println("ELO set to " + elo);
     }
 
     public int[] getGameResults() {

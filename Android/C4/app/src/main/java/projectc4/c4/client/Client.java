@@ -1,19 +1,19 @@
 package projectc4.c4.client;
 
-import android.os.AsyncTask;
-
 import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
  */
-public class Client implements Runnable{
+public class Client implements Runnable, Serializable {
+    private static final long serialVersionUID = -4032343768965050L;
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -82,7 +82,7 @@ public class Client implements Runnable{
         return user;
     }
 
-    public void updateOpponent(int result) {
+    public void updateUser(int result) {
         try {
             oos.writeObject(result);
             oos.flush();

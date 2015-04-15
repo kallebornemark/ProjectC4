@@ -10,7 +10,7 @@ import static projectc4.c4.util.C4Constants.*;
  * @author Kalle Bornemark
  */
 public class ActiveGame implements Serializable {
-    private static final long serialVersionUID = -403250971215465050L;
+    private static final long serialVersionUID = -403250937865050L;
     private ConnectedClient c1;
     private ConnectedClient c2;
     private Thread rematchListener;
@@ -22,9 +22,16 @@ public class ActiveGame implements Serializable {
         this.server = server;
         this.c1 = c1;
         this.c2 = c2;
-        c1.getUser().setActiveGame(this);
-        c2.getUser().setActiveGame(this);
-        server.newGame(c1, c2);
+//        c1.getUser().setActiveGame(this);
+//        c2.getUser().setActiveGame(this);
+        server.newGame(c1, c2, false);
+    }
+
+    public ConnectedClient getOpponent(ConnectedClient connectedClient) {
+        if (connectedClient == c1) {
+            return c2;
+        }
+        return c1;
     }
 
     public GameInfo getGameInfo() {
@@ -55,7 +62,8 @@ public class ActiveGame implements Serializable {
         // Swap start positions
 //        System.out.println("Before swap: " + c2.getStartPos());
 //        System.out.println("Before swap: " + c1.getStartPos());
-
+        swapPos(c1);
+        swapPos(c2);
         /*System.out.println("After swap: " + c2.getStartPos());
         System.out.println("After swap: " + c1.getStartPos());
 
@@ -71,9 +79,7 @@ public class ActiveGame implements Serializable {
         c1.newGame(gameInfoC1);
         c2.newGame(gameInfoC2);*/
 
-        swapPos(c1);
-        swapPos(c2);
-        server.newGame(c1, c2);
+        server.newGame(c1, c2, true);
     }
 
     public void setReady(ConnectedClient connectedClient) {

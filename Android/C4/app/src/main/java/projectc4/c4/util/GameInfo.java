@@ -9,20 +9,21 @@ public class GameInfo implements Serializable {
     private static final long serialVersionUID = -403280971345465050L;
     private int playerTurn;
     private String opponentUserName;
-    private int elo;
-    private int opponentElo;
+    private double elo;
+    private double opponentElo;
 
-    public GameInfo(int playerTurn, String opponentUserName, int elo, int opponentElo) {
+    public GameInfo(int playerTurn, String opponentUserName, double elo, double opponentElo) {
         this.playerTurn = playerTurn;
         this.opponentUserName = opponentUserName;
+        this.elo = elo;
         this.opponentElo = opponentElo;
     }
 
-    public int getElo() {
+    public double getElo() {
         return elo;
     }
 
-    public int getOpponentElo() {
+    public double getOpponentElo() {
         return opponentElo;
     }
 

@@ -53,9 +53,9 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-        client.connect("10.2.25.13", 3450);
+//        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.17.111", 3450);
-//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("10.1.3.0", 3450);     // Kalles laptop
 //        client.connect("172.20.10.2", 3450);    // Kalles laptop #2
 //        client.connect("10.2.25.13", 3450);
@@ -175,17 +175,18 @@ public class ClientController {
      * @param draw Whether or not it's a draw.
      */
     public void updateUser(int playerTurn, boolean draw) {
+        System.out.println("Update user called in ClientController, winner = " + playerTurn + ", draw = " + draw);
         if (!draw) {
             if (playerTurn == player) {
-                getUser().newGameResult(WIN);
-                client.updateOpponent(LOSS);
+                getUser().newGameResult(WIN, gameInfo.getOpponentElo());
+                client.updateUser(WIN);
             } else {
-                getUser().newGameResult(LOSS);
-                client.updateOpponent(WIN);
+                getUser().newGameResult(LOSS, gameInfo.getOpponentElo());
+                client.updateUser(LOSS);
             }
         } else {
-            getUser().newGameResult(DRAW);
-            client.updateOpponent(DRAW);
+            getUser().newGameResult(DRAW, gameInfo.getOpponentElo());
+            client.updateUser(DRAW);
         }
     }
 

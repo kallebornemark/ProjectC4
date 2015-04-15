@@ -43,7 +43,7 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
-        user.setActiveGame(activeGame);
+//        user.setActiveGame(activeGame);
     }
 
     public ActiveGame getActiveGame() {
@@ -75,7 +75,8 @@ public class ConnectedClient extends Thread implements Serializable {
                         activeGame.setReady(this);
 
                     } else if (value == WIN || value == LOSS || value == DRAW) {
-                        server.updateUser(user.getUsername(), value);
+                        double opponentElo = activeGame.getOpponent(this).getUser().getElo();
+                        user.newGameResult(value, opponentElo);
                     }
                     System.out.println("Server: Har fått en int: " + value);
 
@@ -91,23 +92,30 @@ public class ConnectedClient extends Thread implements Serializable {
                         // Check if user is registered
                         user = server.validateUser(username);
                         System.out.println("Server: User set to " + user.getUsername());
+                        System.out.println("Attempting to add user " + user.getUsername() + " to user hashmap");
                         server.addUser(user);
+                        System.out.println(user.getUsername() + " added to client hashmap");
                         server.addConnectedClient(this);
+                        System.out.println(user.getUsername() + " added to cc hashmap");
 
                         // Send back user to client
                         oos.writeObject(user);
                         oos.flush();
+                        System.out.println(user.getUsername() + " sent to client");
                     } else {
                         System.out.println("Server: Client named " + username + " already online!");
                     }
                 }
 
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
             // Hantera om någon dissar
             System.out.println("Server: Client '" + user.getUsername() + "' disconnected");
             server.removeConnectedClient(this);
             System.out.println("Server: Client '" + user.getUsername() + "' removed from connected client list");
+        } catch (ClassNotFoundException e2) {
+            e2.printStackTrace();
         }
     }
 

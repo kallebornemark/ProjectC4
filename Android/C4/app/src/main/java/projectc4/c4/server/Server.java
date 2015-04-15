@@ -10,6 +10,8 @@ import java.util.Random;
 import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 
+import static projectc4.c4.util.C4Constants.*;
+
 /**
  * @author Kalle Bornemark
  */
@@ -37,10 +39,6 @@ public class Server implements Runnable {
 
     public void addUser(User user) {
         userHashMap.put(user.getUsername(), user);
-    }
-
-    public void updateUser(String username, int result) {
-        userHashMap.get(username).newGameResult(result);
     }
 
     public void addConnectedClient(ConnectedClient connectedClient) {
@@ -77,21 +75,19 @@ public class Server implements Runnable {
         }
     }
 
-    public void newGame(ConnectedClient c1, ConnectedClient c2) {
-        Random rand = new Random();
-        int player1, player2;
-        player1 = (rand.nextInt(1)+1)*(-10);
-        player2 = -30 - player1;
-        System.out.println("Server: New Game kallas i servern");
-        System.out.println("Server: C1 = " + player1 + " och C2 = " + player2);
+    public void newGame(ConnectedClient c1, ConnectedClient c2, boolean rematch) {
+        if (!rematch) {
+            Random rand = new Random();
+            int player1, player2;
+            player1 = (rand.nextInt(1)+1)*(-10);
+            player2 = -30 - player1;
+            c1.setStartPos(player1);
+            c2.setStartPos(player2);
+            System.out.println("Startposes swapped, C1 = " + player1 + " och C2 = " + player2);
+        }
 
-        c1.setStartPos(player1);
-        System.out.println("Server: c1 startpos set to " + player1);
-        c2.setStartPos(player2);
-        System.out.println("Server: c2 startpos set to " + player2);
-
-        GameInfo gameInfoC1 = new GameInfo(player1,c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo());
-        GameInfo gameInfoC2 = new GameInfo(player2,c1.getUser().getUsername(),c2.getUser().getElo(), c1.getUser().getElo());
+        GameInfo gameInfoC1 = new GameInfo(c1.getStartPos(),c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo());
+        GameInfo gameInfoC2 = new GameInfo(c2.getStartPos(),c1.getUser().getUsername(),c2.getUser().getElo(), c1.getUser().getElo());
         System.out.println("New GameInfo objects created");
 
 //        c1.getActiveGame().setGameInfo(gameInfoC1);

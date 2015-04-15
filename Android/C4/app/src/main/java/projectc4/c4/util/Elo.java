@@ -5,12 +5,14 @@ package projectc4.c4.util;
  */
 public class Elo {
 
-    public static int calculateElo(int eA, int eB) {
+    public static double calculateElo(double eA, double eB) {
+        System.out.println("Calculating ELO");
+        System.out.println("Current ELO: " + eA + ", opponent ELO: " + eB);
+        double calculatedElo;
+        calculatedElo = 1 / (1 + (Math.pow(10, ((eB-eA)/400))));
+        System.out.println("Calculated ELO: " + calculatedElo);
 
-        int calculatedElo = 0;
-
-        calculatedElo = 1 / (1 + (10^((eB-eA)/400)));
-
-        return calculatedElo;
+        // Avrunda
+        return Math.round(calculatedElo * 100.0) / 100.0;
     }
 }
