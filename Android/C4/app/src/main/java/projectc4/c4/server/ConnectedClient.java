@@ -1,5 +1,6 @@
 package projectc4.c4.server;
 
+import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 
 import java.io.IOException;
@@ -105,17 +106,12 @@ public class ConnectedClient extends Thread implements Serializable {
     /**
      * Notify the client with a new game.
      *
-     * @param player Player 1 or 2.
+     * @param gameInfo information about the game.
      */
-    public void newGame(int player, String opponentName) {
-        startPos = player;
+    public void newGame(GameInfo gameInfo) {
         try {
-            System.out.println("Server: newGame(" + player + ")");
-            oos.writeObject(player);
-            oos.flush();
-
-            // Send opponent name
-            oos.writeObject(opponentName);
+            System.out.println("Server: newGame(" + gameInfo.toString() + ")");
+            oos.writeObject(gameInfo);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();

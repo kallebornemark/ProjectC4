@@ -1,6 +1,9 @@
 package projectc4.c4.server;
 
 import java.io.Serializable;
+
+import projectc4.c4.util.GameInfo;
+
 import static projectc4.c4.util.C4Constants.*;
 
 /**
@@ -36,10 +39,16 @@ public class ActiveGame implements Serializable {
     }
 
     public void rematch() {
+        // Swap start positions
         swapPos(c1);
-        c1.newGame(c1.getStartPos(), c2.getUser().getUsername());
         swapPos(c2);
-        c2.newGame(c2.getStartPos(), c1.getUser().getUsername());
+
+        // Send new GameInfo objects
+        GameInfo gameInfoC1 = new GameInfo(c1.getStartPos(), c2.getUser().getUsername(), c1.getUser().getElo(), c2.getUser().getElo());
+        GameInfo gameInfoC2 = new GameInfo(c2.getStartPos(), c1.getUser().getUsername(), c2.getUser().getElo(), c1.getUser().getElo());
+
+        c1.newGame(gameInfoC1);
+        c2.newGame(gameInfoC2);
     }
 
     public void setReady(ConnectedClient connectedClient) {

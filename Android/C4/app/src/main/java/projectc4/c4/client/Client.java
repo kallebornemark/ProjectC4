@@ -2,6 +2,7 @@ package projectc4.c4.client;
 
 import android.os.AsyncTask;
 
+import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -91,15 +92,7 @@ public class Client implements Runnable{
     }
 
     public void checkNumberAndSend(int number) {
-        if (number == MATCHMAKING) {
-            System.out.println("Klienten får tillbaks ett gamemode " + number);
-            clientController.newGame(number);
-        } else if (number == PLAYER1 || number == PLAYER2) {
-            System.out.println("Klienten får tillbaks en PLAYER " + number);
-            clientController.setPlayerTurn(number);
-//            clientController.gameIsReady = true;
-            clientController.startGameUI();
-        } else if (number >= 0 && number <= 20) {
+        if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
             clientController.newIncomingMove(number);
         }
@@ -118,7 +111,7 @@ public class Client implements Runnable{
     public void startCommunication() {
         Object obj;
         int number;
-        String opponentName;
+        GameInfo gameInfo;
         try {
             System.out.println("Client communication started");
             while (!Thread.interrupted()) {
@@ -126,16 +119,18 @@ public class Client implements Runnable{
 
                 if (obj instanceof Integer) {
                     number = (Integer)obj;
-                    System.out.println("Client: New incoming int: " + number);
                     checkNumberAndSend(number);
 
                 } else if (obj instanceof User) {
                     user = (User)obj;
                     System.out.println("Client: User set to " + user.getUsername());
                     clientController.goToMatchmaking();
-                } else if (obj instanceof String) {
-                    opponentName = (String)obj;
-                    clientController.setOpponentName(opponentName);
+
+                } else if (obj instanceof GameInfo) {
+                    gameInfo = (GameInfo)obj;
+                    clientController.setGameInfo(gameInfo);
+                    clientController.newGame(MATCHMAKING);
+                    clientController.startGameUI();
                 }
             }
         } catch (Exception e) {}

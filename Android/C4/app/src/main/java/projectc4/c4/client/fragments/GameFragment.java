@@ -22,6 +22,7 @@ import projectc4.c4.client.GameGridForeground;
 import projectc4.c4.client.GameGridView;
 import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
+import projectc4.c4.util.GameInfo;
 
 import java.util.Enumeration;
 
@@ -79,10 +80,11 @@ import static projectc4.c4.util.C4Constants.*;
 
 
         if (gameMode == MATCHMAKING){
+            GameInfo gameInfo = clientController.getGameInfo();
             progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
             progressBar.setVisibility(view.VISIBLE);
             textViewPlayer1.setText(clientController.getUser().getUsername());
-            textViewPlayer2.setText(clientController.getOpponentName());
+            textViewPlayer2.setText(gameInfo.getOpponentUserName());
         }
 
         Button buttonNewgame = (Button)view.findViewById(R.id.buttonNewGame);

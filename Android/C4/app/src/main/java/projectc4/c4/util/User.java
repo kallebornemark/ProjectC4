@@ -12,6 +12,16 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
 
+    public int getElo() {
+        return elo;
+    }
+
+    public void setElo(int elo) {
+        this.elo = elo;
+    }
+
+    private int elo;
+
     public User(String username){
         this.username = username;
         gameResults = new int[4];
@@ -48,6 +58,7 @@ public class User implements Serializable {
         int res;
         if (result == WIN) {
             res = 1;
+
         } else if (result == LOSS) {
             res = 2;
         } else {

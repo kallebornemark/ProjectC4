@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 
 /**
@@ -83,8 +84,12 @@ public class Server implements Runnable {
         player2 = -30 - player1;
         System.out.println("Server: New Game kallas i servern");
         System.out.println("C1 = " + player1 + " och C2 = " + player2);
-        c1.newGame(player1, c2.getUser().getUsername());
-        c2.newGame(player2, c1.getUser().getUsername());
+
+        GameInfo gameInfoC1 = new GameInfo(player1,c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo());
+        GameInfo gameInfoC2 = new GameInfo(player2,c1.getUser().getUsername(),c1.getUser().getElo(), c1.getUser().getElo());
+
+        c1.newGame(gameInfoC1);
+        c2.newGame(gameInfoC2);
     }
 
     public void run() {
