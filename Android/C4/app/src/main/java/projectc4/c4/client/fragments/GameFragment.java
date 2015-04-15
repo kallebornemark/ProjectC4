@@ -18,13 +18,12 @@ import android.widget.TextView;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.GameGridAnimation;
+import projectc4.c4.client.GameGridShowPointer;
 import projectc4.c4.client.GameGridForeground;
 import projectc4.c4.client.GameGridView;
 import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
 import projectc4.c4.util.GameInfo;
-
-import java.util.Enumeration;
 
 import static projectc4.c4.util.C4Constants.*;
 
@@ -44,11 +43,13 @@ import static projectc4.c4.util.C4Constants.*;
         clientController = ((MainActivity)getActivity()).getClientController();
         final View view = inflater.inflate(R.layout.fragment_game, container, false);
         this.view = view;
-        GameGridView ggView = (GameGridView)view.findViewById(R.id.gameGridView);
-        GameGridAnimation ggAnimation = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
-        GameGridForeground ggForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
-        clientController.getGameController().setViews(ggView, ggAnimation, ggForeground);
 
+        GameGridView ggView = (GameGridView)view.findViewById(R.id.gameGridView);
+        GameGridShowPointer ggShowPointer = (GameGridShowPointer)view.findViewById(R.id.gameGridShowPointer);
+        GameGridForeground ggForeground = (GameGridForeground)view.findViewById(R.id.gameGridForeground);
+        GameGridAnimation ggAmination = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
+
+        clientController.getGameController().setViews(ggView, ggAmination, ggShowPointer , ggForeground);
         clientController.setGameFragment(this);
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();

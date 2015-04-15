@@ -3,6 +3,7 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -154,26 +155,5 @@ public class GameGridForeground extends View {
         }
         System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
-    }
-
-
-    public class ShowPointer extends View {
-
-
-        public ShowPointer(Context context) {
-            super(context);
-        }
-
-        public ShowPointer(Context context, AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public ShowPointer(Context context, AttributeSet attrs, int defStyleAttr) {
-            super(context, attrs, defStyleAttr);
-        }
-
-
-
-
     }
 }

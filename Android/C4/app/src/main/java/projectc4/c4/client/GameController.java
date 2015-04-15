@@ -12,8 +12,9 @@ import static projectc4.c4.util.C4Constants.*;
 public class GameController {
     private ClientController clientController;
     private GameGridView gameGridView;
-    private GameGridAnimation gameGridAnimation;
+    private GameGridShowPointer gameGridShowPointer;
     private GameGridForeground gameGridForeground;
+    private GameGridAnimation gameGridAnimation;
     private int[][] gameBoard;
     private int[] colSize;
     private int playerTurn;
@@ -55,13 +56,16 @@ public class GameController {
         this.gameBoard = new int[6][7];
     }
 
-    public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridForeground gameGridForeground) {
+    public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
         this.gameGridView = gameGridView;
         this.gameGridView.setGameController(this);
         this.gameGridView.setFocusable(true);
 
         this.gameGridAnimation = gameGridAnimation;
         this.gameGridAnimation.setGameController(this);
+
+        this.gameGridShowPointer = gameGridShowPointer;
+        this.gameGridShowPointer.setGameController(this);
 
         this.gameGridForeground = gameGridForeground;
         this.gameGridForeground.setGameController(this);
@@ -79,7 +83,7 @@ public class GameController {
 
 
     public void changePointerpos(int pointerCol) {
-        gameGridAnimation.animatePointer(pointerCol);
+        gameGridShowPointer.animatePointer(pointerCol);
     }
 
     public void newGame(int gameMode) {
@@ -131,7 +135,9 @@ public class GameController {
                 col = x;
 
                 System.out.println("GC - col: " + col + " row: " + row + " player: " + playerTurn);
-                gameGridView.newMove((getBoardHeight() - 1) - (colSize[x]++), x, playerTurn);
+                int tmpRow = (getBoardHeight() - 1) - (colSize[x]++);
+                gameGridView.newMove(tmpRow, x, playerTurn);
+//                gameGridAnimation.newMove(tmpRow, x, playerTurn);
 
 //                System.out.println("Calc " + calculate(row,col))
                 playedTiles++;
