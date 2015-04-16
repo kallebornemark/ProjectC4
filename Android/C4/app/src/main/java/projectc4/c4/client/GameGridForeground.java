@@ -18,6 +18,8 @@ import static projectc4.c4.util.C4Constants.*;
  */
 public class GameGridForeground extends View {
     private GameController gameController;
+
+    private boolean buttonEnable = true;
     private int sideOfTile;
     private int width;
     private int height;
@@ -87,9 +89,8 @@ public class GameGridForeground extends View {
         updateDisplay();
     }
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
+    public void setButtonEnable(boolean setButtonEnable){
+        this.buttonEnable = setButtonEnable;
     }
 
     @Override
@@ -101,7 +102,7 @@ public class GameGridForeground extends View {
         int x2 = width - offsetX;
         int y = offsetY - sideOfTile;
 
-        if (!isEnabled()) {
+        if (!buttonEnable) {
             return false;
         }
         //Todo ändra så att isEnabled används istället och sätts från gameController.

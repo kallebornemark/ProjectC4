@@ -96,7 +96,6 @@ public class GameController {
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
-            gameGridForeground.setEnabled(true);
         }
         gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
@@ -168,9 +167,9 @@ public class GameController {
             if(timer != null) {
                 timer.cancel();
             }
-            gameGridForeground.setEnabled(false);
             gameIsActive = false;
             clientController.enableGameButton();
+//            gameGridForeground.setEnabled(false);
 
 //            TODO Göra om highlightTiles-metoden
 //            clientController.highlightTiles(winningTiles);
