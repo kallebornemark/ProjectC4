@@ -15,8 +15,6 @@ import static projectc4.c4.util.C4Constants.*;
 public class GameGridView extends View {
     private GameController gameController;
 
-    private boolean paintNewGame = true;
-    private boolean paintnewMove = false;
     private int sideOfTile;
     private int offsetX;
     private int offsetY;
@@ -55,7 +53,6 @@ public class GameGridView extends View {
     }
 
     public void newGame(){
-        this.paintNewGame = true;
         this.bitmap = null;
         updateDisplay();
     }
@@ -66,19 +63,10 @@ public class GameGridView extends View {
         paint = new Paint();
         Paint paint = new Paint();
         paint.setColor(LIGHTGRAY);
-        for (int row = 0; row < gameController.getBoardHeight(); row++) {
-            for (int col = 0; col < gameController.getBoardWidth(); col++) {
-
-                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
-                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
-                c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-            }
-        }
+        c.drawRoundRect(offsetX, offsetY, width-offsetX, height, 20, 20, paint);
     }
 
     public void newMove(int row, int col, int player) {
-        paintNewGame = false;
-        paintnewMove = true;
         if (player == PLAYER1) {
             paint.setColor(RED);
         } else if (player == PLAYER2) {
@@ -94,12 +82,13 @@ public class GameGridView extends View {
 
 
     protected void onDraw(Canvas canvas) {
-        if (paintNewGame && gameController != null){
+        if (bitmap==null){
             resetGameBoard();
+        }
+        if (bitmap != null && gameController != null){
+            canvas.save();
             canvas.drawBitmap(bitmap, 0, 0, paint);
-        } else if (paintnewMove) {
-            canvas.drawBitmap(bitmap, 0, 0, paint);
-            paintnewMove = false;
+            canvas.restore();
         }
     }
 
