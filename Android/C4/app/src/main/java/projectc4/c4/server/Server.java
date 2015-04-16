@@ -86,8 +86,8 @@ public class Server implements Runnable {
             System.out.println("Startposes swapped, C1 = " + player1 + " och C2 = " + player2);
         }
 
-        GameInfo gameInfoC1 = new GameInfo(c1.getStartPos(),c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo());
-        GameInfo gameInfoC2 = new GameInfo(c2.getStartPos(),c1.getUser().getUsername(),c2.getUser().getElo(), c1.getUser().getElo());
+        GameInfo gameInfoC1 = new GameInfo(c1.getStartPos(),c2.getUser().getUsername(),c1.getUser().getElo(), c2.getUser().getElo(), c2.getUser().getGameResults());
+        GameInfo gameInfoC2 = new GameInfo(c2.getStartPos(),c1.getUser().getUsername(),c2.getUser().getElo(), c1.getUser().getElo(), c2.getUser().getGameResults());
         System.out.println("New GameInfo objects created");
 
 //        c1.getActiveGame().setGameInfo(gameInfoC1);

@@ -202,13 +202,23 @@ public class ClientController {
         }
     }
 
-    public String getPlayerStats() {
-        int[] stats = client.getUser().getGameResults();
-        return "Total games played: " + stats[0] + "\n" +
+    public String getPlayerStats(boolean opponent) {
+        int[] stats;
+        String statsToString, elo;
+        if (!opponent) {
+            stats = client.getUser().getGameResults();
+            elo = ""+client.getUser().getElo();
+        } else {
+            stats = getGameInfo().getOpponentGameResults();
+            elo = ""+getGameInfo().getOpponentElo();
+        }
+        statsToString =  "Total games played: " + stats[0] + "\n" +
                 "Games won: " + stats[1] + "\n" +
                 "Games lost: " + stats[2] + "\n" +
                 "Games drawn: " + stats[3] + "\n" +
-                "Your ELO: " + gameInfo.getElo();
+                "Your ELO: ";
+        statsToString += elo;
+        return statsToString;
     }
 
     public void setGameInfo(GameInfo gameInfo) {

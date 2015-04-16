@@ -20,7 +20,8 @@ import projectc4.c4.util.C4Color;
  public class GamePopupFragment extends DialogFragment {
     private ClientController clientController;
     private View view;
-    private TextView tvStatsPlayer1;
+    private TextView tvHeader;
+    private TextView tvContent;
     private Typeface typeface;
     private int section;
 
@@ -71,21 +72,24 @@ import projectc4.c4.util.C4Color;
             }
         });
 
-        // Profile
+        // Init and style elements
+        tvHeader = (TextView)view.findViewById(R.id.tvHeader);
+        tvContent = (TextView)view.findViewById(R.id.tvContent);
+        tvHeader.setTypeface(typeface, Typeface.BOLD);
+        tvContent.setTypeface(typeface, Typeface.BOLD);
+        tvHeader.setTextColor(C4Color.WHITE);
+        tvContent.setTextColor(C4Color.BLACK);
+
+        // Load player stats for section 1 (Profile) and 5 (Opponent Profile)
         if (section == 1) {
-            TextView tvGameProfilePlayer1 = (TextView)view.findViewById(R.id.tvGameProfilePlayer1);
+            tvHeader.setText(clientController.getUser().getUsername());
+            tvContent.setText(clientController.getPlayerStats(false));
+        }
 
-            tvGameProfilePlayer1.setText(clientController.getUser().getUsername());
-
-            tvGameProfilePlayer1.setTypeface(typeface, Typeface.BOLD);
-            tvGameProfilePlayer1.setTextColor(C4Color.WHITE);
-
-            tvStatsPlayer1 = (TextView)view.findViewById(R.id.tvStatsPlayer1);
-
-            tvStatsPlayer1.setTypeface(typeface, Typeface.BOLD);
-            tvStatsPlayer1.setTextColor(C4Color.BLACK);
-
-            tvStatsPlayer1.setText(clientController.getPlayerStats());
+        // Opponent Profile
+        else if (section == 5) {
+            tvHeader.setText(clientController.getGameInfo().getOpponentUserName());
+            tvContent.setText(clientController.getPlayerStats(true));
         }
     }
 

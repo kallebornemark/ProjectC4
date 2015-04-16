@@ -24,7 +24,7 @@
                 android:layout_height="35dp"
                 android:text="PLAYER 1"
                 android:textSize="20dp"
-                android:id="@+id/tvGameProfilePlayer1"
+                android:id="@+id/tvHeader"
                 android:textAlignment="center"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_alignParentEnd="false"
@@ -40,7 +40,7 @@
                 android:layout_alignParentStart="false"
                 android:layout_alignParentEnd="false"
 
-                android:layout_below="@+id/tvGameProfilePlayer1" android:layout_marginTop="15dp"
+                android:layout_below="@+id/tvHeader" android:layout_marginTop="15dp"
                 android:layout_marginLeft="25dp" android:layout_marginRight="25dp"/>
 
         <TextView
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:id="@+id/tvStatsPlayer1"
+                android:id="@+id/tvContent"
                 android:layout_centerVertical="true" android:layout_alignStart="@+id/line"
                 android:layout_below="@+id/line" android:layout_marginTop="15dp"/>
 
