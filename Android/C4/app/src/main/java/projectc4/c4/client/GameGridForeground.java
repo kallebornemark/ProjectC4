@@ -88,6 +88,11 @@ public class GameGridForeground extends View {
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked();
         float touchPosX = event.getX();
@@ -96,6 +101,10 @@ public class GameGridForeground extends View {
         int x2 = width - offsetX;
         int y = offsetY - sideOfTile;
 
+        if (!isEnabled()) {
+            return false;
+        }
+        //Todo ändra så att isEnabled används istället och sätts från gameController.
         if (gameController.getGameMode() == MATCHMAKING && gameController.getPlayerTurn() == PLAYER2) {
             return false;
         }

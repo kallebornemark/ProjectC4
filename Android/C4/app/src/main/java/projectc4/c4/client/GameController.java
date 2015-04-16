@@ -92,11 +92,12 @@ public class GameController {
 
     public void newGame(int gameMode) {
         resetGameBoard();
-        if (gameGridView != null) {
+
+        if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
+            gameGridForeground.setEnabled(true);
         }
-
         gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
         gameIsActive = true;
@@ -161,13 +162,13 @@ public class GameController {
     }
 
     public void checkOutcome(boolean isIncoming) {
-        if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
 
-            gameGridAnimation.setClickable(false);
-            // Somebody won
+        // If somebody won
+        if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
             if(timer != null) {
                 timer.cancel();
             }
+            gameGridForeground.setEnabled(false);
             gameIsActive = false;
             clientController.enableGameButton();
 
@@ -237,7 +238,6 @@ public class GameController {
                     }
                 }
             } else {
-
                 counter++;
             }
             if (counter == 4) {
