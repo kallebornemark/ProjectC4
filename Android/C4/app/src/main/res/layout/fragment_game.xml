@@ -47,7 +47,7 @@
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/iconProfile"
+                android:id="@+id/ibPlayer1Profile"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_profile"
                 android:layout_column="1"
@@ -59,7 +59,7 @@
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/iconSettings"
+                android:id="@+id/ibPlayer1Settings"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_settings"
                 android:layout_column="2"
@@ -71,7 +71,7 @@
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/iconFriends"
+                android:id="@+id/ibPlayer1Friends"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_friends"
                 android:layout_column="3"
@@ -82,7 +82,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/iconChat"
+                android:id="@+id/ibPlayer1Chat"
                 android:layout_column="4"
                 android:background="@drawable/c4_chat"/>
 
@@ -105,7 +105,7 @@
             <ImageButton
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/imageButton"
+                android:id="@+id/ibPlayer2Profile"
                 android:adjustViewBounds="false"
                 android:background="@drawable/c4_profile"
                 android:layout_column="1"
@@ -116,7 +116,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton2"
+                android:id="@+id/ibPlayer2Chat"
                 android:layout_column="4"
                 android:background="@drawable/c4_chat"/>
 

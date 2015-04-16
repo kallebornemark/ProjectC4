@@ -4,10 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Typeface;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +30,14 @@ import static projectc4.c4.util.C4Constants.*;
     private ClientController clientController;
     private int gameMode;
     private View view;
-    private ImageButton buttonGameProfile;
     private AnimationDrawable animation;
+    private ImageButton ibPlayer1Profile;
+    private ImageButton ibPlayer1Settings;
+    private ImageButton ibPlayer1Friends;
+    private ImageButton ibPlayer1Chat;
+    private ImageButton ibPlayer2Profile;
+    private ImageButton ibPlayer2Chat;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +59,6 @@ import static projectc4.c4.util.C4Constants.*;
         initListeners();
 
         clientController.newGame(gameMode);
-
 
         return view;
     }
@@ -99,16 +101,26 @@ import static projectc4.c4.util.C4Constants.*;
         buttonRematch.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
 
-        buttonGameProfile = (ImageButton)view.findViewById(R.id.iconProfile);
-        GridLayout glIcons1 = (GridLayout)view.findViewById(R.id.iconButtons);
-        GridLayout glIcons2 = (GridLayout)view.findViewById(R.id.iconButtons2);
+        // Load icon panels if gamemode is matchmaking
+        if (gameMode == MATCHMAKING) {
+            GridLayout glIcons1 = (GridLayout)view.findViewById(R.id.iconButtons);
+            GridLayout glIcons2 = (GridLayout)view.findViewById(R.id.iconButtons2);
 
-            if (gameMode == MATCHMAKING) {
-                glIcons1.setEnabled(true);
-                glIcons1.setVisibility(View.VISIBLE);
-                glIcons2.setEnabled(true);
-                glIcons2.setVisibility(View.VISIBLE);
-            }
+            glIcons1.setEnabled(true);
+            glIcons1.setVisibility(View.VISIBLE);
+            glIcons2.setEnabled(true);
+            glIcons2.setVisibility(View.VISIBLE);
+
+            // Player 1
+            ibPlayer1Profile = (ImageButton)view.findViewById(R.id.ibPlayer1Profile);
+            ibPlayer1Settings = (ImageButton)view.findViewById(R.id.ibPlayer1Settings);
+            ibPlayer1Friends = (ImageButton)view.findViewById(R.id.ibPlayer1Friends);
+            ibPlayer1Chat = (ImageButton)view.findViewById(R.id.ibPlayer1Chat);
+
+            // Player 2
+            ibPlayer2Profile = (ImageButton)view.findViewById(R.id.ibPlayer2Profile);
+            ibPlayer2Chat = (ImageButton)view.findViewById(R.id.ibPlayer2Chat);
+        }
     }
 
     @Override
@@ -121,9 +133,11 @@ import static projectc4.c4.util.C4Constants.*;
 
     public void initListeners() {
 
-        // Profile button
+        // Set listeners if MM
         if (gameMode == MATCHMAKING) {
-            buttonGameProfile.setOnClickListener(new View.OnClickListener() {
+
+            // Profile button
+            ibPlayer1Profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fragmentManager = getFragmentManager();
@@ -133,6 +147,19 @@ import static projectc4.c4.util.C4Constants.*;
                     fragmentTransaction.commit();
                 }
             });
+
+            // Opponent Profile button
+            ibPlayer2Profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(5));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
         }
     }
 
@@ -253,7 +280,7 @@ import static projectc4.c4.util.C4Constants.*;
                         clientController.newGame(LOCAL);
                         buttonNewGame.setEnabled(false);
                         buttonNewGame.setVisibility(View.INVISIBLE);
-                        RelativeLayout relativeLayoutPlayers = (RelativeLayout)view.findViewById(R.id.relativeLayoutPlayers);
+                        RelativeLayout relativeLayoutPlayers = (RelativeLayout) view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
                         highlightPlayer(PLAYER1);
                     }
