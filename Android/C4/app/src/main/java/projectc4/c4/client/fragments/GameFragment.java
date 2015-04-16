@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,7 +39,6 @@ import static projectc4.c4.util.C4Constants.*;
     private int gameMode;
     private View view;
     private ImageButton buttonGameProfile;
-    private ProgressBar progressBar;
     private AnimationDrawable animation;
 
     @Override
@@ -92,8 +90,6 @@ import static projectc4.c4.util.C4Constants.*;
 
         if (gameMode == MATCHMAKING){
             GameInfo gameInfo = clientController.getGameInfo();
-            progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
-            progressBar.setVisibility(view.VISIBLE);
             textViewPlayer1.setText(clientController.getUser().getUsername());
             textViewPlayer2.setText(gameInfo.getOpponentUserName());
         }
@@ -245,15 +241,6 @@ import static projectc4.c4.util.C4Constants.*;
             }
         });
 
-    }
-
-    public void increaseProgressBar(final int time) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setProgress(time);
-            }
-        });
     }
 
     public void setNewGame() {

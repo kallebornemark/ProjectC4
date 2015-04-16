@@ -202,8 +202,6 @@ public class GameController {
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
             startTimer();
-        } if(!isIncoming && gameMode == MATCHMAKING) {
-            clientController.increaseProgressBar(0);
         }
         if (!isIncoming && timer != null) {
             timer.cancel();
@@ -347,7 +345,7 @@ public class GameController {
     }
 
     public void toDO() {
-        clientController.increaseProgressBar(--time);
+        --time;
         if (time == 0) {
             System.out.println("TIDEN SLUT");
             timer.cancel();
