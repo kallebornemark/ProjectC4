@@ -9,7 +9,8 @@ public class Elo {
         System.out.println("Calculating ELO");
         System.out.println("Current ELO: " + eA + ", opponent ELO: " + eB);
         double calculatedElo;
-        calculatedElo = 1 / (1 + (Math.pow(10, ((eB-eA)/400))));
+        calculatedElo = 1 / (1 + (Math.pow(10, (eA-eB)/400)));
+        calculatedElo = calculatedElo * 10;
         System.out.println("Calculated ELO: " + calculatedElo);
 
         // Avrunda

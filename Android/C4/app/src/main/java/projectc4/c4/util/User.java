@@ -14,7 +14,7 @@ public class User implements Serializable {
     private int[] gameResults;
     private String firstName;
     private String lastName;
-    private double elo;
+    private double elo = 1000;
 //    private ActiveGame activeGame;
 
     public User(String username){
@@ -70,7 +70,7 @@ public class User implements Serializable {
             elo += Elo.calculateElo(elo, opponentElo);
         } else if (result == LOSS) {
             res = 2;
-            elo -= Elo.calculateElo(elo, opponentElo);
+            elo -= Elo.calculateElo(opponentElo, elo);
         } else {
             res = 3;
         }
