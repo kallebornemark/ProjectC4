@@ -49,6 +49,16 @@ public class MatchmakingFragment extends Fragment {
         });
 
 
+        Button buttonMyProfile = (Button)view.findViewById(R.id.buttonMyProfile);
+        Button buttonLeaderboard = (Button)view.findViewById(R.id.buttonLeaderboard);
+        Button buttonLogout = (Button)view.findViewById(R.id.buttonLogout);
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
+
+        buttonMyProfile.setTypeface(type, Typeface.BOLD);
+        buttonFindOpponent.setTypeface(type, Typeface.BOLD);
+        buttonLeaderboard.setTypeface(type, Typeface.BOLD);
+        buttonLogout.setTypeface(type, Typeface.BOLD);
+
     return view;
 
 

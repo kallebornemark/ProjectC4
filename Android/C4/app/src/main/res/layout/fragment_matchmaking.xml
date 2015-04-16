@@ -1,19 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:background="#FFFFFCED"
-    android:id="@+id/fragment_matchmaking">
+    android:id="@+id/fragment_matchmaking"
+    android:paddingLeft="13dp"
+    android:paddingRight="13dp"
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp"
+    >
 
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+       >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -23,10 +27,7 @@
             android:layout_alignEnd="@+id/buttonFindOpponent"
             android:src="@drawable/c4_logo"
             android:adjustViewBounds="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="150dp" />
+            android:layout_marginBottom="50dp" />
 
         <Button
             android:layout_width="match_parent"
@@ -37,9 +38,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/colorred"
             android:textColor="#FFFFFCED"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
@@ -49,8 +48,39 @@
             android:id="@+id/progressBarLarge"
             android:indeterminate="true"
             android:progress="50"
-            android:layout_marginLeft="54dp"
-            android:layout_marginRight="54dp"/>
+           />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MY PROFILE"
+            android:id="@+id/buttonMyProfile"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:textColor="#FFFFFCED"
+            android:textSize="20sp"
+            android:background="@drawable/coloryellow"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LEADERBOARD"
+            android:id="@+id/buttonLeaderboard"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFCED"
+            android:textSize="20sp"
+            android:background="@drawable/colorblack"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGOUT"
+            android:id="@+id/buttonLogout"
+            android:background="@drawable/colorlightgray"
+            android:layout_marginTop="45dp"
+            android:textColor="#FFFFFCED"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
