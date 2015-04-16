@@ -60,7 +60,7 @@ public class ClientController {
 //        client.connect("172.20.10.2", 3450);    // Kalles laptop #2
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("192.168.0.10", 3450);
-        client.connect("10.1.17.111", 3450);
+//        client.connect("10.1.17.111", 3450);
     }
 
     public void newOutgoingMove(int column) {
@@ -206,5 +206,9 @@ public class ClientController {
 
     public GameInfo getGameInfo() {
         return this.gameInfo;
+    }
+
+    public void stopAnimation() {
+        gameFragment.stopAnimation();
     }
 }
