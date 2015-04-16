@@ -91,13 +91,6 @@ public class Client implements Runnable, Serializable {
         }
     }
 
-    public void checkNumberAndSend(int number) {
-        if (number >= 0 && number <= 20) {
-            System.out.println(this.toString() + " får ett inkommande move: " + number);
-            clientController.newIncomingMove(number);
-        }
-    }
-
     public void requestGame(int gamemode) {
         try {
             oos.writeObject(gamemode);
@@ -105,6 +98,15 @@ public class Client implements Runnable, Serializable {
             System.out.println("Request game " + gamemode);
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void checkNumberAndSend(int number) {
+        if (number >= 0 && number <= 20) {
+            System.out.println(this.toString() + " får ett inkommande move: " + number);
+            clientController.newIncomingMove(number);
+        } else if (number == MATCHMAKING) {
+            clientController.startGameUI();
         }
     }
 
@@ -130,7 +132,7 @@ public class Client implements Runnable, Serializable {
                     gameInfo = (GameInfo)obj;
                     clientController.setGameInfo(gameInfo);
                     clientController.setPlayerTurn(gameInfo.getPlayerTurn());
-                    clientController.startGameUI();
+                    System.out.println("New GameInfo received! Opponent wins: " + gameInfo.getOpponentGameResults()[1] + ", losses: " + gameInfo.getOpponentGameResults()[2]);
                 }
             }
         } catch (Exception e) {}

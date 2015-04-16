@@ -63,17 +63,12 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-        client.connect("10.2.10.38", 3450);
+//        client.connect("10.2.10.38", 3450);
 //      client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
-//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
-//        client.connect("10.1.3.0", 3450);     // Kalles laptop
-//        client.connect("172.20.10.2", 3450);  // Kalles laptop #2
-//        client.connect("10.2.25.13", 3450);
-//        client.connect("192.168.0.10", 3450);
-//        client.connect("10.1.17.111", 3450);
+        client.connect("192.168.1.57", 3450); // Kalles hemmadator
     }
 
     public void newOutgoingMove(int column) {
@@ -206,22 +201,23 @@ public class ClientController {
 
     public String getPlayerStats(boolean opponent) {
         int[] stats;
-        String statsToString, elo;
-        if (!opponent) {
-            stats = client.getUser().getGameResults();
-            elo = ""+client.getUser().getElo();
+        double elo;
+        String resString;
+        if (opponent) {
+            stats = gameInfo.getOpponentGameResults();
+            elo = gameInfo.getOpponentElo();
         } else {
-            GameInfo gi = getGameInfo();
-            stats = gi.getOpponentGameResults();
-            elo = ""+gi.getOpponentElo();
+            stats = getUser().getGameResults();
+            elo = getUser().getElo();
         }
-        statsToString = "Total games played: " + stats[0] + "\n" +
+
+        resString = "Total games played: " + stats[0] + "\n" +
                 "Games won: " + stats[1] + "\n" +
                 "Games lost: " + stats[2] + "\n" +
-                "Games drawn: " + stats[3] + "\n" +
-                "Your ELO: ";
-        statsToString += elo;
-        return statsToString;
+                "Games drawn: " + stats[3] + "\n\n" +
+                "ELO: " + elo;
+
+        return resString;
     }
 
     public void setGameInfo(GameInfo gameInfo) {

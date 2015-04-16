@@ -10,8 +10,6 @@ import java.util.Random;
 import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 
-import static projectc4.c4.util.C4Constants.*;
-
 /**
  * @author Kalle Bornemark
  */
@@ -75,32 +73,34 @@ public class Server implements Runnable {
         }
     }
 
-    public void newGame(ConnectedClient c1, ConnectedClient c2, boolean rematch) {
-        if (!rematch) {
-            Random rand = new Random();
-            int player1, player2;
-            player1 = (rand.nextInt(1)+1)*(-10);
-            player2 = -30 - player1;
-            c1.setStartPos(player1);
-            c2.setStartPos(player2);
-            System.out.println("Startposes swapped, C1 = " + player1 + " och C2 = " + player2);
-        }
+    public void updateUser(ConnectedClient c1, int value) {
+        User user = c1.getUser();
+        ConnectedClient opponent = c1.getActiveGame().getOpponent(c1);
+        user.newGameResult(value, opponent.getUser().getElo());
 
-        User c1User = c1.getUser();
-        User c2User = c2.getUser();
-        GameInfo gameInfoC1 = new GameInfo(c1.getStartPos(),c2User.getUsername(),c1User.getElo(), c2User.getElo(), c2User.getGameResults());
-        GameInfo gameInfoC2 = new GameInfo(c2.getStartPos(),c1User.getUsername(),c2User.getElo(), c1User.getElo(), c1User.getGameResults());
-        System.out.println("New GameInfo objects created");
+        opponent.newGameInfo(new GameInfo(opponent.getStartPos(), user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults()));
+        System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
+    }
 
-//        c1.getActiveGame().setGameInfo(gameInfoC1);
-        System.out.println("GameInfo set to " + gameInfoC1 + " in c1");
-//        c2.getActiveGame().setGameInfo(gameInfoC2);
-        System.out.println("GameInfo set to " + gameInfoC2 + " in c1");
+    public void newGame(ConnectedClient c1, ConnectedClient c2) {
+        // Assign random startpos to clients
+        Random rand = new Random();
+        int player1, player2;
+        player1 = (rand.nextInt(1)+1)*(-10);
+        player2 = -30 - player1;
+        c1.setStartPos(player1);
+        c2.setStartPos(player2);
+        System.out.println("Startposes swapped, C1 = " + player1 + " och C2 = " + player2);
+        c1.setStartPos(player1);
+        c2.setStartPos(player2);
 
-        c1.newGame(gameInfoC1);
-        System.out.println("c1.newGame()");
-        c2.newGame(gameInfoC2);
-        System.out.println("c2.newGame()");
+        // Create new GameInfo objects and send to clients
+        User user1 = c1.getUser();
+        User user2 = c2.getUser();
+        c1.newGameInfo(new GameInfo(c1.getStartPos(),user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults()));
+        c2.newGameInfo(new GameInfo(c2.getStartPos(),user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults()));
+        c1.newGame();
+        c2.newGame();
     }
 
     public void run() {

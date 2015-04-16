@@ -76,6 +76,7 @@ public class User implements Serializable {
         }
         gameResults[res]++;
         gameResults[0]++;
+        System.out.println(res + "++ = " + gameResults[res]);
 
         System.out.println("ELO set to " + elo);
     }

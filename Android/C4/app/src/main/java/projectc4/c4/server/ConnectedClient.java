@@ -61,6 +61,7 @@ public class ConnectedClient extends Thread implements Serializable {
                 if (obj instanceof Integer) {
                     value = (Integer)obj;
 
+                    // Hantera ints
                     if (value == MATCHMAKING) {
                         // New incoming MM game
                         System.out.println("Server: New incoming MM game");
@@ -75,8 +76,8 @@ public class ConnectedClient extends Thread implements Serializable {
                         activeGame.setReady(this);
 
                     } else if (value == WIN || value == LOSS || value == DRAW) {
-                        double opponentElo = activeGame.getOpponent(this).getUser().getElo();
-                        user.newGameResult(value, opponentElo);
+                        // Match ended, time to update Users
+                        server.updateUser(this, value);
                     }
                     System.out.println("Server: Har fått en int: " + value);
 
@@ -124,10 +125,19 @@ public class ConnectedClient extends Thread implements Serializable {
      *
      * @param gameInfo information about the game.
      */
-    public void newGame(GameInfo gameInfo) {
+    public void newGameInfo(GameInfo gameInfo) {
         try {
-            System.out.println("Server: newGame(" + gameInfo.toString() + ")");
+            System.out.println("Server: newGameInfo(" + gameInfo.toString() + ")");
             oos.writeObject(gameInfo);
+            oos.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void newGame() {
+        try {
+            oos.writeObject(MATCHMAKING);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
