@@ -19,12 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import projectc4.c4.R;
-import projectc4.c4.client.ClientController;
-import projectc4.c4.client.GameGridAnimation;
-import projectc4.c4.client.GameGridShowPointer;
-import projectc4.c4.client.GameGridForeground;
-import projectc4.c4.client.GameGridView;
-import projectc4.c4.client.MainActivity;
+import projectc4.c4.client.*;
 import projectc4.c4.util.C4Color;
 import projectc4.c4.util.GameInfo;
 
@@ -125,14 +120,15 @@ import static projectc4.c4.util.C4Constants.*;
     }
 
     public void initListeners() {
-        // In-game profile button
+
+        // Profile button
         if (gameMode == MATCHMAKING) {
             buttonGameProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.add(android.R.id.content, new GameProfileFragment());
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(1));
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }

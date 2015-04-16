@@ -1,25 +1,20 @@
 package projectc4.c4.client;
 
-
-
-
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import projectc4.c4.R;
-import projectc4.c4.client.fragments.GameFragment;
-import projectc4.c4.client.fragments.LoginFragment;
-import projectc4.c4.client.fragments.MatchmakingFragment;
-import projectc4.c4.client.fragments.MenuFragment;
+import projectc4.c4.client.fragments.*;
+
 import static projectc4.c4.util.C4Constants.*;
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends FragmentActivity {
 
     private MenuFragment menuFragment;
     private GameFragment gameFragment;
@@ -145,5 +140,4 @@ public class MainActivity extends FragmentActivity{
     public void setGameFragment(GameFragment gameFragment) {
         this.gameFragment = gameFragment;
     }
-
 }

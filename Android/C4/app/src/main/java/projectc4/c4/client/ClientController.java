@@ -2,6 +2,7 @@ package projectc4.c4.client;
 
 
 import projectc4.c4.client.fragments.GameFragment;
+import projectc4.c4.client.fragments.GamePopupFragment;
 import projectc4.c4.client.fragments.LoginFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
 import projectc4.c4.util.GameInfo;
@@ -20,6 +21,7 @@ public class ClientController {
     private GameFragment gameFragment;
     private MatchmakingFragment matchmakingFragment;
     private LoginFragment loginFragment;
+    private GamePopupFragment gamePopupFragment;
     private String opponentName;
     private GameInfo gameInfo;
 
@@ -51,13 +53,22 @@ public class ClientController {
         this.loginFragment = loginFragment;
     }
 
+    public void setGamePopupFragment(GamePopupFragment gamePopupFragment) {
+        this.gamePopupFragment = gamePopupFragment;
+    }
+
+    public GamePopupFragment getGamePopupFragment() {
+        return this.gamePopupFragment;
+    }
+
     public void connect() {
         client = new Client(this);
 //        client.connect("10.2.10.36", 3450);
+        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("10.1.3.0", 3450);     // Kalles laptop
-//        client.connect("172.20.10.2", 3450);    // Kalles laptop #2
+//        client.connect("172.20.10.2", 3450);  // Kalles laptop #2
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);

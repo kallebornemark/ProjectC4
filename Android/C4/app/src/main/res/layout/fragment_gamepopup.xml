@@ -2,16 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".MainActivity"
-    android:id="@+id/fragment_gameprofile"
     android:clickable="true"
     android:transitionGroup="true"
-    android:background="@drawable/dimmedscreen">
+        >
 
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:background="@drawable/dimmedscreen" android:clickable="true"
+            android:id="@+id/popup_background">
+    </RelativeLayout>
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="300dp" android:background="@drawable/popupscreen"
             android:layout_marginLeft="24dp" android:layout_marginRight="24dp" android:layout_centerVertical="true"
-            android:id="@+id/popupPlayer1">
+            android:id="@+id/popup_window" android:clickable="true">
 
 
 
