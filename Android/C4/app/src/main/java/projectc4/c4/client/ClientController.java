@@ -211,10 +211,11 @@ public class ClientController {
             stats = client.getUser().getGameResults();
             elo = ""+client.getUser().getElo();
         } else {
-            stats = getGameInfo().getOpponentGameResults();
-            elo = ""+getGameInfo().getOpponentElo();
+            GameInfo gi = getGameInfo();
+            stats = gi.getOpponentGameResults();
+            elo = ""+gi.getOpponentElo();
         }
-        statsToString =  "Total games played: " + stats[0] + "\n" +
+        statsToString = "Total games played: " + stats[0] + "\n" +
                 "Games won: " + stats[1] + "\n" +
                 "Games lost: " + stats[2] + "\n" +
                 "Games drawn: " + stats[3] + "\n" +
@@ -228,7 +229,7 @@ public class ClientController {
     }
 
     public GameInfo getGameInfo() {
-        return this.gameInfo;
+        return gameInfo;
     }
 
     public void stopAnimation() {

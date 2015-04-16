@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class GameInfo implements Serializable {
     private static final long serialVersionUID = -403280971345465050L;
     private int playerTurn;
-    private String opponentUserName;
     private double elo;
+    private String opponentUserName;
     private double opponentElo;
     private int[] opponentGameResults;
 
@@ -17,7 +17,6 @@ public class GameInfo implements Serializable {
         this.playerTurn = playerTurn;
         this.opponentUserName = opponentUserName;
         this.elo = elo;
-
         this.opponentElo = opponentElo;
         this.opponentGameResults = opponentGameResults;
     }
