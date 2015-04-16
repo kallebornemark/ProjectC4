@@ -22,14 +22,12 @@ public class GameController {
     private int playedTiles;
     private int gameMode;
     private ArrayList<Integer> winningTiles = new ArrayList<>();
-    private boolean gameIsActive;
     private Timer timer;
     private int time;
 
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
         this.clientController = clientController;
-        this.gameIsActive = true;
     }
 
     public int getBoardWidth() {
@@ -96,10 +94,10 @@ public class GameController {
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
+            gameGridForeground.setButtonEnable(true);
         }
         gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
-        gameIsActive = true;
         playedTiles = 0;
         for (int i = 0; i < colSize.length; i++) {
             colSize[i] = 0;
@@ -134,7 +132,7 @@ public class GameController {
     public void newMove(int x, boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < getBoardHeight()) {
-            if ((isIncoming || ( playerTurn == clientController.getPlayer()) && gameIsActive)) {
+            if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
 
                 row = (getBoardHeight() - 1) - (colSize[x]);
                 col = x;
@@ -167,9 +165,8 @@ public class GameController {
             if(timer != null) {
                 timer.cancel();
             }
-            gameIsActive = false;
             clientController.enableGameButton();
-//            gameGridForeground.setEnabled(false);
+            gameGridForeground.setButtonEnable(false);
 
 //            TODO Göra om highlightTiles-metoden
 //            clientController.highlightTiles(winningTiles);

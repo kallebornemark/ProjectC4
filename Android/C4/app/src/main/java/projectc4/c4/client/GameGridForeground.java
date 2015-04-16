@@ -3,7 +3,6 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -32,18 +31,24 @@ public class GameGridForeground extends View {
     private int offsetX;
     private int offsetY;
     private Paint paint;
-    private Bitmap bitmap;
 
     public GameGridForeground(Context context) {
         super(context);
+        init();
     }
 
     public GameGridForeground(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public GameGridForeground(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+
+    public void init(){
+        paint = new Paint();
     }
 
     public void setGameController(GameController gameController) {
@@ -64,10 +69,11 @@ public class GameGridForeground extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        canvas.save();
+        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
-        paint = new Paint();
         paint.setColor(BLACK);
         c.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
 
@@ -83,6 +89,8 @@ public class GameGridForeground extends View {
         }
         paint = new Paint();
         canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.restore();
+
     }
 
     public void paintForeground(){
@@ -113,7 +121,7 @@ public class GameGridForeground extends View {
         if (touchPosX >= x && touchPosX <= x2 && touchPosY >= y) {
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
-                    System.out.println("ACTION_DOWN: - x: " + touchPosX + " y: " + touchPosY);
+//                    System.out.println("ACTION_DOWN: - x: " + touchPosX + " y: " + touchPosY);
 
                     int tmpPoniterCol = (int) (touchPosX / (width / gameController.getBoardWidth()));
                     pointerCol = tmpPoniterCol;
@@ -121,11 +129,11 @@ public class GameGridForeground extends View {
 
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    System.out.println("ACTION_MOVE: - x: " + touchPosX + " y: " + touchPosY);
+//                    System.out.println("ACTION_MOVE: - x: " + touchPosX + " y: " + touchPosY);
 
                     tmpPoniterCol = (int)(touchPosX / (width / gameController.getBoardWidth()));
 
-                    System.out.println("tmp col: " + tmpPoniterCol);
+//                    System.out.println("tmp col: " + tmpPoniterCol);
                     if (tmpPoniterCol != pointerCol){
                         pointerCol = tmpPoniterCol;
                         gameController.changePointerpos(pointerCol);
@@ -133,14 +141,14 @@ public class GameGridForeground extends View {
 
                     break;
                 case MotionEvent.ACTION_UP:
-                    System.out.println("ACTION_UP - x: " + touchPosX + " y: " + touchPosY);
+//                    System.out.println("ACTION_UP - x: " + touchPosX + " y: " + touchPosY);
 
                     int newMoveCol = (int) (touchPosX / (width / gameController.getBoardWidth()));
                     gameController.newMove(newMoveCol, false);
 
                     break;
                 case MotionEvent.ACTION_CANCEL:
-                    System.out.println("ACTION_CANCEL - x: " + touchPosX + " y: " + touchPosY);
+//                    System.out.println("ACTION_CANCEL - x: " + touchPosX + " y: " + touchPosY);
 
                     //Todo ta bort markör eller?
                     break;

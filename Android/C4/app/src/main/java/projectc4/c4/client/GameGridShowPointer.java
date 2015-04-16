@@ -23,12 +23,7 @@ public class GameGridShowPointer extends View {
     private int offsetX;
     private int offsetY;
     private int sideOfTile;
-
     private int player;
-
-    private int width;
-    private int height;
-
     private Paint paint;
     private Bitmap pointerRed;
     private Bitmap pointerYellow;
@@ -95,8 +90,8 @@ public class GameGridShowPointer extends View {
 
     @Override
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
-        width = MeasureSpec.getSize(widthMeasuredSpec);
-        height = MeasureSpec.getSize(heightMeasuredSpec);
+        int width = MeasureSpec.getSize(widthMeasuredSpec);
+        int height = MeasureSpec.getSize(heightMeasuredSpec);
         if (gameController != null) {
             // Räkna ut passande storlek för brickan
             sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),

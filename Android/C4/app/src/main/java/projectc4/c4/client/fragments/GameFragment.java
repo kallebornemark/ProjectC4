@@ -127,6 +127,8 @@ import static projectc4.c4.util.C4Constants.*;
     public void onDestroyView() {
         if(clientController.getGameController().getTimer() != null)
            clientController.cancelTimer();
+
+        //Todo fixa minneshantering så det inte kraschar vid rematch
         System.out.println("DESTROY VIEW");
         super.onDestroyView();
     }

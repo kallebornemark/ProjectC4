@@ -3,10 +3,8 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
