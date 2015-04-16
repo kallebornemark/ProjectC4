@@ -142,7 +142,8 @@
             android:id="@+id/textViewPlayer2"
             android:layout_gravity="left"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentTop="false" android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="25dp"
             android:layout_marginRight="6dp"/>
 
@@ -286,6 +287,7 @@
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/custom_progressbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"

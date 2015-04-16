@@ -4,6 +4,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Typeface;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +41,7 @@ import static projectc4.c4.util.C4Constants.*;
     private View view;
     private ImageButton buttonGameProfile;
     private ProgressBar progressBar;
+    private AnimationDrawable animation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,15 +63,20 @@ import static projectc4.c4.util.C4Constants.*;
         initListeners();
 
         clientController.newGame(gameMode);
+
+
         return view;
     }
-
-
     public void initGraphics(View view) {
         RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.fragment_game);
         relativeLayout.setBackgroundColor(C4Color.WHITE);
 
         TextView textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
+
+//        textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
+//        animation = (AnimationDrawable)textViewPlayer1.getBackground();
+
+
         TextView textViewPlayer2 = (TextView)view.findViewById(R.id.textViewPlayer2);
         TextView textViewVs = (TextView)view.findViewById(R.id.textViewVs);
 
@@ -154,11 +164,27 @@ import static projectc4.c4.util.C4Constants.*;
                 TextView textViewPlayer2 = (TextView) view.findViewById(R.id.textViewPlayer2);
 
                 if (player == PLAYER1) {
-                    textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    if(gameMode == MATCHMAKING) {
+                        textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
+                        animation = (AnimationDrawable)textViewPlayer1.getBackground();
+                        animation.start();
+                    } else {
+                        textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    }
+
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
+
                 } else if (player == PLAYER2) {
-                    textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                    if(gameMode == MATCHMAKING) {
+                        textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
+                        animation = (AnimationDrawable)textViewPlayer2.getBackground();
+                        animation.start();
+                    } else {
+                        textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                    }
+
                     textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+
                 } else if (player == DRAW) {
                     textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
