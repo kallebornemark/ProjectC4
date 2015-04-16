@@ -265,4 +265,9 @@ import static projectc4.c4.util.C4Constants.*;
             }
         });
     }
+
+    public void stopAnimation() {
+        if(animation != null)
+            animation.stop();
+    }
 }

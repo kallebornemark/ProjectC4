@@ -178,6 +178,7 @@ public class GameController {
             clientController.highlightWinnerPlayerStar(playerTurn);
 
             if (gameMode == MATCHMAKING) {
+                clientController.stopAnimation();
                 clientController.updateUser(playerTurn, false);
             }
 
