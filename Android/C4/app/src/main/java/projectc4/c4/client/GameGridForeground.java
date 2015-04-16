@@ -62,7 +62,7 @@ public class GameGridForeground extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
+//        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
         paint = new Paint();
@@ -95,6 +95,11 @@ public class GameGridForeground extends View {
         int x = offsetX;
         int x2 = width - offsetX;
         int y = offsetY - sideOfTile;
+
+        if (gameController.getGameMode() == MATCHMAKING && gameController.getPlayerTurn() == PLAYER2) {
+            return false;
+        }
+
         if (touchPosX >= x && touchPosX <= x2 && touchPosY >= y) {
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
@@ -153,7 +158,7 @@ public class GameGridForeground extends View {
             // Rita gameBoard längst ner på canvasen i y-led
             offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
         }
-        System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
+//        System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }
 }

@@ -127,7 +127,7 @@ public class GameGridAnimation extends View {
             // Rita gameBoard längst ner på canvasen i y-led
             offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
         }
-        System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
+//        System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }
 }

@@ -81,15 +81,20 @@ public class GameController {
         this.playerTurn = player;
     }
 
+    public int getGameMode(){
+        return gameMode;
+    }
+
 
     public void changePointerpos(int pointerCol) {
-        gameGridShowPointer.animatePointer(pointerCol);
+        gameGridShowPointer.changePointerPos(pointerCol);
     }
 
     public void newGame(int gameMode) {
         resetGameBoard();
         if (gameGridView != null) {
             gameGridView.newGame();
+            gameGridShowPointer.changePointerPos(-1);
         }
 
         gameBoard = new int[6][7];
@@ -134,11 +139,12 @@ public class GameController {
                 row = (getBoardHeight() - 1) - (colSize[x]);
                 col = x;
 
-                System.out.println("GC - col: " + col + " row: " + row + " player: " + playerTurn);
                 int tmpRow = (getBoardHeight() - 1) - (colSize[x]++);
+                gameGridShowPointer.changePointerPos(x);
                 gameGridView.newMove(tmpRow, x, playerTurn);
-//                gameGridAnimation.newMove(tmpRow, x, playerTurn);
 
+                //för animation, fungerar inte just nu...
+//                gameGridAnimation.newMove(tmpRow, x, playerTurn);
 //                System.out.println("Calc " + calculate(row,col))
                 playedTiles++;
 
@@ -157,6 +163,7 @@ public class GameController {
     public void checkOutcome(boolean isIncoming) {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
 
+            gameGridAnimation.setClickable(false);
             // Somebody won
             if(timer != null) {
                 timer.cancel();

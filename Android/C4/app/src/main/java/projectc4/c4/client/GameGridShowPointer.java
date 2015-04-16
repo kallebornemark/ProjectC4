@@ -16,18 +16,22 @@ import static projectc4.c4.util.C4Constants.*;
  * @author Jimmy Maksymiw
  */
 public class GameGridShowPointer extends View {
+
     private GameController gameController;
-    private boolean animatePointer = false;
-    private int pointerPos;
+
+    private int pointerPos = 0;
     private int offsetX;
     private int offsetY;
     private int sideOfTile;
+
+    private int player;
 
     private int width;
     private int height;
 
     private Paint paint;
     private Bitmap pointerRed;
+    private Bitmap pointerYellow;
 
     public GameGridShowPointer(Context context) {
         super(context);
@@ -46,7 +50,8 @@ public class GameGridShowPointer extends View {
 
     public void init(){
         paint = new Paint();
-        pointerRed = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow);
+        pointerRed = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow_red);
+        pointerYellow = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow_yellow);
     }
 
     public void setGameController(GameController gameController) {
@@ -65,17 +70,26 @@ public class GameGridShowPointer extends View {
         super.invalidate();
     }
 
-    public void animatePointer(int pointerCol){
-        this.pointerPos = offsetX+(pointerCol*(GRIDSPACING+sideOfTile))+((sideOfTile/2)-(pointerRed.getWidth()/2));
-        this.animatePointer = true;
+    public void changePointerPos(int pointerCol) {
+        if (pointerCol == -1){
+            this.pointerPos = 0;
+        } else {
+            this.pointerPos = offsetX + (pointerCol * (GRIDSPACING + sideOfTile)) + ((sideOfTile / 2) - (pointerRed.getWidth() / 2));
+            player = gameController.getPlayerTurn();
+        }
         updateDisplay();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (animatePointer) {
-            canvas.drawBitmap(pointerRed, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);
-            animatePointer = false;
+        if (gameController != null && pointerPos != 0){
+            canvas.save();
+            if (player == PLAYER1){
+                canvas.drawBitmap(pointerRed, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);
+            } else if (player == PLAYER2) {
+                canvas.drawBitmap(pointerYellow, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);
+            }
+            canvas.restore();
         }
     }
 
@@ -94,7 +108,7 @@ public class GameGridShowPointer extends View {
             // Rita gameBoard längst ner på canvasen i y-led
             offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
         }
-        System.out.println("GGA - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
+//        System.out.println("GGA - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }
 }
