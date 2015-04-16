@@ -12,7 +12,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="30dp">
+        android:layout_margin="30dp"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -24,25 +25,6 @@
             android:layout_marginBottom="50dp"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewTap"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#FF716D61"
-            android:textSize="25dp"
-            android:layout_marginBottom="20dp"
-            android:text="We are C4"
-            />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView6"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_launcher"
-            android:layout_marginBottom="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,86 +32,80 @@
             android:id="@+id/textViewProject"
             android:layout_gravity="center_horizontal"
             android:textColor="#FF716D61"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginBottom="20dp"
-            android:text="4 System developers"
+            android:text="We are C4 , a group of four software developers working on a project at Malmö University"
             />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@drawable/colorblack"
+            android:id="@+id/line"
+            android:layout_alignParentStart="false"
+            android:layout_above="@+id/gridLayoutCenter"
+            android:layout_alignParentEnd="false"
+            android:layout_marginBottom="20dp" />
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+          >
+
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Emil Sandgren"
-                android:layout_margin="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="EMIL SANDGREN"
                 android:id="@+id/emil"
                 android:textSize="15sp"
-                android:textColor="#FF716D61"/>
+                android:textColor="#FFFFFCED"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/colorblack"
+                android:layout_marginTop="5dp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kalle Bornemark"
-                android:layout_margin="14dp"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:text="KALLE BORNEMARK"
                 android:id="@+id/kalle"
                 android:textSize="15sp"
-                android:textColor="#FF716D61"/>
+                android:textColor="#FFFFFCED"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/colororange"
+                android:layout_marginTop="5dp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jimmy Maksymiw"
-                android:layout_margin="14dp"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:text="JIMMY MAKSYMIW"
                 android:id="@+id/jimmy"
                 android:textSize="15sp"
-                android:textColor="#FF716D61"/>
+                android:textColor="#FFFFFCED"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/coloryellow"
+                android:layout_marginTop="5dp" />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Erik Sandgren"
-                android:layout_margin="14dp"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:text="ERIK SANDGREN"
                 android:id="@+id/erik"
                 android:textSize="15sp"
-                android:textColor="#FF716D61"/>
+                android:textColor="#FFFFFCED"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/colorred"
+                android:layout_marginTop="5dp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent">
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_launcher"
+                android:layout_marginTop="15dp" />
 
-                <View
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/colorblack"
-                    android:layout_margin="5dp" />
+        </LinearLayout>
 
-                <View
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/colororange"
-                    android:layout_margin="5dp" />
-                <View
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/coloryellow"
-                    android:layout_margin="5dp" />
+        </LinearLayout>
 
-                <View
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/colorred"
-                    android:layout_margin="5dp" />
-
-            </LinearLayout>
-            </LinearLayout>
-
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>

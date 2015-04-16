@@ -29,6 +29,7 @@ public class AboutFragment extends Fragment {
         TextView kalle = (TextView)view.findViewById(R.id.kalle);
         TextView jimmy = (TextView)view.findViewById(R.id.jimmy);
         TextView erik = (TextView)view.findViewById(R.id.erik);
+        TextView project = (TextView)view.findViewById(R.id.textViewProject);
 
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
@@ -36,6 +37,7 @@ public class AboutFragment extends Fragment {
         kalle.setTypeface(type,Typeface.BOLD);
         jimmy.setTypeface(type,Typeface.BOLD);
         erik.setTypeface(type,Typeface.BOLD);
+        project.setTypeface(type,Typeface.BOLD);
 
         return view;
     }
