@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MainActivity;
 import projectc4.c4.util.C4Color;
+
 
 /**
  * Created by Erik on 2015-04-09.
@@ -42,6 +44,7 @@ public class LoginFragment extends Fragment {
         styleComponents();
         initListeners();
 
+
         return view;
     }
 
@@ -58,9 +61,14 @@ public class LoginFragment extends Fragment {
 
     public void initListeners() {
         // Login Button
+        final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge2);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setEnabled(true);
+                progressBar.setVisibility(View.VISIBLE);
+                buttonLogin.setEnabled(false);
+                buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
                 InputMethodManager inputManager = (InputMethodManager)getActivity().
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
