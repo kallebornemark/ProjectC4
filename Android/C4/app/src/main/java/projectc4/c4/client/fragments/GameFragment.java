@@ -138,13 +138,49 @@ import static projectc4.c4.util.C4Constants.*;
         // Set listeners if MM
         if (gameMode == MATCHMAKING) {
 
-            // Profile button
+            // Profile Button
             ibPlayer1Profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(1));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            // Settings Button
+            ibPlayer1Settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(2));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            // Friends Button
+            ibPlayer1Friends.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(3));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            // Chat Button
+            ibPlayer1Chat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(4));
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }
@@ -157,6 +193,18 @@ import static projectc4.c4.util.C4Constants.*;
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(5));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            // Opponent Chat Button
+            ibPlayer2Chat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(6));
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }

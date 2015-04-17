@@ -13,16 +13,16 @@
     </RelativeLayout>
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="300dp" android:background="@drawable/popupscreen"
+            android:layout_height="300dp"
             android:layout_marginLeft="24dp" android:layout_marginRight="24dp" android:layout_centerVertical="true"
-            android:id="@+id/popup_window" android:clickable="true">
+            android:id="@+id/popup_window" android:clickable="true"
+        >
 
 
 
         <TextView
                 android:layout_width="140dp"
                 android:layout_height="35dp"
-                android:text="PLAYER 1"
                 android:textSize="20dp"
                 android:id="@+id/tvHeader"
                 android:textAlignment="center"

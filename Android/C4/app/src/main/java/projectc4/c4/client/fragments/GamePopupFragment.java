@@ -63,6 +63,7 @@ import projectc4.c4.util.C4Color;
 
         // Make background clickable
         RelativeLayout popupBackground = (RelativeLayout)view.findViewById(R.id.popup_background);
+        RelativeLayout popupWindow = (RelativeLayout)view.findViewById(R.id.popup_window);
         popupBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,23 +81,58 @@ import projectc4.c4.util.C4Color;
         tvHeader.setTextColor(C4Color.WHITE);
         tvContent.setTextColor(C4Color.BLACK);
 
-        // Load player stats for section 1 (Profile) and 5 (Opponent Profile)
-        if (section == 1) {
-            tvHeader.setText(clientController.getUser().getUsername());
-            tvContent.setText(clientController.getPlayerStats(false));
+        // Style popup window and content with red or yellow colors
+        if (section >= 1 && section <= 4) {
+            popupWindow.setBackground(getActivity().getDrawable(R.drawable.popupscreenred));
+            tvHeader.setBackground(getActivity().getDrawable(R.drawable.colorred));
+        } else {
+            popupWindow.setBackground(getActivity().getDrawable(R.drawable.popupscreenyellow));
+            tvHeader.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
         }
+
+
+        // Profile
+        if (section == 1) {
+            tvHeader.setText(clientController.getUser().getUsername()); // Load username
+            tvContent.setText(clientController.getPlayerStats(false)); // Load player stats
+        }
+
+        // Settings
+        else if (section == 2) {
+            tvHeader.setText(clientController.getGameInfo().getOpponentUserName());
+            tvHeader.setText("Settings");
+        }
+
+        // Friends
+        else if (section == 3) {
+            tvHeader.setText(clientController.getGameInfo().getOpponentUserName());
+            tvHeader.setText("Friends");
+        }
+
+        // Chat
+        else if (section == 4) {
+            tvHeader.setText(clientController.getGameInfo().getOpponentUserName());
+            tvHeader.setText("Chat");
+        }
+
 
         // Opponent Profile
         else if (section == 5) {
+            tvHeader.setText(clientController.getGameInfo().getOpponentUserName()); // Load opponent name
+            tvContent.setText(clientController.getPlayerStats(true)); // Load opponent stats
+        }
+
+
+        // Opponent Chat
+        else if (section == 6) {
             tvHeader.setText(clientController.getGameInfo().getOpponentUserName());
-            tvContent.setText(clientController.getPlayerStats(true));
+            tvHeader.setText("Chat");
         }
     }
 
     public void initListeners() {
+        // Lyssnar-mall ifall vi implementerar några lyssnare här sen. LÅT STÅ!
 
-
-        // In-game profile button
         /*buttonGameProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

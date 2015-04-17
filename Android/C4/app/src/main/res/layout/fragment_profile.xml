@@ -63,7 +63,7 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent" android:background="@drawable/popupscreen"
+                    android:layout_height="fill_parent" android:background="@drawable/popupscreenred"
                     android:layout_centerVertical="true"
                     android:id="@+id/popup_window" android:clickable="true"
                     android:layout_marginTop="10dp">
