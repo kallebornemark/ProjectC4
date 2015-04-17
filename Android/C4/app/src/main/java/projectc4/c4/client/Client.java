@@ -105,10 +105,12 @@ public class Client implements Runnable, Serializable {
         if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
             clientController.newIncomingMove(number);
-        } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch() == false) {
+        } else if (number == MATCHMAKING && !clientController.getGameInfo().isRematch()) {
             clientController.startGameUI();
         } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch()) {
             clientController.newGame(MATCHMAKING);
+            clientController.disableGameButton();
+            clientController.changeHighlightedPlayer(clientController.getPlayerTurn());
         }
     }
 

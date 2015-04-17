@@ -99,9 +99,6 @@ public class GameController {
         gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
         playedTiles = 0;
-        for (int i = 0; i < colSize.length; i++) {
-            colSize[i] = 0;
-        }
         winningTiles.clear();
         this.gameMode = gameMode;
 
@@ -146,13 +143,13 @@ public class GameController {
 //                System.out.println("Calc " + calculate(row,col))
                 playedTiles++;
 
-                // Check if somebody won or if the game is drawn
-                checkOutcome(isIncoming);
-
                 // Send the move to opponent if it's an online game
                 if (gameMode == MATCHMAKING && !isIncoming) {
                     clientController.newOutgoingMove(x);
                 }
+
+                // Check if somebody won or if the game is drawn
+                checkOutcome(isIncoming);
             }
 
         }

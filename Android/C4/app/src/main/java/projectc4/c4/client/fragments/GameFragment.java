@@ -214,6 +214,17 @@ import static projectc4.c4.util.C4Constants.*;
         });
     }
 
+    public void unpromptRematch() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
+                buttonRematch.setEnabled(false);
+                buttonRematch.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
     public void promptRematch() {
         getActivity().runOnUiThread(new Runnable() {
             @Override

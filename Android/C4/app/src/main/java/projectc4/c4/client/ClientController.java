@@ -109,6 +109,10 @@ public class ClientController {
         }
     }
 
+    public void disableGameButton() {
+        gameFragment.unpromptRematch();
+    }
+
     public void draw() {
 //        gameFragment.setTextViewWinner("It's a draw!");
         highlightWinnerPlayerStar(DRAW);
