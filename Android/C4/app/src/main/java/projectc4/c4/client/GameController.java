@@ -181,6 +181,7 @@ public class GameController {
             // Draw
             clientController.draw();
             if (gameMode == MATCHMAKING) {
+                clientController.stopAnimation();
                 clientController.updateUser(playerTurn, true);
             }
 
