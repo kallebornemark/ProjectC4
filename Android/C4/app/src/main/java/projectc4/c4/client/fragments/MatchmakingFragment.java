@@ -3,6 +3,7 @@ package projectc4.c4.client.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,8 +49,18 @@ public class MatchmakingFragment extends Fragment {
             }
         });
 
-
         Button buttonMyProfile = (Button)view.findViewById(R.id.buttonMyProfile);
+
+        buttonMyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                transaction.replace(R.id.container, new ProfileFragment()).addToBackStack(null).commit();
+            }
+        });
+
         Button buttonLeaderboard = (Button)view.findViewById(R.id.buttonLeaderboard);
         Button buttonLogout = (Button)view.findViewById(R.id.buttonLogout);
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
