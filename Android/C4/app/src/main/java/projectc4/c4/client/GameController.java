@@ -119,7 +119,7 @@ public class GameController {
         timer.scheduleAtFixedRate(new TimerTask() {
 
             public void run() {
-                toDO();
+                newSecond();
             }
         }, 0, 1000);
 
@@ -346,7 +346,7 @@ public class GameController {
         timer.cancel();
     }
 
-    public void toDO() {
+    public void newSecond() {
         --time;
         if (time == 0) {
             System.out.println("TIDEN SLUT");
