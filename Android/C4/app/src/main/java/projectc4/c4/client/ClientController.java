@@ -65,10 +65,10 @@ public class ClientController {
         client = new Client(this);
 //        client.connect("10.2.10.38", 3450);
 //      client.connect("10.1.8.135", 3450);
-//        client.connect("10.2.10.36", 3450);
+        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
-        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
     }
 
     public void newOutgoingMove(int column) {
