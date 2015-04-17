@@ -65,7 +65,7 @@ public class ClientController {
         client = new Client(this);
 //        client.connect("10.2.10.38", 3450);
 //      client.connect("10.1.8.135", 3450);
-        client.connect("10.2.10.36", 3450);
+        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
@@ -126,6 +126,13 @@ public class ClientController {
 
     public void requestRematch() {
         client.requestRematch();
+    }
+
+    public void rematch() {
+        newGame(MATCHMAKING);
+        disableGameButton();
+        changeHighlightedPlayer(gameController.getPlayerTurn());
+        gameFragment.disableStars();
     }
 
     public void requestGame(int gamemode) {

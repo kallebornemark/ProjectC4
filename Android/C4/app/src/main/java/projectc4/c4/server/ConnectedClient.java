@@ -130,6 +130,7 @@ public class ConnectedClient extends Thread implements Serializable {
             System.out.println("Server: newGameInfo(" + gameInfo.toString() + ")");
             oos.writeObject(gameInfo);
             oos.reset();
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

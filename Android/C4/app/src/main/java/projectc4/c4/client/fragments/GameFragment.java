@@ -264,6 +264,18 @@ import static projectc4.c4.util.C4Constants.*;
         });
     }
 
+    public void disableStars() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+                ivRedStar.setVisibility(View.INVISIBLE);
+                ivYellowStar.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
     public void dehighlightWinners() {
         getActivity().runOnUiThread(new Runnable() {
             @Override

@@ -108,9 +108,7 @@ public class Client implements Runnable, Serializable {
         } else if (number == MATCHMAKING && !clientController.getGameInfo().isRematch()) {
             clientController.startGameUI();
         } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch()) {
-            clientController.newGame(MATCHMAKING);
-            clientController.disableGameButton();
-            clientController.changeHighlightedPlayer(clientController.getPlayerTurn());
+            clientController.rematch();
         }
     }
 
