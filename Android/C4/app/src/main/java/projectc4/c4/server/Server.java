@@ -73,12 +73,18 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Sent when rematch is called.
+     * @param c1
+     * @param value
+     */
     public void updateUser(ConnectedClient c1, int value) {
         User user = c1.getUser();
         ConnectedClient opponent = c1.getActiveGame().getOpponent(c1);
         user.newGameResult(value, opponent.getUser().getElo());
 
-        opponent.newGameInfo(new GameInfo(opponent.getStartPos(), user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults()));
+        opponent.getActiveGame().swapPos(opponent);
+        opponent.newGameInfo(new GameInfo(opponent.getStartPos(), user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true));
         System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
     }
 
@@ -97,8 +103,14 @@ public class Server implements Runnable {
         // Create new GameInfo objects and send to clients
         User user1 = c1.getUser();
         User user2 = c2.getUser();
-        c1.newGameInfo(new GameInfo(c1.getStartPos(),user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults()));
-        c2.newGameInfo(new GameInfo(c2.getStartPos(),user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults()));
+
+        c1.newGameInfo(new GameInfo(c1.getStartPos(),user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false));
+        c2.newGameInfo(new GameInfo(c2.getStartPos(),user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false));
+        c1.newGame();
+        c2.newGame();
+    }
+
+    public void rematch(ConnectedClient c1, ConnectedClient c2) {
         c1.newGame();
         c2.newGame();
     }

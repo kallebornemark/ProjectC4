@@ -22,8 +22,6 @@ public class ActiveGame implements Serializable {
         this.server = server;
         this.c1 = c1;
         this.c2 = c2;
-//        c1.getUser().setActiveGame(this);
-//        c2.getUser().setActiveGame(this);
         server.newGame(c1, c2);
     }
 
@@ -62,10 +60,7 @@ public class ActiveGame implements Serializable {
      * Swap starting positions and start a new game
      */
     public void rematch() {
-        swapPos(c1);
-        swapPos(c2);
-
-        server.newGame(c1, c2);
+        server.rematch(c1, c2);
     }
 
     public void setReady(ConnectedClient connectedClient) {
