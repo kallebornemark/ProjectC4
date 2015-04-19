@@ -19,7 +19,7 @@ public class GameGridShowPointer extends View {
 
     private GameController gameController;
 
-    private int pointerPos = 0;
+    private int pointerPos = -1;
     private int offsetX;
     private int offsetY;
     private int sideOfTile;
@@ -67,7 +67,7 @@ public class GameGridShowPointer extends View {
 
     public void changePointerPos(int pointerCol) {
         if (pointerCol == -1){
-            this.pointerPos = 0;
+            this.pointerPos = -1;
         } else {
             this.pointerPos = offsetX + (pointerCol * (GRIDSPACING + sideOfTile)) + ((sideOfTile / 2) - (pointerRed.getWidth() / 2));
             player = gameController.getPlayerTurn();
@@ -77,7 +77,7 @@ public class GameGridShowPointer extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (gameController != null && pointerPos != 0){
+        if (gameController != null && pointerPos != -1){
             canvas.save();
             if (player == PLAYER1){
                 canvas.drawBitmap(pointerRed, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);

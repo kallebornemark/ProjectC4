@@ -13,16 +13,16 @@
         android:layout_height="fill_parent"
         >
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView3"
-            android:adjustViewBounds="true"
-            android:src="@drawable/c4_logo"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp" />
+        <!--<ImageView-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/imageView3"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:src="@drawable/c4_logo"-->
+            <!--android:layout_marginBottom="30dp"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:layout_marginRight="30dp" />-->
 
         <RelativeLayout
             android:layout_width="fill_parent"

@@ -82,6 +82,7 @@ public class LoginFragment extends Fragment {
     public void goToMatchmaking() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
+        transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+        transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
     }
 }

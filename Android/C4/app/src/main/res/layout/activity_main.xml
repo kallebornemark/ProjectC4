@@ -3,6 +3,27 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="projectc4.c4.client.MainActivity" tools:ignore="MergeRootFrame">
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/activity_layout_main"
+        android:background="#FFFFFCED">
 
+        <fragment
+            android:name="projectc4.c4.client.fragments.LogoFragment"
+            android:id="@+id/fragment_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_logo"
+            android:layout_alignParentEnd="false" />
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/activity_layout_fragmentpos"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/fragment_logo">
+
+        </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>

@@ -57,7 +57,7 @@ public class MatchmakingFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.container, new ProfileFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.activity_layout_fragmentpos, new ProfileFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -92,7 +92,8 @@ public class MatchmakingFragment extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         System.out.println("Gör transaktion");
 //        fragmentManager.popBackStack();
-        transaction.replace(R.id.container, new GameFragment()).addToBackStack("multi-game").commit();
+        transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+        transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack("multi-game").commit();
         System.out.println("Har gjort transaktion");
 
 

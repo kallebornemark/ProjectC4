@@ -4,8 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
+import java.util.HashSet;
+
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -13,6 +17,7 @@ import static projectc4.c4.util.C4Constants.*;
  * @author Jimmy Maksymiw
  */
 public class GameGridView extends View {
+
     private GameController gameController;
 
     private int sideOfTile;
@@ -92,9 +97,39 @@ public class GameGridView extends View {
         }
     }
 
-    //Todo skicka in vinnande brickor på ett smidigt sätt
-    public void setWinningTiles() {
+    public void setWinningTiles(HashSet<Integer> winningTiles, int[][] gameBoard) {
+        Paint erasePaint = new Paint();
+        erasePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        c.drawRect(0, 0, width, height, erasePaint);
 
+        int tmpCounter = 0;
+        for (int row = 0; row < gameBoard.length; row++) {
+            for (int col = 0; col < gameBoard[row].length; col++) {
+                int tmpPlayer = gameBoard[row][col];
+                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+
+                if (!winningTiles.contains(tmpCounter)) {
+                    if (tmpPlayer == PLAYER1) {
+                        paint.setColor(REDLOSERTILE);
+                    } else if (tmpPlayer == PLAYER2) {
+                        paint.setColor(YELLOWLOSERTILE);
+                    } else {
+                        paint.setColor(LIGHTGRAY);
+                    }
+                } else {
+                    if (tmpPlayer == PLAYER1) {
+                        paint.setColor(RED);
+                    } else if (tmpPlayer == PLAYER2) {
+                        paint.setColor(YELLOW);
+                    }
+                }
+                c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                tmpCounter++;
+            }
+        }
+        paint.reset();
+        updateDisplay();
     }
 
     @Override

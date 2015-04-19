@@ -68,7 +68,8 @@ public class ClientController {
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
-        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+        client.connect("192.168.0.10", 3450);
     }
 
     public void newOutgoingMove(int column) {
@@ -77,7 +78,7 @@ public class ClientController {
 
     public void newIncomingMove(int column) {
         System.out.println("Clientcontrollerns newIncomingMove " + column);
-        if(column == 20) {
+        if(column == EMPTYMOVE) {
             gameController.changePlayer(true);
         }else {
             gameController.newMove(column, true);
@@ -91,7 +92,6 @@ public class ClientController {
     public void drawTile(int pos, int player) {
         System.out.println("Drawtile: drawTile(" + pos + "," + player + ")");
     }
-
 
     public void changeHighlightedPlayer(int player) {
         gameFragment.highlightPlayer(player);

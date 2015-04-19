@@ -41,7 +41,8 @@ public class MainActivity extends FragmentActivity {
 //            this.matchmakingFragment = new MatchmakingFragment();
 //            this.loginFragment = new LoginFragment();
 
-            getFragmentManager().beginTransaction().replace(R.id.container, menuFragment).addToBackStack("Menu").commit();
+//            getFragmentManager().beginTransaction().add(R.id.container, new LogoFragment());
+            getFragmentManager().beginTransaction().add(R.id.activity_layout_fragmentpos, menuFragment).addToBackStack("Menu").commit();
 
 //            getFragmentManager().beginTransaction().add(R.id.container, menuFragment, "menu");
 //            getFragmentManager().beginTransaction().add(R.id.container, gameFragment, "game");
@@ -51,8 +52,8 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-
-    @Override
+    //Avmarkerat för att slippa settingsmenyn
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -72,11 +73,12 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().findFragmentById(R.id.container) instanceof GameFragment) {
+        if(getFragmentManager().findFragmentById(R.id.activity_layout_fragmentpos) instanceof GameFragment &&
+                !(gameController.getGameMode()==LOCAL && gameController.getPlayedTiles() == 0)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
             builder.setMessage("Do you want to cancel the game?");
@@ -94,7 +96,6 @@ public class MainActivity extends FragmentActivity {
                 }
             });
 
-
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -106,7 +107,7 @@ public class MainActivity extends FragmentActivity {
             alert.show();
         } else {
             FragmentManager fm = getFragmentManager();
-            if (fm.findFragmentById(R.id.container) instanceof MenuFragment) {
+            if (fm.findFragmentById(R.id.activity_layout_fragmentpos) instanceof MenuFragment) {
                 finish();
             } else if (fm.getBackStackEntryCount() > 0) {
                 fm.popBackStack();

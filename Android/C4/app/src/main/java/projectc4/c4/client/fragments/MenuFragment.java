@@ -58,7 +58,7 @@ public class MenuFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.container, new GameFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -68,7 +68,8 @@ public class MenuFragment extends Fragment {
                 ((MainActivity)getActivity()).getClientController().connect();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, new LoginFragment()).addToBackStack(null).commit();
+                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack(null).commit();
 
                 /*FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -82,7 +83,7 @@ public class MenuFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.container, new SettingsFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.activity_layout_fragmentpos, new SettingsFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -92,7 +93,7 @@ public class MenuFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.container, new HowToPlayFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.activity_layout_fragmentpos, new HowToPlayFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -102,7 +103,7 @@ public class MenuFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.container, new AboutFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.activity_layout_fragmentpos, new AboutFragment()).addToBackStack(null).commit();
             }
         });
         return view;

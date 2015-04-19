@@ -23,13 +23,11 @@ public class GameGridForeground extends View {
     private int width;
     private int height;
     private int pointerCol = -1;
-
-    //Todo bara hämta rows/cols från Gameconroller, ej sätta som instansvariabler.
     private int rows;
     private int cols;
-
     private int offsetX;
     private int offsetY;
+    private Bitmap bitmap;
     private Paint paint;
 
     public GameGridForeground(Context context) {
@@ -69,10 +67,17 @@ public class GameGridForeground extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        if (bitmap==null){
+            paintForeground();
+        }
         canvas.save();
-        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.restore();
+    }
+
+    private  void paintForeground(){
+//        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
         paint.setColor(BLACK);
         c.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
@@ -88,13 +93,6 @@ public class GameGridForeground extends View {
             }
         }
         paint = new Paint();
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        canvas.restore();
-
-    }
-
-    public void paintForeground(){
-        updateDisplay();
     }
 
     public void setButtonEnable(boolean setButtonEnable){

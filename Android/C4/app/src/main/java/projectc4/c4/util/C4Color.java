@@ -12,4 +12,8 @@ public class C4Color {
     public static final int YELLOWPRESSED = 0x40ECD06C;
     public static final int LIGHTGRAY = 0xFFa59484;
     public static final int ORANGE = 0xFFf5b379;
+
+
+    public static final int REDLOSERTILE = 0x70F67E59;
+    public static final int YELLOWLOSERTILE = 0x70ECD06C;
 }

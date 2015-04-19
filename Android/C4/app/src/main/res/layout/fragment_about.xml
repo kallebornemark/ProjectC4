@@ -15,15 +15,15 @@
         android:layout_margin="30dp"
         >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView5"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/c4_logo"
-            android:adjustViewBounds="true"
-            android:layout_marginBottom="50dp"
-            />
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/imageView5"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:src="@drawable/c4_logo"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:layout_marginBottom="50dp"-->
+            <!--/>-->
 
 
         <TextView

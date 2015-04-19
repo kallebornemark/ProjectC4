@@ -1,6 +1,6 @@
 package projectc4.c4.client;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,40 +18,16 @@ public class GameController {
     private int[][] gameBoard;
     private int[] colSize;
     private int playerTurn;
-    private int row, col;
+    private int playedRow, playedCol;
     private int playedTiles;
     private int gameMode;
-    private ArrayList<Integer> winningTiles = new ArrayList<>();
+    private HashSet<Integer> winningTiles = new HashSet<>();
     private Timer timer;
     private int time;
 
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
         this.clientController = clientController;
-    }
-
-    public int getBoardWidth() {
-        return gameBoard[1].length;
-    }
-
-    public int getBoardHeight() {
-        return gameBoard.length;
-    }
-
-    public void setElement(int row, int col, int player) {
-        this.gameBoard[row][col] = player;
-    }
-
-    public int getElement(int i, int j) {
-        return gameBoard[i][j];
-    }
-
-    public Timer getTimer() {
-        return timer;
-    }
-
-    public void resetGameBoard() {
-        this.gameBoard = new int[6][7];
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
@@ -70,12 +46,40 @@ public class GameController {
 
     }
 
+    public int getBoardWidth() {
+        return gameBoard[1].length;
+    }
+
+    public int getBoardHeight() {
+        return gameBoard.length;
+    }
+
+    public void setElement(int row, int col, int player) {
+        this.gameBoard[row][col] = player;
+    }
+
+    public int getElement(int row, int col) {
+        return gameBoard[row][col];
+    }
+
+    public int getPlayedTiles() {
+        return playedTiles;
+    }
+
+    public void resetGameBoard() {
+        this.gameBoard = new int[6][7];
+    }
+
     public int getPlayerTurn() {
         return playerTurn;
     }
 
+    public Timer getTimer() {
+        return timer;
+    }
+
     public void setPlayerTurn(int player) {
-        System.out.println("Sätter player i gameController");
+//        System.out.println("Sätter player i gameController");
         this.playerTurn = player;
     }
 
@@ -83,9 +87,59 @@ public class GameController {
         return gameMode;
     }
 
+    public void startTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        time = 30;
+        timer = new Timer(); //Kanske slösar minne
+        System.out.println("TIMER STARTAD");
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                newSecond();
+            }
+        }, 0, 1000);
+    }
+
+    public void newSecond() {
+        --time;
+        if (time == 0) {
+            System.out.println("TIDEN SLUT");
+            timer.cancel();
+            changePlayer(false);
+            clientController.newOutgoingMove(EMPTYMOVE);
+        }
+    }
+
+    public void cancelTimer() {
+        timer.cancel();
+    }
 
     public void changePointerpos(int pointerCol) {
         gameGridShowPointer.changePointerPos(pointerCol);
+    }
+
+    private int calculate(int row, int col) {
+        return (row * getBoardWidth()) + col;
+    }
+
+    public void changePlayer(boolean isIncoming) {
+        if (playerTurn == PLAYER1) {
+            playerTurn = PLAYER2;
+        } else {
+            playerTurn = PLAYER1;
+        }
+        clientController.changeHighlightedPlayer(playerTurn);
+        if (isIncoming) {
+            startTimer();
+        }
+        if (!isIncoming && timer != null) {
+            timer.cancel();
+        }
+    }
+
+    private void highlightTiles(){
+        gameGridView.setWinningTiles(winningTiles, gameBoard);
     }
 
     public void newGame(int gameMode) {
@@ -109,30 +163,13 @@ public class GameController {
         }
     }
 
-    public void startTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        time = 30;
-        timer = new Timer(); //Kanske slösar minne
-        System.out.println("TIMER STARTAD");
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            public void run() {
-                newSecond();
-            }
-        }, 0, 1000);
-
-
-}
-
     public void newMove(int x, boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < getBoardHeight()) {
             if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
 
-                row = (getBoardHeight() - 1) - (colSize[x]);
-                col = x;
+                playedRow = (getBoardHeight() - 1) - (colSize[x]);
+                playedCol = x;
 
                 int tmpRow = (getBoardHeight() - 1) - (colSize[x]++);
                 gameGridShowPointer.changePointerPos(x);
@@ -140,7 +177,7 @@ public class GameController {
 
                 //för animation, fungerar inte just nu...
 //                gameGridAnimation.newMove(tmpRow, x, playerTurn);
-//                System.out.println("Calc " + calculate(row,col))
+//                System.out.println("Calc " + calculate(playedRow,playedCol))
                 playedTiles++;
 
                 // Send the move to opponent if it's an online game
@@ -156,18 +193,14 @@ public class GameController {
     }
 
     public void checkOutcome(boolean isIncoming) {
-
-        // If somebody won
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
+            // If somebody won
             if(timer != null) {
                 timer.cancel();
             }
             clientController.enableGameButton();
             gameGridForeground.setButtonEnable(false);
-
-//            TODO Göra om highlightTiles-metoden
-//            clientController.highlightTiles(winningTiles);
-
+            highlightTiles();
             // Put a star next to the player who won
             clientController.highlightWinnerPlayerStar(playerTurn);
 
@@ -175,9 +208,7 @@ public class GameController {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, false);
             }
-
         } else if (playedTiles == 42) {
-
             // Draw
             clientController.draw();
             if (gameMode == MATCHMAKING) {
@@ -186,173 +217,182 @@ public class GameController {
             }
 
         } else {
-
             // Regular move without any particular outcome
             changePlayer(isIncoming);
             if (gameMode == LOCAL) {
                 clientController.setPlayer(playerTurn);
             }
-
-        }
-    }
-
-    public void changePlayer(boolean isIncoming) {
-        if (playerTurn == PLAYER1) {
-            playerTurn = PLAYER2;
-        } else {
-            playerTurn = PLAYER1;
-        }
-        clientController.changeHighlightedPlayer(playerTurn);
-        if (isIncoming) {
-            startTimer();
-        }
-        if (!isIncoming && timer != null) {
-            timer.cancel();
         }
     }
 
     private boolean checkHorizontal() {
-        int counter = 1;
-        for (int i = col; i < getBoardWidth(); i++) {
-            if (i == getBoardWidth() - 1 || getElement(row, i + 1) != playerTurn) {
-                counter = 1;
-                for (int j = i; j >= 0; j--) {
-                    if (j == 0 || getElement(row, j - 1) != playerTurn) {
-                        return false;
-                    } else {
+        winningTiles.clear();
+        int counter = 0;
+        for(int col = playedCol; col < getBoardWidth(); col++) {
+            if(col == getBoardWidth()-1 || getElement(playedRow, col+1) != playerTurn) {
+                for(int colMinus = col; colMinus >= 0; colMinus--) {
+                    if(getElement(playedRow, colMinus) == playerTurn) {
                         counter++;
+                        winningTiles.add(calculate(playedRow, colMinus));
+                    } else {
+                        return counter >= 4;
                     }
-                    if (counter == 4) {
-                        System.out.println("j: " + j);
-                        for(int n = 0; n < counter; n++) {
-                            winningTiles.add(calculate(row, j - 1) + n);
-                            System.out.print(calculate(row, j - 1) + n);
-                        }
-                        return true;
-                    }
+
                 }
-            } else {
-                counter++;
-            }
-            if (counter == 4) {
-                System.out.println("i: " + i);
-                for(int n = 0; n < counter; n++) {
-                    winningTiles.add(calculate(row, i + 1) - n);
-                    System.out.print(calculate(row, i + 1) - n);
-                }
-                return true;
+                return counter >= 4;
             }
         }
-        return false;
+        return counter >= 4;
+//        int counter = 1;
+//        for (int i = playedCol; i < getBoardWidth(); i++) {
+//            if (i == getBoardWidth() - 1 || getElement(playedRow, i + 1) != playerTurn) {
+//                counter = 1;
+//                for (int j = i; j >= 0; j--) {
+//                    if (j == 0 || getElement(playedRow, j - 1) != playerTurn) {
+//                        return false;
+//                    } else {
+//                        counter++;
+//                    }
+//                    if (counter == 4) {
+//                        System.out.println("j: " + j);
+//                        for(int n = 0; n < counter; n++) {
+//                            winningTiles.add(calculate(playedRow, j - 1) + n);
+//                            System.out.print(calculate(playedRow, j - 1) + n);
+//                        }
+//                        return true;
+//                    }
+//                }
+//            } else {
+//                counter++;
+//            }
+//            if (counter == 4) {
+//                System.out.println("i: " + i);
+//                for(int n = 0; n < counter; n++) {
+//                    winningTiles.add(calculate(playedRow, i + 1) - n);
+//                    System.out.print(calculate(playedRow, i + 1) - n);
+//                }
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     private boolean checkVertical(){
-        int counter = 1;
-        for(int x = row; x < getBoardHeight(); x++) {
-            if(x == getBoardHeight() - 1 || getElement(x + 1, col) != playerTurn) {
-                return false;
-            } else {
+        winningTiles.clear();
+        int counter = 0;
+        for(int row = playedRow; row < getBoardHeight(); row++) {
+            if(getElement(row, playedCol) == playerTurn) {
                 counter++;
-                if (counter == 4) {
-                    System.out.println();
-                    for(int i = 0, j= 0; i < counter; i ++,j += 6) {
-                        winningTiles.add(calculate(row,col) + j);
-                    }
-                    return true;
-                }
+                winningTiles.add(calculate(row, playedCol));
+            } else {
+                return counter >= 4;
             }
         }
-        return false;
-
+        return counter >= 4;
     }
 
     private boolean checkDiagonalRight() {
-        int counter = 1;
-        for(int i = col,j = row; i < getBoardWidth() && j < getBoardHeight(); i++, j++) {
-            if(i == getBoardWidth() - 1 || j == getBoardHeight() -1 || getElement(j + 1, i + 1) != playerTurn) {
-                counter = 1;
-                for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
-                    if(x == 0 || y == 0 || getElement(y - 1, x - 1) != playerTurn) {
-                        return false;
-                    }else {
+        winningTiles.clear();
+        int counter = 0;
+        for(int col = playedCol, row = playedRow; col < getBoardWidth() && row < getBoardHeight(); col++, row++) {
+            if(col == getBoardWidth()-1 || row == getBoardHeight()-1 || getElement(row+1, col+1) != playerTurn) {
+                for(int colMinus = col, rowMinus = row; colMinus >= 0 && rowMinus >= 0; colMinus--, rowMinus--) {
+                    if(getElement(rowMinus, colMinus) == playerTurn) {
                         counter++;
-                    }
-                    if(counter == 4) {
-                        System.out.println();
-                        for(int n = 0; n <= 21; n+=7) {
-                            winningTiles.add(calculate(y - 1,x - 1) + n);
-                            System.out.print(calculate(y - 1,x - 1) + n + " ");
-                        }
-                        return true;
+                        winningTiles.add(calculate(rowMinus, colMinus));
+                    } else {
+                        return counter >= 4;
                     }
                 }
-            }else {
-                counter++;
-            }
-            if(counter == 4) {
-                System.out.println()
-                ;
-                for(int n = 0; n <= 21; n+=7) {
-                    winningTiles.add(calculate(j + 1,i + 1) - n);
-                    System.out.print(calculate(j + 1,i + 1) - n + " ");
-                }
-                return true;
+                return counter >= 4;
             }
         }
-        return false;
+        return counter >= 4;
+
+//        int counter = 1;
+//        for(int i = playedCol,j = playedRow; i < getBoardWidth() && j < getBoardHeight(); i++, j++) {
+//            if(i == getBoardWidth() - 1 || j == getBoardHeight() -1 || getElement(j + 1, i + 1) != playerTurn) {
+//                counter = 1;
+//                for(int x = i, y = j; x >= 0 && y >= 0; x--, y--) {
+//                    if(x == 0 || y == 0 || getElement(y - 1, x - 1) != playerTurn) {
+//                        return false;
+//                    }else {
+//                        counter++;
+//                    }
+//                    if(counter == 4) {
+//                        System.out.println();
+//                        for(int n = 0; n <= 21; n+=7) {
+//                            winningTiles.add(calculate(y - 1,x - 1) + n);
+//                            System.out.print(calculate(y - 1,x - 1) + n + " ");
+//                        }
+//                        return true;
+//                    }
+//                }
+//            }else {
+//                counter++;
+//            }
+//            if(counter == 4) {
+//                System.out.println()
+//                ;
+//                for(int n = 0; n <= 21; n+=7) {
+//                    winningTiles.add(calculate(j + 1,i + 1) - n);
+//                    System.out.print(calculate(j + 1,i + 1) - n + " ");
+//                }
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     private boolean checkDiagonalLeft(){
-        int counter = 1;
-        for(int i = col,j = row; i >= 0 && j < getBoardHeight(); i--, j++) {
-            if(i == 0 || j == getBoardHeight() -1 || getElement(j + 1, i - 1) != playerTurn) {
-                counter = 1;
-                for(int x = i, y = j; x < getBoardWidth() && y >= 0; x++, y--) {
-                    if(x == getBoardWidth() - 1 || y == 0 || getElement(y - 1, x + 1) != playerTurn) {
-                        return false;
-                    }else {
+        winningTiles.clear();
+        int counter = 0;
+        for (int colMinus = playedCol, rowPlus = playedRow; colMinus >= 0 && rowPlus < getBoardHeight(); colMinus--, rowPlus++) {
+            if (colMinus == 0 || rowPlus == getBoardHeight()-1 || getElement(rowPlus+1, colMinus-1) != playerTurn) {
+                for (int colPlus = colMinus, rowMinus = rowPlus; colPlus < getBoardWidth() && rowMinus >= 0; colPlus++, rowMinus--) {
+                    if (getElement(rowMinus, colPlus) == playerTurn) {
                         counter++;
-                    }if(counter == 4) {
-                        System.out.println()
-                        ;
-                        for(int n = 0; n <= 15; n+=5) {
-                            winningTiles.add(calculate(y - 1,x + 1) + n);
-                            System.out.print(calculate(y - 1,x + 1) + n + " ");
-                        }
-                        return true;
+                        winningTiles.add(calculate(rowMinus, colPlus));
+                    } else {
+                        return counter >= 4;
                     }
                 }
-            }else {
-                counter++;
-            }if(counter == 4) {
-                System.out.println()
-                ;
-                for(int n = 0; n <= 15; n+=5) {
-                    winningTiles.add(calculate(j + 1,i - 1) - n);
-                    System.out.print(calculate(j + 1,i - 1) - n + " ");
-                }
-                return true;
+                return counter >= 4;
             }
         }
-        return false;
-    }
+        return counter >= 4;
 
-    private int calculate(int row, int col) {
-        int value = (row * 6) + col;
-        return value;
-    }
-
-    public void cancelTimer() {
-        timer.cancel();
-    }
-
-    public void newSecond() {
-        --time;
-        if (time == 0) {
-            System.out.println("TIDEN SLUT");
-            timer.cancel();
-            changePlayer(false);
-            clientController.newOutgoingMove(EMPTYMOVE);
-        }
+//        int counter = 1;
+//        for(int i = playedCol,j = playedRow; i >= 0 && j < getBoardHeight(); i--, j++) {
+//            if(i == 0 || j == getBoardHeight() -1 || getElement(j + 1, i - 1) != playerTurn) {
+//                counter = 1;
+//                for(int x = i, y = j; x < getBoardWidth() && y >= 0; x++, y--) {
+//                    if(x == getBoardWidth() - 1 || y == 0 || getElement(y - 1, x + 1) != playerTurn) {
+//                        return false;
+//                    }else {
+//                        counter++;
+//                    }if(counter == 4) {
+//                        System.out.println()
+//                        ;
+//                        for(int n = 0; n <= 15; n+=5) {
+//                            winningTiles.add(calculate(y - 1,x + 1) + n);
+//                            System.out.print(calculate(y - 1,x + 1) + n + " ");
+//                        }
+//                        return true;
+//                    }
+//                }
+//            }else {
+//                counter++;
+//            }if(counter == 4) {
+//                System.out.println()
+//                ;
+//                for(int n = 0; n <= 15; n+=5) {
+//                    winningTiles.add(calculate(j + 1,i - 1) - n);
+//                    System.out.print(calculate(j + 1,i - 1) - n + " ");
+//                }
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }
