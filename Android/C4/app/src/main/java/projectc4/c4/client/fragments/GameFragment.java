@@ -38,7 +38,12 @@ import static projectc4.c4.util.C4Constants.*;
     private ImageButton ibPlayer1Chat;
     private ImageButton ibPlayer2Profile;
     private ImageButton ibPlayer2Chat;
-
+    private ImageView ivBlackArrow;
+    private TranslateAnimation blackarrow_right;
+    private TranslateAnimation blackarrow_left;
+    private TextView textViewPlayer1;
+    private TextView textViewPlayer2;
+    private RelativeLayout belowLine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,13 +72,11 @@ import static projectc4.c4.util.C4Constants.*;
         RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.fragment_game);
         relativeLayout.setBackgroundColor(C4Color.WHITE);
 
-        TextView textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
+        belowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
+        ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
 
-//        textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
-//        animation = (AnimationDrawable)textViewPlayer1.getBackground();
-
-
-        TextView textViewPlayer2 = (TextView)view.findViewById(R.id.textViewPlayer2);
+        textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
+        textViewPlayer2 = (TextView)view.findViewById(R.id.textViewPlayer2);
         TextView textViewVs = (TextView)view.findViewById(R.id.textViewVs);
 
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
@@ -226,27 +229,41 @@ import static projectc4.c4.util.C4Constants.*;
         });
     }*/
 
+    public void animateArrow(int direction) {
+        if (direction == 1) {
+            blackarrow_left = new TranslateAnimation(belowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
+            blackarrow_left.setDuration(250);
+            blackarrow_left.setFillAfter(true);
+            ivBlackArrow.startAnimation(blackarrow_left);
+        } else {
+            ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
+            blackarrow_right = new TranslateAnimation(0.0f, belowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
+            blackarrow_right.setDuration(250);
+            blackarrow_right.setFillAfter(true);
+        }
+    }
+
+    public void setEnableArrow(final boolean enable) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (enable) {
+                    ivBlackArrow.setEnabled(true);
+                    ivBlackArrow.setVisibility(View.VISIBLE);
+                } else {
+                    ivBlackArrow.setEnabled(false);
+                    ivBlackArrow.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
     public void highlightPlayer(final int player) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                RelativeLayout belowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
-                int width = belowLine.getWidth();
-                ImageView blackarrow_anim = (ImageView)view.findViewById(R.id.ivBlackArrow);
-                TranslateAnimation blackarrow_right = new TranslateAnimation(0.0f, width-blackarrow_anim.getWidth(), 0.0f, 0.0f);
-                TranslateAnimation blackarrow_left = new TranslateAnimation(width-blackarrow_anim.getWidth(), 0.0f, 0.0f, 0.0f);
-                blackarrow_right.setDuration(250);
-                blackarrow_right.setRepeatMode(2);
-                blackarrow_right.setFillAfter(true);
-                blackarrow_left.setDuration(250);
-                blackarrow_left.setRepeatMode(2);
-                blackarrow_left.setFillAfter(true);
-
-                TextView textViewPlayer1 = (TextView) view.findViewById(R.id.textViewPlayer1);
-                TextView textViewPlayer2 = (TextView) view.findViewById(R.id.textViewPlayer2);
-
                 if (player == PLAYER1) {
-                    blackarrow_anim.startAnimation(blackarrow_left);
+                    animateArrow(1);
                     if(gameMode == MATCHMAKING) {
                         textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
                         animation = (AnimationDrawable)textViewPlayer1.getBackground();
@@ -258,7 +275,8 @@ import static projectc4.c4.util.C4Constants.*;
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
 
                 } else if (player == PLAYER2) {
-                    blackarrow_anim.startAnimation(blackarrow_right);
+                    animateArrow(2);
+                    ivBlackArrow.startAnimation(blackarrow_right);
                     if(gameMode == MATCHMAKING) {
                         textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
                         animation = (AnimationDrawable)textViewPlayer2.getBackground();
