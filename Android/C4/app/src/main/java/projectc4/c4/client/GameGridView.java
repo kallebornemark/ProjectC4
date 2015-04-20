@@ -98,9 +98,10 @@ public class GameGridView extends View {
     }
 
     public void setWinningTiles(HashSet<Integer> winningTiles, int[][] gameBoard) {
-        Paint erasePaint = new Paint();
-        erasePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        c.drawRect(0, 0, width, height, erasePaint);
+        Paint strokePaint = new Paint();
+        strokePaint.setStrokeWidth(5);
+        strokePaint.setColor(WHITE);
+        strokePaint.setStyle(Paint.Style.STROKE);
 
         int tmpCounter = 0;
         for (int row = 0; row < gameBoard.length; row++) {
@@ -109,22 +110,27 @@ public class GameGridView extends View {
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
                 int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
 
-                if (!winningTiles.contains(tmpCounter)) {
-                    if (tmpPlayer == PLAYER1) {
-                        paint.setColor(REDLOSERTILE);
-                    } else if (tmpPlayer == PLAYER2) {
-                        paint.setColor(YELLOWLOSERTILE);
+                if (tmpPlayer != 0) {
+                    if (!winningTiles.contains(tmpCounter)) {
+                        if (tmpPlayer == PLAYER1) {
+                            paint.setColor(REDLOSERTILE);
+                        } else if (tmpPlayer == PLAYER2) {
+                            paint.setColor(YELLOWLOSERTILE);
+                        } else {
+                            paint.setColor(LIGHTGRAY);
+                        }
+                        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
                     } else {
-                        paint.setColor(LIGHTGRAY);
-                    }
-                } else {
-                    if (tmpPlayer == PLAYER1) {
-                        paint.setColor(RED);
-                    } else if (tmpPlayer == PLAYER2) {
-                        paint.setColor(YELLOW);
+                        if (tmpPlayer == PLAYER1) {
+                            paint.setColor(RED);
+                        } else if (tmpPlayer == PLAYER2) {
+                            paint.setColor(YELLOW);
+                        }
+                        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, strokePaint);
                     }
                 }
-                c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
                 tmpCounter++;
             }
         }
