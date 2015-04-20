@@ -13,6 +13,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.net.SocketException;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -51,6 +56,8 @@ public class LoginFragment extends Fragment {
     public void initComponents() {
         buttonLogin = (Button)view.findViewById(R.id.buttonLogin);
         etUsername = (EditText)view.findViewById(R.id.etUsername);
+        TextView error = (TextView)view.findViewById(R.id.textViewError);
+        error.setText("");
     }
 
     public void styleComponents() {
@@ -69,12 +76,17 @@ public class LoginFragment extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 buttonLogin.setEnabled(false);
                 buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
-                InputMethodManager inputManager = (InputMethodManager)getActivity().
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-                clientController.requestUsername(etUsername.getText().toString());
+                try {
+                    clientController.requestUsername(etUsername.getText().toString());
+                } catch (Exception e) {
+                    TextView error = (TextView)view.findViewById(R.id.textViewError);
+                    error.setText("SERVER OFFLINE");
+                    buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    progressBar.setEnabled(false);
+                }
             }
         });
     }
