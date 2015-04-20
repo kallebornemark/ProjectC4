@@ -1,12 +1,14 @@
 package projectc4.c4.client.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import projectc4.c4.R;
@@ -21,6 +23,7 @@ public class ProfileFragment extends Fragment {
     private ClientController clientController;
     private String firstName;
     private String lastName;
+    private ImageView imageViewProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,10 +59,25 @@ public class ProfileFragment extends Fragment {
         tvContent.setText(clientController.getPlayerStats(false));
         tvContent.setTypeface(type, Typeface.BOLD);
 
+        imageViewProfile = (ImageView)view.findViewById(R.id.imageViewProfile);
+        imageViewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent();
+               intent.setType("image/*");
+               intent.setAction(Intent.ACTION_GET_CONTENT);
+               startActivityForResult(Intent.createChooser(intent, "Select profile-picture"),1);
+            }
+        });
 
         return view;
     }
 
+    public void onActivityResult(int reqCode, int resCode, Intent data) {
+        if (reqCode == 1) {
+            imageViewProfile.setImageURI(data.getData());
+        }
+    }
 
 
 }

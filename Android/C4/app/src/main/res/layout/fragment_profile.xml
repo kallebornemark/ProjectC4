@@ -43,7 +43,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView9"
+                        android:id="@+id/imageViewProfile"
                         android:src="@drawable/noprofilepicturesmall"
                         android:clickable="true"
                         android:layout_gravity="left|center_horizontal"
