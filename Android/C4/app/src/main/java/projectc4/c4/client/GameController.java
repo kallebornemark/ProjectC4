@@ -126,12 +126,19 @@ public class GameController {
     public void changePlayer(boolean isIncoming) {
         if (playerTurn == PLAYER1) {
             playerTurn = PLAYER2;
+            clientController.animateBlackArrow(2);
         } else {
             playerTurn = PLAYER1;
+            clientController.animateBlackArrow(1);
         }
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
             startTimer();
+            if (playerTurn == PLAYER1) {
+                clientController.animateBlackArrow(1);
+            } else {
+                clientController.animateBlackArrow(2);
+            }
         }
         if (!isIncoming && timer != null) {
             timer.cancel();
@@ -199,6 +206,7 @@ public class GameController {
                 timer.cancel();
             }
             clientController.enableGameButton();
+            clientController.disableBlackArrow();
             gameGridForeground.setButtonEnable(false);
             highlightTiles();
             // Put a star next to the player who won

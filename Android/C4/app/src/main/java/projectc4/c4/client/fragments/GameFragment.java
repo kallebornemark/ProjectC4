@@ -43,7 +43,7 @@ import static projectc4.c4.util.C4Constants.*;
     private TranslateAnimation blackarrow_left;
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
-    private RelativeLayout belowLine;
+    private RelativeLayout rlBelowLine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,10 +69,10 @@ import static projectc4.c4.util.C4Constants.*;
         return view;
     }
     public void initGraphics(View view) {
-        RelativeLayout relativeLayout = (RelativeLayout)view.findViewById(R.id.fragment_game);
-        relativeLayout.setBackgroundColor(C4Color.WHITE);
+        RelativeLayout rlGameFragment = (RelativeLayout)view.findViewById(R.id.fragment_game);
+        rlGameFragment.setBackgroundColor(C4Color.WHITE);
 
-        belowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
+        rlBelowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
         ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
 
         textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
@@ -85,6 +85,7 @@ import static projectc4.c4.util.C4Constants.*;
 
         textViewVs.setTextColor(C4Color.BLACK);
         highlightPlayer(clientController.getPlayerTurn());
+
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
@@ -131,9 +132,6 @@ import static projectc4.c4.util.C4Constants.*;
     public void onDestroyView() {
         if(clientController.getGameController().getTimer() != null)
            clientController.cancelTimer();
-
-        //Todo fixa minneshantering så det inte kraschar vid rematch
-        System.out.println("DESTROY VIEW");
         super.onDestroyView();
     }
 
@@ -229,31 +227,54 @@ import static projectc4.c4.util.C4Constants.*;
         });
     }*/
 
-    public void animateArrow(int direction) {
-        if (direction == 1) {
-            blackarrow_left = new TranslateAnimation(belowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
-            blackarrow_left.setDuration(250);
-            blackarrow_left.setFillAfter(true);
-            ivBlackArrow.startAnimation(blackarrow_left);
-        } else {
-            ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
-            blackarrow_right = new TranslateAnimation(0.0f, belowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
-            blackarrow_right.setDuration(250);
-            blackarrow_right.setFillAfter(true);
-        }
+    public void animateArrow(final int direction) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (direction == 1) {
+                    blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
+                    blackarrow_left.setDuration(250);
+                    blackarrow_left.setFillAfter(true);
+                    ivBlackArrow.startAnimation(blackarrow_left);
+                } else {
+                    blackarrow_right = new TranslateAnimation(0.0f, rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
+                    blackarrow_right.setDuration(250);
+                    blackarrow_right.setFillAfter(true);
+                    ivBlackArrow.startAnimation(blackarrow_right);
+                }
+            }
+        });
     }
 
-    public void setEnableArrow(final boolean enable) {
+    public void setEnableBlackArrow(final boolean enable) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (enable) {
-                    ivBlackArrow.setEnabled(true);
                     ivBlackArrow.setVisibility(View.VISIBLE);
                 } else {
-                    ivBlackArrow.setEnabled(false);
                     ivBlackArrow.setVisibility(View.INVISIBLE);
                 }
+            }
+        });
+    }
+
+    public void enableBlackArrow() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+//                ImageView ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
+                ivBlackArrow.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void disableBlackArrow() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+//                ImageView ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
+                ivBlackArrow.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -263,7 +284,6 @@ import static projectc4.c4.util.C4Constants.*;
             @Override
             public void run() {
                 if (player == PLAYER1) {
-                    animateArrow(1);
                     if(gameMode == MATCHMAKING) {
                         textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
                         animation = (AnimationDrawable)textViewPlayer1.getBackground();
@@ -275,8 +295,6 @@ import static projectc4.c4.util.C4Constants.*;
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
 
                 } else if (player == PLAYER2) {
-                    animateArrow(2);
-                    ivBlackArrow.startAnimation(blackarrow_right);
                     if(gameMode == MATCHMAKING) {
                         textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
                         animation = (AnimationDrawable)textViewPlayer2.getBackground();
