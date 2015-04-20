@@ -217,7 +217,10 @@ public class ClientController {
             if (playerTurn == player) {
                 getUser().newGameResult(WIN, gameInfo.getOpponentElo());
                 client.updateUser(WIN);
-            } else {
+            }else if (playerTurn == LOSS) {
+                getUser().newGameResult(LOSS, gameInfo.getOpponentElo());
+                client.updateUser(LOSS);
+            }else {
                 getUser().newGameResult(LOSS, gameInfo.getOpponentElo());
                 client.updateUser(LOSS);
             }
