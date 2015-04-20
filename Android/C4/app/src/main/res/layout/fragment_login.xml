@@ -160,7 +160,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewError"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="30dp"
+            android:textColor="#FFF67E59"/>
 
 
     </LinearLayout>

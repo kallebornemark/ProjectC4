@@ -56,8 +56,6 @@ public class LoginFragment extends Fragment {
     public void initComponents() {
         buttonLogin = (Button)view.findViewById(R.id.buttonLogin);
         etUsername = (EditText)view.findViewById(R.id.etUsername);
-        TextView error = (TextView)view.findViewById(R.id.textViewError);
-        error.setText("");
     }
 
     public void styleComponents() {
@@ -84,8 +82,7 @@ public class LoginFragment extends Fragment {
                 } catch (Exception e) {
                     TextView error = (TextView)view.findViewById(R.id.textViewError);
                     error.setText("SERVER OFFLINE");
-                    buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorred));
-                    progressBar.setEnabled(false);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });
