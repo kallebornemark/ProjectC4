@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -155,7 +156,9 @@ public class Client implements Runnable, Serializable {
         System.out.println("Clienttråd börjad");
         try {
             System.out.println("Försöker skapa socket...");
-            socket = new Socket(ip, port);
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), 4000);
+            socket.setSoTimeout(5000);
             System.out.println("Socket skapad");
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
@@ -169,7 +172,8 @@ public class Client implements Runnable, Serializable {
             // Start listening
             startCommunication();
         } catch (IOException e) {
-            e.printStackTrace();
+            clientController.serverOffline();
+            disconnect();
 //        } catch (ClassNotFoundException e2) {
 //            e2.printStackTrace();
         }

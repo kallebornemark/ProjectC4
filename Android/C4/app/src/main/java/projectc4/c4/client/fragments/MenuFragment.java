@@ -66,6 +66,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if ((((MainActivity)getActivity()).getClientController().getClient() != null) &&
+                        (((MainActivity)getActivity()).getClientController().getClient().getSocket()) != null &&
                     (((MainActivity)getActivity()).getClientController().getClient().getSocket().isConnected())){
                     System.out.println("Ändrar till matchmaking");
                     FragmentManager fragmentManager = getFragmentManager();

@@ -79,12 +79,22 @@ public class LoginFragment extends Fragment {
                    try {
                        ((MainActivity) getActivity()).getClientController().connect();
                    }catch(Exception e) {
-                       TextView error = (TextView)view.findViewById(R.id.textViewError);
-                       error.setText("SERVER OFFLINE");
-                       progressBar.setVisibility(view.INVISIBLE);
+
                    }
                 }
 
+            }
+        });
+    }
+
+    public void serverOffline() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView error = (TextView)view.findViewById(R.id.textViewError);
+                error.setText("SERVER OFFLINE");
+                final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge2);
+                progressBar.setVisibility(view.INVISIBLE);
             }
         });
     }

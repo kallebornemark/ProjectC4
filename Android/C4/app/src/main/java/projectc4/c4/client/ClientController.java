@@ -45,6 +45,10 @@ public class ClientController {
         this.client = c;
     }
 
+    public void serverOffline() {
+        loginFragment.serverOffline();
+    }
+
     public void cancelTimer() {
         gameController.cancelTimer();
     }
