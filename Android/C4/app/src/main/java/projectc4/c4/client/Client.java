@@ -46,7 +46,9 @@ public class Client implements Runnable, Serializable {
     public void disconnect() {
         if (client != null) {
             client.interrupt();
+            clientController.setClient(null);
             client = null;
+            System.out.println("Client Disconnected");
         }
     }
 
@@ -120,6 +122,7 @@ public class Client implements Runnable, Serializable {
         Object obj;
         int number;
         GameInfo gameInfo;
+        clientController.login();
         try {
             System.out.println("Client communication started");
             while (!Thread.interrupted()) {

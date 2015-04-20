@@ -105,7 +105,9 @@ public class MainActivity extends FragmentActivity {
             });
             AlertDialog alert = builder.create();
             alert.show();
-        } else {
+        } else if (getFragmentManager().findFragmentById(R.id.activity_layout_fragmentpos) instanceof MatchmakingFragment) {
+            getFragmentManager().popBackStackImmediate("Menu", 0);
+        }else {
             FragmentManager fm = getFragmentManager();
             if (fm.findFragmentById(R.id.activity_layout_fragmentpos) instanceof MenuFragment) {
                 finish();

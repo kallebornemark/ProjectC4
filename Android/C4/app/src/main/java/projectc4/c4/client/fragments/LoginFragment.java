@@ -13,11 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.net.SocketException;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -74,16 +69,24 @@ public class LoginFragment extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 buttonLogin.setEnabled(false);
                 buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
-                InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                InputMethodManager inputManager = (InputMethodManager)getActivity().
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                try {
-                    clientController.requestUsername(etUsername.getText().toString());
-                } catch (Exception e) {
-                    TextView error = (TextView)view.findViewById(R.id.textViewError);
-                    error.setText("SERVER OFFLINE");
-                    progressBar.setVisibility(View.INVISIBLE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+                if (((MainActivity) getActivity()).getClientController().getClient() == null) {
+                    ((MainActivity) getActivity()).getClientController().connect();
                 }
+
+            }
+        });
+    }
+
+    public void requestUsername() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                clientController.requestUsername(etUsername.getText().toString());
             }
         });
     }

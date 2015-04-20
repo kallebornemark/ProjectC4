@@ -63,6 +63,18 @@ public class MatchmakingFragment extends Fragment {
 
         Button buttonLeaderboard = (Button)view.findViewById(R.id.buttonLeaderboard);
         Button buttonLogout = (Button)view.findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    ((MainActivity) getActivity()).getClientController().getClient().disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.popBackStackImmediate("Menu", 0);
+            }
+        });
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
         buttonMyProfile.setTypeface(type, Typeface.BOLD);
