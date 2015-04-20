@@ -158,7 +158,6 @@ public class Client implements Runnable, Serializable {
             System.out.println("Försöker skapa socket...");
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(ip, port), 4000);
-            socket.setSoTimeout(5000);
             System.out.println("Socket skapad");
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
