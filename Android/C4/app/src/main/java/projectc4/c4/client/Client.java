@@ -39,6 +39,10 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
     public void disconnect() {
         if (client != null) {
             client.interrupt();
@@ -137,7 +141,9 @@ public class Client implements Runnable, Serializable {
                     System.out.println("New GameInfo received! Opponent wins: " + gameInfo.getOpponentGameResults()[1] + ", losses: " + gameInfo.getOpponentGameResults()[2]);
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+
+        }
     }
 
     public void run() {

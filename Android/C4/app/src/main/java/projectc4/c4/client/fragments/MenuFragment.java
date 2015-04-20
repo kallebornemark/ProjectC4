@@ -65,15 +65,23 @@ public class MenuFragment extends Fragment {
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).getClientController().connect();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack(null).commit();
+
+                    ((MainActivity) getActivity()).getClientController().connect();
+                    if (((MainActivity) getActivity()).getClientController().getClient().getSocket() == null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                    transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack(null).commit();
 
                 /*FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.container, new MatchmakingFragment()).addToBackStack(null).commit();*/
+                } else {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                    transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
+                }
             }
         });
 
