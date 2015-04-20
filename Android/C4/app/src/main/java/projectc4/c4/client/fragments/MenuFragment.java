@@ -65,9 +65,7 @@ public class MenuFragment extends Fragment {
         buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((((MainActivity)getActivity()).getClientController().getClient() != null) &&
-                        (((MainActivity)getActivity()).getClientController().getClient().getSocket()) != null &&
-                    (((MainActivity)getActivity()).getClientController().getClient().getSocket().isConnected())){
+                if ((((MainActivity)getActivity()).getClientController().getClient() != null)){
                     System.out.println("Ändrar till matchmaking");
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();

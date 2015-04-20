@@ -15,5 +15,6 @@
         <item>Green</item>
         <item>Cyan</item>
     </string-array>
+    <string name="c4_arrow_black">Black Arrow</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -229,10 +230,23 @@ import static projectc4.c4.util.C4Constants.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                RelativeLayout belowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
+                int width = belowLine.getWidth();
+                ImageView blackarrow_anim = (ImageView)view.findViewById(R.id.ivBlackArrow);
+                TranslateAnimation blackarrow_right = new TranslateAnimation(0.0f, width-blackarrow_anim.getWidth(), 0.0f, 0.0f);
+                TranslateAnimation blackarrow_left = new TranslateAnimation(width-blackarrow_anim.getWidth(), 0.0f, 0.0f, 0.0f);
+                blackarrow_right.setDuration(250);
+                blackarrow_right.setRepeatMode(2);
+                blackarrow_right.setFillAfter(true);
+                blackarrow_left.setDuration(250);
+                blackarrow_left.setRepeatMode(2);
+                blackarrow_left.setFillAfter(true);
+
                 TextView textViewPlayer1 = (TextView) view.findViewById(R.id.textViewPlayer1);
                 TextView textViewPlayer2 = (TextView) view.findViewById(R.id.textViewPlayer2);
 
                 if (player == PLAYER1) {
+                    blackarrow_anim.startAnimation(blackarrow_left);
                     if(gameMode == MATCHMAKING) {
                         textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
                         animation = (AnimationDrawable)textViewPlayer1.getBackground();
@@ -244,6 +258,7 @@ import static projectc4.c4.util.C4Constants.*;
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
 
                 } else if (player == PLAYER2) {
+                    blackarrow_anim.startAnimation(blackarrow_right);
                     if(gameMode == MATCHMAKING) {
                         textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
                         animation = (AnimationDrawable)textViewPlayer2.getBackground();
