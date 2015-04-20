@@ -57,7 +57,7 @@ public class MatchmakingFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new ProfileFragment()).addToBackStack(null).commit();
+                transaction.replace(R.id.activity_layout_fragmentpos, new ProfileFragment()).addToBackStack("Profilefragment").commit();
             }
         });
 

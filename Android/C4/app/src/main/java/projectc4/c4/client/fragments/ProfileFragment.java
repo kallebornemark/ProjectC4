@@ -63,10 +63,10 @@ public class ProfileFragment extends Fragment {
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent();
-               intent.setType("image/*");
-               intent.setAction(Intent.ACTION_GET_CONTENT);
-               startActivityForResult(Intent.createChooser(intent, "Select profile-picture"),1);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select profile-picture"), 1);
             }
         });
 
@@ -74,10 +74,15 @@ public class ProfileFragment extends Fragment {
     }
 
     public void onActivityResult(int reqCode, int resCode, Intent data) {
-        if (reqCode == 1) {
-            imageViewProfile.setImageURI(data.getData());
-        }
+       if (data == null) {
+           getActivity().getFragmentManager().popBackStackImmediate("Profilefragment" , 0);
+       } else if (reqCode == 1) {
+           imageViewProfile.setImageURI(data.getData());
+       }
+
     }
+
+
 
 
 }
