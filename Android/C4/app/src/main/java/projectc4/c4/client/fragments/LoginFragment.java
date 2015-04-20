@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -75,7 +76,13 @@ public class LoginFragment extends Fragment {
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
                 if (((MainActivity) getActivity()).getClientController().getClient() == null) {
-                    ((MainActivity) getActivity()).getClientController().connect();
+                   try {
+                       ((MainActivity) getActivity()).getClientController().connect();
+                   }catch(Exception e) {
+                       TextView error = (TextView)view.findViewById(R.id.textViewError);
+                       error.setText("SERVER OFFLINE");
+                       progressBar.setVisibility(view.INVISIBLE);
+                   }
                 }
 
             }
