@@ -1,5 +1,10 @@
 package projectc4.c4.client;
 
+
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
 import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,6 +33,7 @@ public class GameController {
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
         this.clientController = clientController;
+        this.gameBoard = new int[6][7];
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
@@ -155,7 +161,7 @@ public class GameController {
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
-            gameGridForeground.setButtonEnable(true);
+            setButtonEnable(true);
         }
         gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
@@ -170,7 +176,7 @@ public class GameController {
         }
     }
 
-    public void newMove(int x, boolean isIncoming) {
+    public synchronized void newMove(int x, final boolean isIncoming) {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < getBoardHeight()) {
             if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
@@ -178,28 +184,49 @@ public class GameController {
                 playedRow = (getBoardHeight() - 1) - (colSize[x]);
                 playedCol = x;
 
-                int tmpRow = (getBoardHeight() - 1) - (colSize[x]++);
+                final int tmpRow = (getBoardHeight() - 1) - (colSize[x]++);
                 gameGridShowPointer.changePointerPos(x);
-                gameGridView.newMove(tmpRow, x, playerTurn);
 
-                //för animation, fungerar inte just nu...
-//                gameGridAnimation.newMove(tmpRow, x, playerTurn);
-//                System.out.println("Calc " + calculate(playedRow,playedCol))
-                playedTiles++;
-
-                // Send the move to opponent if it's an online game
                 if (gameMode == MATCHMAKING && !isIncoming) {
                     clientController.newOutgoingMove(x);
                 }
 
-                // Check if somebody won or if the game is drawn
-                checkOutcome(isIncoming);
-            }
+//                System.out.println("Calc " + calculate(playedRow,playedCol))
 
+                playedTiles++;
+
+                if (gameMode == MATCHMAKING){
+                    gameGridView.newMove(tmpRow, x, playerTurn);
+                    checkOutcome(isIncoming);
+
+                } else if (gameMode == LOCAL) {
+                    gameGridAnimation.newMove(tmpRow,x,playerTurn, isIncoming);
+
+                }
+            }
         }
     }
 
-    public void checkOutcome(boolean isIncoming) {
+    public void setButtonEnable(boolean buttonEnable){
+//        gameGridForeground.setButtonEnable(buttonEnable);
+    }
+       //Todo dafuck händer här?
+    public synchronized void finishMove(final int row, final int col, final int player, final boolean isIncoming){
+        new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
+            @Override
+            public void run() {
+                gameGridView.newMove(row, col, player);
+            }
+        });
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkOutcome(isIncoming);
+            }
+        }, 20);
+    }
+
+    public synchronized void checkOutcome(boolean isIncoming) {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
             // If somebody won
             if(timer != null) {
@@ -207,7 +234,7 @@ public class GameController {
             }
             clientController.enableGameButton();
             clientController.disableBlackArrow();
-            gameGridForeground.setButtonEnable(false);
+            setButtonEnable(false);
             highlightTiles();
             // Put a star next to the player who won
             clientController.highlightWinnerPlayerStar(playerTurn);

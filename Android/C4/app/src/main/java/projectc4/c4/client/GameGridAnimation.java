@@ -5,6 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.RelativeLayout;
 
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
@@ -12,40 +17,17 @@ import static projectc4.c4.util.C4Constants.*;
 /**
  * Created by Jimmy on 2015-04-15.
  */
-public class GameGridAnimation extends View {
+public class GameGridAnimation extends RelativeLayout {
     private GameController gameController;
 
-    private boolean animateNewMove = false;
+    private Tile redTile;
+    private Tile yellowTile;
+
+    private int sideOfTile;
     private int offsetX;
     private int offsetY;
-    private int sideOfTile;
-    private int width;
-    private int height;
 
-    private int col;
-    private int rowStop;
-    private int currentPosY ;
-    private int pointerPos;
-    private Paint paint = new Paint();
-
-    private Runnable animator = new Runnable() {
-        @Override
-        public void run() {
-            boolean needNewFrame = true;
-
-            if (needNewFrame) {
-                if (pointerPos > getHeight()){
-                    pointerPos = 0;
-                } else {
-                    pointerPos +=20;
-                }
-                System.out.println("inne i runnable");
-                postDelayed(this, 15);
-                invalidate();
-
-            }
-        }
-    };
+    private BounceInterpolator bounce;
 
     public GameGridAnimation(Context context) {
         super(context);
@@ -59,73 +41,90 @@ public class GameGridAnimation extends View {
         super(context, attrs, defStyle);
     }
 
-
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
+        init();
     }
 
-    public void testAnimation(Canvas canvas){
-//    paint.setColor(YELLOW);
-        int x = offsetX + ((GRIDSPACING + sideOfTile) * col);
-        int x2 = offsetX + sideOfTile + ((GRIDSPACING + sideOfTile) * col);
-        int y2 = pointerPos + sideOfTile;
+    public void init(){
+        bounce = new BounceInterpolator();
 
-        canvas.drawRoundRect(x, pointerPos, x2, y2, 20, 20, paint);
+        this.redTile = new Tile(getContext(), RED);
+        addView(redTile);
+        redTile.setVisibility(INVISIBLE);
 
-    }
-
-    public void newMove(int row, int col, int player) {
-        if (player == PLAYER1) {
-            paint.setColor(RED);
-        } else if (player == PLAYER2) {
-            paint.setColor(YELLOW);
-        }
-        this.rowStop = row;
-        this.col = col;
-        animateNewMove = true;
-        removeCallbacks(animator);
-        post(animator);
-    }
-
-    private void drawTile(Canvas canvas){
-        if (gameController.getPlayerTurn() == PLAYER1) {
-            paint.setColor(RED);
-        } else {
-            paint.setColor(YELLOW);
-        }
-        int x = offsetX + ((GRIDSPACING + sideOfTile) * col) ;
-        int x2 = offsetX + sideOfTile + ((GRIDSPACING + sideOfTile) * col);
-        int y2= pointerPos+sideOfTile;
-
-        canvas.drawRoundRect(x, pointerPos, x2, y2, 20, 20, paint);
-    }
-
-    protected void onDraw(Canvas canvas) {
-        if (animateNewMove) {
-            canvas.save();
-//            drawTile(canvas);
-            testAnimation(canvas);
-            canvas.restore();
-        }
+        this.yellowTile = new Tile(getContext(), YELLOW);
+        addView(yellowTile);
+        yellowTile.setVisibility(INVISIBLE);
     }
 
     @Override
-    protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
-        width = View.MeasureSpec.getSize(widthMeasuredSpec);
-        height = MeasureSpec.getSize(heightMeasuredSpec);
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        sideOfTile = Math.min((((getWidth() - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
+                (((getHeight() - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+        offsetX = (getWidth() - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
+        offsetY = (getHeight() - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
 
-        if (gameController != null) {
-            // Räkna ut passande storlek för brickan
-            sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
-                    (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+        System.out.println("AMIN: w:" + getWidth() + " h: " + getHeight()+ " sideoftile: " + sideOfTile);
 
-            // Rita gameBoard mitt i canvasen i x-led
-            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
-
-            // Rita gameBoard längst ner på canvasen i y-led
-            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = getChildAt(i);
+            if ( child instanceof Tile){
+                child.layout(0, 0, sideOfTile, sideOfTile);
+            }
         }
-//        System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
-        setMeasuredDimension(width, height);
+    }
+
+
+    public synchronized void newMove(final int row, final int col, final int player, final boolean isIncoming) {
+        int xPos = offsetX + (col * (GRIDSPACING + sideOfTile));
+        int yStop = offsetY + (row * (GRIDSPACING + sideOfTile));
+
+        TranslateAnimation animate = new TranslateAnimation(xPos,xPos,offsetY-sideOfTile,yStop);
+        animate.setInterpolator(bounce);
+        animate.setDuration(250);
+        animate.setFillAfter(false);
+        animate.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationStart(Animation animate) {}
+            public void onAnimationRepeat(Animation animate) {}
+            public void onAnimationEnd(Animation animate) {
+                gameController.finishMove(row, col, player, isIncoming);
+            }
+        });
+
+        if (player == PLAYER1) {
+            redTile.startAnimation(animate);
+        } else if (player == PLAYER2) {
+            yellowTile.startAnimation(animate);
+        }
+
+    }
+
+    /**
+     *
+     */
+    private class Tile extends View {
+
+        private Paint paint = new Paint();
+
+        public Tile(Context context,int color) {
+            super(context);
+            paint.setColor(color);
+            System.out.println("TILE: color: " + color);
+        }
+
+        public Tile(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public Tile(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            canvas.drawRoundRect(0, 0, getWidth(), getHeight(), 20, 20, paint);
+        }
     }
 }

@@ -57,6 +57,10 @@ import static projectc4.c4.util.C4Constants.*;
         GameGridAnimation ggAmination = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
 
         clientController.getGameController().setViews(ggView, ggAmination, ggShowPointer , ggForeground);
+
+//        GameGridViewGroup ggViewGroup = (GameGridViewGroup)view.findViewById(R.id.gameGridViewGroup);
+//        ggViewGroup.setGameController(clientController.getGameController());
+
         clientController.setGameFragment(this);
         System.out.println(clientController.getPlayerTurn());
         gameMode = clientController.getGameMode();
@@ -74,7 +78,6 @@ import static projectc4.c4.util.C4Constants.*;
 
         rlBelowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
         ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
-
         textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
         textViewPlayer2 = (TextView)view.findViewById(R.id.textViewPlayer2);
         TextView textViewVs = (TextView)view.findViewById(R.id.textViewVs);

@@ -63,12 +63,12 @@ public class GameGridView extends View {
     }
 
     public void resetGameBoard(){
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         c = new Canvas(bitmap);
         paint = new Paint();
         Paint paint = new Paint();
         paint.setColor(LIGHTGRAY);
-        c.drawRoundRect(offsetX, offsetY, width-offsetX, height, 20, 20, paint);
+        c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
     }
 
     public void newMove(int row, int col, int player) {
@@ -153,7 +153,7 @@ public class GameGridView extends View {
             // Rita gameBoard längst ner på canvasen i y-led
             offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
         }
-//        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
+        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }
 }
