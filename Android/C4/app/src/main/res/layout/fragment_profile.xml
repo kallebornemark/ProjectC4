@@ -37,7 +37,7 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
@@ -49,16 +49,101 @@
                         android:layout_gravity="left|center_horizontal"
                         android:layout_marginRight="10dp" />
 
-                    <TextView
+                    <TableLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="YourName"
-                        android:id="@+id/textViewProfileName"
-                        android:textSize="25sp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="15dp"
-                        android:textColor="#FF716D61"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_height="wrap_content">
+
+                        <TableRow
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="YourName"
+                                android:id="@+id/textViewProfileName"
+                                android:textSize="25sp"
+                                android:textColor="#FF716D61" />
+
+                        </TableRow>
+                            <TableRow
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
+
+                                <RelativeLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:layout_gravity="bottom">
+
+                                    <EditText
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="textPersonName"
+                                        android:ems="10"
+                                        android:id="@+id/editText"
+                                        android:visibility="invisible"
+                                        android:hint="First Name"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="New Text"
+                                        android:id="@+id/textViewFirstName"
+                                        android:textSize="20sp"
+                                        android:layout_alignParentEnd="false"
+                                        android:layout_alignParentStart="false"
+                                        android:layout_alignBaseline="@+id/editText"
+                                        android:textColor="#FF716D61"/>
+
+                                </RelativeLayout>
+
+
+
+
+                            </TableRow>
+
+                        <TableRow>
+
+                            <RelativeLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
+
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:ems="10"
+                                    android:id="@+id/editText2"
+                                    android:visibility="invisible"
+                                    android:hint="Surname"/>
+
+                                <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="New Text"
+                                android:id="@+id/textViewLastName"
+                                android:textSize="20sp"
+                                android:textColor="#FF716D61"
+                                />
+                            </RelativeLayout>
+                        </TableRow>
+                        <TableRow android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:text="EDIT"
+                                android:id="@+id/button"
+                                android:textColor="#FFFFFCED"
+                                android:background="@drawable/colororange"
+                                android:textSize="15sp"
+                                android:layout_marginRight="120dp" />
+                        </TableRow>
+
+                    </TableLayout>
+
                 </LinearLayout>
 
                 <RelativeLayout
@@ -109,9 +194,11 @@
                         android:textColor="#FF716D61"/>
 
                 </RelativeLayout>
+
             </LinearLayout>
 
         </RelativeLayout>
+
     </LinearLayout>
 
     </RelativeLayout>

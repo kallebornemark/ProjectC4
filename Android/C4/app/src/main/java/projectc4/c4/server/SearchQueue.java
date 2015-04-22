@@ -63,6 +63,7 @@ public class SearchQueue implements Runnable {
         if (searchQueueListener != null) {
             searchQueueListener.interrupt();
             searchQueueListener = null;
+            System.out.println("SERVER: que stopped");
         }
     }
 
@@ -74,9 +75,12 @@ public class SearchQueue implements Runnable {
             try {
                 int nbr = queue.size();
                 while (nbr < 2) {
-                    searchQueueListener.sleep(500);
+                    Thread.sleep(500);
                     nbr = queue.size();
                     System.out.println(queue.size() + " in queue, waiting for second...");
+                    if(nbr == 0) {
+                        searchQueueListener.interrupt();
+                    }
                 }
                 c1 = get();
                 c2 = get();
@@ -89,7 +93,7 @@ public class SearchQueue implements Runnable {
                 stop();
                 System.out.println("Search Queue stopped, current size: " + queue.size());
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("SERVER: Que interrupted");
             }
         }
     }

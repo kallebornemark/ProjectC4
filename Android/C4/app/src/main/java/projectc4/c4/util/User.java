@@ -1,5 +1,9 @@
 package projectc4.c4.util;
 
+import android.content.Intent;
+import android.media.Image;
+import android.widget.ImageView;
+
 import projectc4.c4.server.ActiveGame;
 
 import java.io.Serializable;
@@ -15,6 +19,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private double elo = 1000;
+    private Intent profileImage;
 //    private ActiveGame activeGame;
 
     public User(String username){
@@ -26,6 +31,14 @@ public class User implements Serializable {
     /*public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
     }*/
+
+    public void setProfileImage(Intent profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public Intent getProfileImage() {
+        return this.profileImage;
+    }
 
     public double getElo() {
         return elo;

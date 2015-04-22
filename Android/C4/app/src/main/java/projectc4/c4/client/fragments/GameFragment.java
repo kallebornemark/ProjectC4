@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +40,12 @@ import static projectc4.c4.util.C4Constants.*;
     private ImageButton ibPlayer2Profile;
     private ImageButton ibPlayer2Chat;
     private ImageView ivBlackArrow;
+    private RelativeLayout rlBelowLine;
     private TranslateAnimation blackarrow_right;
     private TranslateAnimation blackarrow_left;
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
-    private RelativeLayout rlBelowLine;
+    private int winner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ import static projectc4.c4.util.C4Constants.*;
 
         textViewVs.setTextColor(C4Color.BLACK);
         highlightPlayer(clientController.getPlayerTurn());
+        animateArrow(clientController.getPlayerTurn());
 
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
@@ -234,30 +237,22 @@ import static projectc4.c4.util.C4Constants.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (direction == 1) {
-                    blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
-                    blackarrow_left.setDuration(250);
-                    blackarrow_left.setFillAfter(true);
-                    ivBlackArrow.startAnimation(blackarrow_left);
-                } else {
-                    blackarrow_right = new TranslateAnimation(0.0f, rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
-                    blackarrow_right.setDuration(250);
-                    blackarrow_right.setFillAfter(true);
-                    ivBlackArrow.startAnimation(blackarrow_right);
-                }
-            }
-        });
-    }
+                blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
+                blackarrow_left.setDuration(250);
+                blackarrow_left.setFillAfter(true);
 
-    public void setEnableBlackArrow(final boolean enable) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (enable) {
-                    ivBlackArrow.setVisibility(View.VISIBLE);
+                blackarrow_right = new TranslateAnimation(0.0f, rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
+                blackarrow_right.setDuration(250);
+                blackarrow_right.setFillAfter(true);
+
+                if (direction == PLAYER1) {
+                    ivBlackArrow.startAnimation(blackarrow_left);
+                    System.out.println("Animation blackarrow_right used");
                 } else {
-                    ivBlackArrow.setVisibility(View.INVISIBLE);
+                    ivBlackArrow.startAnimation(blackarrow_right);
+                    System.out.println("Animation blackarrow_left used");
                 }
+                ivBlackArrow.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -281,6 +276,23 @@ import static projectc4.c4.util.C4Constants.*;
             }
         });
     }
+
+    /*public void setArrowPosition(final int player) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (player == PLAYER1) {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)view.getLayoutParams();
+                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    rlBelowLine.addView(ivBlackArrow, params);
+                } else {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)view.getLayoutParams();
+                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    rlBelowLine.addView(ivBlackArrow, params);
+                }
+            }
+        });
+    }*/
 
     public void highlightPlayer(final int player) {
         getActivity().runOnUiThread(new Runnable() {
@@ -344,6 +356,10 @@ import static projectc4.c4.util.C4Constants.*;
                 });
             }
         });
+    }
+
+    public void setWinner(int winner) {
+        this.winner = winner;
     }
 
     public void highlightWinnerPlayerStar(final int player) {
@@ -410,6 +426,9 @@ import static projectc4.c4.util.C4Constants.*;
                         RelativeLayout relativeLayoutPlayers = (RelativeLayout) view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
                         highlightPlayer(PLAYER1);
+                        if (winner == PLAYER2) {
+                            animateArrow(PLAYER1);
+                        }
                     }
                 });
             }

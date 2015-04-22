@@ -75,11 +75,22 @@ public class ConnectedClient extends Thread implements Serializable {
                         // Requested rematch
                         activeGame.setReady(this);
 
-                    } else if (value == WIN || value == LOSS || value == DRAW) {
-                        // Match ended, time to update Users
-                        server.updateUser(this, value);
+                    } else if (value == CANCELSEARCH) {
+                        server.cancelSearch(this);
+                    } else if (value == WIN || value == LOSS || value == DRAW || value == SURRENDER) {
+                        // Match ended, time to update Users, if the user surrender you should force loss
+                        if(value == SURRENDER) {
+                            System.out.println("            Server: En klient har SURRENDERAT, skicka vinst till han andra");
+                            server.updateUser(this, LOSS);
+                            //newMove kan användas att skicka till korresponderande klient
+                            //Skicka SURRENDER till den andra klienten
+                            activeGame.newMove(this, SURRENDER);
+                            System.out.println("            Skickat SURRENDER till klient 2");
+                        } else {
+                            server.updateUser(this, value);
+                        }
+
                     }
-                    System.out.println("Server: Har fått en int: " + value);
 
 
                     // Hantera Users
@@ -149,7 +160,7 @@ public class ConnectedClient extends Thread implements Serializable {
         try {
             oos.writeObject(column);
             oos.flush();
-            System.out.println("Server: CC " + this.toString() + " sending a new move: " + column);
+            System.out.println(":            Server: CC " + this.toString() + " sending a new move: " + column);
         } catch (IOException e) {
             e.printStackTrace();
         }

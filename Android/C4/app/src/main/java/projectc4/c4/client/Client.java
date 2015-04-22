@@ -67,6 +67,16 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void cancelSearch() {
+        try {
+            oos.writeObject(CANCELSEARCH);
+            oos.flush();
+            System.out.println(CANCELSEARCH + " CANCEL");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void requestRematch() {
         try {
             oos.writeObject(REMATCH);
@@ -116,6 +126,9 @@ public class Client implements Runnable, Serializable {
             clientController.startGameUI();
         } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch()) {
             clientController.rematch();
+        } else if (number == SURRENDER) {
+            System.out.println(":                Han andra SURRENDERA, du ska VINNA");
+            clientController.updateUser(WIN, false);
         }
     }
 
