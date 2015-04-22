@@ -46,6 +46,11 @@ public class Client implements Runnable, Serializable {
 
     public void disconnect() {
         if (client != null) {
+            try {
+                socket.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             client.interrupt();
             clientController.setClient(null);
             client = null;
@@ -170,6 +175,7 @@ public class Client implements Runnable, Serializable {
         try {
             System.out.println("Försöker skapa socket...");
             Socket socket = new Socket();
+            this.socket = socket;
             socket.connect(new InetSocketAddress(ip, port), 4000);
             System.out.println("Socket skapad");
             ois = new ObjectInputStream(socket.getInputStream());

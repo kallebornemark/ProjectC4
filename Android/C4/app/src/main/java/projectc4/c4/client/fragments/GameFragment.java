@@ -46,6 +46,7 @@ import static projectc4.c4.util.C4Constants.*;
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
     private int winner;
+    private boolean startup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
         textViewVs.setTextColor(C4Color.BLACK);
+        startup = true;
         highlightPlayer(clientController.getPlayerTurn());
         animateArrow(clientController.getPlayerTurn());
 
@@ -300,9 +302,16 @@ import static projectc4.c4.util.C4Constants.*;
             public void run() {
                 if (player == PLAYER1) {
                     if(gameMode == MATCHMAKING) {
-                        textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
-                        animation = (AnimationDrawable)textViewPlayer1.getBackground();
-                        animation.start();
+                        if(startup) {
+                            textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                            startup = false;
+                        } else {
+                            textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
+                            animation = (AnimationDrawable)textViewPlayer1.getBackground();
+                            animation.start();
+
+                        }
+
                     } else {
                         textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
                     }
@@ -311,9 +320,15 @@ import static projectc4.c4.util.C4Constants.*;
 
                 } else if (player == PLAYER2) {
                     if(gameMode == MATCHMAKING) {
-                        textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
-                        animation = (AnimationDrawable)textViewPlayer2.getBackground();
-                        animation.start();
+                        if(startup) {
+                            textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                            startup = false;
+                        } else {
+                            textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
+                            animation = (AnimationDrawable) textViewPlayer2.getBackground();
+                            animation.start();
+
+                        }
                     } else {
                         textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                     }
@@ -343,6 +358,7 @@ import static projectc4.c4.util.C4Constants.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                startup = true;
                 final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
                 buttonRematch.getBackground().setAlpha(255);
                 buttonRematch.setEnabled(true);

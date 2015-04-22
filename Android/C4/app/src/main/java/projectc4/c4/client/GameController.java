@@ -164,6 +164,9 @@ public class GameController {
             gameGridShowPointer.changePointerPos(-1);
             setButtonEnable(true);
         }
+//        if(gameMode == MATCHMAKING) {
+//            clientController.stopAnimation();
+//        }
         gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
         playedTiles = 0;
