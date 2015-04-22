@@ -126,18 +126,19 @@ public class GameController {
     public void changePlayer(boolean isIncoming) {
         if (playerTurn == PLAYER1) {
             playerTurn = PLAYER2;
-            clientController.animateBlackArrow(2);
+
         } else {
             playerTurn = PLAYER1;
-            clientController.animateBlackArrow(1);
         }
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
             startTimer();
+            clientController.animateBlackArrow(PLAYER1); // <--
+        } else {
             if (playerTurn == PLAYER1) {
-                clientController.animateBlackArrow(1);
+                clientController.animateBlackArrow(PLAYER1); // <--
             } else {
-                clientController.animateBlackArrow(2);
+                clientController.animateBlackArrow(PLAYER2); // -->
             }
         }
         if (!isIncoming && timer != null) {
@@ -211,6 +212,7 @@ public class GameController {
             highlightTiles();
             // Put a star next to the player who won
             clientController.highlightWinnerPlayerStar(playerTurn);
+            clientController.setWinner(playerTurn);
 
             if (gameMode == MATCHMAKING) {
                 clientController.stopAnimation();

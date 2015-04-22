@@ -249,16 +249,17 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/relativeLayoutPlayers"
         android:id="@+id/belowLine"
-        android:layout_marginTop="7dp" android:layout_marginLeft="58dp" android:layout_marginRight="58dp">
+        android:layout_marginTop="7dp" android:layout_marginLeft="58dp" android:layout_marginRight="58dp"
+        android:layout_centerHorizontal="true">
 
 
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ivBlackArrow" android:src="@drawable/c4_arrow_black"/>
+                android:id="@+id/ivBlackArrow" android:src="@drawable/c4_arrow_black"
+                android:layout_alignParentEnd="false" android:visibility="invisible"/>
         <Button
             android:text="Play Again"
             android:id="@+id/buttonNewGame"
