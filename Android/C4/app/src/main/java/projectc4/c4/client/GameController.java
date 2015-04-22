@@ -403,4 +403,8 @@ public class GameController {
 //        }
 //        return false;
     }
+
+    public void setButtonEnable() {
+        gameGridForeground.setButtonEnable(false);
+    }
 }

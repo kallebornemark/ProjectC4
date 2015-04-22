@@ -90,8 +90,12 @@ public class MainActivity extends FragmentActivity {
                         fm.popBackStackImmediate("Menu", 0);
                     } else if (clientController.getGameMode() == MATCHMAKING) {
                         fm.popBackStackImmediate("Matchmaking", 0);
-                        System.out.println("Gå till matchmaking från gameGrid och du förlorade");
-                        clientController.updateUser(LOSS, false);
+                        if(!clientController.isOkayToLeave()) {
+                            System.out.println("Gå till matchmaking från gameGrid och du förlorade");
+                            clientController.updateUser(SURRENDER, false);
+                        }
+                        clientController.setOkayToLeave(false);
+
                     } else {
                         fm.popBackStack();
                     }
