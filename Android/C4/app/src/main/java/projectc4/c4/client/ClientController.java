@@ -247,7 +247,7 @@ public class ClientController {
             }else if(playerTurn == WIN) { //Force win
                 System.out.println("FORCE WIN");
                 gameController.setButtonEnable();
-                highlightWinnerPlayerStar(player);
+                highlightWinnerPlayerStar(PLAYER1);
                 stopAnimation();
                 getUser().newGameResult(WIN, gameInfo.getOpponentElo());
                 client.updateUser(WIN);
