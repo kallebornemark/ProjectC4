@@ -75,15 +75,18 @@ public class ClientController {
     }
 
     public void connect() {
+        client = new Client(this);
+//        client.connect("10.2.10.36", 3450);
             client = new Client(this);
             client.connect("10.2.10.36", 3450);
 //      client.connect("10.1.8.135", 3450);
-//        client.connect("10.2.25.13", 3450);
+        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("172.20.10.2", 3450); // Kalles hemmadator
+//        client.connect("192.168.0.10", 3450);
 //            client.connect("192.168.0.10", 3450);
-
     }
 
     public void newOutgoingMove(int column) {
@@ -158,11 +161,16 @@ public class ClientController {
         newGame(MATCHMAKING);
         unpromptRematch();
         changeHighlightedPlayer(gameController.getPlayerTurn());
+        gameFragment.animateArrow(gameController.getPlayerTurn());
         gameFragment.disableStars();
     }
 
     public void requestGame(int gamemode) {
         client.requestGame(gamemode);
+    }
+
+    public void setWinner(int winner) {
+        gameFragment.setWinner(winner);
     }
 
     public int getOpponent() {

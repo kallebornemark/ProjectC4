@@ -9,6 +9,7 @@ import java.util.Random;
 
 import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark
@@ -91,14 +92,18 @@ public class Server implements Runnable {
     public void newGame(ConnectedClient c1, ConnectedClient c2) {
         // Assign random startpos to clients
         Random rand = new Random();
-        int player1, player2;
-        player1 = (rand.nextInt(1)+1)*(-10);
-        player2 = -30 - player1;
+        int player1, player2, temp;
+        temp = rand.nextInt(2)+1;
+        if (temp == 1) {
+            player1 = PLAYER1;
+            player2 = PLAYER2;
+        } else {
+            player1 = PLAYER2;
+            player2 = PLAYER1;
+        }
         c1.setStartPos(player1);
         c2.setStartPos(player2);
-        System.out.println("Startposes swapped, C1 = " + player1 + " och C2 = " + player2);
-        c1.setStartPos(player1);
-        c2.setStartPos(player2);
+        System.out.println("Startpositions set - Player 1 = " + player1 + ", Player 2 = " + player2);
 
         // Create new GameInfo objects and send to clients
         User user1 = c1.getUser();
