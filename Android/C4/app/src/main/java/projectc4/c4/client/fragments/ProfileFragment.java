@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +23,8 @@ import projectc4.c4.client.MainActivity;
  */
 public class ProfileFragment extends Fragment {
     private ClientController clientController;
-    private String firstName;
-    private String lastName;
     private ImageView imageViewProfile;
+    private boolean clicked = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,25 +33,33 @@ public class ProfileFragment extends Fragment {
         clientController = ((MainActivity)getActivity()).getClientController();
 
         TextView textViewProfileName = (TextView)view.findViewById(R.id.textViewProfileName);
+        final TextView textViewFirstName = (TextView)view.findViewById(R.id.textViewFirstName);
+        final TextView textViewLastName = (TextView)view.findViewById(R.id.textViewLastName);
+        final EditText editText = (EditText)view.findViewById(R.id.editText);
+        final EditText editText2 = (EditText)view.findViewById(R.id.editText2);
         /*
             The 2 if-else checks if the first and last name is null or not.
          */
         if (clientController.getUser().getFirstName() == null) {
-            firstName = " - ";
+            textViewFirstName.setText(" - ");
+            editText.setText("");
         } else {
-            firstName = clientController.getUser().getFirstName();
+            textViewFirstName.setText(clientController.getUser().getFirstName());
+            editText.setText(clientController.getUser().getFirstName());
         }
 
         if (clientController.getUser().getLastName() == null) {
-            lastName = " - ";
+            textViewLastName.setText(" - ");
+            editText2.setText("");
         } else {
-            lastName = clientController.getUser().getLastName();
+            textViewLastName.setText(clientController.getUser().getLastName());
+            editText2.setText(clientController.getUser().getLastName());
         }
 
-        textViewProfileName.setText(clientController.getUser().getUsername() + "\n"
-        + firstName + "\n"
-        + lastName);
+        textViewProfileName.setText(clientController.getUser().getUsername());
         textViewProfileName.setTypeface(type, Typeface.BOLD);
+        textViewFirstName.setTypeface(type,Typeface.BOLD);
+        textViewLastName.setTypeface(type,Typeface.BOLD);
 
         TextView tvHeader = (TextView)view.findViewById(R.id.tvHeader);
         tvHeader.setTypeface(type,Typeface.BOLD);
@@ -60,6 +69,7 @@ public class ProfileFragment extends Fragment {
         tvContent.setTypeface(type, Typeface.BOLD);
 
         imageViewProfile = (ImageView)view.findViewById(R.id.imageViewProfile);
+        imageViewProfile.setEnabled(false);
         imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +80,30 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        if (clientController.getUser().getProfileImage() != null) {
+        imageViewProfile.setImageURI(clientController.getUser().getProfileImage().getData());
+        }
+
+        final Button button = (Button)view.findViewById(R.id.button);
+        button.setTypeface(type, Typeface.BOLD);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!clicked) {
+                    textViewFirstName.setVisibility(View.INVISIBLE);
+                    textViewLastName.setVisibility(View.INVISIBLE);
+                    editText2.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.VISIBLE);
+                    button.setText("SAVE");
+                    imageViewProfile.setEnabled(true);
+                    imageViewProfile.setImageResource(R.drawable.changepictureicon );
+                    clicked = true;
+                } else {
+                    
+                }
+            }
+        });
+
         return view;
     }
 
@@ -77,12 +111,8 @@ public class ProfileFragment extends Fragment {
        if (data == null) {
            getActivity().getFragmentManager().popBackStackImmediate("Profilefragment" , 0);
        } else if (reqCode == 1) {
-           imageViewProfile.setImageURI(data.getData());
+           clientController.getUser().setProfileImage(data);
+           imageViewProfile.setImageURI(clientController.getUser().getProfileImage().getData());
        }
-
     }
-
-
-
-
 }
