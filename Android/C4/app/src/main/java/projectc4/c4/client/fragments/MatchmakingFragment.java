@@ -40,12 +40,22 @@ public class MatchmakingFragment extends Fragment {
         buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientController.requestGame(MATCHMAKING);
+                if(buttonFindOpponent.getText() == "Cancel search") {
+                    System.out.println("Cancel search!!!");
+                    clientController.cancelSearch();
+                    buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    buttonFindOpponent.setText("Find Opponent");
+                    progressBar.setEnabled(false);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }else {
+                    clientController.requestGame(MATCHMAKING);
 
-                progressBar.setEnabled(true);
-                progressBar.setVisibility(View.VISIBLE);
-                buttonFindOpponent.setEnabled(false);
-                buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    progressBar.setEnabled(true);
+                    progressBar.setVisibility(View.VISIBLE);
+//                buttonFindOpponent.setEnabled(false);
+                    buttonFindOpponent.setText("Cancel search");
+                    buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                }
             }
         });
 

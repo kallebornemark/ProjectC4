@@ -128,6 +128,14 @@ public class Server implements Runnable {
         }
     }
 
+    public void cancelSearch(ConnectedClient c) {
+        try {
+            searchingForGame.remove(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new Server(3450);
     }

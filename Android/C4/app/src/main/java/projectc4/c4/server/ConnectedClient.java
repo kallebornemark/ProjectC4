@@ -75,6 +75,8 @@ public class ConnectedClient extends Thread implements Serializable {
                         // Requested rematch
                         activeGame.setReady(this);
 
+                    } else if (value == CANCELSEARCH) {
+                        server.cancelSearch(this);
                     } else if (value == WIN || value == LOSS || value == DRAW || value == SURRENDER) {
                         // Match ended, time to update Users, if the user surrender you should force loss
                         if(value == SURRENDER) {

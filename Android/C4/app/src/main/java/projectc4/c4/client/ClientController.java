@@ -293,4 +293,8 @@ public class ClientController {
     public void setOkayToLeave(boolean okayToLeave) {
         this.okayToLeave = okayToLeave;
     }
+
+    public void cancelSearch() {
+        client.cancelSearch();
+    }
 }

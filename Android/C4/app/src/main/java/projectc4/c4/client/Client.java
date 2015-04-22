@@ -67,6 +67,16 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void cancelSearch() {
+        try {
+            oos.writeObject(CANCELSEARCH);
+            oos.flush();
+            System.out.println(CANCELSEARCH + " CANCEL");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void requestRematch() {
         try {
             oos.writeObject(REMATCH);
