@@ -116,6 +116,9 @@ public class Client implements Runnable, Serializable {
             clientController.startGameUI();
         } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch()) {
             clientController.rematch();
+        } else if (number == SURRENDER) {
+            System.out.println(":                Han andra SURRENDERA, du ska VINNA");
+            clientController.updateUser(WIN, false);
         }
     }
 
