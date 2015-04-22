@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,10 +91,15 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer1.setTypeface(type, Typeface.BOLD);
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
+        // Place black arrow on current player side
         textViewVs.setTextColor(C4Color.BLACK);
         startup = true;
         highlightPlayer(clientController.getPlayerTurn());
-        animateArrow(clientController.getPlayerTurn());
+        if (gameMode == LOCAL) {
+            animateArrowDelayed(PLAYER1);
+        } else {
+            animateArrowDelayed(clientController.getPlayerTurn());
+        }
 
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
@@ -236,7 +243,28 @@ import static projectc4.c4.util.C4Constants.*;
     }*/
 
     public void animateArrow(final int direction) {
-        getActivity().runOnUiThread(new Runnable() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (direction == PLAYER1) {
+                    blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
+                    blackarrow_left.setDuration(220);
+                    blackarrow_left.setFillAfter(true);
+                    ivBlackArrow.startAnimation(blackarrow_left);
+                    System.out.println("Animation blackarrow_right used");
+                } else {
+                    blackarrow_right = new TranslateAnimation(0.0f, rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
+                    blackarrow_right.setDuration(220);
+                    blackarrow_right.setFillAfter(true);
+                    ivBlackArrow.startAnimation(blackarrow_right);
+                    System.out.println("Animation blackarrow_left used");
+                }
+            }
+        });
+    }
+
+    public void animateArrowDelayed(final int direction) {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
@@ -254,9 +282,8 @@ import static projectc4.c4.util.C4Constants.*;
                     ivBlackArrow.startAnimation(blackarrow_right);
                     System.out.println("Animation blackarrow_left used");
                 }
-                ivBlackArrow.setVisibility(View.VISIBLE);
             }
-        });
+        }, 500);
     }
 
     public void enableBlackArrow() {

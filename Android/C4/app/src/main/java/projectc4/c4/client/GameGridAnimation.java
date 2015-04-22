@@ -27,6 +27,8 @@ public class GameGridAnimation extends RelativeLayout {
     private int offsetX;
     private int offsetY;
 
+    TranslateAnimation animate;
+
     private BounceInterpolator bounce;
 
     public GameGridAnimation(Context context) {
@@ -81,7 +83,7 @@ public class GameGridAnimation extends RelativeLayout {
         int xPos = offsetX + (col * (GRIDSPACING + sideOfTile));
         int yStop = offsetY + (row * (GRIDSPACING + sideOfTile));
 
-        TranslateAnimation animate = new TranslateAnimation(xPos,xPos,offsetY-sideOfTile,yStop);
+        animate = new TranslateAnimation(xPos,xPos,offsetY-sideOfTile,yStop);
         animate.setInterpolator(bounce);
         animate.setDuration(250);
         animate.setFillAfter(false);

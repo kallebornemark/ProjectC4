@@ -184,6 +184,7 @@ public class GameController {
         System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[x] < getBoardHeight()) {
             if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
+                setButtonEnable(false);
 
                 playedRow = (getBoardHeight() - 1) - (colSize[x]);
                 playedCol = x;
@@ -202,17 +203,18 @@ public class GameController {
                 if (gameMode == MATCHMAKING){
                     gameGridView.newMove(tmpRow, x, playerTurn);
                     checkOutcome(isIncoming);
+                    // TODO Fixa animation för MM, tredje movet fuckad upp allt atm
+//                    gameGridAnimation.newMove(tmpRow,x,playerTurn, isIncoming);
 
                 } else if (gameMode == LOCAL) {
                     gameGridAnimation.newMove(tmpRow,x,playerTurn, isIncoming);
-
                 }
             }
         }
     }
 
     public void setButtonEnable(boolean buttonEnable){
-//        gameGridForeground.setButtonEnable(buttonEnable);
+        gameGridForeground.setButtonEnable(buttonEnable);
     }
        //Todo dafuck händer här?
     public synchronized void finishMove(final int row, final int col, final int player, final boolean isIncoming){
@@ -233,6 +235,7 @@ public class GameController {
     public synchronized void checkOutcome(boolean isIncoming) {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
             // If somebody won
+            setButtonEnable(false);
             if(timer != null) {
                 timer.cancel();
             }
@@ -259,6 +262,7 @@ public class GameController {
         } else {
             // Regular move without any particular outcome
             changePlayer(isIncoming);
+            setButtonEnable(true);
             if (gameMode == LOCAL) {
                 clientController.setPlayer(playerTurn);
             }

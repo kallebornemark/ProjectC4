@@ -101,6 +101,9 @@ public class GameGridForeground extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!buttonEnable) {
+            return false;
+        }
         int action = event.getActionMasked();
         float touchPosX = event.getX();
         float touchPosY = event.getY();
@@ -108,10 +111,6 @@ public class GameGridForeground extends View {
         int x2 = width - offsetX;
         int y = offsetY - sideOfTile;
 
-        if (!buttonEnable) {
-            return false;
-        }
-        //Todo ändra så att isEnabled används istället och sätts från gameController.
         if (gameController.getGameMode() == MATCHMAKING && gameController.getPlayerTurn() == PLAYER2) {
             return false;
         }
@@ -147,8 +146,6 @@ public class GameGridForeground extends View {
                     break;
                 case MotionEvent.ACTION_CANCEL:
 //                    System.out.println("ACTION_CANCEL - x: " + touchPosX + " y: " + touchPosY);
-
-                    //Todo ta bort markör eller?
                     break;
             }
         }

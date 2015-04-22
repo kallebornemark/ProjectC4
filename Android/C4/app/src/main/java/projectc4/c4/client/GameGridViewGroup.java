@@ -24,13 +24,9 @@ public class GameGridViewGroup extends RelativeLayout{
     private GameGridForeground gameGridForeground;
     private RelativeLayout relativeLayout;
 
-
     private Tile redTile, yellowTile;
 
-
     private Paint paint;
-
-
 
     public GameGridViewGroup(Context context) {
         super(context);
