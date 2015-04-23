@@ -40,16 +40,16 @@ public class SearchQueue implements Runnable {
     }
 
     public synchronized void remove(ConnectedClient connectedClient) throws InterruptedException {
-        while(queue.isEmpty()) {
-            wait();
-        }
-
-        ConnectedClient item = (ConnectedClient) queue.remove();
+//        while(queue.isEmpty()) {
+//            wait();
+//        }
+        queue.remove(connectedClient);
+//
         if (queue.isEmpty()) {
             stop();
         }
-
-        notify(); // notifyAll() for multiple producer/consumer threads
+//
+//        notify(); // notifyAll() for multiple producer/consumer threads
     }
 
     public void start() {
@@ -61,7 +61,6 @@ public class SearchQueue implements Runnable {
 
     public void stop() {
         if (searchQueueListener != null) {
-            searchQueueListener.interrupt();
             searchQueueListener = null;
             System.out.println("SERVER: que stopped");
         }
@@ -73,26 +72,26 @@ public class SearchQueue implements Runnable {
         ActiveGame a;
         while (!Thread.interrupted()) {
             try {
-                int nbr = queue.size();
-                while (nbr < 2) {
-                    Thread.sleep(500);
-                    nbr = queue.size();
-                    System.out.println(queue.size() + " in queue, waiting for second...");
-                    if(nbr == 0) {
-                        searchQueueListener.interrupt();
-                    }
+                Thread.sleep(500);
+
+                if ( queue.size() > 1) {
+                    c1 = get();
+                    c2 = get();
+                    a = new ActiveGame(server, c1, c2);
+                    System.out.println("New ActiveGame created");
+                    c1.setActiveGame(a);
+                    c2.setActiveGame(a);
+                    server.addActiveGame(a);
+                    System.out.println("ActiveGame set to both clients and added to server's Active Games");
                 }
-                c1 = get();
-                c2 = get();
-                a = new ActiveGame(server, c1, c2);
-                System.out.println("New ActiveGame created");
-                c1.setActiveGame(a);
-                c2.setActiveGame(a);
-                server.addActiveGame(a);
-                System.out.println("ActiveGame set to both clients and added to server's Active Games");
-                stop();
-                System.out.println("Search Queue stopped, current size: " + queue.size());
+
+                if (queue.size() == 0) {
+                    searchQueueListener.interrupt();
+                    stop();
+                }
+                System.out.println(queue.size() + " in queue, waiting for second...");
             } catch (InterruptedException e) {
+                e.printStackTrace();
                 System.out.println("SERVER: Que interrupted");
             }
         }

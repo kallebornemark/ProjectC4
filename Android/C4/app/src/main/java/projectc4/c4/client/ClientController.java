@@ -101,7 +101,7 @@ public class ClientController {
         System.out.println("Clientcontrollerns newIncomingMove " + column);
         if(column == EMPTYMOVE) {
             gameController.changePlayer(true);
-        }else {
+        } else {
             gameController.newMove(column, true);
         }
     }

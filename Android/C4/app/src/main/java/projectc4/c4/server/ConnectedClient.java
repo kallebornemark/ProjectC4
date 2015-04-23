@@ -80,6 +80,7 @@ public class ConnectedClient extends Thread implements Serializable {
                         activeGame.setReady(this);
 
                     } else if (value == CANCELSEARCH) {
+                        System.out.println("CANCEL SEARCH !!!!");
                         server.cancelSearch(this);
                     } else if (value == WIN || value == LOSS || value == DRAW || value == SURRENDER) {
                         // Match ended, time to update Users, if the user surrender you should force loss
@@ -113,7 +114,6 @@ public class ConnectedClient extends Thread implements Serializable {
                         user = server.validateUser(username);
                         System.out.println("Server: User set to " + user.getUsername());
                         System.out.println("Attempting to add user " + user.getUsername() + " to user hashmap");
-                        server.addUser(user);
                         System.out.println(user.getUsername() + " added to client hashmap");
                         server.addConnectedClient(this);
                         System.out.println(user.getUsername() + " added to cc hashmap");
@@ -146,7 +146,7 @@ public class ConnectedClient extends Thread implements Serializable {
      */
     public void newGameInfo(GameInfo gameInfo) {
         try {
-            System.out.println("Server: newGameInfo(" + gameInfo.toString() + ")");
+            System.out.println("Server: newGameInfo sent to opponent. playerTurn : " + gameInfo.getPlayerTurn());
             oos.writeObject(gameInfo);
             oos.reset();
             oos.flush();

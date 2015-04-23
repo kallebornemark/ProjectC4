@@ -81,7 +81,7 @@ public class GameGridAnimation extends RelativeLayout {
     }
 
 
-    public void newMove(final int row, final int col, final int player, final boolean isIncoming) {
+    public void newMove(int row, int col, int player, final boolean isIncoming) {
         int xPos = offsetX + (col * (GRIDSPACING + sideOfTile));
         int yStop = offsetY + (row * (GRIDSPACING + sideOfTile));
 
@@ -93,7 +93,7 @@ public class GameGridAnimation extends RelativeLayout {
             public void onAnimationStart(Animation animate) {}
             public void onAnimationRepeat(Animation animate) {}
             public void onAnimationEnd(Animation animate) {
-                gameController.finishMove(row, col, player, isIncoming);
+                gameController.finishMove(isIncoming);
             }
         });
         if (player == PLAYER1) {

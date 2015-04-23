@@ -40,15 +40,15 @@ public class Server implements Runnable {
         userHashMap.put(user.getUsername(), user);
     }
 
-    public void addConnectedClient(ConnectedClient connectedClient) {
+    public synchronized void addConnectedClient(ConnectedClient connectedClient) {
         connectedClientHashMap.put(connectedClient.getUser().getUsername(), connectedClient);
     }
 
-    public void removeConnectedClient(ConnectedClient connectedClient) {
+    public synchronized void removeConnectedClient(ConnectedClient connectedClient) {
         connectedClientHashMap.remove(connectedClient.getUser().getUsername());
     }
 
-    public User validateUser(String name) {
+    public synchronized User validateUser(String name) {
         if (userHashMap.containsKey(name)) {
             return userHashMap.get(name);
         } else {
@@ -62,7 +62,7 @@ public class Server implements Runnable {
         userHashMap.put(user.getUsername(), user);
     }
 
-    public boolean isUserOnline(String name) {
+    public synchronized boolean isUserOnline(String name) {
         return connectedClientHashMap.containsKey(name);
     }
 
@@ -88,8 +88,7 @@ public class Server implements Runnable {
         ConnectedClient opponent = c1.getActiveGame().getOpponent(c1);
         user.newGameResult(value, opponent.getUser().getElo());
 
-        opponent.getActiveGame().swapPos(opponent);
-        opponent.newGameInfo(new GameInfo(opponent.getStartPos(), user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true));
+        opponent.newGameInfo(new GameInfo(user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true));
         System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
     }
 
@@ -114,8 +113,8 @@ public class Server implements Runnable {
         User user1 = c1.getUser();
         User user2 = c2.getUser();
 
-        c1.newGameInfo(new GameInfo(c1.getStartPos(),user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false));
-        c2.newGameInfo(new GameInfo(c2.getStartPos(),user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false));
+        c1.newGameInfo(new GameInfo(user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos()));
+        c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos()));
         c1.newGame();
         c2.newGame();
     }
