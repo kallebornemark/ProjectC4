@@ -58,6 +58,10 @@ public class Server implements Runnable {
         }
     }
 
+    public void updateUser(User user) {
+        userHashMap.put(user.getUsername(), user);
+    }
+
     public boolean isUserOnline(String name) {
         return connectedClientHashMap.containsKey(name);
     }
@@ -88,6 +92,7 @@ public class Server implements Runnable {
         opponent.newGameInfo(new GameInfo(opponent.getStartPos(), user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true));
         System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
     }
+
 
     public void newGame(ConnectedClient c1, ConnectedClient c2) {
         // Assign random startpos to clients

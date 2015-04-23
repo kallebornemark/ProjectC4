@@ -31,14 +31,18 @@ public class User implements Serializable {
     /*public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
     }*/
-
+/*
     public void setProfileImage(Intent profileImage) {
         this.profileImage = profileImage;
     }
 
     public Intent getProfileImage() {
         return this.profileImage;
-    }
+    }*/
+
+   /* public void setUser(User user) {
+        User.this = user;
+    }*/
 
     public double getElo() {
         return elo;

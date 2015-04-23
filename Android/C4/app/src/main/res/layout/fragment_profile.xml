@@ -39,15 +39,31 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
-
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/imageViewProfile"
                         android:src="@drawable/noprofilepicturesmall"
                         android:clickable="true"
                         android:layout_gravity="left|center_horizontal"
                         android:layout_marginRight="10dp" />
+                    <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:text="EDIT"
+                    android:id="@+id/button"
+                    android:textColor="#FFFFFCED"
+                    android:background="@drawable/colorblack"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                        android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
 
                     <TableLayout
                         android:orientation="horizontal"
@@ -63,27 +79,40 @@
                                 android:layout_height="wrap_content"
                                 android:text="YourName"
                                 android:id="@+id/textViewProfileName"
-                                android:textSize="25sp"
-                                android:textColor="#FF716D61" />
+                                android:textSize="35sp"
+                                android:textColor="#FF716D61"
+                                android:gravity="center_horizontal" />
 
+                        </TableRow>
+                        <TableRow>
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_height="1dp"
+                                android:background="@drawable/colorblack"
+                                android:id="@+id/lineBlack"
+                                android:layout_alignParentStart="false"
+                                android:layout_above="@+id/gridLayoutCenter"
+                                android:layout_alignParentEnd="false"
+                                />
                         </TableRow>
                             <TableRow
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent">
 
                                 <RelativeLayout
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="bottom">
 
                                     <EditText
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:inputType="textPersonName"
-                                        android:ems="10"
                                         android:id="@+id/editText"
                                         android:visibility="invisible"
                                         android:hint="First Name"
+                                        android:ems="13"
+                                        android:textSize="20sp"
                                         />
 
                                     <TextView
@@ -94,8 +123,25 @@
                                         android:textSize="20sp"
                                         android:layout_alignParentEnd="false"
                                         android:layout_alignParentStart="false"
-                                        android:layout_alignBaseline="@+id/editText"
-                                        android:textColor="#FF716D61"/>
+                                        android:textColor="#FF716D61"
+                                        android:layout_alignParentBottom="false"
+                                        android:layout_alignParentRight="false"
+                                        android:layout_alignWithParentIfMissing="false"
+                                        android:layout_alignParentLeft="false"
+                                        android:layout_alignParentTop="false"
+                                        android:elegantTextHeight="false"
+                                        android:paddingTop="4dp"
+                                        android:paddingBottom="8dp" />
+                                    <View
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="1dp"
+                                        android:background="@drawable/colorblack"
+                                        android:id="@+id/lineBlack2"
+                                        android:layout_alignParentStart="false"
+                                        android:layout_alignParentEnd="false"
+                                        android:layout_alignBottom="@+id/textViewFirstName" />
+
+
 
                                 </RelativeLayout>
 
@@ -107,17 +153,19 @@
                         <TableRow>
 
                             <RelativeLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent">
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
 
                                 <EditText
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:inputType="textPersonName"
-                                    android:ems="10"
+                                    android:ems="13"
                                     android:id="@+id/editText2"
                                     android:visibility="invisible"
-                                    android:hint="Surname"/>
+                                    android:hint="Surname"
+                                    android:textSize="20sp"
+                                    />
 
                                 <TextView
                                 android:layout_width="wrap_content"
@@ -126,21 +174,20 @@
                                 android:id="@+id/textViewLastName"
                                 android:textSize="20sp"
                                 android:textColor="#FF716D61"
-                                />
+                                android:paddingTop="4dp"
+                                    android:paddingBottom="8dp" />
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="1dp"
+                                    android:background="@drawable/colorblack"
+                                    android:id="@+id/lineBlack3"
+                                    android:layout_alignParentStart="false"
+                                    android:layout_alignParentEnd="false"
+                                    android:layout_alignBottom="@+id/textViewLastName" />
                             </RelativeLayout>
                         </TableRow>
                         <TableRow android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:text="EDIT"
-                                android:id="@+id/button"
-                                android:textColor="#FFFFFCED"
-                                android:background="@drawable/colororange"
-                                android:textSize="15sp"
-                                android:layout_marginRight="120dp" />
-                        </TableRow>
+                            android:layout_height="wrap_content"></TableRow>
 
                     </TableLayout>
 

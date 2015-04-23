@@ -29,6 +29,10 @@ public class ConnectedClient extends Thread implements Serializable {
         this.socket = socket;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public User getUser() {
         return user;
     }
@@ -92,9 +96,13 @@ public class ConnectedClient extends Thread implements Serializable {
 
                     }
 
-
-                    // Hantera Users
-                } else if (obj instanceof String) {
+                    // Hantera Users //Emil - Updatera userobjektet med bild etc från profilen
+                } else if (obj instanceof User) {
+                    user = (User)obj;
+                    server.updateUser(user);
+                    System.out.println("Server: User-object updated");
+                }
+                else if (obj instanceof String) {
                     username = (String)obj;
                     System.out.println("Server: Username recieved: " + username);
 

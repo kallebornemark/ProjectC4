@@ -1,6 +1,7 @@
 package projectc4.c4.client.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.lang.reflect.Type;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -37,6 +41,8 @@ public class ProfileFragment extends Fragment {
         final TextView textViewLastName = (TextView)view.findViewById(R.id.textViewLastName);
         final EditText editText = (EditText)view.findViewById(R.id.editText);
         final EditText editText2 = (EditText)view.findViewById(R.id.editText2);
+        final View blackLine2 = (View)view.findViewById(R.id.lineBlack2);
+        final View blackLine3 = (View)view.findViewById(R.id.lineBlack3);
         /*
             The 2 if-else checks if the first and last name is null or not.
          */
@@ -58,8 +64,10 @@ public class ProfileFragment extends Fragment {
 
         textViewProfileName.setText(clientController.getUser().getUsername());
         textViewProfileName.setTypeface(type, Typeface.BOLD);
-        textViewFirstName.setTypeface(type,Typeface.BOLD);
+        textViewFirstName.setTypeface(type, Typeface.BOLD);
         textViewLastName.setTypeface(type,Typeface.BOLD);
+        editText.setTypeface(type,Typeface.BOLD);
+        editText2.setTypeface(type,Typeface.BOLD);
 
         TextView tvHeader = (TextView)view.findViewById(R.id.tvHeader);
         tvHeader.setTypeface(type,Typeface.BOLD);
@@ -69,50 +77,69 @@ public class ProfileFragment extends Fragment {
         tvContent.setTypeface(type, Typeface.BOLD);
 
         imageViewProfile = (ImageView)view.findViewById(R.id.imageViewProfile);
-        imageViewProfile.setEnabled(false);
-        imageViewProfile.setOnClickListener(new View.OnClickListener() {
+        //Detta är välja bild
+      /*  imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setType("image/*");
+                intent.setType("image*//*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select profile-picture"), 1);
             }
         });
-
-        if (clientController.getUser().getProfileImage() != null) {
-        imageViewProfile.setImageURI(clientController.getUser().getProfileImage().getData());
-        }
-
+*/
         final Button button = (Button)view.findViewById(R.id.button);
-        button.setTypeface(type, Typeface.BOLD);
+        button.setTypeface(type, Typeface.BOLD|Typeface.ITALIC);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!clicked) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     textViewFirstName.setVisibility(View.INVISIBLE);
                     textViewLastName.setVisibility(View.INVISIBLE);
                     editText2.setVisibility(View.VISIBLE);
                     editText.setVisibility(View.VISIBLE);
                     button.setText("SAVE");
-                    imageViewProfile.setEnabled(true);
-                    imageViewProfile.setImageResource(R.drawable.changepictureicon );
+                    blackLine2.setVisibility(View.INVISIBLE);
+                    blackLine3.setVisibility(View.INVISIBLE);
+                    button.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                    editText.requestFocus();
+                    editText.setSelection(editText.getText().length());
+                    editText2.setSelection(editText2.getText().length());
+                    imm.showSoftInput(editText,InputMethodManager.SHOW_IMPLICIT);
                     clicked = true;
+
                 } else {
-                    
+                    clientController.getUser().setFirstName(editText.getText().toString());
+                    clientController.getUser().setLastName(editText2.getText().toString());
+                    clientController.getClient().updateUserObject(clientController.getUser());
+                    textViewFirstName.setText(clientController.getUser().getFirstName());
+                    textViewLastName.setText(clientController.getUser().getLastName());
+                    textViewFirstName.setVisibility(View.VISIBLE);
+                    textViewLastName.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.INVISIBLE);
+                    editText2.setVisibility(View.INVISIBLE);
+                    clicked = false;
+                    button.setText("EDIT");
+                    blackLine2.setVisibility(View.VISIBLE);
+                    blackLine3.setVisibility(View.VISIBLE);
+                    button.setBackground(getActivity().getDrawable(R.drawable.colorblack));
+
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(editText2.getWindowToken(), 0);
                 }
             }
         });
 
         return view;
     }
-
-    public void onActivityResult(int reqCode, int resCode, Intent data) {
+    //Detta är välja bild med kameran
+   /* public void onActivityResult(int reqCode, int resCode, Intent data) {
        if (data == null) {
            getActivity().getFragmentManager().popBackStackImmediate("Profilefragment" , 0);
        } else if (reqCode == 1) {
-           clientController.getUser().setProfileImage(data);
-           imageViewProfile.setImageURI(clientController.getUser().getProfileImage().getData());
+           imageViewProfile.setImageURI(clientController.getUser().getProfilePicture().getProfileImage());
        }
-    }
+    }*/
 }
