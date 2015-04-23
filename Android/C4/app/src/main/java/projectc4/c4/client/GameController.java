@@ -138,7 +138,9 @@ public class GameController {
         }
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
-            startTimer();
+
+            //Todo start timer
+//            startTimer();
             clientController.animateBlackArrow(PLAYER1); // <--
         } else {
             if (playerTurn == PLAYER1) {
@@ -158,18 +160,15 @@ public class GameController {
 
     public void newGame(int gameMode) {
         resetGameBoard();
-
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
             setButtonEnable(true);
         }
-        gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
         playedTiles = 0;
         winningTiles.clear();
         this.gameMode = gameMode;
-
         if(gameMode == LOCAL) {
             setPlayerTurn(PLAYER1);
             clientController.setPlayer(PLAYER1);
@@ -177,59 +176,50 @@ public class GameController {
         }
     }
 
-    public synchronized void newMove(int x, final boolean isIncoming) {
-        System.out.println("GameController - newMove(" + x + ") [ isIncoming = " + isIncoming + " ]");
-        if (colSize[x] < getBoardHeight()) {
-            if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
+    public void newMove(int playedCol, boolean isIncoming) {
+        System.out.println("GameController - newMove(" + playedCol + ") [ isIncoming = " + isIncoming + " ]");
+        if (colSize[playedCol] < getBoardHeight()) {
+//            if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
+                setButtonEnable(false);
 
-                playedRow = (getBoardHeight() - 1) - (colSize[x]);
-                playedCol = x;
+                this.playedRow = (getBoardHeight() - 1) - (colSize[playedCol]++);
+                this.playedCol = playedCol;
 
-                final int tmpRow = (getBoardHeight() - 1) - (colSize[x]++);
-                gameGridShowPointer.changePointerPos(x);
-
-                if (gameMode == MATCHMAKING && !isIncoming) {
-                    clientController.newOutgoingMove(x);
-                }
-
+                gameGridShowPointer.changePointerPos(playedCol);
 //                System.out.println("Calc " + calculate(playedRow,playedCol))
-
                 playedTiles++;
 
                 if (gameMode == MATCHMAKING){
-                    gameGridView.newMove(tmpRow, x, playerTurn);
-                    checkOutcome(isIncoming);
-
+//                    gameGridView.newMove(playedRow, playedCol, playerTurn);
+//                    checkOutcome(isIncoming);
+                    // TODO Fixa animation för MM, tredje movet fuckad upp allt atmplayedCol
+                    gameGridAnimation.newMove(playedRow, playedCol, playerTurn, isIncoming);
                 } else if (gameMode == LOCAL) {
-                    gameGridAnimation.newMove(tmpRow,x,playerTurn, isIncoming);
+                    gameGridAnimation.newMove(playedRow, playedCol, playerTurn, isIncoming);
 
                 }
-            }
+//            }
         }
     }
 
     public void setButtonEnable(boolean buttonEnable){
-//        gameGridForeground.setButtonEnable(buttonEnable);
+        gameGridForeground.setButtonEnable(buttonEnable);
     }
        //Todo dafuck händer här?
-    public synchronized void finishMove(final int row, final int col, final int player, final boolean isIncoming){
-        new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
-            @Override
-            public void run() {
-                gameGridView.newMove(row, col, player);
-            }
-        });
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkOutcome(isIncoming);
-            }
-        }, 20);
+    public void finishMove(final int row, final int col, final int player, final boolean isIncoming){
+        gameGridView.newMove(row, col, player);
+        checkOutcome(isIncoming);
+
+        if (gameMode == MATCHMAKING && !isIncoming) {
+            clientController.newOutgoingMove(playedCol);
+        }
+
     }
 
-    public synchronized void checkOutcome(boolean isIncoming) {
+    public void checkOutcome(boolean isIncoming) {
         if (checkHorizontal() || checkVertical() || checkDiagonalRight() || checkDiagonalLeft()) {
             // If somebody won
+            setButtonEnable(false);
             if(timer != null) {
                 timer.cancel();
             }
@@ -256,6 +246,7 @@ public class GameController {
         } else {
             // Regular move without any particular outcome
             changePlayer(isIncoming);
+            setButtonEnable(true);
             if (gameMode == LOCAL) {
                 clientController.setPlayer(playerTurn);
             }

@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +48,7 @@ import static projectc4.c4.util.C4Constants.*;
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
     private int winner;
+    private boolean startup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,9 +91,15 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer1.setTypeface(type, Typeface.BOLD);
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
 
+        // Place black arrow on current player side
         textViewVs.setTextColor(C4Color.BLACK);
+        startup = true;
         highlightPlayer(clientController.getPlayerTurn());
-        animateArrow(clientController.getPlayerTurn());
+        if (gameMode == LOCAL) {
+            animateArrowDelayed(PLAYER1);
+        } else {
+            animateArrowDelayed(clientController.getPlayerTurn());
+        }
 
         textViewPlayer1.setTextColor(C4Color.WHITE);
         textViewPlayer2.setTextColor(C4Color.WHITE);
@@ -234,7 +243,28 @@ import static projectc4.c4.util.C4Constants.*;
     }*/
 
     public void animateArrow(final int direction) {
-        getActivity().runOnUiThread(new Runnable() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (direction == PLAYER1) {
+                    blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
+                    blackarrow_left.setDuration(220);
+                    blackarrow_left.setFillAfter(true);
+                    ivBlackArrow.startAnimation(blackarrow_left);
+                    System.out.println("Animation blackarrow_right used");
+                } else {
+                    blackarrow_right = new TranslateAnimation(0.0f, rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f);
+                    blackarrow_right.setDuration(220);
+                    blackarrow_right.setFillAfter(true);
+                    ivBlackArrow.startAnimation(blackarrow_right);
+                    System.out.println("Animation blackarrow_left used");
+                }
+            }
+        });
+    }
+
+    public void animateArrowDelayed(final int direction) {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
@@ -252,9 +282,8 @@ import static projectc4.c4.util.C4Constants.*;
                     ivBlackArrow.startAnimation(blackarrow_right);
                     System.out.println("Animation blackarrow_left used");
                 }
-                ivBlackArrow.setVisibility(View.VISIBLE);
             }
-        });
+        }, 500);
     }
 
     public void enableBlackArrow() {
@@ -300,9 +329,16 @@ import static projectc4.c4.util.C4Constants.*;
             public void run() {
                 if (player == PLAYER1) {
                     if(gameMode == MATCHMAKING) {
-                        textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
-                        animation = (AnimationDrawable)textViewPlayer1.getBackground();
-                        animation.start();
+                        if(startup) {
+                            textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                            startup = false;
+                        } else {
+                            textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
+                            animation = (AnimationDrawable)textViewPlayer1.getBackground();
+                            animation.start();
+
+                        }
+
                     } else {
                         textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
                     }
@@ -311,9 +347,15 @@ import static projectc4.c4.util.C4Constants.*;
 
                 } else if (player == PLAYER2) {
                     if(gameMode == MATCHMAKING) {
-                        textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
-                        animation = (AnimationDrawable)textViewPlayer2.getBackground();
-                        animation.start();
+                        if(startup) {
+                            textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                            startup = false;
+                        } else {
+                            textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
+                            animation = (AnimationDrawable) textViewPlayer2.getBackground();
+                            animation.start();
+
+                        }
                     } else {
                         textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                     }
@@ -343,6 +385,7 @@ import static projectc4.c4.util.C4Constants.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                startup = true;
                 final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
                 buttonRematch.getBackground().setAlpha(255);
                 buttonRematch.setEnabled(true);
