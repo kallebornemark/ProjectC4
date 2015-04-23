@@ -158,21 +158,15 @@ public class GameController {
 
     public void newGame(int gameMode) {
         resetGameBoard();
-
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
             setButtonEnable(true);
         }
-//        if(gameMode == MATCHMAKING) {
-//            clientController.stopAnimation();
-//        }
-        gameBoard = new int[6][7];
         colSize = new int[getBoardWidth()];
         playedTiles = 0;
         winningTiles.clear();
         this.gameMode = gameMode;
-
         if(gameMode == LOCAL) {
             setPlayerTurn(PLAYER1);
             clientController.setPlayer(PLAYER1);
