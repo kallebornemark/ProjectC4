@@ -62,7 +62,7 @@ public class Client implements Runnable, Serializable {
         this.user = user;
     }
 
-    public void newMove(int value) {
+    public void newMove(final int value) {
         try {
             oos.writeObject(value);
             oos.flush();

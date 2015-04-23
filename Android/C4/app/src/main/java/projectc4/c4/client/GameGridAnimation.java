@@ -3,6 +3,8 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +81,7 @@ public class GameGridAnimation extends RelativeLayout {
     }
 
 
-    public synchronized void newMove(final int row, final int col, final int player, final boolean isIncoming) {
+    public void newMove(final int row, final int col, final int player, final boolean isIncoming) {
         int xPos = offsetX + (col * (GRIDSPACING + sideOfTile));
         int yStop = offsetY + (row * (GRIDSPACING + sideOfTile));
 
@@ -94,13 +96,11 @@ public class GameGridAnimation extends RelativeLayout {
                 gameController.finishMove(row, col, player, isIncoming);
             }
         });
-
         if (player == PLAYER1) {
             redTile.startAnimation(animate);
         } else if (player == PLAYER2) {
             yellowTile.startAnimation(animate);
         }
-
     }
 
     /**
