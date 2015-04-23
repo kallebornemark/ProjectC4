@@ -12,7 +12,10 @@ import projectc4.c4.util.User;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Kalle Bornemark
+ * Handles all the clients that are connected to the server. A new thread for every new connected
+ * client is set up.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Server implements Runnable {
     private ServerSocket serverSocket;

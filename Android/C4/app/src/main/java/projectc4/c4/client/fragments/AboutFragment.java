@@ -17,7 +17,7 @@ import java.util.Random;
 import projectc4.c4.R;
 
 /**
- * Created by Emil on 2015-04-14.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class AboutFragment extends Fragment {
 

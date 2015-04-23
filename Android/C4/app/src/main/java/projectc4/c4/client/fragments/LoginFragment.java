@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -22,7 +24,7 @@ import projectc4.c4.util.C4Color;
 
 
 /**
- * Created by Erik on 2015-04-09.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class LoginFragment extends Fragment {
     private View view;
@@ -45,7 +47,6 @@ public class LoginFragment extends Fragment {
         styleComponents();
         initListeners();
 
-
         return view;
     }
 
@@ -66,23 +67,27 @@ public class LoginFragment extends Fragment {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setEnabled(true);
-                progressBar.setVisibility(View.VISIBLE);
-                buttonLogin.setEnabled(false);
-                buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
-                InputMethodManager inputManager = (InputMethodManager)getActivity().
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (etUsername.getText().length() > 0) {
+                    progressBar.setEnabled(true);
+                    progressBar.setVisibility(View.VISIBLE);
+                    buttonLogin.setEnabled(false);
+                    buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    InputMethodManager inputManager = (InputMethodManager) getActivity().
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-                if (((MainActivity) getActivity()).getClientController().getClient() == null) {
-                   try {
-                       ((MainActivity) getActivity()).getClientController().connect();
-                   }catch(Exception e) {
-
-                   }
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (((MainActivity) getActivity()).getClientController().getClient() == null) {
+                        try {
+                            ((MainActivity) getActivity()).getClientController().connect();
+                        } catch (Exception e) {
+                        }
+                    }
+                } else {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Username can't be empty!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                 }
-
             }
         });
     }

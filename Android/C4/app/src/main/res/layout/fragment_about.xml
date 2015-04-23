@@ -12,19 +12,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="30dp"
-        >
-
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/imageView5"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:src="@drawable/c4_logo"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:layout_marginBottom="50dp"-->
-            <!--/>-->
-
+        android:layout_margin="30dp" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,25 +22,20 @@
             android:textColor="#FF716D61"
             android:textSize="25sp"
             android:layout_marginBottom="20dp"
-            android:text="We are C4 , a group of four software developers working on a project at Malmö University"
-            />
+            android:text="We are C4 , a group of four software developers working on a project at Malmö University" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/colorblack"
             android:id="@+id/line"
-            android:layout_alignParentStart="false"
-            android:layout_above="@+id/gridLayoutCenter"
-            android:layout_alignParentEnd="false"
             android:layout_marginBottom="20dp" />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="center_horizontal"
-          >
-
-
+            android:gravity="center_horizontal" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -65,6 +48,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:background="@drawable/colorblack"
                 android:layout_marginTop="5dp" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
@@ -75,6 +59,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:background="@drawable/colororange"
                 android:layout_marginTop="5dp" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
@@ -85,6 +70,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:background="@drawable/coloryellow"
                 android:layout_marginTop="5dp" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
@@ -105,7 +91,5 @@
                 android:layout_marginTop="15dp" />
 
         </LinearLayout>
-
         </LinearLayout>
-
     </RelativeLayout>

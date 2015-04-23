@@ -10,7 +10,10 @@ import java.io.Serializable;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Kalle Bornemark
+ * Information about the user. Contains their usernamne, name, wins, losses, elo-rating and
+ * profile picture. This is sent to the user when they connect to the server.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class User implements Serializable {
     private static final long serialVersionUID = -253471345465050L;

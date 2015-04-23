@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
 import java.util.HashSet;
@@ -14,7 +12,7 @@ import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Jimmy Maksymiw
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class GameGridView extends View {
 
@@ -26,19 +24,30 @@ public class GameGridView extends View {
     private int width;
     private int height;
     private Paint paint;
+    private Paint strokePaint;
     private Bitmap bitmap;
     private Canvas c;
 
     public GameGridView(Context context) {
         super(context);
+        init();
     }
 
     public GameGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public GameGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+    public void init(){
+        paint = new Paint();
+        strokePaint = new Paint();
+        strokePaint.setStrokeWidth(5);
+        strokePaint.setColor(WHITE);
+        strokePaint.setStyle(Paint.Style.STROKE);
     }
 
     public void setGameController(GameController gameController) {
@@ -65,23 +74,20 @@ public class GameGridView extends View {
     public void resetGameBoard(){
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         c = new Canvas(bitmap);
-        paint = new Paint();
-        Paint paint = new Paint();
         paint.setColor(LIGHTGRAY);
         c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
     }
 
-    public void newMove(int row, int col, int player) {
-        if (player == PLAYER1) {
+    public void newMove(int row, int col) {
+        if (gameController.getPlayerTurn() == PLAYER1) {
             paint.setColor(RED);
-        } else if (player == PLAYER2) {
+        } else if (gameController.getPlayerTurn() == PLAYER2) {
             paint.setColor(YELLOW);
         }
         int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
         int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
         c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
         updateDisplay();
-        gameController.setElement(row, col, player);
     }
 
 
@@ -98,11 +104,6 @@ public class GameGridView extends View {
     }
 
     public void setWinningTiles(HashSet<Integer> winningTiles, int[][] gameBoard) {
-        Paint strokePaint = new Paint();
-        strokePaint.setStrokeWidth(5);
-        strokePaint.setColor(WHITE);
-        strokePaint.setStyle(Paint.Style.STROKE);
-
         int tmpCounter = 0;
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
@@ -130,7 +131,6 @@ public class GameGridView extends View {
                         c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, strokePaint);
                     }
                 }
-
                 tmpCounter++;
             }
         }
@@ -153,7 +153,7 @@ public class GameGridView extends View {
             // Rita gameBoard längst ner på canvasen i y-led
             offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
         }
-        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
+//        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
     }
 }

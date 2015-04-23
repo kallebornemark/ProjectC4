@@ -11,12 +11,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Kalle Bornemark
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Client implements Runnable, Serializable {
     private static final long serialVersionUID = -4032343768965050L;
@@ -193,8 +192,6 @@ public class Client implements Runnable, Serializable {
     }
 
     public void run() {
-        Object obj;
-        User user;
         System.out.println("Clienttråd börjad");
         try {
             System.out.println("Försöker skapa socket...");

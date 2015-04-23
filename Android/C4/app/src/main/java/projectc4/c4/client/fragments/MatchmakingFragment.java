@@ -19,7 +19,7 @@ import projectc4.c4.client.MainActivity;
 import static projectc4.c4.util.C4Constants.MATCHMAKING;
 
 /**
- * Created by Erik on 2015-04-09.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class MatchmakingFragment extends Fragment {
     private View view;
@@ -32,75 +32,32 @@ public class MatchmakingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_matchmaking, container, false);
         this.view = view;
 
-        initGraphics();
-        final Button buttonFindOpponent = (Button)view.findViewById(R.id.buttonFindOpponent);
-        final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge);
         clientController.setMatchmakingFragment(this);
 
-        buttonFindOpponent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonFindOpponent.getText() == "Cancel search") {
-                    System.out.println("Cancel search!!!");
-                    clientController.cancelSearch();
-                    buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorred));
-                    buttonFindOpponent.setText("Find Opponent");
-                    progressBar.setEnabled(false);
-                    progressBar.setVisibility(View.INVISIBLE);
-                }else {
-                    clientController.requestGame(MATCHMAKING);
-
-                    progressBar.setEnabled(true);
-                    progressBar.setVisibility(View.VISIBLE);
-//                buttonFindOpponent.setEnabled(false);
-                    buttonFindOpponent.setText("Cancel search");
-                    buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
-                }
-            }
-        });
-
+        // Init buttons
+        final Button buttonFindOpponent = (Button)view.findViewById(R.id.buttonFindOpponent);
         Button buttonMyProfile = (Button)view.findViewById(R.id.buttonMyProfile);
-
-        buttonMyProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new ProfileFragment()).addToBackStack("Profilefragment").commit();
-            }
-        });
-
         Button buttonLeaderboard = (Button)view.findViewById(R.id.buttonLeaderboard);
         Button buttonLogout = (Button)view.findViewById(R.id.buttonLogout);
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    ((MainActivity) getActivity()).getClientController().getClient().disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.popBackStackImmediate("Menu", 0);
-            }
-        });
-        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
+        // Init buttongraphics
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
         buttonMyProfile.setTypeface(type, Typeface.BOLD);
         buttonFindOpponent.setTypeface(type, Typeface.BOLD);
         buttonLeaderboard.setTypeface(type, Typeface.BOLD);
         buttonLogout.setTypeface(type, Typeface.BOLD);
 
-    return view;
+        // Init progressbar
+        final ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge);
 
+        // Init listeners
+        ButtonClickListener buttonClickListener = new ButtonClickListener();
+        buttonFindOpponent.setOnClickListener(buttonClickListener);
+        buttonMyProfile.setOnClickListener(buttonClickListener);
+        buttonLeaderboard.setOnClickListener(buttonClickListener);
+        buttonLogout.setOnClickListener(buttonClickListener);
 
-    }
-
-    private void initGraphics() {
-        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
-        Button button = (Button)view.findViewById(R.id.buttonFindOpponent);
-        button.setTypeface(type, Typeface.BOLD);
+        return view;
     }
 
     public void startGameUI() {
@@ -121,7 +78,60 @@ public class MatchmakingFragment extends Fragment {
 
     }
 
+    /**
+     * Private class that handels the buttons in the MatchmakingFragment.
+     */
+    private class ButtonClickListener implements View.OnClickListener {
 
+        @Override
+        public void onClick(View v) {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+
+            switch (v.getId()) {
+                case R.id.buttonFindOpponent:
+                    Button buttonFindOpponent = (Button) v;
+                    ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarLarge);
+                    if (buttonFindOpponent.getText() == "Cancel search") {
+                        System.out.println("Cancel search!!!");
+                        clientController.cancelSearch();
+                        buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                        buttonFindOpponent.setText("Find Opponent");
+                        progressBar.setEnabled(false);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    } else {
+                        clientController.requestGame(MATCHMAKING);
+                        progressBar.setEnabled(true);
+                        progressBar.setVisibility(View.VISIBLE);
+//                        buttonFindOpponent.setEnabled(false);
+                        buttonFindOpponent.setText("Cancel search");
+                        buttonFindOpponent.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    }
+                    break;
+
+                case R.id.buttonMyProfile:
+                    transaction.replace(R.id.activity_layout_fragmentpos, new ProfileFragment()).addToBackStack("Profilefragment").commit();
+                    break;
+
+                case R.id.buttonLeaderboard:
+
+                    break;
+
+                case R.id.buttonLogout:
+                    try {
+                        ((MainActivity) getActivity()).getClientController().getClient().disconnect();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    fragmentManager.popBackStackImmediate("Menu", 0);
+
+                    break;
+            }
+
+        }
+
+    }
 
 
 }

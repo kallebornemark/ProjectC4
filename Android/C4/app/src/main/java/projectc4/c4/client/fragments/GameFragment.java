@@ -28,7 +28,7 @@ import static projectc4.c4.util.C4Constants.*;
 
 
 /**
- * Created by Emil on 2015-04-09.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
  public class GameFragment extends Fragment {
     private ClientController clientController;

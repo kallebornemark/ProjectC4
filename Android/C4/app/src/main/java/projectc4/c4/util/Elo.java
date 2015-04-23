@@ -1,7 +1,9 @@
 package projectc4.c4.util;
 
 /**
- * Created by Emil on 2015-04-15.
+ * Calculating the relative skill level of two players.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Elo {
 

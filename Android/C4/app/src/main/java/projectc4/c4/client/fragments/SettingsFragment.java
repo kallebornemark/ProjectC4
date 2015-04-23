@@ -11,12 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import projectc4.c4.R;
 
 /**
- * Created by Emil on 2015-04-14.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class SettingsFragment extends Fragment {
     private Spinner spinner;

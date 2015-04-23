@@ -17,6 +17,9 @@ import projectc4.c4.util.C4Color;
 
 import static projectc4.c4.util.C4Constants.LOCAL;
 
+/**
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
+ */
 public class MenuFragment extends Fragment {
 
     @Override
@@ -29,87 +32,80 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         // init buttons
-        Button buttonLocalGame = (Button)view.findViewById(R.id.localGame);
-        Button buttonMultiplayer = (Button)view.findViewById(R.id.buttonMultiplayer);
-        Button buttonSettings = (Button)view.findViewById(R.id.buttonSocial);
-        Button buttonHowToPlay = (Button)view.findViewById(R.id.buttonHigh);
+        Button buttonPlayLocal = (Button)view.findViewById(R.id.buttonPlayLocal);
+        Button buttonPlayOnline = (Button)view.findViewById(R.id.buttonPlayOnline);
+        Button buttonSettings = (Button)view.findViewById(R.id.buttonSettings);
+        Button buttonHowToPlay = (Button)view.findViewById(R.id.buttonHowToPlay);
         Button buttonAbout = (Button)view.findViewById(R.id.buttonAbout);
 
-        // InitGraphcs
+        // Init buttongraphics
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
-        buttonLocalGame.setTypeface(type,Typeface.BOLD);
-        buttonMultiplayer.setTypeface(type,Typeface.BOLD);
+        buttonPlayLocal.setTypeface(type,Typeface.BOLD);
+        buttonPlayOnline.setTypeface(type,Typeface.BOLD);
         buttonSettings.setTypeface(type, Typeface.BOLD);
         buttonHowToPlay.setTypeface(type, Typeface.BOLD);
         buttonAbout.setTypeface(type, Typeface.BOLD);
 
-        buttonLocalGame.setTextColor(C4Color.WHITE);
-        buttonMultiplayer.setTextColor(C4Color.WHITE);
+        buttonPlayLocal.setTextColor(C4Color.WHITE);
+        buttonPlayOnline.setTextColor(C4Color.WHITE);
         buttonSettings.setTextColor(C4Color.WHITE);
         buttonHowToPlay.setTextColor(C4Color.WHITE);
         buttonAbout.setTextColor(C4Color.WHITE);
 
         // Init listeners
-        buttonLocalGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)getActivity()).getClientController().setGameMode(LOCAL);
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack(null).commit();
-            }
-        });
+        ButtonClickListener buttonClickListener = new ButtonClickListener();
 
-        buttonMultiplayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((((MainActivity)getActivity()).getClientController().getClient() != null)){
-                    System.out.println("Ändrar till matchmaking");
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                    transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
-                } else {
-                    System.out.println("Ändrar till Login");
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                    transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
-                }
-            }
-        });
+        buttonPlayLocal.setOnClickListener(buttonClickListener);
+        buttonPlayOnline.setOnClickListener(buttonClickListener);
+        buttonSettings.setOnClickListener(buttonClickListener);
+        buttonHowToPlay.setOnClickListener(buttonClickListener);
+        buttonAbout.setOnClickListener(buttonClickListener);
 
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new SettingsFragment()).addToBackStack(null).commit();
-            }
-        });
-
-        buttonHowToPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new HowToPlayFragment()).addToBackStack(null).commit();
-            }
-        });
-
-        buttonAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
-                transaction.replace(R.id.activity_layout_fragmentpos, new AboutFragment()).addToBackStack(null).commit();
-            }
-        });
         return view;
+    }
+
+    /**
+     * Private class to handel the buttons in the MenuFragment.
+     */
+    private class ButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+
+            switch (v.getId()) {
+                case R.id.buttonPlayLocal:
+                    ((MainActivity)getActivity()).getClientController().setGameMode(LOCAL);
+                    transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack(null).commit();
+                    break;
+
+                case R.id.buttonPlayOnline:
+                    if ((((MainActivity)getActivity()).getClientController().getClient() != null)){
+                        System.out.println("Ändrar till matchmaking");
+                        transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
+                    } else {
+                        System.out.println("Ändrar till Login");
+                        transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
+                    }
+                    break;
+
+                case R.id.buttonSettings:
+                    transaction.replace(R.id.activity_layout_fragmentpos, new SettingsFragment()).addToBackStack(null).commit();
+                    break;
+
+                case R.id.buttonHowToPlay:
+                    transaction.replace(R.id.activity_layout_fragmentpos, new HowToPlayFragment()).addToBackStack(null).commit();
+                    break;
+
+                case R.id.buttonAbout:
+                    transaction.replace(R.id.activity_layout_fragmentpos, new AboutFragment()).addToBackStack(null).commit();
+                    break;
+            }
+
+        }
+
     }
 }

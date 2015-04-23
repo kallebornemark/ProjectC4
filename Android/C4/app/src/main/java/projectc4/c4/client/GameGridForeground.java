@@ -13,7 +13,7 @@ import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Jimmy Maksymiw
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class GameGridForeground extends View {
     private GameController gameController;

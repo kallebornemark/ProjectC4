@@ -14,7 +14,7 @@ import static projectc4.c4.util.C4Color.*;
 
 
 /**
- * @author Jimmy Maksymiw
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class GameGridViewGroup extends RelativeLayout{
 

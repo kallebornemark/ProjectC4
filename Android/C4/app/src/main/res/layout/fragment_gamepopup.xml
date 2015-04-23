@@ -1,57 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".MainActivity"
     android:clickable="true"
-    android:transitionGroup="true"
-        >
+    android:transitionGroup="true" >
 
     <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:background="@drawable/dimmedscreen" android:clickable="true"
-            android:id="@+id/popup_background">
+        android:id="@+id/popup_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/dimmedscreen"
+        android:clickable="true">
     </RelativeLayout>
     <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="300dp"
-            android:layout_marginLeft="24dp" android:layout_marginRight="24dp" android:layout_centerVertical="true"
-            android:id="@+id/popup_window" android:clickable="true"
-        >
-
-
+        android:id="@+id/popup_window"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:clickable="true">
 
         <TextView
-                android:layout_width="140dp"
-                android:layout_height="35dp"
-                android:textSize="20dp"
-                android:id="@+id/tvHeader"
-                android:textAlignment="center"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_alignParentEnd="false"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="6dp" android:layout_centerHorizontal="true" android:visibility="visible"
-                android:background="@drawable/colorred"/>
+            android:id="@+id/tvHeader"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/colorred"
+            android:gravity="center_vertical|center_horizontal"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:visibility="visible" />
 
         <View
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:background="@drawable/colorlightgray"
-                android:id="@+id/line"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentEnd="false"
-
-                android:layout_below="@+id/tvHeader" android:layout_marginTop="15dp"
-                android:layout_marginLeft="25dp" android:layout_marginRight="25dp"/>
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/tvHeader"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/colorlightgray" />
 
         <TextView
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/tvContent"
-                android:layout_centerVertical="true" android:layout_alignStart="@+id/line"
-                android:layout_below="@+id/line" android:layout_marginTop="15dp"/>
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/line"
+            android:layout_below="@+id/line"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
+            android:text=""
+            android:textSize="20sp" />
 
     </RelativeLayout>
-
 </RelativeLayout>

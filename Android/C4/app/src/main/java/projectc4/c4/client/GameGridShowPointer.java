@@ -13,7 +13,7 @@ import projectc4.c4.R;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Jimmy Maksymiw
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class GameGridShowPointer extends View {
 

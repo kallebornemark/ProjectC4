@@ -3,11 +3,8 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -17,7 +14,7 @@ import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * Created by Jimmy on 2015-04-15.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class GameGridAnimation extends RelativeLayout {
     private GameController gameController;
@@ -81,7 +78,7 @@ public class GameGridAnimation extends RelativeLayout {
     }
 
 
-    public void newMove(int row, int col, int player, final boolean isIncoming) {
+    public void newMove(int row, int col, final boolean isIncoming) {
         int xPos = offsetX + (col * (GRIDSPACING + sideOfTile));
         int yStop = offsetY + (row * (GRIDSPACING + sideOfTile));
 
@@ -96,15 +93,15 @@ public class GameGridAnimation extends RelativeLayout {
                 gameController.finishMove(isIncoming);
             }
         });
-        if (player == PLAYER1) {
+        if (gameController.getPlayerTurn() == PLAYER1) {
             redTile.startAnimation(animate);
-        } else if (player == PLAYER2) {
+        } else if (gameController.getPlayerTurn() == PLAYER2) {
             yellowTile.startAnimation(animate);
         }
     }
 
     /**
-     *
+     * Privat klass
      */
     private class Tile extends View {
 
@@ -113,7 +110,6 @@ public class GameGridAnimation extends RelativeLayout {
         public Tile(Context context,int color) {
             super(context);
             paint.setColor(color);
-            System.out.println("TILE: color: " + color);
         }
 
         public Tile(Context context, AttributeSet attrs) {

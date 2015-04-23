@@ -12,7 +12,9 @@ import java.net.Socket;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Kalle Bornemark
+ * Handles the incoming/outgoing traffic between the server and the client.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class ConnectedClient extends Thread implements Serializable {
     private static final long serialVersionUID = -4032345715465050L;

@@ -3,7 +3,11 @@ package projectc4.c4.server;
 import java.util.LinkedList;
 
 /**
- * @author Kalle Bornemark
+ * A queue to handle all players that want to play a game. When the queue has two player (or more)
+ * they will be set together and a game will start. The queue-thread will start when it's one client
+ * in it and stop if it's empty.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class SearchQueue implements Runnable {
     private LinkedList queue = new LinkedList();

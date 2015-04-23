@@ -1,7 +1,9 @@
 package projectc4.c4.util;
 
 /**
- * @author Kalle Bornemark
+ * Constants.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class C4Constants {
     public static final int EMPTYMOVE = 20;

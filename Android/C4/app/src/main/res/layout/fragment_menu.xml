@@ -14,25 +14,13 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="30dp">
 
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/imageView2"-->
-            <!--android:src="@drawable/c4_logo"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:layout_marginBottom="50dp"-->
-            <!--/>-->
-
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="2 PLAYER LOCAL"
-            android:id="@+id/localGame"
-            android:layout_alignBaseline="@+id/buttonSocial"
-            android:layout_alignBottom="@+id/buttonSocial"
-            android:layout_alignParentStart="true"
+            android:id="@+id/buttonPlayLocal"
             android:layout_marginBottom="10dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@drawable/coloryellow"
             />
 
@@ -40,14 +28,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="PLAY ONLINE"
-            android:id="@+id/buttonMultiplayer"
-            android:layout_alignBaseline="@+id/localGame"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentBottom="false"
-            android:layout_below="@+id/localGame"
-            android:textSize="20dp"
+            android:id="@+id/buttonPlayOnline"
+            android:textSize="20sp"
             android:layout_marginBottom="50dp"
             android:background="@drawable/colorred"/>
 
@@ -55,10 +37,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="SETTINGS"
-            android:id="@+id/buttonSocial"
-            android:layout_above="@+id/buttonSocial"
-            android:layout_centerHorizontal="true"
-            android:textSize="20dp"
+            android:id="@+id/buttonSettings"
+            android:textSize="20sp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/colororange"/>
 
@@ -66,11 +46,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="HOW TO PLAY"
-            android:id="@+id/buttonHigh"
-            android:layout_alignBaseline="@+id/buttonAbout"
-            android:layout_alignBottom="@+id/buttonAbout"
-            android:layout_alignParentStart="true"
-            android:textSize="20dp"
+            android:id="@+id/buttonHowToPlay"
+            android:textSize="20sp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/colorlightgray"/>
 
@@ -79,10 +56,7 @@
             android:layout_height="wrap_content"
             android:text="ABOUT PROJECT C4"
             android:id="@+id/buttonAbout"
-            android:layout_alignBaseline="@+id/buttonHow"
-            android:layout_alignBottom="@+id/buttonHow"
-            android:layout_alignParentStart="true"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@drawable/colorblack"/>
 
     </LinearLayout>

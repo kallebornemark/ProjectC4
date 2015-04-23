@@ -1,13 +1,15 @@
 package projectc4.c4.server;
 
 import java.io.Serializable;
-
 import projectc4.c4.util.GameInfo;
 
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Kalle Bornemark
+ * Handles a game that is played between two clients online. The moves they do and and if they want
+ * to play again.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class ActiveGame implements Serializable {
     private static final long serialVersionUID = -403250937865050L;

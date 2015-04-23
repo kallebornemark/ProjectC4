@@ -11,7 +11,7 @@ import projectc4.c4.util.User;
 import static projectc4.c4.util.C4Constants.*;
 
 /**
- * @author Kalle Bornemark
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class ClientController {
     private GameController gameController;
@@ -85,11 +85,9 @@ public class ClientController {
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);
-        client.connect("10.2.20.240", 3450);
-//        client.connect("17
-// 2.20.10.2", 3450); // Kalles hemmadator
-//        client.connect("192.168.0.10", 3450);
-//        client.connect("192.168.0.10", 3450);
+//        client.connect("10.2.20.240", 3450);
+//        client.connect("172.20.10.2", 3450); // Kalles hemmadator
+        client.connect("192.168.0.10", 3450);
 
     }
 
@@ -248,7 +246,7 @@ public class ClientController {
                 client.updateUser(SURRENDER);
             }else if(playerTurn == WIN) { //Force win
                 System.out.println("FORCE WIN");
-                gameController.setButtonEnable();
+                gameController.setButtonEnable(false);
                 highlightWinnerPlayerStar(PLAYER1);
                 stopAnimation();
                 getUser().newGameResult(WIN, gameInfo.getOpponentElo());
