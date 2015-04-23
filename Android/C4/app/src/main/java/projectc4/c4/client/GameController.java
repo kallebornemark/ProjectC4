@@ -176,10 +176,10 @@ public class GameController {
         }
     }
 
-    public void newMove(final int playedCol, final boolean isIncoming) {
+    public void newMove(int playedCol, boolean isIncoming) {
         System.out.println("GameController - newMove(" + playedCol + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[playedCol] < getBoardHeight()) {
-            if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
+//            if ((isIncoming || ( playerTurn == clientController.getPlayer()))) {
                 setButtonEnable(false);
 
                 this.playedRow = (getBoardHeight() - 1) - (colSize[playedCol]++);
@@ -198,7 +198,7 @@ public class GameController {
                     gameGridAnimation.newMove(playedRow, playedCol, playerTurn, isIncoming);
 
                 }
-            }
+//            }
         }
     }
 

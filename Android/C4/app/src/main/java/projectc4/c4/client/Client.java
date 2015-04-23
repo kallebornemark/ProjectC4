@@ -1,5 +1,8 @@
 package projectc4.c4.client;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 import java.io.IOException;
@@ -123,6 +126,24 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void startCommunication() {
+        clientController.login();
+        try {
+            System.out.println("Client communication started");
+            while (!Thread.interrupted()) {
+                final Object obj = ois.readObject();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkObject(obj);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void checkNumberAndSend(int number) {
         if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
@@ -137,34 +158,23 @@ public class Client implements Runnable, Serializable {
         }
     }
 
-    public void startCommunication() {
-        Object obj;
+    private void checkObject(Object obj) {
         int number;
         GameInfo gameInfo;
-        clientController.login();
-        try {
-            System.out.println("Client communication started");
-            while (!Thread.interrupted()) {
-                obj = ois.readObject();
+        if (obj instanceof Integer) {
+            number = (Integer)obj;
+            checkNumberAndSend(number);
 
-                if (obj instanceof Integer) {
-                    number = (Integer)obj;
-                    checkNumberAndSend(number);
+        } else if (obj instanceof User) {
+            user = (User)obj;
+            System.out.println("Client: User set to " + user.getUsername());
+            clientController.goToMatchmaking();
 
-                } else if (obj instanceof User) {
-                    user = (User)obj;
-                    System.out.println("Client: User set to " + user.getUsername());
-                    clientController.goToMatchmaking();
-
-                } else if (obj instanceof GameInfo) {
-                    gameInfo = (GameInfo)obj;
-                    clientController.setGameInfo(gameInfo);
-                    clientController.setPlayerTurn(gameInfo.getPlayerTurn());
-                    System.out.println("New GameInfo received! Opponent wins: " + gameInfo.getOpponentGameResults()[1] + ", losses: " + gameInfo.getOpponentGameResults()[2]);
-                }
-            }
-        } catch (Exception e) {
-
+        } else if (obj instanceof GameInfo) {
+            gameInfo = (GameInfo)obj;
+            clientController.setGameInfo(gameInfo);
+            clientController.setPlayerTurn(gameInfo.getPlayerTurn());
+            System.out.println("New GameInfo received! Opponent wins: " + gameInfo.getOpponentGameResults()[1] + ", losses: " + gameInfo.getOpponentGameResults()[2]);
         }
     }
 
