@@ -374,6 +374,7 @@ import static projectc4.c4.util.C4Constants.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                clientController.setOkayToLeave(false);
                 final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
                 buttonRematch.setEnabled(false);
                 buttonRematch.setVisibility(View.INVISIBLE);
