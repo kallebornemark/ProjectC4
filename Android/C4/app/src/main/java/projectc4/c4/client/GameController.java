@@ -212,6 +212,7 @@ public class GameController {
             if (gameMode == MATCHMAKING) {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, false);
+                clientController.setOkayToLeave(true);
             }
         } else if (playedTiles == 42) {
             // Draw
