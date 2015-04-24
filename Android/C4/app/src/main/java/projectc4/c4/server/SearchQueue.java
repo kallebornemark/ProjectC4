@@ -85,7 +85,7 @@ public class SearchQueue implements Runnable {
                     System.out.println("New ActiveGame created");
                     c1.setActiveGame(a);
                     c2.setActiveGame(a);
-                    server.addActiveGame(a);
+//                    server.addActiveGame(a);  // används inte just nu
                     System.out.println("ActiveGame set to both clients and added to server's Active Games");
                 }
 

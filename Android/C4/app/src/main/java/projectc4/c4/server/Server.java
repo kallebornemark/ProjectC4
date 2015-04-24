@@ -23,7 +23,7 @@ public class Server implements Runnable {
     private HashMap<String , User> userHashMap;
     private HashMap<String, ConnectedClient> connectedClientHashMap;
     private SearchQueue searchingForGame;
-    private ArrayList<ActiveGame> activeGames;
+//    private ArrayList<ActiveGame> activeGames; // används inte just nu
 
     public Server(int port) {
         userHashMap = new HashMap<>();
@@ -33,7 +33,7 @@ public class Server implements Runnable {
             server = new Thread(this);
             server.start();
             searchingForGame = new SearchQueue(this, 10);
-            activeGames = new ArrayList<>();
+//            activeGames = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,9 +69,10 @@ public class Server implements Runnable {
         return connectedClientHashMap.containsKey(name);
     }
 
+    /* Behövs inte just nu
     public void addActiveGame(ActiveGame g) {
         activeGames.add(g);
-    }
+    } */
 
     public void addSearchingClient(ConnectedClient connectedClient) {
         try {
