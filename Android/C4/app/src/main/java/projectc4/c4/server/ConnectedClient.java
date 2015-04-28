@@ -157,6 +157,15 @@ public class ConnectedClient extends Thread implements Serializable {
         }
     }
 
+    public void sendPowerups(int[][] gameBoard) {
+        try {
+            oos.writeObject(gameBoard);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void newGame() {
         try {
             oos.writeObject(MATCHMAKING);
