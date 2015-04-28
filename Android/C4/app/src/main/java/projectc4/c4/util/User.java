@@ -25,10 +25,12 @@ public class User implements Serializable {
     private Intent profileImage;
 //    private ActiveGame activeGame;
 
-    public User(String username){
+    public User(String username, String firstName, String lastName, double elo){
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.elo = elo;
         gameResults = new int[4];
-        elo = 0;
     }
 
     /*public void setActiveGame(ActiveGame activeGame) {
@@ -43,7 +45,7 @@ public class User implements Serializable {
         return this.profileImage;
     }*/
 
-   /* public void setUser(User user) {
+   /* public void setUsername(User user) {
         User.this = user;
     }*/
 

@@ -97,9 +97,10 @@ public class Client implements Runnable, Serializable {
         }
     }
 
-    public void requestUsername(String username) {
+    public void login(String username, String password) {
         try {
             oos.writeObject(username);
+            oos.writeObject(password);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();

@@ -3,7 +3,6 @@ package projectc4.c4.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -20,14 +19,14 @@ import static projectc4.c4.util.C4Constants.*;
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Thread server;
-    private HashMap<String , User> userHashMap;
     private HashMap<String, ConnectedClient> connectedClientHashMap;
     private SearchQueue searchingForGame;
+    private SQLiteJDBC database;
 //    private ArrayList<ActiveGame> activeGames; // används inte just nu
 
     public Server(int port) {
-        userHashMap = new HashMap<>();
         connectedClientHashMap = new HashMap<>();
+        database = new SQLiteJDBC();
         try {
             serverSocket = new ServerSocket(port);
             server = new Thread(this);
@@ -37,32 +36,27 @@ public class Server implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Server started");
     }
 
     public void addUser(User user) {
-        userHashMap.put(user.getUsername(), user);
     }
 
     public synchronized void addConnectedClient(ConnectedClient connectedClient) {
-        connectedClientHashMap.put(connectedClient.getUser().getUsername(), connectedClient);
+        connectedClientHashMap.put(connectedClient.getUsername(), connectedClient);
     }
 
     public synchronized void removeConnectedClient(ConnectedClient connectedClient) {
-        connectedClientHashMap.remove(connectedClient.getUser().getUsername());
+        connectedClientHashMap.remove(connectedClient.getUsername());
     }
 
-    public synchronized User validateUser(String name) {
-        if (userHashMap.containsKey(name)) {
-            return userHashMap.get(name);
-        } else {
-            User user = new User(name);
-            addUser(user);
-            return user;
-        }
+    public synchronized User attemptLogin(String name, String password) {
+        return database.attemptLogin(name, password);
     }
 
     public void updateUser(User user) {
-        userHashMap.put(user.getUsername(), user);
+        // TODO Uppdatera User i databasen
+//        database.updateUser(user);
     }
 
     public synchronized boolean isUserOnline(String name) {
@@ -85,16 +79,16 @@ public class Server implements Runnable {
     /**
      * Sent when rematch is called.
      * @param c1
-     * @param value
+     * @param
      */
-    public void updateUser(ConnectedClient c1, int value) {
-        User user = c1.getUser();
+    /*public void updateUser(ConnectedClient c1, int value) {
+        User user = c1.getUsername();
         ConnectedClient opponent = c1.getActiveGame().getOpponent(c1);
-        user.newGameResult(value, opponent.getUser().getElo());
+        user.newGameResult(value, opponent.getUsername().getElo());
 
-        opponent.newGameInfo(new GameInfo(user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true));
+        opponent.newGameInfo(new GameInfo(user.getUsername(), opponent.getUsername().getElo(), user.getElo(), user.getGameResults(), true));
         System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
-    }
+    }*/
 
 
     public void newGame(ConnectedClient c1, ConnectedClient c2) {
@@ -114,11 +108,12 @@ public class Server implements Runnable {
         System.out.println("Startpositions set - Player 1 = " + player1 + ", Player 2 = " + player2);
 
         // Create new GameInfo objects and send to clients
-        User user1 = c1.getUser();
-        User user2 = c2.getUser();
+        String user1 = c1.getUsername();
+        String user2 = c2.getUsername();
 
-        c1.newGameInfo(new GameInfo(user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos()));
-        c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos()));
+        // TODO New game utkommenterat så att vi kan testa inloggning
+//        c1.newGameInfo(new GameInfo(database.,user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos()));
+//        c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos()));
         c1.newGame();
         c2.newGame();
 

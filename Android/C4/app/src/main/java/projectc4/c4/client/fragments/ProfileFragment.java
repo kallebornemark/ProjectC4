@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment {
        if (data == null) {
            getActivity().getFragmentManager().popBackStackImmediate("Profilefragment" , 0);
        } else if (reqCode == 1) {
-           imageViewProfile.setImageURI(clientController.getUser().getProfilePicture().getProfileImage());
+           imageViewProfile.setImageURI(clientController.getUsername().getProfilePicture().getProfileImage());
        }
     }*/
 }

@@ -30,6 +30,7 @@ public class LoginFragment extends Fragment {
     private View view;
     private Button buttonLogin;
     private EditText etUsername;
+    private EditText etPassword;
     private ClientController clientController;
 
     @Override
@@ -53,6 +54,7 @@ public class LoginFragment extends Fragment {
     public void initComponents() {
         buttonLogin = (Button)view.findViewById(R.id.buttonLogin);
         etUsername = (EditText)view.findViewById(R.id.etUsername);
+        etPassword = (EditText)view.findViewById(R.id.etPassword);
     }
 
     public void styleComponents() {
@@ -104,11 +106,11 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    public void requestUsername() {
+    public void login() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                clientController.requestUsername(etUsername.getText().toString());
+                clientController.login(etUsername.getText().toString(), etPassword.getText().toString());
             }
         });
     }

@@ -21,7 +21,7 @@ public class ConnectedClient extends Thread implements Serializable {
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private User user;
+    private String username;
     private Server server;
     private ActiveGame activeGame;
     private int startPos;
@@ -31,12 +31,12 @@ public class ConnectedClient extends Thread implements Serializable {
         this.socket = socket;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
     
     public int getStartPos() {
@@ -49,7 +49,7 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
-//        user.setActiveGame(activeGame);
+//        username.setActiveGame(activeGame);
     }
 
     public ActiveGame getActiveGame() {
@@ -58,7 +58,7 @@ public class ConnectedClient extends Thread implements Serializable {
 
     private void startCommunication() {
         int value;
-        String username;
+        String username, password;
         try {
             System.out.println("ConnectedClient: Communication started");
             while (!Thread.interrupted()) {
@@ -85,45 +85,48 @@ public class ConnectedClient extends Thread implements Serializable {
                         System.out.println("CANCEL SEARCH !!!!");
                         server.cancelSearch(this);
                     } else if (value == WIN || value == LOSS || value == DRAW || value == SURRENDER) {
-                        // Match ended, time to update Users, if the user surrender you should force loss
+                        // Match ended, time to update Users, if the username surrender you should force loss
                         if(value == SURRENDER) {
-                            System.out.println("            Server: En klient har SURRENDERAT, skicka vinst till han andra");
-                            server.updateUser(this, LOSS);
+
+                            // TODO Surrender utkommenterat för att kunna testa
+                            System.out.println("Server: En klient har SURRENDERAT, skicka vinst till han andra");
+//                            server.updateUser(this, LOSS);
                             //newMove kan användas att skicka till korresponderande klient
                             //Skicka SURRENDER till den andra klienten
                             activeGame.newMove(this, SURRENDER);
-                            System.out.println("            Skickat SURRENDER till klient 2");
+                            System.out.println("Skickat SURRENDER till klient 2");
                         } else {
-                            server.updateUser(this, value);
+//                            server.updateUser(this, value);
                         }
 
                     }
 
                     // Hantera Users //Emil - Updatera userobjektet med bild etc från profilen
                 } else if (obj instanceof User) {
-                    user = (User)obj;
-                    server.updateUser(user);
-                    System.out.println("Server: User-object updated");
+                    // TODO Uppdatera databasen när någon uppdaterat sin profil
+//                    this.username = (User)obj;
+//                    server.updateUser(this.username);
+//                    System.out.println("Server: User-object updated");
                 }
                 else if (obj instanceof String) {
+                    User user;
                     username = (String)obj;
                     System.out.println("Server: Username recieved: " + username);
+                    obj = ois.readObject();
+                    password = (String)obj;
+                    System.out.println("Server: Password recieved: " + password);
 
-                    // Check if user is online
+
+                    // Check if username is online
                     if (!server.isUserOnline(username)) {
                         System.out.println("Server: No users with username '" + username + "' online, validating...");
-                        // Check if user is registered
-                        user = server.validateUser(username);
-                        System.out.println("Server: User set to " + user.getUsername());
-                        System.out.println("Attempting to add user " + user.getUsername() + " to user hashmap");
-                        System.out.println(user.getUsername() + " added to client hashmap");
+                        // Check if username is registered
+                        user = server.attemptLogin(username, password);
                         server.addConnectedClient(this);
-                        System.out.println(user.getUsername() + " added to cc hashmap");
 
-                        // Send back user to client
+                        // Send back username to client
                         oos.writeObject(user);
                         oos.flush();
-                        System.out.println(user.getUsername() + " sent to client");
                     } else {
                         System.out.println("Server: Client named " + username + " already online!");
                     }
@@ -133,9 +136,9 @@ public class ConnectedClient extends Thread implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
             // Hantera om någon dissar
-            System.out.println("Server: Client '" + user.getUsername() + "' disconnected");
+            System.out.println("Server: Client '" + this.username + "' disconnected");
             server.removeConnectedClient(this);
-            System.out.println("Server: Client '" + user.getUsername() + "' removed from connected client list");
+            System.out.println("Server: Client '" + this.username + "' removed from connected client list");
         } catch (ClassNotFoundException e2) {
             e2.printStackTrace();
         }

@@ -23,7 +23,7 @@ public class GameInfo implements Serializable {
         this.playerTurn = playerTurn;
     }
 
-    public GameInfo(String opponentUserName, double elo, double opponentElo, int[] opponentGameResults, boolean rematch) {
+    public GameInfo(double elo, double opponentElo, int[] opponentGameResults, boolean rematch) {
         this.opponentUserName = opponentUserName;
         this.elo = elo;
         this.opponentElo = opponentElo;
