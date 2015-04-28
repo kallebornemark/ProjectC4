@@ -68,6 +68,7 @@ public class GameController {
     }
 
     public void resetGameBoard() {
+        System.out.println("RESET GAMEBOARD");
         this.gameBoard = new int[6][7];
     }
 
@@ -151,7 +152,7 @@ public class GameController {
     }
 
     public void newGame(int gameMode) {
-        resetGameBoard();
+       // resetGameBoard();
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
@@ -283,6 +284,10 @@ public class GameController {
             }
         }
         return counter >= 4;
+    }
+
+    public void setPowerups(int[][] gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     private boolean checkDiagonalLeft(){

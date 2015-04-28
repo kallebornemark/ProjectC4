@@ -121,6 +121,12 @@ public class Server implements Runnable {
         c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos()));
         c1.newGame();
         c2.newGame();
+
+        Powerups powerups = new Powerups();
+        int[][] gameBoard = powerups.spawnPowerup();
+        c1.sendPowerups(gameBoard);
+        c2.sendPowerups(gameBoard);
+
     }
 
     public void rematch(ConnectedClient c1, ConnectedClient c2) {

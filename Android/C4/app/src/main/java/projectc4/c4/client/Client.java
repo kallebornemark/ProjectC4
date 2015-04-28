@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -157,6 +158,12 @@ public class Client implements Runnable, Serializable {
         if (obj instanceof Integer) {
             number = (Integer)obj;
             checkNumberAndSend(number);
+
+            //Powerup spawn
+        } else if (obj instanceof int[][]){
+            int[][] gameBoard = (int[][])obj;
+            clientController.getGameController().setPowerups(gameBoard);
+            System.out.println("Skickat powerups");
 
         } else if (obj instanceof User) {
             user = (User)obj;
