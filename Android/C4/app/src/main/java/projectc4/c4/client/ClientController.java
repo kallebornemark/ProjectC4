@@ -77,7 +77,6 @@ public class ClientController {
     public void connect() {
         client = new Client(this);
 //        client.connect("10.2.10.36", 3450);
-//        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
@@ -173,6 +172,10 @@ public class ClientController {
 
     public void setWinner(int winner) {
         gameFragment.setWinner(winner);
+    }
+
+    public void setTimeLimit(boolean timeLimit) {
+        gameFragment.setTimeLimit(timeLimit);
     }
 
     public int getOpponent() {

@@ -6,9 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import projectc4.c4.R;
+
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -76,22 +80,28 @@ public class GameGridForeground extends View {
     }
 
     private  void paintForeground(){
+        Drawable d = getResources().getDrawable(R.drawable.clock); //The time-icon
+
 //        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
         paint.setColor(BLACK);
         c.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
-
+        c.drawRoundRect(100,400,300,300,20,20,paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
 
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
                 int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
-
-                c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                if (row == 3 && col == 0) { //Time icon draw
+                    d.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    d.draw(c);
+                }
             }
         }
+
         paint = new Paint();
     }
 

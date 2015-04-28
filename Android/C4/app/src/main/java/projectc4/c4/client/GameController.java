@@ -24,11 +24,13 @@ public class GameController {
     private HashSet<Integer> winningTiles = new HashSet<>();
     private Timer timer;
     private int time;
+    private Powerup powerup;
 
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
         this.clientController = clientController;
         this.gameBoard = new int[6][7];
+        this.powerup = new Powerup(this);
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
@@ -87,11 +89,11 @@ public class GameController {
         return gameMode;
     }
 
-    public void startTimer() {
+    public void startTimer(int time) {
         if (timer != null) {
             timer.cancel();
         }
-        time = 30;
+        this.time = time;
         timer = new Timer();
         System.out.println("TIMER STARTAD");
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -132,7 +134,9 @@ public class GameController {
         }
         clientController.changeHighlightedPlayer(playerTurn);
         if (isIncoming) {
-            startTimer();
+            if(timer == null) {
+                startTimer(30);
+            }
             clientController.animateBlackArrow(PLAYER1); // <--
         } else {
             if (playerTurn == PLAYER1) {
@@ -152,6 +156,7 @@ public class GameController {
 
     public void newGame(int gameMode) {
         resetGameBoard();
+        setElement(3,0,POWERUP_TIME);
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
@@ -166,11 +171,25 @@ public class GameController {
             clientController.setPlayer(PLAYER1);
             clientController.changeHighlightedPlayer(PLAYER1);
         }
+
     }
+
+    public void checkIfPowerup(int tile, boolean isIncoming) {
+        if(tile == POWERUP_TIME) {
+            if(isIncoming) {
+                System.out.println("POWERUP TIME");
+                powerup.powerupTime();
+            }
+           clientController.setTimeLimit(true);
+        }
+    }
+
 
     public void newMove(int col, boolean isIncoming) {
         System.out.println("GameController - newMove(" + col + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[col] < getBoardHeight()) {
+            System.out.println(getElement((getBoardHeight() - 1) - (colSize[col]),col));
+            checkIfPowerup(getElement((getBoardHeight() - 1) - (colSize[col]),col), isIncoming);
             setButtonEnable(false);
             this.playedCol = col;
             this.playedRow = (getBoardHeight() - 1) - (colSize[playedCol]++);

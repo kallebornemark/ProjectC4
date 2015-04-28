@@ -48,7 +48,7 @@ import static projectc4.c4.util.C4Constants.*;
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
     private int winner;
-    private boolean startup;
+    private boolean startup, timeLimit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -332,7 +332,12 @@ import static projectc4.c4.util.C4Constants.*;
                         if(startup) {
                             textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
                             startup = false;
-                        } else {
+                        }else if (timeLimit) {
+                            textViewPlayer1.setBackgroundResource(R.drawable.timer_animation3);
+                            animation = (AnimationDrawable)textViewPlayer1.getBackground();
+                            animation.start();
+                            timeLimit = false;
+                        }else {
                             textViewPlayer1.setBackgroundResource(R.drawable.timer_animation);
                             animation = (AnimationDrawable)textViewPlayer1.getBackground();
                             animation.start();
@@ -350,6 +355,11 @@ import static projectc4.c4.util.C4Constants.*;
                         if(startup) {
                             textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                             startup = false;
+                        }else if (timeLimit) {
+                            textViewPlayer2.setBackgroundResource(R.drawable.timer_animation4);
+                            animation = (AnimationDrawable)textViewPlayer2.getBackground();
+                            animation.start();
+                            timeLimit = false;
                         } else {
                             textViewPlayer2.setBackgroundResource(R.drawable.timer_animation2);
                             animation = (AnimationDrawable) textViewPlayer2.getBackground();
@@ -477,6 +487,10 @@ import static projectc4.c4.util.C4Constants.*;
                 });
             }
         });
+    }
+
+    public void setTimeLimit(boolean timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
     public void stopAnimation() {

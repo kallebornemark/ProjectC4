@@ -18,4 +18,5 @@ public class C4Constants {
     public static final int CANCELSEARCH = -500;
     public static final int PLAYER1 = -10;
     public static final int PLAYER2 = -20;
+    public static final int POWERUP_TIME = 30;
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item android:drawable="@drawable/red_progress1" android:duration="333" />
+    <item android:drawable="@drawable/red_progress2" android:duration="333" />
+    <item android:drawable="@drawable/red_progress3" android:duration="333" />
+    <item android:drawable="@drawable/red_progress4" android:duration="333" />
+    <item android:drawable="@drawable/red_progress5" android:duration="333" />
+    <item android:drawable="@drawable/red_progress6" android:duration="333" />
+    <item android:drawable="@drawable/red_progress7" android:duration="333" />
+    <item android:drawable="@drawable/red_progress8" android:duration="333" />
+    <item android:drawable="@drawable/red_progress9" android:duration="333" />
+    <item android:drawable="@drawable/red_progress10" android:duration="333" />
+    <item android:drawable="@drawable/red_progress11" android:duration="333" />
+    <item android:drawable="@drawable/red_progress12" android:duration="333" />
+    <item android:drawable="@drawable/red_progress13" android:duration="333" />
+    <item android:drawable="@drawable/red_progress14" android:duration="333" />
+    <item android:drawable="@drawable/red_progress15" android:duration="333" />
+    <item android:drawable="@drawable/red_progress16" android:duration="333" />
+    <item android:drawable="@drawable/red_progress17" android:duration="333" />
+    <item android:drawable="@drawable/red_progress18" android:duration="333" />
+    <item android:drawable="@drawable/red_progress19" android:duration="333" />
+    <item android:drawable="@drawable/red_progress20" android:duration="333" />
+    <item android:drawable="@drawable/red_progress21" android:duration="333" />
+    <item android:drawable="@drawable/red_progress22" android:duration="333" />
+    <item android:drawable="@drawable/red_progress23" android:duration="333" />
+    <item android:drawable="@drawable/red_progress24" android:duration="333" />
+    <item android:drawable="@drawable/red_progress25" android:duration="333" />
+    <item android:drawable="@drawable/red_progress26" android:duration="333" />
+    <item android:drawable="@drawable/red_progress27" android:duration="333" />
+    <item android:drawable="@drawable/red_progress28" android:duration="333" />
+    <item android:drawable="@drawable/red_progress29" android:duration="333" />
+    <item android:drawable="@drawable/red_progress30" android:duration="333" />
+</animation-list>
