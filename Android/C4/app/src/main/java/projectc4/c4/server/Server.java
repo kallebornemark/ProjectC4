@@ -87,12 +87,14 @@ public class Server implements Runnable {
      * @param c1
      * @param value
      */
-    public void updateUser(ConnectedClient c1, int value) {
+    public void updateUser(ConnectedClient c1, int value, int[][] gameBoard) {
         User user = c1.getUser();
         ConnectedClient opponent = c1.getActiveGame().getOpponent(c1);
         user.newGameResult(value, opponent.getUser().getElo());
 
-        opponent.newGameInfo(new GameInfo(user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true));
+        if(gameBoard != null) {
+            opponent.newGameInfo(new GameInfo(user.getUsername(), opponent.getUser().getElo(), user.getElo(), user.getGameResults(), true, gameBoard)); //<---- Nya gameBoard
+        }
         System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
     }
 
@@ -117,19 +119,25 @@ public class Server implements Runnable {
         User user1 = c1.getUser();
         User user2 = c2.getUser();
 
-        c1.newGameInfo(new GameInfo(user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos()));
-        c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos()));
+        Powerups powerups = new Powerups();
+        int[][] gameBoard = powerups.spawnPowerup();
+
+
+
+        c1.newGameInfo(new GameInfo(user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos(),gameBoard));
+        c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos(), gameBoard));
         c1.newGame();
         c2.newGame();
 
-        Powerups powerups = new Powerups();
-        int[][] gameBoard = powerups.spawnPowerup();
-        c1.sendPowerups(gameBoard);
-        c2.sendPowerups(gameBoard);
+//        Powerups powerups = new Powerups();
+//        int[][] gameBoard = powerups.spawnPowerup();
+//        c1.sendPowerups(gameBoard);
+//        c2.sendPowerups(gameBoard);
 
     }
 
     public void rematch(ConnectedClient c1, ConnectedClient c2) {
+        System.out.println("Rematch : Server");
         c1.newGame();
         c2.newGame();
     }
@@ -154,6 +162,8 @@ public class Server implements Runnable {
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] args) {
         new Server(3450);

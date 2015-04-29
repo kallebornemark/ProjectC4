@@ -76,7 +76,7 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-          client.connect("10.2.10.38", 3450);
+//          client.connect("10.2.10.38", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
@@ -88,7 +88,7 @@ public class ClientController {
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
 //        client.connect("172.20.10.2", 3450); // Kalles hemmadator
-        client.connect("192.168.0.10", 3450);
+        client.connect("192.168.2.74", 3450);
 
     }
 
@@ -130,6 +130,8 @@ public class ClientController {
     }
 
     public void unpromptRematch() {
+//        gameController.setPowerups(gameInfo.getGameBoard());
+
         gameFragment.unpromptRematch();
     }
 
@@ -153,6 +155,8 @@ public class ClientController {
     }
 
     public void newGame(int gamemode) {
+
+        gameController.setPowerups(gameInfo.getGameBoard());
         gameController.newGame(gamemode);
     }
 
@@ -162,6 +166,7 @@ public class ClientController {
 
     public void rematch() {
         newGame(MATCHMAKING);
+//        gameController.reDraw();
         unpromptRematch();
         changeHighlightedPlayer(gameController.getPlayerTurn());
         gameFragment.animateArrow(gameController.getPlayerTurn());

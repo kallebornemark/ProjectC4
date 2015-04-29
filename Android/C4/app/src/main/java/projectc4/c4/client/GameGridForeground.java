@@ -33,6 +33,7 @@ public class GameGridForeground extends View {
     private int offsetY;
     private Bitmap bitmap;
     private Paint paint;
+    private Canvas c;
 
     public GameGridForeground(Context context) {
         super(context);
@@ -50,6 +51,10 @@ public class GameGridForeground extends View {
     }
 
     public void init(){
+        /*
+        Flyttade denna hit
+         */
+
         paint = new Paint();
     }
 
@@ -72,37 +77,49 @@ public class GameGridForeground extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (bitmap==null){
-            paintForeground();
+            paintForeground(gameController.getGameBoard());
         }
         canvas.save();
         canvas.drawBitmap(bitmap, 0, 0, paint);
         canvas.restore();
     }
 
-    private  void paintForeground(){
-        Drawable d = getResources().getDrawable(R.drawable.clock); //The time-icon
+    private void paintForeground(int[][] array){
+//        Drawable d = getResources().getDrawable(R.drawable.clock); //The time-icon
 
 //        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bitmap);
+        c = new Canvas(bitmap);
         paint.setColor(BLACK);
         c.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
-        c.drawRoundRect(100,400,300,300,20,20,paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
 
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
                 int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
-                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-                if (row == 3 && col == 0) { //Time icon draw
-                    d.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
-                    d.draw(c);
-                }
+                c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+//                if (array[row][col] >=30 && array[row][col] < 35) { //Time icon draw
+//                    d.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+//                    d.draw(c);
+//                }
             }
         }
 
         paint = new Paint();
+    }
+
+
+    /*
+    TODO Ta bort och lägg till ikoner! Jimmy: dra över allt till gameGridView istället
+     */
+    public void removeIcon(int row, int col) {
+        Paint paint = new Paint();
+        paint.setColor(WHITE);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+        int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
     }
 
     public void setButtonEnable(boolean setButtonEnable){

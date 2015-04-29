@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import java.util.HashSet;
+
+import projectc4.c4.R;
 
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
@@ -27,6 +30,7 @@ public class GameGridView extends View {
     private Paint strokePaint;
     private Bitmap bitmap;
     private Canvas c;
+    private int rows, cols;
 
     public GameGridView(Context context) {
         super(context);
@@ -52,6 +56,8 @@ public class GameGridView extends View {
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
+        rows = gameController.getBoardHeight();
+        cols = gameController.getBoardWidth();
     }
 
     public void updateDisplay() {
@@ -71,11 +77,24 @@ public class GameGridView extends View {
         updateDisplay();
     }
 
-    public void resetGameBoard(){
+    public void resetGameBoard(int[][] array){
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         c = new Canvas(bitmap);
         paint.setColor(LIGHTGRAY);
         c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
+        Drawable d = getResources().getDrawable(R.drawable.clock);
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+                if (array[row][col] >=30 && array[row][col] < 35) { //Time icon draw
+                    d.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    d.draw(c);
+                }
+            }
+        }
+
+
     }
 
     public void newMove(int row, int col) {
@@ -94,7 +113,7 @@ public class GameGridView extends View {
 
     protected void onDraw(Canvas canvas) {
         if (bitmap==null){
-            resetGameBoard();
+            resetGameBoard(gameController.getGameBoard());
         }
         if (bitmap != null && gameController != null){
             canvas.save();

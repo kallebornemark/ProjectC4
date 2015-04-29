@@ -72,8 +72,9 @@ import static projectc4.c4.util.C4Constants.*;
 
         initGraphics(view);
         initListeners();
-
-        clientController.newGame(gameMode);
+        if (gameMode == LOCAL) {
+            clientController.newGame(gameMode);
+        }
 
         return view;
     }

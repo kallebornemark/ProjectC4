@@ -145,6 +145,7 @@ public class Client implements Runnable, Serializable {
         } else if (number == MATCHMAKING && !clientController.getGameInfo().isRematch()) {
             clientController.startGameUI();
         } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch()) {
+            System.out.println("REMATCH REMATCH REMATCH");
             clientController.rematch();
         } else if (number == SURRENDER) {
             System.out.println(":                Han andra SURRENDERA, du ska VINNA");
@@ -159,11 +160,11 @@ public class Client implements Runnable, Serializable {
             number = (Integer)obj;
             checkNumberAndSend(number);
 
-            //Powerup spawn
+//            Powerup spawn
         } else if (obj instanceof int[][]){
             int[][] gameBoard = (int[][])obj;
             clientController.getGameController().setPowerups(gameBoard);
-            System.out.println("Skickat powerups");
+            System.out.println("Skickat powerups"); //TEMP
 
         } else if (obj instanceof User) {
             user = (User)obj;

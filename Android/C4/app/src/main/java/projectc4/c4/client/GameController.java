@@ -155,8 +155,15 @@ public class GameController {
         gameGridView.setWinningTiles(winningTiles, gameBoard);
     }
 
+    public int[][] getGameBoard() {
+        return gameBoard;
+    }
+
     public void newGame(int gameMode) {
-       // resetGameBoard();
+//        resetGameBoard();
+//        setElement(3, 0, POWERUP_TIME);
+//        setElement(4, 3, POWERUP_TIME);
+
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
@@ -171,7 +178,6 @@ public class GameController {
             clientController.setPlayer(PLAYER1);
             clientController.changeHighlightedPlayer(PLAYER1);
         }
-
     }
 
     public void checkIfPowerup(int tile, boolean isIncoming) {
@@ -184,8 +190,14 @@ public class GameController {
         }
     }
 
+    public void reDraw() {
+        System.out.println("ReDraw");
+//        gameGridForeground.paintForeground(gameBoard);
+    }
+
 
     public void newMove(int col, boolean isIncoming) {
+//        gameGridForeground.removeIcon(3,0);
         System.out.println("GameController - newMove(" + col + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[col] < getBoardHeight()) {
             System.out.println(getElement((getBoardHeight() - 1) - (colSize[col]),col));
@@ -306,6 +318,12 @@ public class GameController {
 
     public void setPowerups(int[][] gameBoard) {
         this.gameBoard = gameBoard;
+        for(int i = 0; i < 6; i++) {
+            System.out.println();
+            for(int j = 0; j < 7; j++) {
+                System.out.print(gameBoard[i][j] + " ");
+            }
+        }
     }
 
     private boolean checkDiagonalLeft(){

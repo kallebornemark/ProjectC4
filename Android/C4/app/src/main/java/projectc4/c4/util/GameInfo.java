@@ -13,23 +13,26 @@ public class GameInfo implements Serializable {
     private double opponentElo;
     private int[] opponentGameResults;
     private boolean rematch;
+    private int[][] gameBoard;
 
-    public GameInfo(String opponentUserName, double elo, double opponentElo, int[] opponentGameResults, boolean rematch, int playerTurn) {
+    public GameInfo(String opponentUserName, double elo, double opponentElo, int[] opponentGameResults, boolean rematch, int playerTurn, int[][] gameBoard) {
         this.opponentUserName = opponentUserName;
         this.elo = elo;
         this.opponentElo = opponentElo;
         this.opponentGameResults = opponentGameResults;
         this.rematch = rematch;
         this.playerTurn = playerTurn;
+        this.gameBoard = gameBoard;
     }
 
-    public GameInfo(String opponentUserName, double elo, double opponentElo, int[] opponentGameResults, boolean rematch) {
+    public GameInfo(String opponentUserName, double elo, double opponentElo, int[] opponentGameResults, boolean rematch, int[][] gameBoard) {
         this.opponentUserName = opponentUserName;
         this.elo = elo;
         this.opponentElo = opponentElo;
         this.opponentGameResults = opponentGameResults;
         this.rematch = rematch;
         this.playerTurn = 0;
+        this.gameBoard = gameBoard;
     }
 
     public double getElo() {
@@ -70,5 +73,13 @@ public class GameInfo implements Serializable {
 
     public int[] getOpponentGameResults() {
         return opponentGameResults;
+    }
+
+    public void setGameBoard(int[][] gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public int[][] getGameBoard() {
+        return gameBoard;
     }
 }
