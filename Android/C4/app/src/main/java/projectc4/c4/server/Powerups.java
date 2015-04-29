@@ -43,7 +43,7 @@ public class Powerups {
     public static int[] SpawnPowerupTier1() {
         Random random = new Random();
         int colRandom = random.nextInt(7);
-        int chance = random.nextInt(20)+1;
+        int chance = random.nextInt(6)+1;
         if (chance == 1) {
             int[] sendArray = new int[2];
             sendArray[1] = colRandom;
