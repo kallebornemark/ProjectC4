@@ -1,6 +1,7 @@
 package projectc4.c4.server;
 
 import java.util.Random;
+import static projectc4.c4.util.C4Constants.*;
 
 /**
  * Created by Emil on 2015-04-28.
@@ -10,42 +11,60 @@ public class Powerups {
      * Genererar en powerup
      * @return powerup-int
      */
-    public int generatePowerup() {
+    public int generatePowerupTier1() {
         Random random = new Random();
-        int powerup = random.nextInt(51)+1;
-
-            //Klocka
-        if (powerup <= 15) {
-            return 30;
-            //Bomb
-        } else if (powerup > 15 && powerup <= 30) {
-            return 31;
+        int powerup = random.nextInt(50)+1;
+            //Klocka ska åka ner
+        if (powerup <= 20) {
+            return POWERUP_TIME;
+            //Bomb ska åka ner
+        } else if (powerup > 20 && powerup <= 40) {
+            return POWERUP_BOMB;
             //Colorblind
-        } else if (powerup > 30 && powerup <= 40) {
-            return 32;
-            //Extra turn
-        } else if (powerup > 40 && powerup <= 45) {
-            return 33;
-            //Shuffle board
-        } else if (powerup > 45 && powerup <= 50) {
-            return 34;
+        } else if (powerup > 40 && powerup <= 50) {
+            return POWERUP_COLORBLIND;
         }
         return 0;
+    }
+
+    public int generatePowerupTier3() {
+        Random random = new Random();
+        int powerup = random.nextInt(2) + 1;
+        //extra turn
+        if (powerup == 1) {
+            return POWERUP_EXTRATURN;
+            //Shuffle board
+        } else if (powerup == 2) {
+            return POWERUP_SHUFFLE;
+        }
+        return 0;
+    }
+
+    public int[] SpawnPowerupTier1() {
+        Random random = new Random();
+        int colRandom = random.nextInt(7);
+        int chance = random.nextInt(20)+1;
+        if (chance == 1) {
+            int[] sendArray = new int[2];
+            sendArray[1] = colRandom;
+            sendArray[0] = generatePowerupTier1();
+            return sendArray;
+        }
+        return null;
     }
 
     /**
      * Spawns powerups randomly in the gameboardgrid.
      * @return grid with powerups
      */
-    public int[][] spawnPowerup() {
+    public int[][] spawnPowerupTier3() {
         Random random = new Random();
         int[][] gameboard = new int[6][7];
-
         for (int i = 0; i < gameboard.length ; i++) {
             for (int j = 0; j < gameboard[i].length ; j++) {
-                int chance = random.nextInt(11)+1;
+                int chance = random.nextInt(30)+1;
                 if (chance == 1) {
-                    gameboard[i][j] = generatePowerup();
+                    gameboard[i][j] = generatePowerupTier3();
                 } else {
                     gameboard[i][j] = 0;
                 }

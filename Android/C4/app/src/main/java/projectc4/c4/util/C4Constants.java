@@ -19,4 +19,8 @@ public class C4Constants {
     public static final int PLAYER1 = -10;
     public static final int PLAYER2 = -20;
     public static final int POWERUP_TIME = 30;
+    public static final int POWERUP_BOMB = 31;
+    public static final int POWERUP_COLORBLIND = 32;
+    public static final int POWERUP_EXTRATURN = 33;
+    public static final int POWERUP_SHUFFLE = 34;
 }
