@@ -160,9 +160,9 @@ public class GameController {
     }
 
     public void newGame(int gameMode) {
-//        resetGameBoard();
-//        setElement(3, 0, POWERUP_TIME);
-//        setElement(4, 3, POWERUP_TIME);
+        if(gameMode == LOCAL) {
+          resetGameBoard();
+        }
 
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
