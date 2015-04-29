@@ -155,8 +155,9 @@ public class ClientController {
     }
 
     public void newGame(int gamemode) {
-
-        gameController.setPowerups(gameInfo.getGameBoard());
+        if(gamemode == MATCHMAKING) {
+            gameController.setPowerups(gameInfo.getGameBoard());
+        }
         gameController.newGame(gamemode);
     }
 
