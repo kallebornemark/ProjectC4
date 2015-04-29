@@ -164,7 +164,12 @@ public class Client implements Runnable, Serializable {
         } else if (obj instanceof int[][]){
             int[][] gameBoard = (int[][])obj;
             clientController.getGameController().setPowerups(gameBoard);
-            System.out.println("Skickat powerups"); //TEMP
+            System.out.println("Tagit emot powerups"); //TEMP
+
+        } else if (obj instanceof int[]){
+            int[] powerupAndCol = (int[])obj;
+            clientController.getGameController().dropPowerup(powerupAndCol);
+            System.out.println("Tagit emot powerup tier 1 och col"); //TEMP
 
         } else if (obj instanceof User) {
             user = (User)obj;
