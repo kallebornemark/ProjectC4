@@ -31,6 +31,11 @@ public class GameGridView extends View {
     private Bitmap bitmap;
     private Canvas c;
     private int rows, cols;
+    private Drawable clock = getResources().getDrawable(R.drawable.clock);
+    private Drawable bomb = getResources().getDrawable(R.drawable.bomb);
+    private Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
+    private Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
+    private Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
 
     public GameGridView(Context context) {
         super(context);
@@ -109,6 +114,39 @@ public class GameGridView extends View {
                 }
             }
         }
+    }
+
+    public void dropPowerup(int powerup, int col, int[] colSize) {
+
+        if (colSize[col] < gameController.getBoardHeight()) {
+            int row = (gameController.getBoardHeight() - 1) - (colSize[col]);
+            int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+            int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+            if (powerup == 30) { //Time icon draw
+                clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                clock.draw(c);
+                gameController.setElement(row,col,30);
+            } else if (powerup == 31){
+                bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                bomb.draw(c);
+                gameController.setElement(row,col,31);
+            } else if (powerup == 32){
+                colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                colorblind.draw(c);
+                gameController.setElement(row,col,32);
+            } else if (powerup == 33){
+                extraturn.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                extraturn.draw(c);
+                gameController.setElement(row,col,33);
+            } else if (powerup == 34){
+                shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                shuffle.draw(c);
+                gameController.setElement(row,col,34);
+            }
+        }
+
+
+
     }
 
     public void newMove(int row, int col) {
