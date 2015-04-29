@@ -167,6 +167,13 @@ public class GameGridView extends View {
     }
 
     public void setWinningTiles(HashSet<Integer> winningTiles, int[][] gameBoard) {
+        System.out.println("--------------------------------------------------");
+        for(int i = 0; i < 6; i++) {
+            System.out.println();
+            for(int j = 0; j < 7; j++) {
+                System.out.print(gameBoard[i][j] + " ");
+            }
+        }
         int tmpCounter = 0;
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
