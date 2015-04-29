@@ -87,11 +87,6 @@ public class GameGridView extends View {
         c = new Canvas(bitmap);
         paint.setColor(LIGHTGRAY);
         c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
-        Drawable clock = getResources().getDrawable(R.drawable.clock);
-        Drawable bomb = getResources().getDrawable(R.drawable.bomb);
-        Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
-        Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
-        Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
@@ -144,9 +139,6 @@ public class GameGridView extends View {
                 gameController.setElement(row,col,34);
             }
         }
-
-
-
     }
 
     public void newMove(int row, int col) {

@@ -11,7 +11,7 @@ public class Powerups {
      * Genererar en powerup
      * @return powerup-int
      */
-    public int generatePowerupTier1() {
+    public static int generatePowerupTier1() {
         Random random = new Random();
         int powerup = random.nextInt(50)+1;
             //Klocka ska åka ner
@@ -27,7 +27,7 @@ public class Powerups {
         return 0;
     }
 
-    public int generatePowerupTier3() {
+    public static int generatePowerupTier3() {
         Random random = new Random();
         int powerup = random.nextInt(2) + 1;
         //extra turn
@@ -40,7 +40,7 @@ public class Powerups {
         return 0;
     }
 
-    public int[] SpawnPowerupTier1() {
+    public static int[] SpawnPowerupTier1() {
         Random random = new Random();
         int colRandom = random.nextInt(7);
         int chance = random.nextInt(20)+1;
@@ -57,7 +57,7 @@ public class Powerups {
      * Spawns powerups randomly in the gameboardgrid.
      * @return grid with powerups
      */
-    public int[][] spawnPowerupTier3() {
+    public static int[][] spawnPowerupTier3() {
         Random random = new Random();
         int[][] gameboard = new int[6][7];
         for (int i = 0; i < gameboard.length ; i++) {

@@ -90,9 +90,15 @@ public class GameController {
         return gameMode;
     }
 
+    public void dropPowerup(int[] powerupAndCol) {
+        int powerup = powerupAndCol[0], col = powerupAndCol[1];
+        gameGridView.dropPowerup(powerup, col, colSize);
+    }
+
     public void startTimer(int time) {
         if (timer != null) {
             timer.cancel();
+            timer = null;
         }
         this.time = time;
         timer = new Timer();
@@ -109,6 +115,7 @@ public class GameController {
         if (time == 0) {
             System.out.println("TIDEN SLUT");
             timer.cancel();
+            timer = null;
             changePlayer(false);
             clientController.newOutgoingMove(EMPTYMOVE);
         }
@@ -116,6 +123,7 @@ public class GameController {
 
     public void cancelTimer() {
         timer.cancel();
+        timer = null;
     }
 
     public void changePointerpos(int pointerCol) {
@@ -148,6 +156,7 @@ public class GameController {
         }
         if (!isIncoming && timer != null) {
             timer.cancel();
+            timer = null;
         }
     }
 
