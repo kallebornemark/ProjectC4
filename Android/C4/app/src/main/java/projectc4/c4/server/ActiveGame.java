@@ -73,7 +73,7 @@ public class ActiveGame implements Serializable {
      */
     public void rematch() {
         System.out.println("Rematch : ActiveGame");
-        server.rematch(c1, c2);
+        server.rematch(c1, c2, getGameBoard());
     }
 
     public void setReady(ConnectedClient connectedClient) {

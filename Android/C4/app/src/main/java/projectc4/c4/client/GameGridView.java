@@ -117,23 +117,23 @@ public class GameGridView extends View {
             int row = (gameController.getBoardHeight() - 1) - (colSize[col]);
             int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
             int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
-            if (powerup == 30) { //Time icon draw
+            if (gameController.getGameBoard()[row][col] == 0 && powerup == 30) { //Time icon draw
                 clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 clock.draw(c);
                 gameController.setElement(row,col,30);
-            } else if (powerup == 31){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 31){
                 bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 bomb.draw(c);
                 gameController.setElement(row,col,31);
-            } else if (powerup == 32){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 32){
                 colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 colorblind.draw(c);
                 gameController.setElement(row,col,32);
-            } else if (powerup == 33){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 33){
                 extraturn.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 extraturn.draw(c);
                 gameController.setElement(row,col,33);
-            } else if (powerup == 34){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 34){
                 shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 shuffle.draw(c);
                 gameController.setElement(row,col,34);

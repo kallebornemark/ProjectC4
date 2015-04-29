@@ -88,13 +88,13 @@ public class ConnectedClient extends Thread implements Serializable {
                         // Match ended, time to update Users, if the user surrender you should force loss
                         if(value == SURRENDER) {
                             System.out.println("            Server: En klient har SURRENDERAT, skicka vinst till han andra");
-                            server.updateUser(this, LOSS, null);
+                            server.updateUser(this, LOSS);
                             //newMove kan användas att skicka till korresponderande klient
                             //Skicka SURRENDER till den andra klienten
                             activeGame.newMove(this, SURRENDER);
                             System.out.println("            Skickat SURRENDER till klient 2");
                         } else {
-                            server.updateUser(this, value, activeGame.getGameBoard());
+                            server.updateUser(this, value); //getGameboard från active game
                         }
 
                     }
@@ -162,6 +162,16 @@ public class ConnectedClient extends Thread implements Serializable {
             oos.writeObject(powerupAndCol);
             oos.flush();
             System.out.println("Sent powerup and col from server");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendPowerups(int[][] powerups) {
+        try {
+            oos.writeObject(powerups);
+            oos.flush();
+            System.out.println("Sent powerup grid--------------------------------------------------------------");
         } catch (IOException e) {
             e.printStackTrace();
         }
