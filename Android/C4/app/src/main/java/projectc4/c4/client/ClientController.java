@@ -167,6 +167,7 @@ public class ClientController {
     public void rematch() {
         newGame(MATCHMAKING);
 //        gameController.reDraw();
+        //Hej
         unpromptRematch();
         changeHighlightedPlayer(gameController.getPlayerTurn());
         gameFragment.animateArrow(gameController.getPlayerTurn());
