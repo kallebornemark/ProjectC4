@@ -22,6 +22,8 @@ public class ConnectedClient extends Thread implements Serializable {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private String username;
+    private String firstName;
+    private String lastName;
     private Server server;
     private ActiveGame activeGame;
     private int startPos;
@@ -37,6 +39,14 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
     
     public int getStartPos() {
@@ -63,15 +73,21 @@ public class ConnectedClient extends Thread implements Serializable {
                 System.out.println("Server: No users with username '" + username + "' online, validating...");
 
                 // Check if username is registered
+                // If successful, re-create User object from given info, then send back to client
                 String[] res = server.attemptLogin(username, password);
-                if (res[4] == null) {
-                    User returnUser = new User(res[0], res[1], res[2], Double.parseDouble(res[3]));
+                if (res[0] == null) {
+                    int[] gameResults = {Integer.parseInt(res[5]), Integer.parseInt(res[6]), Integer.parseInt(res[7])};
+
+                    // Re-create User with username, firstname, lastname, elo and gameresults
+                    User returnUser = new User(res[1], res[2], res[3], Double.parseDouble(res[4]), gameResults);
                     oos.writeObject(returnUser);
                     oos.flush();
                     this.username = username;
+                    this.firstName = res[2];
+                    this.lastName = res[3];
                     server.addConnectedClient(this);
                 } else {
-                    String error = res[4];
+                    String error = res[0];
                     oos.writeObject(error);
                     oos.flush();
                 }
@@ -114,18 +130,18 @@ public class ConnectedClient extends Thread implements Serializable {
                         System.out.println("CANCEL SEARCH !!!!");
                         server.cancelSearch(this);
                     } else if (value == WIN || value == LOSS || value == DRAW || value == SURRENDER) {
+                        if (value == WIN) {
+                            server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), value);
+//                            server.updateUser(this, value);
+                        }
                         // Match ended, time to update Users, if the username surrender you should force loss
-                        if(value == SURRENDER) {
-
-                            // TODO Surrender utkommenterat för att kunna testa
+                        else if (value == SURRENDER) {
                             System.out.println("Server: En klient har SURRENDERAT, skicka vinst till han andra");
-//                            server.updateUser(this, LOSS);
-                            //newMove kan användas att skicka till korresponderande klient
-                            //Skicka SURRENDER till den andra klienten
+                            server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), LOSS);
+
+                            // Skicka SURRENDER till den andra klienten
                             activeGame.newMove(this, SURRENDER);
                             System.out.println("Skickat SURRENDER till klient 2");
-                        } else {
-//                            server.updateUser(this, value);
                         }
 
                     }
@@ -134,7 +150,7 @@ public class ConnectedClient extends Thread implements Serializable {
                 } else if (obj instanceof User) {
                     // TODO Uppdatera databasen när någon uppdaterat sin profil
 //                    this.username = (User)obj;
-//                    server.updateUser(this.username);
+//                    server.newGameResult(this.username);
 //                    System.out.println("Server: User-object updated");
                 }
                 else if (obj instanceof String) {

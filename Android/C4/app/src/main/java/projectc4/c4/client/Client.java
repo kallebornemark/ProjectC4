@@ -26,6 +26,7 @@ public class Client implements Runnable, Serializable {
     private int port;
     private Thread client;
     private User user;
+    private User opponentUser;
     private ClientController clientController;
 
     public Client(ClientController clientController) {
@@ -110,6 +111,14 @@ public class Client implements Runnable, Serializable {
         return user;
     }
 
+    public void createOpponentUser(GameInfo gameInfo) {
+        opponentUser = new User(gameInfo.getOpponentUserName(), gameInfo.getOpponentFirstName(), gameInfo.getOpponentLastName(), gameInfo.getOpponentElo(), gameInfo.getOpponentGameResults());
+    }
+
+    public User getOpponentUser() {
+        return opponentUser;
+    }
+
     public void updateUser(int result) {
         try {
             oos.writeObject(result);
@@ -175,12 +184,13 @@ public class Client implements Runnable, Serializable {
             clientController.goToMatchmaking();
 
         } else if (obj instanceof GameInfo) {
+            // Sent the first time a series of games is started
             gameInfo = (GameInfo)obj;
+            createOpponentUser(gameInfo);
             clientController.setGameInfo(gameInfo);
-            if (gameInfo.getPlayerTurn() != 0) {
-                clientController.setPlayerTurn(gameInfo.getPlayerTurn());
-            }
-            System.out.println("New GameInfo received! Opponent wins: " + gameInfo.getOpponentGameResults()[1] + ", losses: " + gameInfo.getOpponentGameResults()[2]);
+            clientController.setPlayerTurn(gameInfo.getPlayerTurn());
+            clientController.setOpponentName(gameInfo.getOpponentUserName());
+            System.out.println("New GameInfo received! ------- Opponent: " + clientController.getGameInfo().getOpponentUserName());
         }
     }
 

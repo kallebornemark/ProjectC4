@@ -25,12 +25,12 @@ public class User implements Serializable {
     private Intent profileImage;
 //    private ActiveGame activeGame;
 
-    public User(String username, String firstName, String lastName, double elo){
+    public User(String username, String firstName, String lastName, double elo, int[] gameResults){
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.elo = elo;
-        gameResults = new int[4];
+        this.gameResults = gameResults;
     }
 
     /*public void setActiveGame(ActiveGame activeGame) {
@@ -88,16 +88,15 @@ public class User implements Serializable {
         System.out.println("New game result inc, current ELO: " + elo + ", opponent ELO: " + opponentElo);
         int res;
         if (result == WIN) {
-            res = 1;
+            res = 0;
             elo += Elo.calculateElo(elo, opponentElo);
         } else if (result == LOSS) {
-            res = 2;
+            res = 1;
             elo -= Elo.calculateElo(opponentElo, elo);
         } else {
-            res = 3;
+            res = 2;
         }
         gameResults[res]++;
-        gameResults[0]++;
         System.out.println(res + "++ = " + gameResults[res]);
 
         System.out.println("ELO set to " + elo);

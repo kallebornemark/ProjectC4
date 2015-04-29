@@ -76,14 +76,14 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-          client.connect("10.2.25.13", 3450);
+//          client.connect("10.2.25.13", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
-//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
@@ -217,6 +217,10 @@ public class ClientController {
         return client.getUser();
     }
 
+    public User getOpponentUser() {
+        return client.getOpponentUser();
+    }
+
     public void goToMatchmaking() {
         loginFragment.goToMatchmaking();
     }
@@ -243,24 +247,25 @@ public class ClientController {
         System.out.println("Update user called in ClientController, winner = " + playerTurn + ", draw = " + draw);
         if (!draw) {
             if (playerTurn == player) {
-                getUser().newGameResult(WIN, gameInfo.getOpponentElo());
+                getUser().newGameResult(WIN, getOpponentUser().getElo());
+                getOpponentUser().newGameResult(LOSS, getUser().getElo());
+
                 client.updateUser(WIN);
-            }else if (playerTurn == SURRENDER) { // Force Loss
+            } else if (playerTurn == SURRENDER) { // Force Loss
                 System.out.println("FORCE LOSS");
                 getUser().newGameResult(LOSS, gameInfo.getOpponentElo());
                 client.updateUser(SURRENDER);
-            }else if(playerTurn == WIN) { //Force win
+            } else if (playerTurn == WIN) { //Force win
                 System.out.println("FORCE WIN");
                 gameController.setButtonEnable(false);
                 highlightWinnerPlayerStar(PLAYER1);
                 stopAnimation();
                 getUser().newGameResult(WIN, gameInfo.getOpponentElo());
-                client.updateUser(WIN);
                 setOkayToLeave(true);
 
-            }else {
-                getUser().newGameResult(LOSS, gameInfo.getOpponentElo());
-                client.updateUser(LOSS);
+            } else {
+                getUser().newGameResult(LOSS, getOpponentUser().getElo());
+                getOpponentUser().newGameResult(WIN, getUser().getElo());
             }
         } else {
             getUser().newGameResult(DRAW, gameInfo.getOpponentElo());
@@ -273,18 +278,19 @@ public class ClientController {
         double elo;
         String resString;
         if (opponent) {
-            stats = gameInfo.getOpponentGameResults();
-            elo = gameInfo.getOpponentElo();
+            stats = client.getOpponentUser().getGameResults();
+            elo = client.getOpponentUser().getElo();
         } else {
             stats = getUser().getGameResults();
             elo = getUser().getElo();
         }
+        String eloString = String.format("%.2f", elo);
 
-        resString = "Total games played: " + stats[0] + "\n" +
-                "Games won: " + stats[1] + "\n" +
-                "Games lost: " + stats[2] + "\n" +
-                "Games drawn: " + stats[3] + "\n\n" +
-                "ELO: " + elo;
+        resString = "Total games played: " + (stats[0] + stats[1] + stats[2]) + "\n" +
+                    "Games won: " + stats[0] + "\n" +
+                    "Games lost: " + stats[1] + "\n" +
+                    "Games drawn: " + stats[2] + "\n\n" +
+                    "ELO: " + eloString;
 
         return resString;
     }

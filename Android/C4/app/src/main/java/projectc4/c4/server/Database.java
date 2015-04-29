@@ -1,8 +1,10 @@
 package projectc4.c4.server;
 
-import projectc4.c4.util.User;
+import static projectc4.c4.util.C4Constants.*;
 
 import java.sql.*;
+
+import projectc4.c4.util.Elo;
 
 /**
  * @author Kalle Bornemark
@@ -12,7 +14,7 @@ public class Database {
     private Statement statement;
     private ResultSet resultSet;
 
-    public Database() {
+/*    public Database() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:app/src/main/java/projectc4/c4/server/db/c4_database.db");
@@ -21,65 +23,203 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public boolean newUser(String username, String password) {
+    public void connect() {
         try {
-            statement.executeUpdate("insert into User ('username', 'password')" +
-                                    "values ('" + username + "', '" + password + "')");
-            return false;
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:app/src/main/java/projectc4/c4/server/db/c4_database.db");
+            statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
-            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
-    public String[] attemptLogin(String username, String password) {
-        String[] res = new String[5];
+    public void closeAll() {
+        try { if (resultSet != null) resultSet.close(); } catch (SQLException e) {}
+        try { if (statement != null) statement.close(); } catch (SQLException e) {}
+        try { if (connection != null) connection.close(); } catch (SQLException e) {}
+    }
+
+    public synchronized boolean newUser(String username, String password) {
         try {
+            connect();
+            statement.executeUpdate("insert into User ('username', 'password')" +
+                    "values ('" + username + "', '" + password + "')");
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { if (resultSet != null) {resultSet.close();} } catch (SQLException e) {}
+            try { if (statement != null) {statement.close();} } catch (SQLException e) {}
+            try { if (connection != null) {connection.close();} } catch (SQLException e) {}
+        }
+        return true;
+    }
+
+    /**
+     * Checks if username + password matches the database,
+     * and returns a String-array with the user's info.
+     *
+     * @param username Username to check existence
+     * @param password Password to check together with username
+     * @return String-array with following info in slot:
+     * 0: Potential error message
+     * 1: Username
+     * 2: Firstname
+     * 3: Lastname
+     * 4: ELO
+     * 5: Wins
+     * 6: Losses
+     * 7: Draws
+     */
+    public synchronized String[] attemptLogin(String username, String password) {
+        String[] res = new String[8];
+        try {
+            connect();
             resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
             if (resultSet.next()) {
                 resultSet = statement.executeQuery("select * from User where (username = '" + username + "' and password = '" + password + "')");
                 if (resultSet.next()) {
                     System.out.println("User and password matches database, login accepted.\nSending back string-array to server");
-                    res[0] = username;
-                    res[1] = resultSet.getString("firstname");
-                    res[2] = resultSet.getString("lastname");
-                    res[3] = Double.toString(resultSet.getDouble("elo"));
+                    res[1] = username;                                      // Username
+                    res[2] = resultSet.getString("firstname");              // Firstname
+                    res[3] = resultSet.getString("lastname");               // Lastname
+                    res[4] = Double.toString(resultSet.getDouble("elo"));   // ELO
+                    int wins = resultSet.getInt("wins");                    // Number of wins
+                    int losses = resultSet.getInt("losses");                // Number of losses
+                    int draws = resultSet.getInt("draws");                  // Number of draws
+                    res[5] = Integer.toString(wins);
+                    res[6] = Integer.toString(losses);
+                    res[7] = Integer.toString(draws);
                 } else {
-                    res[4] = "Wrong password for user: " + username;
+                    res[0] = "Wrong password for user: " + username;
                 }
             } else {
-                res[4] = "No such user: " + username;
+                res[0] = "No such user: " + username;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeAll();
         }
 
         return res;
     }
 
-    public void setFirstname(String username, String firstname) {
+    public synchronized void newGameResult(String username, String opponentUsername, int result) {
+        double elo , opponentElo, newElo, newOpponentElo;
+        String res, opponentRes = "";
+
         try {
+            connect();
+            // Get initial ELO
+            System.out.println("Attempting to get initial ELO and opponent ElO...");
+            resultSet = statement.executeQuery("select elo from User where username = '" + username + "';");
+            elo = resultSet.getDouble(1);
+            resultSet = statement.executeQuery("select elo from User where username = '" + opponentUsername + "';");
+            opponentElo = resultSet.getDouble(1);
+            System.out.println("ELO: " + elo + ", OpponentELO: " + opponentElo);
+            newElo = elo;
+            newOpponentElo = opponentElo;
+
+            // Calculate new ELO and get result type
+            System.out.println("Attempting to calculate new ELO and get result type...");
+            if (result == WIN) {
+                res = "wins";
+                opponentRes = "losses";
+                newElo += Elo.calculateElo(elo, opponentElo);
+                newOpponentElo -= Elo.calculateElo(opponentElo, elo);
+            } else if (result == LOSS) {
+                res = "losses";
+                opponentRes = "wins";
+                newElo -= Elo.calculateElo(elo, opponentElo);
+                newOpponentElo += Elo.calculateElo(opponentElo, elo);
+            } else {
+                res = "draws";
+            }
+
+            // Update both ELO's
+            statement.executeUpdate("update User set elo = '" + newElo + "' where username = '" + username + "'");
+            statement.executeUpdate("update User set elo = '" + newOpponentElo + "' where username = '" + opponentUsername + "'");
+            System.out.println("New ELO: " + newElo + ", Result: " + res + "\n" +
+                               "New Opponent ELO: " + newOpponentElo + ", Result: " + opponentRes);
+            System.out.println("ELO Updated in database.");
+
+            // Update database with result
+            statement.executeUpdate("update User set " + res + " = " + res  + " + 1 where username = '" + username + "'");
+            statement.executeUpdate("update User set " + opponentRes + " = " + opponentRes  + " + 1 where username = '" + opponentUsername + "'");
+            System.out.println("User: " + username + " updated with result: " + res);
+            System.out.println("Opponent: " + opponentUsername + " updated with result: " + opponentRes);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+    }
+
+    public synchronized void setFirstname(String username, String firstname) {
+        try {
+            connect();
             statement.executeUpdate("update User set firstname = " + firstname + " where username = " + username + ";");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeAll();
         }
     }
 
-    public void setLastname(String username, String lastname) {
+    public synchronized void setLastname(String username, String lastname) {
         try {
+            connect();
             statement.executeUpdate("update User set lastname = " + lastname + " where username = " + username + ";");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeAll();
         }
     }
 
-    public void setElo(double elo, String username) {
+    public synchronized void setElo(double elo, String username) {
         try {
+            connect();
             statement.executeUpdate("update User set elo = " + elo + " where username = " + username + ";");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeAll();
         }
+    }
+
+    public synchronized double getElo(String username) {
+        double elo = 0;
+        try {
+            connect();
+            resultSet = statement.executeQuery("select elo from User where username = '" + username + "'");
+            elo = resultSet.getDouble(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return elo;
+    }
+
+    public synchronized int[] getGameResults(String username) {
+        int[] results = new int[3];
+        try {
+            connect();
+            resultSet = statement.executeQuery("select wins, losses, draws from User where username = '" + username + "'");
+            for (int i = 1; i <= 3; i++) {
+                results[i-1] = resultSet.getInt(i);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return results;
     }
 }

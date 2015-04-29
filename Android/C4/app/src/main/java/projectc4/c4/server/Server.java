@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
+import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
 import static projectc4.c4.util.C4Constants.*;
 
@@ -53,9 +54,8 @@ public class Server implements Runnable {
         return database.attemptLogin(name, password);
     }
 
-    public void updateUser(User user) {
-        // TODO Uppdatera User i databasen
-//        database.updateUser(user);
+    public void newGameResult(String username, String opponentUsername, int result) {
+        database.newGameResult(username, opponentUsername, result);
     }
 
     public synchronized boolean isUserOnline(String name) {
@@ -76,17 +76,16 @@ public class Server implements Runnable {
     }
 
     /**
-     * Sent when rematch is called.
-     * @param c1
-     * @param
+     * Update User's database with new result,
+     * send new GameInfo object to opponent with updated ELO:s and game statistics
+     * @param c1 The ConnectedClient to update in database
+     * @param value Win/loss/draw
      */
-    /*public void updateUser(ConnectedClient c1, int value) {
-        User user = c1.getUsername();
+/*    public void updateUser(ConnectedClient c1, int value) {
+        String user1 = c1.getUsername();
         ConnectedClient opponent = c1.getActiveGame().getOpponent(c1);
-        user.newGameResult(value, opponent.getUsername().getElo());
-
-        opponent.newGameInfo(new GameInfo(user.getUsername(), opponent.getUsername().getElo(), user.getElo(), user.getGameResults(), true));
-        System.out.println("Sent new GameInfo to opponent. My wins: " + user.getGameResults()[1]);
+        String user2 = opponent.getUsername();
+        opponent.newGameInfo(new GameInfo(database.getElo(user2), database.getElo(user1), true));
     }*/
 
 
@@ -110,9 +109,9 @@ public class Server implements Runnable {
         String user1 = c1.getUsername();
         String user2 = c2.getUsername();
 
-        // TODO New game utkommenterat så att vi kan testa inloggning
-//        c1.newGameInfo(new GameInfo(database.,user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos()));
-//        c2.newGameInfo(new GameInfo(user1.getUsername(),user2.getElo(), user1.getElo(), user1.getGameResults(), false, c2.getStartPos()));
+        c1.newGameInfo(new GameInfo(user2, c2.getFirstName(), c2.getLastName(), database.getElo(user2), database.getGameResults(user2), c1.getStartPos()));
+        c2.newGameInfo(new GameInfo(user1, c1.getFirstName(), c1.getLastName(), database.getElo(user1), database.getGameResults(user1), c2.getStartPos()));
+
         c1.newGame();
         c2.newGame();
 

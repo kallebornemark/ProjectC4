@@ -1,5 +1,9 @@
 package projectc4.c4.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  * Calculating the relative skill level of two players.
  *
@@ -12,10 +16,21 @@ public class Elo {
         System.out.println("Current ELO: " + eA + ", opponent ELO: " + eB);
         double calculatedElo;
         calculatedElo = 1 / (1 + (Math.pow(10, (eA-eB)/400)));
-        calculatedElo = calculatedElo * 10;
+//        calculatedElo *= 10;
         System.out.println("Calculated ELO: " + calculatedElo);
 
         // Avrunda
-        return Math.round(calculatedElo * 100.0) / 100.0;
+        /*DecimalFormat df = new DecimalFormat("#.##");
+        double res = Double.valueOf(df.format(calculatedElo));
+        return res;*/
+        return calculatedElo;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
