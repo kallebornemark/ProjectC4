@@ -13,15 +13,15 @@ public class Powerups {
      */
     public static int generatePowerupTier1() {
         Random random = new Random();
-        int powerup = random.nextInt(50)+1;
+        int powerup = random.nextInt(100)+1;
             //Klocka ska åka ner
-        if (powerup <= 20) {
+        if (powerup <= 34) {
             return POWERUP_TIME;
             //Bomb ska åka ner
-        } else if (powerup > 20 && powerup <= 40) {
+        } else if (powerup > 34 && powerup <= 65) {
             return POWERUP_BOMB;
             //Colorblind
-        } else if (powerup > 40 && powerup <= 50) {
+        } else if (powerup > 65 && powerup <= 100) {
             return POWERUP_COLORBLIND;
         }
         return 0;
@@ -67,7 +67,7 @@ public class Powerups {
             for (int j = 0; j < gameboard[i].length ; j++) {
                if (i <= 2) {
                    int chance = random.nextInt(10)+1;
-                   if (chance == 1 && counter <= 2) {
+                   if (chance == 1 && counter <= 1) {
                        gameboard[i][j] = generatePowerupTier3();
                        counter ++;
                    } else {
