@@ -66,8 +66,8 @@ public class Powerups {
         for (int i = 0; i < gameboard.length ; i++) {
             for (int j = 0; j < gameboard[i].length ; j++) {
                if (i <= 2) {
-                   int chance = random.nextInt(30)+1;
-                   if (chance == 1 && counter <= 3) {
+                   int chance = random.nextInt(10)+1;
+                   if (chance == 1 && counter <= 2) {
                        gameboard[i][j] = generatePowerupTier3();
                        counter ++;
                    } else {
