@@ -57,9 +57,10 @@ public class Powerups {
      * Spawns powerups randomly in the gameboardgrid.
      * @return grid with powerups
      */
-    public int[][] spawnPowerupTier3() {
-        int counter = 0;
+
+
     public static int[][] spawnPowerupTier3() {
+        int counter = 0;
         Random random = new Random();
         int[][] gameboard = new int[6][7];
         for (int i = 0; i < gameboard.length ; i++) {
