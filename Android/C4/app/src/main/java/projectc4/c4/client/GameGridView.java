@@ -82,19 +82,33 @@ public class GameGridView extends View {
         c = new Canvas(bitmap);
         paint.setColor(LIGHTGRAY);
         c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
-        Drawable d = getResources().getDrawable(R.drawable.clock);
+        Drawable clock = getResources().getDrawable(R.drawable.clock);
+        Drawable bomb = getResources().getDrawable(R.drawable.bomb);
+        Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
+        Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
+        Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
                 int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
-                if (array[row][col] >=30 && array[row][col] < 35) { //Time icon draw
-                    d.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
-                    d.draw(c);
+                if (array[row][col] == 30) { //Time icon draw
+                    clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    clock.draw(c);
+                } else if (array[row][col] == 31){
+                    bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    bomb.draw(c);
+                } else if (array[row][col] == 32){
+                    colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    colorblind.draw(c);
+                } else if (array[row][col] == 33){
+                    extraturn.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    extraturn.draw(c);
+                } else if (array[row][col] == 34){
+                    shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    shuffle.draw(c);
                 }
             }
         }
-
-
     }
 
     public void newMove(int row, int col) {
