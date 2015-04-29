@@ -29,12 +29,12 @@ public class Powerups {
 
     public static int generatePowerupTier3() {
         Random random = new Random();
-        int powerup = random.nextInt(2) + 1;
+        int powerup = random.nextInt(3) + 1;
         //extra turn
-        if (powerup == 1) {
+        if (powerup <= 2) {
             return POWERUP_EXTRATURN;
             //Shuffle board
-        } else if (powerup == 2) {
+        } else if (powerup == 3) {
             return POWERUP_SHUFFLE;
         }
         return 0;
@@ -65,13 +65,17 @@ public class Powerups {
         int[][] gameboard = new int[6][7];
         for (int i = 0; i < gameboard.length ; i++) {
             for (int j = 0; j < gameboard[i].length ; j++) {
-                int chance = random.nextInt(30)+1;
-                if (chance == 1 && counter <= 3) {
-                    gameboard[i][j] = generatePowerupTier3();
-                    counter ++;
-                } else {
-                    gameboard[i][j] = 0;
-                }
+               if (i <= 2) {
+                   int chance = random.nextInt(30)+1;
+                   if (chance == 1 && counter <= 3) {
+                       gameboard[i][j] = generatePowerupTier3();
+                       counter ++;
+                   } else {
+                       gameboard[i][j] = 0;
+                   }
+               } else {
+                   gameboard[i][j] = 0;
+               }
             }
         }
         return gameboard;
