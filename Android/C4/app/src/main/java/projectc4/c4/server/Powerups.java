@@ -58,13 +58,15 @@ public class Powerups {
      * @return grid with powerups
      */
     public int[][] spawnPowerupTier3() {
+        int counter = 0;
         Random random = new Random();
         int[][] gameboard = new int[6][7];
         for (int i = 0; i < gameboard.length ; i++) {
             for (int j = 0; j < gameboard[i].length ; j++) {
                 int chance = random.nextInt(30)+1;
-                if (chance == 1) {
+                if (chance == 1 && counter <= 3) {
                     gameboard[i][j] = generatePowerupTier3();
+                    counter ++;
                 } else {
                     gameboard[i][j] = 0;
                 }
