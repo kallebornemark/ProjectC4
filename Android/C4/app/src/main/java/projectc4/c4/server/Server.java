@@ -115,7 +115,7 @@ public class Server implements Runnable {
         User user1 = c1.getUser();
         User user2 = c2.getUser();
 
-        int[][] gameBoard = Powerups.spawnPowerupTier3();
+        int[][] gameBoard = new Powerups().spawnPowerupTier3();
 
 
         c1.newGameInfo(new GameInfo(user2.getUsername(),user1.getElo(), user2.getElo(), user2.getGameResults(), false, c1.getStartPos()));

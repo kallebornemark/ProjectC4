@@ -30,7 +30,7 @@ public class GameController {
         this.playerTurn = PLAYER1;
         this.clientController = clientController;
         this.gameBoard = new int[6][7];
-        this.powerup = new Powerup(this);
+
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
@@ -47,6 +47,7 @@ public class GameController {
         this.gameGridForeground = gameGridForeground;
         this.gameGridForeground.setGameController(this);
 
+        this.powerup = new Powerup(this, gameGridView);
     }
 
     public int getBoardWidth() {
@@ -197,6 +198,11 @@ public class GameController {
             }
            clientController.setTimeLimit(true);
         }
+        if(tile == POWERUP_COLORBLIND) {
+            if(isIncoming) {
+                powerup.powerupsColorblind();
+            }
+        }
     }
 
     public void reDraw() {
@@ -252,6 +258,7 @@ public class GameController {
             if (gameMode == MATCHMAKING) {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, false);
+                clientController.getGameInfo().setRematch(true);
                 clientController.setOkayToLeave(true);
             }
         } else if (playedTiles == 42) {
@@ -326,13 +333,8 @@ public class GameController {
     }
 
     public void setPowerups(int[][] gameBoard) {
+        this.gameBoard = null;
         this.gameBoard = gameBoard;
-        for(int i = 0; i < 6; i++) {
-            System.out.println();
-            for(int j = 0; j < 7; j++) {
-                System.out.print(gameBoard[i][j] + " ");
-            }
-        }
     }
 
     private boolean checkDiagonalLeft(){
