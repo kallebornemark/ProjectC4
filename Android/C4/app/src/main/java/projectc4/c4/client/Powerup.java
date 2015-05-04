@@ -18,7 +18,74 @@ public class Powerup {
         gameGridView.setNoColor(true);
     }
 
-    public void powerupBomb() {
-        gameController.bombTiles();
+    public void powerupBomb(int playedRow, int playedCol) {
+        if (playedCol == 0 && playedRow == 0) {
+            gameController.setElement(playedRow, playedCol+1, 0);
+            gameController.setElement(playedRow+1,playedCol+1, 0);
+            gameController.setElement(playedRow-1,playedCol , 0);
+            gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedCol == 6 && playedRow == 5) {
+            gameController.setElement(playedRow-1,playedCol, 0);
+            gameController.setElement(playedRow-1,playedCol-1,0);
+            gameController.setElement(playedRow+1,playedCol-1,0);
+            gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedCol == 6 && playedRow == 0) {
+            gameController.setElement(playedRow,playedCol-1, 0);
+            gameController.setElement(playedRow+1,playedCol-1, 0);
+            gameController.setElement(playedRow+1,playedCol, 0);
+            gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedCol == 0 && playedRow == 5) {
+            gameController.setElement(playedRow-1,playedCol, 0);
+            gameController.setElement(playedRow-1,playedCol+1, 0);
+            gameController.setElement(playedRow,playedCol+1, 0);
+            gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedCol == 0) {
+            gameController.setElement(playedRow-1,playedCol, 0);
+            gameController.setElement(playedRow-1,playedCol+1, 0);
+            gameController.setElement(playedRow,playedCol+1, 0);
+            gameController.setElement(playedRow+1,playedCol+1, 0);
+            gameController.setElement(playedRow+1,playedCol, 0);
+            gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedCol == 6) {
+            gameController.setElement(playedRow-1,playedCol, 0);
+            gameController.setElement(playedRow-1,playedCol-1, 0);
+            gameController.setElement(playedRow,playedCol-1, 0);
+            gameController.setElement(playedRow+1,playedCol-1, 0);
+            gameController.setElement(playedRow+1,playedCol, 0);
+            gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedRow == 0) {
+           gameController.setElement(playedRow,playedCol-1, 0);
+           gameController.setElement(playedRow+1,playedCol-1, 0);
+           gameController.setElement(playedRow+1,playedCol, 0);
+           gameController.setElement(playedRow+1,playedCol+1, 0);
+           gameController.setElement(playedRow,playedCol+1, 0);
+           gameController.setElement(playedRow, playedCol, 0);
+
+        } else if (playedRow == 5) {
+          gameController.setElement(playedRow,playedCol-1, 0);
+          gameController.setElement(playedRow-1,playedCol-1, 0);
+          gameController.setElement(playedRow-1,playedCol, 0);
+          gameController.setElement(playedRow-1,playedCol+1, 0);
+          gameController.setElement(playedRow,playedCol+1, 0);
+          gameController.setElement(playedRow, playedCol, 0);
+
+        } else {
+           gameController.setElement(playedRow,playedCol-1, 0);
+           gameController.setElement(playedRow-1,playedCol-1, 0);
+           gameController.setElement(playedRow-1,playedCol, 0);
+           gameController.setElement(playedRow-1,playedCol+1, 0);
+           gameController.setElement(playedRow,playedCol+1, 0);
+           gameController.setElement(playedRow+1,playedCol-1, 0);
+           gameController.setElement(playedRow+1,playedCol, 0);
+           gameController.setElement(playedRow+1,playedCol+1, 0);
+           gameController.setElement(playedRow, playedCol, 0);
+        }
+        gameGridView.bombTiles(playedRow, playedCol);
     }
 }

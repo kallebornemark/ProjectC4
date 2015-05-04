@@ -204,7 +204,7 @@ public class GameController {
             }
         }
         if (tile == POWERUP_BOMB) {
-            powerup.powerupBomb();
+            powerup.powerupBomb(playedRow, playedCol);
         }
     }
 
@@ -358,31 +358,4 @@ public class GameController {
         }
         return counter >= 4;
     }
-
-   public void bombTiles() {
-       if (playedCol == 0 && playedRow == 0) {
-           gameBoard[playedRow -1][playedCol -1] = 0;
-           gameBoard[playedRow][playedCol -1] = 0;
-           gameBoard[playedRow -1][playedCol +1] = 0;
-           gameBoard[playedRow +1][playedCol -1] = 0;
-       } else if (playedCol == 6 && playedRow == 5) {
-
-       } else if (playedCol == 6 && playedRow == 0) {
-
-       } else if (playedCol == 0 && playedRow == 5) {
-
-       } else if (playedCol == 0) {
-
-       } else if (playedCol == 6) {
-
-       } else if (playedRow == 0) {
-
-       } else if (playedRow == 5) {
-
-       } else {
-
-       }
-
-       gameGridView.bombTiles(playedRow, playedCol);
-   }
 }
