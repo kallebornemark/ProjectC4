@@ -3,7 +3,6 @@ package projectc4.c4.client.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import c4.utils.C4Constants;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MainActivity;
 
-import static projectc4.c4.util.C4Constants.MATCHMAKING;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -65,8 +64,8 @@ public class MatchmakingFragment extends Fragment {
 //        progressBar.setEnabled(false);
 //        progressBar.setVisibility(View.INVISIBLE);
         System.out.println("startGameUI");
-        clientController.setGameMode(MATCHMAKING);
-        clientController.newGame(MATCHMAKING);
+        clientController.setGameMode(C4Constants.MATCHMAKING);
+        clientController.newGame(C4Constants.MATCHMAKING);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         System.out.println("Gör transaktion");
@@ -101,7 +100,7 @@ public class MatchmakingFragment extends Fragment {
                         progressBar.setEnabled(false);
                         progressBar.setVisibility(View.INVISIBLE);
                     } else {
-                        clientController.requestGame(MATCHMAKING);
+                        clientController.requestGame(C4Constants.MATCHMAKING);
                         progressBar.setEnabled(true);
                         progressBar.setVisibility(View.VISIBLE);
 //                        buttonFindOpponent.setEnabled(false);

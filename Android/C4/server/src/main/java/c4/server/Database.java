@@ -1,10 +1,14 @@
-package projectc4.c4.server;
+package c4.server;
 
-import static projectc4.c4.util.C4Constants.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import java.sql.*;
+import c4.utils.C4Constants;
+import c4.utils.Elo;
 
-import projectc4.c4.util.Elo;
 
 /**
  * @author Kalle Bornemark
@@ -28,7 +32,7 @@ public class Database {
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:app/src/main/java/projectc4/c4/server/db/c4_database.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:server/src/main/java/c4/server/db/c4_database.db");
             statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,12 +131,12 @@ public class Database {
 
             // Calculate new ELO and get result type
             System.out.println("Attempting to calculate new ELO and get result type...");
-            if (result == WIN) {
+            if (result == C4Constants.WIN) {
                 res = "wins";
                 opponentRes = "losses";
                 newElo += Elo.calculateElo(elo, opponentElo);
                 newOpponentElo -= Elo.calculateElo(opponentElo, elo);
-            } else if (result == LOSS) {
+            } else if (result == C4Constants.LOSS) {
                 res = "losses";
                 opponentRes = "wins";
                 newElo -= Elo.calculateElo(elo, opponentElo);

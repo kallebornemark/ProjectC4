@@ -11,11 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import c4.utils.C4Color;
+import c4.utils.C4Constants;
 import projectc4.c4.R;
 import projectc4.c4.client.MainActivity;
-import projectc4.c4.util.C4Color;
-
-import static projectc4.c4.util.C4Constants.LOCAL;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -78,7 +77,7 @@ public class MenuFragment extends Fragment {
 
             switch (v.getId()) {
                 case R.id.buttonPlayLocal:
-                    ((MainActivity)getActivity()).getClientController().setGameMode(LOCAL);
+                    ((MainActivity)getActivity()).getClientController().setGameMode(C4Constants.LOCAL);
                     transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack(null).commit();
                     break;
 

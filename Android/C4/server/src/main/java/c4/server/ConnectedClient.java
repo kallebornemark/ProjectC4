@@ -1,7 +1,4 @@
-package projectc4.c4.server;
-
-import projectc4.c4.util.GameInfo;
-import projectc4.c4.util.User;
+package c4.server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,7 +6,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 
-import static projectc4.c4.util.C4Constants.*;
+import c4.utils.C4Constants;
+import c4.utils.GameInfo;
+import c4.utils.User;
+
 
 /**
  * Handles the incoming/outgoing traffic between the server and the client.
@@ -113,7 +113,7 @@ public class ConnectedClient extends Thread implements Serializable {
                     value = (Integer)obj;
 
                     // Hantera ints
-                    if (value == MATCHMAKING) {
+                    if (value == C4Constants.MATCHMAKING) {
                         // New incoming MM game
                         System.out.println("Server: New incoming MM game");
                         server.addSearchingClient(this);
@@ -122,25 +122,25 @@ public class ConnectedClient extends Thread implements Serializable {
                         // New incoming move
                         activeGame.newMove(this, value);
 
-                    } else if (value == REMATCH) {
+                    } else if (value == C4Constants.REMATCH) {
                         // Requested rematch
                         activeGame.setReady(this);
 
-                    } else if (value == CANCELSEARCH) {
+                    } else if (value == C4Constants.CANCELSEARCH) {
                         System.out.println("CANCEL SEARCH !!!!");
                         server.cancelSearch(this);
-                    } else if (value == WIN || value == LOSS || value == DRAW || value == SURRENDER) {
-                        if (value == WIN) {
+                    } else if (value == C4Constants.WIN || value == C4Constants.LOSS || value == C4Constants.DRAW || value == C4Constants.SURRENDER) {
+                        if (value == C4Constants.WIN) {
                             server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), value);
 //                            server.updateUser(this, value);
                         }
                         // Match ended, time to update Users, if the username surrender you should force loss
-                        else if (value == SURRENDER) {
+                        else if (value == C4Constants.SURRENDER) {
                             System.out.println("Server: En klient har SURRENDERAT, skicka vinst till han andra");
-                            server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), LOSS);
+                            server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), C4Constants.LOSS);
 
                             // Skicka SURRENDER till den andra klienten
-                            activeGame.newMove(this, SURRENDER);
+                            activeGame.newMove(this, C4Constants.SURRENDER);
                             System.out.println("Skickat SURRENDER till klient 2");
                         }
 
@@ -213,7 +213,7 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void newGame() {
         try {
-            oos.writeObject(MATCHMAKING);
+            oos.writeObject(C4Constants.MATCHMAKING);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,13 +1,9 @@
-package projectc4.c4.util;
+package c4.utils;
 
 import android.content.Intent;
-import android.media.Image;
-import android.widget.ImageView;
-
-import projectc4.c4.server.ActiveGame;
 
 import java.io.Serializable;
-import static projectc4.c4.util.C4Constants.*;
+
 
 /**
  * Information about the user. Contains their usernamne, name, wins, losses, elo-rating and
@@ -87,10 +83,10 @@ public class User implements Serializable {
     public void newGameResult(int result, double opponentElo) {
         System.out.println("New game result inc, current ELO: " + elo + ", opponent ELO: " + opponentElo);
         int res;
-        if (result == WIN) {
+        if (result == C4Constants.WIN) {
             res = 0;
             elo += Elo.calculateElo(elo, opponentElo);
-        } else if (result == LOSS) {
+        } else if (result == C4Constants.LOSS) {
             res = 1;
             elo -= Elo.calculateElo(opponentElo, elo);
         } else {

@@ -1,4 +1,4 @@
-package projectc4.c4.util;
+package c4.utils;
 
 import java.io.Serializable;
 

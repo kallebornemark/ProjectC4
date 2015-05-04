@@ -1,7 +1,9 @@
-package projectc4.c4.server;
+package c4.server;
 
 import java.util.Random;
-import static projectc4.c4.util.C4Constants.*;
+
+import c4.utils.C4Constants;
+
 
 /**
  * Created by Emil on 2015-04-28.
@@ -16,13 +18,13 @@ public class Powerups {
         int powerup = random.nextInt(100)+1;
             //Klocka ska åka ner
         if (powerup <= 34) {
-            return POWERUP_TIME;
+            return C4Constants.POWERUP_TIME;
             //Bomb ska åka ner
         } else if (powerup > 34 && powerup <= 65) {
-            return POWERUP_BOMB;
+            return C4Constants.POWERUP_BOMB;
             //Colorblind
         } else if (powerup > 65 && powerup <= 100) {
-            return POWERUP_COLORBLIND;
+            return C4Constants.POWERUP_COLORBLIND;
         }
         return 0;
     }
@@ -32,10 +34,10 @@ public class Powerups {
         int powerup = random.nextInt(3) + 1;
         //extra turn
         if (powerup <= 2) {
-            return POWERUP_EXTRATURN;
+            return C4Constants.POWERUP_EXTRATURN;
             //Shuffle board
         } else if (powerup == 3) {
-            return POWERUP_SHUFFLE;
+            return C4Constants.POWERUP_SHUFFLE;
         }
         return 0;
     }

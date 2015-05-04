@@ -3,12 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+
     defaultConfig {
-        applicationId "projectc4.c4"
+        applicationId "c4.server"
         minSdkVersion 21
         targetSdkVersion 21
         versionCode 1
-        versionName "3.0"
+        versionName "1.0"
     }
     buildTypes {
         release {
@@ -16,15 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-    }
-    productFlavors {
-    }
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:21.0.3'
     compile project(':utils')
+    compile files('src/main/assets/sqlite-jdbc-3.8.7.jar')
 }

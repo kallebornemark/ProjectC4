@@ -17,10 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import c4.utils.C4Color;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MainActivity;
-import static projectc4.c4.util.C4Color.*;
 
 
 /**
@@ -88,7 +88,7 @@ public class LoginFragment extends Fragment {
     public void styleComponents() {
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
         buttonLogin.setTypeface(type, Typeface.BOLD);
-        buttonLogin.setTextColor(WHITE);
+        buttonLogin.setTextColor(C4Color.WHITE);
     }
 
     public void initListeners() {

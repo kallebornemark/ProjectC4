@@ -1,4 +1,4 @@
-package projectc4.c4.server;
+package c4.server;
 
 import java.util.LinkedList;
 

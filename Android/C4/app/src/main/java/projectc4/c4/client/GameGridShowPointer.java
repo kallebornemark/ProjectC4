@@ -8,9 +8,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import c4.utils.C4Constants;
 import projectc4.c4.R;
-
-import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -69,7 +68,7 @@ public class GameGridShowPointer extends View {
         if (pointerCol == -1){
             this.pointerPos = -1;
         } else {
-            this.pointerPos = offsetX + (pointerCol * (GRIDSPACING + sideOfTile)) + ((sideOfTile / 2) - (pointerRed.getWidth() / 2));
+            this.pointerPos = offsetX + (pointerCol * (C4Constants.GRIDSPACING + sideOfTile)) + ((sideOfTile / 2) - (pointerRed.getWidth() / 2));
             player = gameController.getPlayerTurn();
         }
         updateDisplay();
@@ -79,10 +78,10 @@ public class GameGridShowPointer extends View {
     protected void onDraw(Canvas canvas) {
         if (gameController != null && pointerPos != -1){
             canvas.save();
-            if (player == PLAYER1){
-                canvas.drawBitmap(pointerRed, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);
-            } else if (player == PLAYER2) {
-                canvas.drawBitmap(pointerYellow, pointerPos, offsetY - pointerRed.getHeight()-GRIDSPACING, paint);
+            if (player == C4Constants.PLAYER1){
+                canvas.drawBitmap(pointerRed, pointerPos, offsetY - pointerRed.getHeight()-C4Constants.GRIDSPACING, paint);
+            } else if (player == C4Constants.PLAYER2) {
+                canvas.drawBitmap(pointerYellow, pointerPos, offsetY - pointerRed.getHeight()-C4Constants.GRIDSPACING, paint);
             }
             canvas.restore();
         }
@@ -94,14 +93,14 @@ public class GameGridShowPointer extends View {
         int height = MeasureSpec.getSize(heightMeasuredSpec);
         if (gameController != null) {
             // Räkna ut passande storlek för brickan
-            sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
-                    (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+            sideOfTile = Math.min((((width - C4Constants.GRIDSPACING) / gameController.getBoardWidth()) - C4Constants.GRIDSPACING),
+                    (((height - C4Constants.GRIDSPACING) / gameController.getBoardHeight()) - C4Constants.GRIDSPACING));
 
             // Rita gameBoard mitt i canvasen i x-led
-            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
+            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + C4Constants.GRIDSPACING) - C4Constants.GRIDSPACING)) / 2;
 
             // Rita gameBoard längst ner på canvasen i y-led
-            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + C4Constants.GRIDSPACING)));
         }
 //        System.out.println("GGA - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);

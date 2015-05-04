@@ -10,8 +10,7 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
-import static projectc4.c4.util.C4Color.*;
-
+import c4.utils.C4Color;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -142,7 +141,7 @@ public class GameGridViewGroup extends RelativeLayout{
         protected void onDraw(Canvas canvas) {
             System.out.println("TILE ONDRAW");
             Paint paint = new Paint();
-            paint.setColor(YELLOW);
+            paint.setColor(C4Color.YELLOW);
             canvas.drawRoundRect(0, 0, getWidth(), getHeight(), 20, 20, paint);
         }
     }

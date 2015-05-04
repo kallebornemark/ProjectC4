@@ -6,15 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import projectc4.c4.R;
-
-import static projectc4.c4.util.C4Color.*;
-import static projectc4.c4.util.C4Constants.*;
+import c4.utils.C4Color;
+import c4.utils.C4Constants;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -86,13 +83,13 @@ public class GameGridForeground extends View {
 //        System.gc();
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         c = new Canvas(bitmap);
-        paint.setColor(BLACK);
-        c.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
+        paint.setColor(C4Color.BLACK);
+        c.drawRoundRect(offsetX - C4Constants.GRIDSPACING, offsetY - C4Constants.GRIDSPACING, offsetX + (cols * (sideOfTile + C4Constants.GRIDSPACING)), offsetY + (rows * (sideOfTile + C4Constants.GRIDSPACING)), 20, 20, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
-                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+                int posX = (col * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
                 c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
             }
         }
@@ -116,7 +113,7 @@ public class GameGridForeground extends View {
         int x2 = width - offsetX;
         int y = offsetY - sideOfTile;
 
-        if (gameController.getGameMode() == MATCHMAKING && gameController.getPlayerTurn() == PLAYER2) {
+        if (gameController.getGameMode() == C4Constants.MATCHMAKING && gameController.getPlayerTurn() == C4Constants.PLAYER2) {
             return false;
         }
 
@@ -167,14 +164,14 @@ public class GameGridForeground extends View {
             cols = gameController.getBoardWidth();
 
             // Räkna ut passande storlek för brickan
-            sideOfTile = Math.min((((width - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
-                    (((height - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
+            sideOfTile = Math.min((((width - C4Constants.GRIDSPACING) / gameController.getBoardWidth()) - C4Constants.GRIDSPACING),
+                    (((height - C4Constants.GRIDSPACING) / gameController.getBoardHeight()) - C4Constants.GRIDSPACING));
 
             // Rita gameBoard mitt i canvasen i x-led
-            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
+            offsetX = (width - (gameController.getBoardWidth() * (sideOfTile + C4Constants.GRIDSPACING) - C4Constants.GRIDSPACING)) / 2;
 
             // Rita gameBoard längst ner på canvasen i y-led
-            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+            offsetY = (height - (gameController.getBoardHeight() * (sideOfTile + C4Constants.GRIDSPACING)));
         }
 //        System.out.println("GGF - width: " + width + " height: " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);

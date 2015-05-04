@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static projectc4.c4.util.C4Constants.*;
+import c4.utils.C4Constants;
+
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -28,7 +29,7 @@ public class GameController {
     private Boolean extraTurn = false;
 
     public GameController(ClientController clientController) {
-        this.playerTurn = PLAYER1;
+        this.playerTurn = C4Constants.PLAYER1;
         this.clientController = clientController;
         this.gameBoard = new int[6][7];
 
@@ -119,7 +120,7 @@ public class GameController {
             timer.cancel();
             timer = null;
             changePlayer(false);
-            clientController.newOutgoingMove(EMPTYMOVE);
+            clientController.newOutgoingMove(C4Constants.EMPTYMOVE);
         }
     }
 
@@ -138,23 +139,23 @@ public class GameController {
 
     public void changePlayer(boolean isIncoming) {
         if(!extraTurn) {
-            if (playerTurn == PLAYER1) {
-                playerTurn = PLAYER2;
+            if (playerTurn == C4Constants.PLAYER1) {
+                playerTurn = C4Constants.PLAYER2;
 
             } else {
-                playerTurn = PLAYER1;
+                playerTurn = C4Constants.PLAYER1;
             }
             clientController.changeHighlightedPlayer(playerTurn);
             if (isIncoming) {
                 if (timer == null) {
                     startTimer(30);
                 }
-                clientController.animateBlackArrow(PLAYER1); // <--
+                clientController.animateBlackArrow(C4Constants.PLAYER1); // <--
             } else {
-                if (playerTurn == PLAYER1) {
-                    clientController.animateBlackArrow(PLAYER1); // <--
+                if (playerTurn == C4Constants.PLAYER1) {
+                    clientController.animateBlackArrow(C4Constants.PLAYER1); // <--
                 } else {
-                    clientController.animateBlackArrow(PLAYER2); // -->
+                    clientController.animateBlackArrow(C4Constants.PLAYER2); // -->
                 }
             }
             if (!isIncoming && timer != null) {
@@ -187,7 +188,7 @@ public class GameController {
     }
 
     public void newGame(int gameMode) {
-        if(gameMode == LOCAL) {
+        if(gameMode == C4Constants.LOCAL) {
           resetGameBoard();
         }
 
@@ -200,30 +201,30 @@ public class GameController {
         playedTiles = 0;
         winningTiles.clear();
         this.gameMode = gameMode;
-        if(gameMode == LOCAL) {
-            setPlayerTurn(PLAYER1);
-            clientController.setPlayer(PLAYER1);
-            clientController.changeHighlightedPlayer(PLAYER1);
+        if(gameMode == C4Constants.LOCAL) {
+            setPlayerTurn(C4Constants.PLAYER1);
+            clientController.setPlayer(C4Constants.PLAYER1);
+            clientController.changeHighlightedPlayer(C4Constants.PLAYER1);
         }
     }
 
     public void checkIfPowerup(int tile, boolean isIncoming) {
-        if (tile == POWERUP_TIME) {
+        if (tile == C4Constants.POWERUP_TIME) {
             if(isIncoming) {
                 System.out.println("POWERUP TIME");
                 powerup.powerupTime();
             }
            clientController.setTimeLimit(true);
         }
-        if (tile == POWERUP_COLORBLIND) {
+        if (tile == C4Constants.POWERUP_COLORBLIND) {
             if(isIncoming) {
                 powerup.powerupColorblind();
             }
         }
-        if (tile == POWERUP_BOMB) {
+        if (tile == C4Constants.POWERUP_BOMB) {
             powerup.powerupBomb(playedRow, playedCol);
         }
-        if (tile == POWERUP_EXTRATURN) {
+        if (tile == C4Constants.POWERUP_EXTRATURN) {
             powerup.powerupExtraTurn();
         }
     }
@@ -257,7 +258,7 @@ public class GameController {
     public void finishMove(boolean isIncoming){
         gameGridView.newMove(playedRow, playedCol);
 
-        if (gameMode == MATCHMAKING && !isIncoming) {
+        if (gameMode == C4Constants.MATCHMAKING && !isIncoming) {
             clientController.newOutgoingMove(playedCol);
         }
         checkOutcome(isIncoming);
@@ -278,7 +279,7 @@ public class GameController {
             clientController.highlightWinnerPlayerStar(playerTurn);
             clientController.setWinner(playerTurn);
 
-            if (gameMode == MATCHMAKING) {
+            if (gameMode == C4Constants.MATCHMAKING) {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, false);
                 clientController.getGameInfo().setRematch(true);
@@ -287,7 +288,7 @@ public class GameController {
         } else if (playedTiles == 42) {
             // Draw
             clientController.draw();
-            if (gameMode == MATCHMAKING) {
+            if (gameMode == C4Constants.MATCHMAKING) {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, true);
             }
@@ -296,7 +297,7 @@ public class GameController {
             // Regular move without any particular outcome
             changePlayer(isIncoming);
             setButtonEnable(true);
-            if (gameMode == LOCAL) {
+            if (gameMode == C4Constants.LOCAL) {
                 clientController.setPlayer(playerTurn);
             }
         }

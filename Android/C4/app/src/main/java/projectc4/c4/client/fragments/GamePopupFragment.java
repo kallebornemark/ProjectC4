@@ -10,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import c4.utils.C4Color;
 import projectc4.c4.R;
 import projectc4.c4.client.*;
-import projectc4.c4.util.C4Color;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.

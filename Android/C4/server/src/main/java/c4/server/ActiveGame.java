@@ -1,12 +1,10 @@
-package projectc4.c4.server;
+package c4.server;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.Random;
 
-import projectc4.c4.util.GameInfo;
+import c4.utils.C4Constants;
+import c4.utils.GameInfo;
 
-import static projectc4.c4.util.C4Constants.*;
 
 /**
  * Handles a game that is played between two clients online. The moves they do and and if they want
@@ -61,10 +59,10 @@ public class ActiveGame implements Serializable {
     }
 
     public void swapPos(ConnectedClient cc) {
-        if (cc.getStartPos() == PLAYER1) {
-            cc.setStartPos(PLAYER2);
-        } else if (cc.getStartPos() == PLAYER2) {
-            cc.setStartPos(PLAYER1);
+        if (cc.getStartPos() == C4Constants.PLAYER1) {
+            cc.setStartPos(C4Constants.PLAYER2);
+        } else if (cc.getStartPos() == C4Constants.PLAYER2) {
+            cc.setStartPos(C4Constants.PLAYER1);
         }
     }
 

@@ -1,8 +1,7 @@
-package projectc4.c4.util;
+package c4.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 /**
  * Calculating the relative skill level of two players.

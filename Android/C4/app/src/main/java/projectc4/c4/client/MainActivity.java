@@ -5,10 +5,11 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import c4.utils.C4Constants;
 import projectc4.c4.R;
 import projectc4.c4.client.fragments.*;
 
-import static projectc4.c4.util.C4Constants.*;
 
 
 /**
@@ -39,7 +40,7 @@ public class MainActivity extends FragmentActivity {
     public void onBackPressed() {
 
         if(getFragmentManager().findFragmentById(R.id.activity_layout_fragmentpos) instanceof GameFragment &&
-                !(gameController.getGameMode()==LOCAL && gameController.getPlayedTiles() == 0)) {
+                !(gameController.getGameMode()== C4Constants.LOCAL && gameController.getPlayedTiles() == 0)) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
@@ -48,13 +49,13 @@ public class MainActivity extends FragmentActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     FragmentManager fm = getFragmentManager();
-                    if (clientController.getGameMode() == LOCAL) {
+                    if (clientController.getGameMode() == C4Constants.LOCAL) {
                         fm.popBackStackImmediate("Menu", 0);
-                    } else if (clientController.getGameMode() == MATCHMAKING) {
+                    } else if (clientController.getGameMode() == C4Constants.MATCHMAKING) {
                         fm.popBackStackImmediate("Matchmaking", 0);
                         if(!clientController.isOkayToLeave()) {
                             System.out.println("Gå till matchmaking från gameGrid och du förlorade");
-                            clientController.updateUser(SURRENDER, false);
+                            clientController.updateUser(C4Constants.SURRENDER, false);
                         }
                         clientController.setOkayToLeave(false);
 

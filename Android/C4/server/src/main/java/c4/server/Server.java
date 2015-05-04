@@ -1,4 +1,4 @@
-package projectc4.c4.server;
+package c4.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,10 +6,10 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Random;
 
-import projectc4.c4.util.GameInfo;
-import projectc4.c4.util.User;
+import c4.utils.C4Constants;
+import c4.utils.GameInfo;
+import c4.utils.User;
 
-import static projectc4.c4.util.C4Constants.*;
 
 /**
  * Handles all the clients that are connected to the server. A new thread for every new connected
@@ -96,11 +96,11 @@ public class Server implements Runnable {
         int player1, player2, temp;
         temp = rand.nextInt(2)+1;
         if (temp == 1) {
-            player1 = PLAYER1;
-            player2 = PLAYER2;
+            player1 = C4Constants.PLAYER1;
+            player2 = C4Constants.PLAYER2;
         } else {
-            player1 = PLAYER2;
-            player2 = PLAYER1;
+            player1 = C4Constants.PLAYER2;
+            player2 = C4Constants.PLAYER1;
         }
         c1.setStartPos(player1);
         c2.setStartPos(player2);

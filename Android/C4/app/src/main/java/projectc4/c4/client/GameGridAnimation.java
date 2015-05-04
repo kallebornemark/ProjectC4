@@ -10,8 +10,8 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
-import static projectc4.c4.util.C4Color.*;
-import static projectc4.c4.util.C4Constants.*;
+import c4.utils.C4Color;
+import c4.utils.C4Constants;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -50,21 +50,21 @@ public class GameGridAnimation extends RelativeLayout {
     public void init(){
         bounce = new BounceInterpolator();
 
-        this.redTile = new Tile(getContext(), RED);
+        this.redTile = new Tile(getContext(), C4Color.RED);
         addView(redTile);
         redTile.setVisibility(INVISIBLE);
 
-        this.yellowTile = new Tile(getContext(), YELLOW);
+        this.yellowTile = new Tile(getContext(), C4Color.YELLOW);
         addView(yellowTile);
         yellowTile.setVisibility(INVISIBLE);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        sideOfTile = Math.min((((getWidth() - GRIDSPACING) / gameController.getBoardWidth()) - GRIDSPACING),
-                (((getHeight() - GRIDSPACING) / gameController.getBoardHeight()) - GRIDSPACING));
-        offsetX = (getWidth() - (gameController.getBoardWidth() * (sideOfTile + GRIDSPACING) - GRIDSPACING)) / 2;
-        offsetY = (getHeight() - (gameController.getBoardHeight() * (sideOfTile + GRIDSPACING)));
+        sideOfTile = Math.min((((getWidth() - C4Constants.GRIDSPACING) / gameController.getBoardWidth()) - C4Constants.GRIDSPACING),
+                (((getHeight() - C4Constants.GRIDSPACING) / gameController.getBoardHeight()) - C4Constants.GRIDSPACING));
+        offsetX = (getWidth() - (gameController.getBoardWidth() * (sideOfTile + C4Constants.GRIDSPACING) - C4Constants.GRIDSPACING)) / 2;
+        offsetY = (getHeight() - (gameController.getBoardHeight() * (sideOfTile + C4Constants.GRIDSPACING)));
 
         System.out.println("AMIN: w:" + getWidth() + " h: " + getHeight()+ " sideoftile: " + sideOfTile);
 
@@ -79,8 +79,8 @@ public class GameGridAnimation extends RelativeLayout {
 
 
     public void newMove(int row, int col, final boolean isIncoming) {
-        int xPos = offsetX + (col * (GRIDSPACING + sideOfTile));
-        int yStop = offsetY + (row * (GRIDSPACING + sideOfTile));
+        int xPos = offsetX + (col * (C4Constants.GRIDSPACING + sideOfTile));
+        int yStop = offsetY + (row * (C4Constants.GRIDSPACING + sideOfTile));
 
         animate = new TranslateAnimation(xPos,xPos,offsetY-sideOfTile,yStop);
         animate.setInterpolator(bounce);
@@ -93,9 +93,9 @@ public class GameGridAnimation extends RelativeLayout {
                 gameController.finishMove(isIncoming);
             }
         });
-        if (gameController.getPlayerTurn() == PLAYER1) {
+        if (gameController.getPlayerTurn() == C4Constants.PLAYER1) {
             redTile.startAnimation(animate);
-        } else if (gameController.getPlayerTurn() == PLAYER2) {
+        } else if (gameController.getPlayerTurn() == C4Constants.PLAYER2) {
             yellowTile.startAnimation(animate);
         }
     }

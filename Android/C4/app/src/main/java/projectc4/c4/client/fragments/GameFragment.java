@@ -8,7 +8,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +18,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import c4.utils.C4Color;
+import c4.utils.C4Constants;
+import c4.utils.GameInfo;
 import projectc4.c4.R;
 import projectc4.c4.client.*;
-import projectc4.c4.util.C4Color;
-import projectc4.c4.util.GameInfo;
-
-import static projectc4.c4.util.C4Constants.*;
 
 
 /**
@@ -72,7 +70,7 @@ import static projectc4.c4.util.C4Constants.*;
 
         initGraphics(view);
         initListeners();
-        if (gameMode == LOCAL) {
+        if (gameMode == C4Constants.LOCAL) {
             clientController.newGame(gameMode);
         }
 
@@ -96,8 +94,8 @@ import static projectc4.c4.util.C4Constants.*;
         textViewVs.setTextColor(C4Color.BLACK);
         startup = true;
         highlightPlayer(clientController.getPlayerTurn());
-        if (gameMode == LOCAL) {
-            animateArrowDelayed(PLAYER1);
+        if (gameMode == C4Constants.LOCAL) {
+            animateArrowDelayed(C4Constants.PLAYER1);
         } else {
             animateArrowDelayed(clientController.getPlayerTurn());
         }
@@ -106,7 +104,7 @@ import static projectc4.c4.util.C4Constants.*;
         textViewPlayer2.setTextColor(C4Color.WHITE);
 
 
-        if (gameMode == MATCHMAKING){
+        if (gameMode == C4Constants.MATCHMAKING){
             GameInfo gameInfo = clientController.getGameInfo();
             textViewPlayer1.setText(clientController.getUser().getUsername());
             textViewPlayer2.setText(gameInfo.getOpponentUserName());
@@ -123,7 +121,7 @@ import static projectc4.c4.util.C4Constants.*;
         buttonRematch.setTextColor(C4Color.WHITE);
 
         // Load icon panels if gamemode is matchmaking
-        if (gameMode == MATCHMAKING) {
+        if (gameMode == C4Constants.MATCHMAKING) {
             GridLayout glIcons1 = (GridLayout)view.findViewById(R.id.iconButtons);
             GridLayout glIcons2 = (GridLayout)view.findViewById(R.id.iconButtons2);
 
@@ -154,7 +152,7 @@ import static projectc4.c4.util.C4Constants.*;
     public void initListeners() {
 
         // Set listeners if MM
-        if (gameMode == MATCHMAKING) {
+        if (gameMode == C4Constants.MATCHMAKING) {
 
             // Profile Button
             ibPlayer1Profile.setOnClickListener(new View.OnClickListener() {
@@ -247,7 +245,7 @@ import static projectc4.c4.util.C4Constants.*;
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                if (direction == PLAYER1) {
+                if (direction == C4Constants.PLAYER1) {
                     blackarrow_left = new TranslateAnimation(rlBelowLine.getWidth() - ivBlackArrow.getWidth(), 0.0f, 0.0f, 0.0f);
                     blackarrow_left.setDuration(220);
                     blackarrow_left.setFillAfter(true);
@@ -276,7 +274,7 @@ import static projectc4.c4.util.C4Constants.*;
                 blackarrow_right.setDuration(250);
                 blackarrow_right.setFillAfter(true);
 
-                if (direction == PLAYER1) {
+                if (direction == C4Constants.PLAYER1) {
                     ivBlackArrow.startAnimation(blackarrow_left);
                     System.out.println("Animation blackarrow_right used");
                 } else {
@@ -329,8 +327,8 @@ import static projectc4.c4.util.C4Constants.*;
             @Override
             //TODO stoppa och göra om animationen på extra runda
             public void run() {
-                if (player == PLAYER1) {
-                    if(gameMode == MATCHMAKING) {
+                if (player == C4Constants.PLAYER1) {
+                    if(gameMode == C4Constants.MATCHMAKING) {
                         if(startup) {
                             textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
                             startup = false;
@@ -352,8 +350,8 @@ import static projectc4.c4.util.C4Constants.*;
 
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
 
-                } else if (player == PLAYER2) {
-                    if(gameMode == MATCHMAKING) {
+                } else if (player == C4Constants.PLAYER2) {
+                    if(gameMode == C4Constants.MATCHMAKING) {
                         if(startup) {
                             textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                             startup = false;
@@ -374,7 +372,7 @@ import static projectc4.c4.util.C4Constants.*;
 
                     textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
 
-                } else if (player == DRAW) {
+                } else if (player == C4Constants.DRAW) {
                     textViewPlayer1.setBackground(getActivity().getDrawable(R.drawable.colorred));
                     textViewPlayer2.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                 }
@@ -424,15 +422,15 @@ import static projectc4.c4.util.C4Constants.*;
             public void run() {
                 ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
                 ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
-                if (player == PLAYER1) {
+                if (player == C4Constants.PLAYER1) {
                     ivRedStar.setEnabled(true);
                     ivRedStar.setVisibility(View.VISIBLE);
-                } else if (player == PLAYER2) {
+                } else if (player == C4Constants.PLAYER2) {
                     ivYellowStar.setEnabled(true);
                     ivYellowStar.setVisibility(View.VISIBLE);
-                } else if (player == DRAW) {
-                    highlightWinnerPlayerStar(PLAYER1);
-                    highlightWinnerPlayerStar(PLAYER2);
+                } else if (player == C4Constants.DRAW) {
+                    highlightWinnerPlayerStar(C4Constants.PLAYER1);
+                    highlightWinnerPlayerStar(C4Constants.PLAYER2);
                 }
             }
         });
@@ -476,14 +474,14 @@ import static projectc4.c4.util.C4Constants.*;
                     @Override
                     public void onClick(View v) {
                         dehighlightWinners();
-                        clientController.newGame(LOCAL);
+                        clientController.newGame(C4Constants.LOCAL);
                         buttonNewGame.setEnabled(false);
                         buttonNewGame.setVisibility(View.INVISIBLE);
                         RelativeLayout relativeLayoutPlayers = (RelativeLayout) view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
-                        highlightPlayer(PLAYER1);
-                        if (winner == PLAYER2) {
-                            animateArrow(PLAYER1);
+                        highlightPlayer(C4Constants.PLAYER1);
+                        if (winner == C4Constants.PLAYER2) {
+                            animateArrow(C4Constants.PLAYER1);
                         }
                     }
                 });

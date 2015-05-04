@@ -1,14 +1,13 @@
 package projectc4.c4.client;
 
 
+import c4.utils.C4Constants;
+import c4.utils.GameInfo;
+import c4.utils.User;
 import projectc4.c4.client.fragments.GameFragment;
 import projectc4.c4.client.fragments.GamePopupFragment;
 import projectc4.c4.client.fragments.LoginFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
-import projectc4.c4.util.GameInfo;
-import projectc4.c4.util.User;
-
-import static projectc4.c4.util.C4Constants.*;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -16,7 +15,7 @@ import static projectc4.c4.util.C4Constants.*;
 public class ClientController {
     private GameController gameController;
     private Client client;
-    private int player = PLAYER1;
+    private int player = C4Constants.PLAYER1;
     private int gameMode;
     private GameFragment gameFragment;
     private MatchmakingFragment matchmakingFragment;
@@ -83,12 +82,13 @@ public class ClientController {
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
-        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
 //        client.connect("172.20.10.2", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
+        client.connect("192.168.1.225", 3450);
 
     }
 
@@ -98,7 +98,7 @@ public class ClientController {
 
     public void newIncomingMove(int column) {
         System.out.println("Clientcontrollerns newIncomingMove " + column);
-        if(column == EMPTYMOVE) {
+        if(column == C4Constants.EMPTYMOVE) {
             gameController.changePlayer(true);
         } else {
             gameController.newMove(column, true);
@@ -122,9 +122,9 @@ public class ClientController {
     }
 
     public void enableGameButton() {
-        if (gameMode == MATCHMAKING) {
+        if (gameMode == C4Constants.MATCHMAKING) {
             gameFragment.promptRematch();
-        } else if (gameMode == LOCAL) {
+        } else if (gameMode == C4Constants.LOCAL) {
             gameFragment.setNewGame();
         }
     }
@@ -147,8 +147,8 @@ public class ClientController {
 
     public void draw() {
 //        gameFragment.setTextViewWinner("It's a draw!");
-        highlightWinnerPlayerStar(DRAW);
-        changeHighlightedPlayer(DRAW);
+        highlightWinnerPlayerStar(C4Constants.DRAW);
+        changeHighlightedPlayer(C4Constants.DRAW);
         enableGameButton();
     }
 
@@ -161,7 +161,7 @@ public class ClientController {
     }
 
     public void rematch() {
-        newGame(MATCHMAKING);
+        newGame(C4Constants.MATCHMAKING);
         unpromptRematch();
         changeHighlightedPlayer(gameController.getPlayerTurn());
         gameFragment.animateArrow(gameController.getPlayerTurn());
@@ -182,10 +182,10 @@ public class ClientController {
 
     public int getOpponent() {
         int opponent;
-        if (player == PLAYER1) {
-            return PLAYER2;
+        if (player == C4Constants.PLAYER1) {
+            return C4Constants.PLAYER2;
         }
-        return PLAYER1;
+        return C4Constants.PLAYER1;
     }
 
     public int getPlayer() {
@@ -247,29 +247,29 @@ public class ClientController {
         System.out.println("Update user called in ClientController, winner = " + playerTurn + ", draw = " + draw);
         if (!draw) {
             if (playerTurn == player) {
-                getUser().newGameResult(WIN, getOpponentUser().getElo());
-                getOpponentUser().newGameResult(LOSS, getUser().getElo());
+                getUser().newGameResult(C4Constants.WIN, getOpponentUser().getElo());
+                getOpponentUser().newGameResult(C4Constants.LOSS, getUser().getElo());
 
-                client.updateUser(WIN);
-            } else if (playerTurn == SURRENDER) { // Force Loss
+                client.updateUser(C4Constants.WIN);
+            } else if (playerTurn == C4Constants.SURRENDER) { // Force Loss
                 System.out.println("FORCE LOSS");
-                getUser().newGameResult(LOSS, gameInfo.getOpponentElo());
-                client.updateUser(SURRENDER);
-            } else if (playerTurn == WIN) { //Force win
+                getUser().newGameResult(C4Constants.LOSS, gameInfo.getOpponentElo());
+                client.updateUser(C4Constants.SURRENDER);
+            } else if (playerTurn == C4Constants.WIN) { //Force win
                 System.out.println("FORCE WIN");
                 gameController.setButtonEnable(false);
-                highlightWinnerPlayerStar(PLAYER1);
+                highlightWinnerPlayerStar(C4Constants.PLAYER1);
                 stopAnimation();
-                getUser().newGameResult(WIN, gameInfo.getOpponentElo());
+                getUser().newGameResult(C4Constants.WIN, gameInfo.getOpponentElo());
                 setOkayToLeave(true);
 
             } else {
-                getUser().newGameResult(LOSS, getOpponentUser().getElo());
-                getOpponentUser().newGameResult(WIN, getUser().getElo());
+                getUser().newGameResult(C4Constants.LOSS, getOpponentUser().getElo());
+                getOpponentUser().newGameResult(C4Constants.WIN, getUser().getElo());
             }
         } else {
-            getUser().newGameResult(DRAW, gameInfo.getOpponentElo());
-            client.updateUser(DRAW);
+            getUser().newGameResult(C4Constants.DRAW, gameInfo.getOpponentElo());
+            client.updateUser(C4Constants.DRAW);
         }
     }
 

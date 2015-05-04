@@ -3,8 +3,6 @@ package projectc4.c4.client;
 import android.os.Handler;
 import android.os.Looper;
 
-import projectc4.c4.util.GameInfo;
-import projectc4.c4.util.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,7 +10,10 @@ import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import static projectc4.c4.util.C4Constants.*;
+import c4.utils.C4Constants;
+import c4.utils.GameInfo;
+import c4.utils.User;
+
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
@@ -80,9 +81,9 @@ public class Client implements Runnable, Serializable {
 
     public void cancelSearch() {
         try {
-            oos.writeObject(CANCELSEARCH);
+            oos.writeObject(C4Constants.CANCELSEARCH);
             oos.flush();
-            System.out.println(CANCELSEARCH + " CANCEL");
+            System.out.println(C4Constants.CANCELSEARCH + " CANCEL");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +91,7 @@ public class Client implements Runnable, Serializable {
 
     public void requestRematch() {
         try {
-            oos.writeObject(REMATCH);
+            oos.writeObject(C4Constants.REMATCH);
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,14 +152,14 @@ public class Client implements Runnable, Serializable {
         if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
             clientController.newIncomingMove(number);
-        } else if (number == MATCHMAKING && !clientController.getGameInfo().isRematch()) {
+        } else if (number == C4Constants.MATCHMAKING && !clientController.getGameInfo().isRematch()) {
             clientController.startGameUI();
-        } else if (number == MATCHMAKING && clientController.getGameInfo().isRematch()) {
+        } else if (number == C4Constants.MATCHMAKING && clientController.getGameInfo().isRematch()) {
             System.out.println("REMATCH REMATCH REMATCH");
             clientController.rematch();
-        } else if (number == SURRENDER) {
+        } else if (number == C4Constants.SURRENDER) {
             System.out.println(":                Han andra SURRENDERA, du ska VINNA");
-            clientController.updateUser(WIN, false);
+            clientController.updateUser(C4Constants.WIN, false);
         }
     }
 
