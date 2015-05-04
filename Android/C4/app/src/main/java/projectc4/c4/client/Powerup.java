@@ -17,4 +17,8 @@ public class Powerup {
     public void powerupsColorblind() {
         gameGridView.drawTilesGray();
     }
+
+    public void powerupBomb() {
+        gameController.bombTiles();
+    }
 }

@@ -71,7 +71,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="LOGIN"
+            android:text="CREATE ACCOUNT"
             android:id="@+id/buttonLogin"
             android:textSize="20sp"
             android:textColor="#FFFFFCED"
@@ -101,5 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create a new account"
-        android:id="@+id/textViewHeader" />
+        android:id="@+id/textViewHeader"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        />
 </RelativeLayout>
