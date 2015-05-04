@@ -9,61 +9,146 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="projectc4.c4.activity.LoginActivity">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="30dp"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/relativeLayout"
+        android:visibility="visible"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp">
 
         <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tableLayout">
 
             <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="USERNAME: "
-                    android:id="@+id/textUSERNAME"
-                    android:layout_column="0"
-                    android:layout_gravity="center"
-                    android:textSize="15sp" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tableRowUsername"
+                android:layout_marginTop="0dp">
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/etUsername"
-                    android:layout_column="1"
-                    android:layout_gravity="center" />
+                    android:id="@+id/editTextUsername"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Username"/>
 
             </TableRow>
+
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PASSWORD: "
-                    android:id="@+id/textPASSWORD"
-                    android:layout_column="0"
-                    android:layout_gravity="center"
-                    android:textSize="15sp"/>
+                android:layout_gravity="center"
+                android:id="@+id/tableRowFirstName"
+                android:layout_marginTop="0dp">
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:ems="10"
-                    android:id="@+id/etPassword"
-                    android:layout_column="1"
-                    android:layout_gravity="center" />
+                    android:id="@+id/editTextFirstName"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textPersonName"
+                    android:hint="First name"
+                    android:layout_weight="1"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/tableRowSurname"
+                android:layout_marginTop="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:id="@+id/editTextSurname"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:hint="Surname" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/tableRowEmail"
+                android:layout_marginTop="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextEmail"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textEmailAddress"
+                    android:layout_weight="1"
+                    android:hint="Email" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/tableRowEmailAgain"
+                android:layout_marginTop="0dp" >
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextEmailAgain"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textEmailAddress"
+                    android:layout_weight="1"
+                    android:hint="Repeat email"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/tableRowPassword"
+                android:layout_marginTop="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextPassword"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:id="@+id/tableRowPasswordAgain"
+                android:layout_marginTop="0dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextPasswordAgain"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Repeat password"
+                    android:inputType="textPassword" />
             </TableRow>
 
         </TableLayout>
@@ -76,7 +161,10 @@
             android:textSize="20sp"
             android:textColor="#FFFFFCED"
             android:background="@drawable/colorred"
-            android:layout_marginTop="30dp"/>
+            android:layout_below="@+id/tableLayout"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp" />
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
@@ -85,15 +173,31 @@
             android:layout_height="wrap_content"
             android:id="@+id/progressBarLarge2"
             android:indeterminate="true"
-            android:progress="50" />
+            android:progress="50"
+            android:layout_below="@+id/buttonLogin"
+            android:layout_alignEnd="@+id/textViewError" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewError"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFF67E59"
+            android:textSize="20sp"
+            android:layout_below="@+id/progressBarLarge2"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewError"
+            android:id="@+id/textViewNewAccount"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:textColor="#FFF67E59"/>
+            android:textColor="#FFF67E59"
+            android:text="Create a new account?"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
