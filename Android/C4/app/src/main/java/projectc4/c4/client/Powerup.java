@@ -15,7 +15,7 @@ public class Powerup {
     }
 
     public void powerupsColorblind() {
-        gameGridView.drawTilesGray();
+        gameGridView.setNoColor(true);
     }
 
     public void powerupBomb() {
