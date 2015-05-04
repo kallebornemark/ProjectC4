@@ -137,28 +137,40 @@ public class GameController {
     }
 
     public void changePlayer(boolean isIncoming) {
-        if (playerTurn == PLAYER1) {
-            playerTurn = PLAYER2;
-
-        } else {
-            playerTurn = PLAYER1;
-        }
-        clientController.changeHighlightedPlayer(playerTurn);
-        if (isIncoming) {
-            if(timer == null) {
-                startTimer(30);
-            }
-            clientController.animateBlackArrow(PLAYER1); // <--
-        } else {
+        if(!extraTurn) {
             if (playerTurn == PLAYER1) {
+                playerTurn = PLAYER2;
+
+            } else {
+                playerTurn = PLAYER1;
+            }
+            clientController.changeHighlightedPlayer(playerTurn);
+            if (isIncoming) {
+                if (timer == null) {
+                    startTimer(30);
+                }
                 clientController.animateBlackArrow(PLAYER1); // <--
             } else {
-                clientController.animateBlackArrow(PLAYER2); // -->
+                if (playerTurn == PLAYER1) {
+                    clientController.animateBlackArrow(PLAYER1); // <--
+                } else {
+                    clientController.animateBlackArrow(PLAYER2); // -->
+                }
             }
-        }
-        if (!isIncoming && timer != null) {
-            timer.cancel();
-            timer = null;
+            if (!isIncoming && timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+        } else {
+            setExtraTurn(false);
+            clientController.changeHighlightedPlayer(playerTurn);
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+            if(!isIncoming && timer == null) {
+                startTimer(30);
+            }
         }
     }
 
@@ -210,6 +222,9 @@ public class GameController {
         }
         if (tile == POWERUP_BOMB) {
             powerup.powerupBomb();
+        }
+        if (tile == POWERUP_EXTRATURN) {
+            powerup.powerupExtraTurn();
         }
     }
 
