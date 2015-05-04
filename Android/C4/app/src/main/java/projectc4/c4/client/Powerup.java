@@ -21,4 +21,8 @@ public class Powerup {
     public void powerupExtraTurn() {
         gameController.setExtraTurn(true);
     }
+
+    public void powerupBomb() {
+        gameController.bombTiles();
+    }
 }

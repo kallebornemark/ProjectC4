@@ -11,6 +11,7 @@ import android.view.View;
 import java.util.HashSet;
 
 import projectc4.c4.R;
+import projectc4.c4.util.C4Color;
 
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
@@ -284,5 +285,41 @@ public class GameGridView extends View {
         }
 //        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
+    }
+
+    public void bombTiles(int playedRow, int playedCol) {
+
+        paint.setColor(C4Color.LIGHTGRAY);
+
+        int posX = ((playedCol-1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        int posY = ((playedRow-1) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+        posX = ((playedCol-1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        posY = ((playedRow) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+        posX = ((playedCol+1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        posY = ((playedRow) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+        posX = ((playedCol+1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        posY = ((playedRow-1) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+
+        if (playedRow != 6) {
+            posX = ((playedCol-1) * (sideOfTile + GRIDSPACING)) + offsetX;
+            posY = ((playedRow +1) * (sideOfTile + GRIDSPACING)) + offsetY;
+            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+            posX = ((playedCol+1) * (sideOfTile + GRIDSPACING)) + offsetX;
+            posY = ((playedRow+1) * (sideOfTile + GRIDSPACING)) + offsetY;
+            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+            posX = ((playedCol) * (sideOfTile + GRIDSPACING)) + offsetX;
+            posY = ((playedRow+1) * (sideOfTile + GRIDSPACING)) + offsetY;
+            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+        }
     }
 }
