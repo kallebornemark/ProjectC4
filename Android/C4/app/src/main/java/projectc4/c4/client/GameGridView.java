@@ -36,8 +36,7 @@ public class GameGridView extends View {
     private Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
     private Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
     private Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
-    private boolean noColor = false;
-    private int counter = 0;
+    private boolean noColor = false, drawColor = false;
     private Bitmap bitmap;
     private boolean newGame = true, create = true;
 
@@ -165,13 +164,11 @@ public class GameGridView extends View {
         int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
         int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
         c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-        if(noColor) {
-            counter++;
-            if(counter == 2) {
-                drawTiles();
-                counter = 0;
-            }
-
+        if(drawColor) {
+            drawTiles();
+        } else if(noColor) {
+            drawTilesGray();
+            drawColor = true;
         }
         updateDisplay();
     }
@@ -227,7 +224,7 @@ public class GameGridView extends View {
 
     public void drawTilesGray() {
         Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
+        paint.setColor(TEST);
         for (int row = 0; row < gameController.getGameBoard().length; row++) {
             for (int col = 0; col < gameController.getGameBoard()[row].length; col++) {
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
@@ -241,8 +238,13 @@ public class GameGridView extends View {
         }
         paint = null;
         updateDisplay();
-        noColor = true;
+        noColor = false;
     }
+
+    public void setNoColor(Boolean noColor) {
+        this.noColor = noColor;
+    }
+
     public void drawTiles() {
         Paint paint = new Paint();
         for (int row = 0; row < gameController.getGameBoard().length; row++) {
@@ -261,7 +263,8 @@ public class GameGridView extends View {
             }
         }
         paint = null;
-        noColor = false;
+        drawColor = false;
+
     }
 
     @Override
