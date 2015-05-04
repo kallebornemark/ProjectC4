@@ -25,6 +25,7 @@ public class GameController {
     private Timer timer;
     private int time;
     private Powerup powerup;
+    private Boolean extraTurn = false;
 
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
@@ -136,28 +137,40 @@ public class GameController {
     }
 
     public void changePlayer(boolean isIncoming) {
-        if (playerTurn == PLAYER1) {
-            playerTurn = PLAYER2;
-
-        } else {
-            playerTurn = PLAYER1;
-        }
-        clientController.changeHighlightedPlayer(playerTurn);
-        if (isIncoming) {
-            if(timer == null) {
-                startTimer(30);
-            }
-            clientController.animateBlackArrow(PLAYER1); // <--
-        } else {
+        if(!extraTurn) {
             if (playerTurn == PLAYER1) {
+                playerTurn = PLAYER2;
+
+            } else {
+                playerTurn = PLAYER1;
+            }
+            clientController.changeHighlightedPlayer(playerTurn);
+            if (isIncoming) {
+                if (timer == null) {
+                    startTimer(30);
+                }
                 clientController.animateBlackArrow(PLAYER1); // <--
             } else {
-                clientController.animateBlackArrow(PLAYER2); // -->
+                if (playerTurn == PLAYER1) {
+                    clientController.animateBlackArrow(PLAYER1); // <--
+                } else {
+                    clientController.animateBlackArrow(PLAYER2); // -->
+                }
             }
-        }
-        if (!isIncoming && timer != null) {
-            timer.cancel();
-            timer = null;
+            if (!isIncoming && timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+        } else {
+            setExtraTurn(false);
+            clientController.changeHighlightedPlayer(playerTurn);
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+            if(!isIncoming && timer == null) {
+                startTimer(30);
+            }
         }
     }
 
@@ -167,6 +180,10 @@ public class GameController {
 
     public int[][] getGameBoard() {
         return gameBoard;
+    }
+
+    public void setExtraTurn(Boolean extraTurn) {
+        this.extraTurn = extraTurn;
     }
 
     public void newGame(int gameMode) {
@@ -200,11 +217,14 @@ public class GameController {
         }
         if (tile == POWERUP_COLORBLIND) {
             if(isIncoming) {
-                powerup.powerupsColorblind();
+                powerup.powerupColorblind();
             }
         }
         if (tile == POWERUP_BOMB) {
             powerup.powerupBomb(playedRow, playedCol);
+        }
+        if (tile == POWERUP_EXTRATURN) {
+            powerup.powerupExtraTurn();
         }
     }
 
