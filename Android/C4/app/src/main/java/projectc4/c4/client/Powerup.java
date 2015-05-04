@@ -14,7 +14,11 @@ public class Powerup {
        gameController.startTimer(10);
     }
 
-    public void powerupsColorblind() {
+    public void powerupColorblind() {
         gameGridView.setNoColor(true);
+    }
+
+    public void powerupExtraTurn() {
+        gameController.setExtraTurn(true);
     }
 }

@@ -25,6 +25,7 @@ public class GameController {
     private Timer timer;
     private int time;
     private Powerup powerup;
+    private Boolean extraTurn = false;
 
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
@@ -169,6 +170,10 @@ public class GameController {
         return gameBoard;
     }
 
+    public void setExtraTurn(Boolean extraTurn) {
+        this.extraTurn = extraTurn;
+    }
+
     public void newGame(int gameMode) {
         if(gameMode == LOCAL) {
           resetGameBoard();
@@ -200,7 +205,7 @@ public class GameController {
         }
         if(tile == POWERUP_COLORBLIND) {
             if(isIncoming) {
-                powerup.powerupsColorblind();
+                powerup.powerupColorblind();
             }
         }
     }
