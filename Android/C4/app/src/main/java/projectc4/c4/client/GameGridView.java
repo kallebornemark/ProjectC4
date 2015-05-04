@@ -3,10 +3,15 @@ package projectc4.c4.client;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import java.util.HashSet;
+
+import projectc4.c4.R;
+import projectc4.c4.util.C4Color;
 
 import static projectc4.c4.util.C4Color.*;
 import static projectc4.c4.util.C4Constants.*;
@@ -25,8 +30,16 @@ public class GameGridView extends View {
     private int height;
     private Paint paint;
     private Paint strokePaint;
-    private Bitmap bitmap;
     private Canvas c;
+    private int rows, cols;
+    private Drawable clock = getResources().getDrawable(R.drawable.clock);
+    private Drawable bomb = getResources().getDrawable(R.drawable.bomb);
+    private Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
+    private Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
+    private Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
+    private boolean noColor = false, drawColor = false;
+    private Bitmap bitmap;
+    private boolean newGame = true, create = true;
 
     public GameGridView(Context context) {
         super(context);
@@ -48,10 +61,14 @@ public class GameGridView extends View {
         strokePaint.setStrokeWidth(5);
         strokePaint.setColor(WHITE);
         strokePaint.setStyle(Paint.Style.STROKE);
+
+
     }
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
+        rows = gameController.getBoardHeight();
+        cols = gameController.getBoardWidth();
     }
 
     public void updateDisplay() {
@@ -67,15 +84,76 @@ public class GameGridView extends View {
     }
 
     public void newGame(){
-        this.bitmap = null;
+        newGame = true;
         updateDisplay();
     }
 
-    public void resetGameBoard(){
+    public void createBitmap() {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         c = new Canvas(bitmap);
+    }
+
+    public void resetGameBoard(int[][] array){
+          if(create) {
+              createBitmap();
+              create = false;
+          }
         paint.setColor(LIGHTGRAY);
         c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+                if (array[row][col] == POWERUP_TIME) { //Time icon draw
+                    clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    clock.draw(c);
+                } else if (array[row][col] == POWERUP_BOMB){
+                    bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    bomb.draw(c);
+                } else if (array[row][col] == POWERUP_COLORBLIND){
+                    colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    colorblind.draw(c);
+                } else if (array[row][col] == POWERUP_EXTRATURN){
+                    extraturn.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    extraturn.draw(c);
+                } else if (array[row][col] == POWERUP_SHUFFLE){
+                    shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    shuffle.draw(c);
+                }
+            }
+        }
+        updateDisplay();
+    }
+
+    public void dropPowerup(int powerup, int col, int[] colSize) {
+
+        if (colSize[col] < gameController.getBoardHeight()) {
+            int row = (gameController.getBoardHeight() - 1) - (colSize[col]);
+            int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+            int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+            if (gameController.getGameBoard()[row][col] == 0 && powerup == 30) { //Time icon draw
+                clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                clock.draw(c);
+                gameController.setElement(row,col,POWERUP_TIME);
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 31){
+                bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                bomb.draw(c);
+                gameController.setElement(row,col,31);
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 32){
+                colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                colorblind.draw(c);
+                gameController.setElement(row,col,32);
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 33){
+                extraturn.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                extraturn.draw(c);
+                gameController.setElement(row,col,33);
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 34){
+                shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                shuffle.draw(c);
+                gameController.setElement(row,col,34);
+            }
+        }
+        updateDisplay();
     }
 
     public void newMove(int row, int col) {
@@ -87,16 +165,23 @@ public class GameGridView extends View {
         int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
         int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
         c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+        if(drawColor) {
+            drawTiles();
+        } else if(noColor) {
+            drawTilesGray();
+            drawColor = true;
+        }
         updateDisplay();
     }
 
-
-
     protected void onDraw(Canvas canvas) {
-        if (bitmap==null){
-            resetGameBoard();
+//        if (bitmap==null){
+        if(newGame) {
+            resetGameBoard(gameController.getGameBoard());
+            newGame = false;
         }
-        if (bitmap != null && gameController != null){
+//        if (bitmap != null && gameController != null){
+        if(!newGame) {
             canvas.save();
             canvas.drawBitmap(bitmap, 0, 0, paint);
             canvas.restore();
@@ -138,6 +223,51 @@ public class GameGridView extends View {
         updateDisplay();
     }
 
+    public void drawTilesGray() {
+        Paint paint = new Paint();
+        paint.setColor(TEST);
+        for (int row = 0; row < gameController.getGameBoard().length; row++) {
+            for (int col = 0; col < gameController.getGameBoard()[row].length; col++) {
+                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+                if(gameController.getElement(row,col) == PLAYER1 || gameController.getElement(row, col) == PLAYER2) {
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+                }
+
+            }
+        }
+        paint = null;
+        updateDisplay();
+        noColor = false;
+    }
+
+    public void setNoColor(Boolean noColor) {
+        this.noColor = noColor;
+    }
+
+    public void drawTiles() {
+        Paint paint = new Paint();
+        for (int row = 0; row < gameController.getGameBoard().length; row++) {
+            for (int col = 0; col < gameController.getGameBoard()[row].length; col++) {
+                int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
+                int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
+                if(gameController.getElement(row,col) == PLAYER1) {
+                    paint.setColor(RED);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                }
+                else if (gameController.getElement(row, col) == PLAYER2) {
+                    paint.setColor(YELLOW);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                }
+
+            }
+        }
+        paint = null;
+        drawColor = false;
+
+    }
+
     @Override
     protected void onMeasure(int widthMeasuredSpec, int heightMeasuredSpec) {
         width = MeasureSpec.getSize(widthMeasuredSpec);
@@ -155,5 +285,41 @@ public class GameGridView extends View {
         }
 //        System.out.println("GGW - getWidth(): " + width + " getHeight(): " + height + "\nsideOfTile: " + sideOfTile);
         setMeasuredDimension(width, height);
+    }
+
+    public void bombTiles(int playedRow, int playedCol) {
+
+        paint.setColor(C4Color.LIGHTGRAY);
+
+        int posX = ((playedCol-1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        int posY = ((playedRow-1) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+        posX = ((playedCol-1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        posY = ((playedRow) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+        posX = ((playedCol+1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        posY = ((playedRow) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+        posX = ((playedCol+1) * (sideOfTile + GRIDSPACING)) + offsetX;
+        posY = ((playedRow-1) * (sideOfTile + GRIDSPACING)) + offsetY;
+        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+
+        if (playedRow != 6) {
+            posX = ((playedCol-1) * (sideOfTile + GRIDSPACING)) + offsetX;
+            posY = ((playedRow +1) * (sideOfTile + GRIDSPACING)) + offsetY;
+            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+            posX = ((playedCol+1) * (sideOfTile + GRIDSPACING)) + offsetX;
+            posY = ((playedRow+1) * (sideOfTile + GRIDSPACING)) + offsetY;
+            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+
+            posX = ((playedCol) * (sideOfTile + GRIDSPACING)) + offsetX;
+            posY = ((playedRow+1) * (sideOfTile + GRIDSPACING)) + offsetY;
+            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+        }
     }
 }

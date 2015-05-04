@@ -120,7 +120,7 @@
                                     android:paddingTop="4dp"
                                     android:text="New Text"
                                     android:textColor="#FF716D61"
-                                    android:textSize="20sp" />
+                                    android:textSize="20sp" /> h
 
                                 <View
                                     android:id="@+id/lineBlack2"

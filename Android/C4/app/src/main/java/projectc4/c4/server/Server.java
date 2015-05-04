@@ -8,6 +8,7 @@ import java.util.Random;
 
 import projectc4.c4.util.GameInfo;
 import projectc4.c4.util.User;
+
 import static projectc4.c4.util.C4Constants.*;
 
 /**
@@ -109,20 +110,23 @@ public class Server implements Runnable {
         String user1 = c1.getUsername();
         String user2 = c2.getUsername();
 
+        int[][] gameBoard = new Powerups().spawnPowerupTier3();
+
         c1.newGameInfo(new GameInfo(user2, c2.getFirstName(), c2.getLastName(), database.getElo(user2), database.getGameResults(user2), c1.getStartPos()));
         c2.newGameInfo(new GameInfo(user1, c1.getFirstName(), c1.getLastName(), database.getElo(user1), database.getGameResults(user1), c2.getStartPos()));
 
-        c1.newGame();
-        c2.newGame();
-
-        Powerups powerups = new Powerups();
-        int[][] gameBoard = powerups.spawnPowerup();
         c1.sendPowerups(gameBoard);
         c2.sendPowerups(gameBoard);
 
+        c1.newGame();
+        c2.newGame();
     }
 
-    public void rematch(ConnectedClient c1, ConnectedClient c2) {
+    public void rematch(ConnectedClient c1, ConnectedClient c2, int[][] powerups) {
+        System.out.println("Rematch : Server");
+        c1.sendPowerups(powerups);
+        c2.sendPowerups(powerups);
+
         c1.newGame();
         c2.newGame();
     }

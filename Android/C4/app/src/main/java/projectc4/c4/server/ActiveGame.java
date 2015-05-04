@@ -22,6 +22,7 @@ public class ActiveGame implements Serializable {
     private boolean c1isReady = false, c2isReady = false;
     private GameInfo gameInfo;
     private Server server;
+    private int[][] gameboard;
 
     public ActiveGame(Server server, ConnectedClient c1, ConnectedClient c2) {
         this.server = server;
@@ -46,10 +47,16 @@ public class ActiveGame implements Serializable {
     }
 
     public void newMove(ConnectedClient sender, int column) {
+
         if (sender == c1) {
             c2.newMove(column);
         } else {
             c1.newMove(column);
+        }
+        int[] powerupAndCol = new Powerups().SpawnPowerupTier1();
+        if(powerupAndCol != null) {
+            c1.sendPowerup(powerupAndCol);
+            c2.sendPowerup(powerupAndCol);
         }
     }
 
@@ -65,7 +72,8 @@ public class ActiveGame implements Serializable {
      * Swap starting positions and start a new game
      */
     public void rematch() {
-        server.rematch(c1, c2);
+        System.out.println("Rematch : ActiveGame");
+        server.rematch(c1, c2, getGameBoard());
     }
 
     public void setReady(ConnectedClient connectedClient) {
@@ -91,9 +99,19 @@ public class ActiveGame implements Serializable {
         }
     }
 
+    public void setGameboard(int[][] gameboard) {
+        this.gameboard = gameboard;
+    }
+
+    public int[][] getGameBoard() {
+        return gameboard;
+    }
+
     private class RematchListener implements Runnable {
+
         public void run() {
             try {
+                setGameboard(new Powerups().spawnPowerupTier3());
                 while (!Thread.interrupted()) {
                     System.out.println("ActiveGame: One player ready for rematch, waiting for second...");
                     if (c1isReady && c2isReady) {

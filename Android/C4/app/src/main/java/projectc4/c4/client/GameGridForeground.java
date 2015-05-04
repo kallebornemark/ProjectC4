@@ -31,8 +31,9 @@ public class GameGridForeground extends View {
     private int cols;
     private int offsetX;
     private int offsetY;
-    private Bitmap bitmap;
     private Paint paint;
+    private Canvas c;
+    private Bitmap bitmap;
 
     public GameGridForeground(Context context) {
         super(context);
@@ -50,6 +51,7 @@ public class GameGridForeground extends View {
     }
 
     public void init(){
+
         paint = new Paint();
     }
 
@@ -79,26 +81,19 @@ public class GameGridForeground extends View {
         canvas.restore();
     }
 
-    private  void paintForeground(){
-        Drawable d = getResources().getDrawable(R.drawable.clock); //The time-icon
 
-//        System.out.println("GGF - create bitmap - Width: " + width + " Height: " + height);
+    private void paintForeground(){
+//        System.gc();
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bitmap);
+        c = new Canvas(bitmap);
         paint.setColor(BLACK);
         c.drawRoundRect(offsetX - GRIDSPACING, offsetY - GRIDSPACING, offsetX + (cols * (sideOfTile + GRIDSPACING)), offsetY + (rows * (sideOfTile + GRIDSPACING)), 20, 20, paint);
-        c.drawRoundRect(100,400,300,300,20,20,paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-
                 int posX = (col * (sideOfTile + GRIDSPACING)) + offsetX;
                 int posY = (row * (sideOfTile + GRIDSPACING)) + offsetY;
-                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-                if (row == 3 && col == 0) { //Time icon draw
-                    d.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
-                    d.draw(c);
-                }
+                c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
             }
         }
 

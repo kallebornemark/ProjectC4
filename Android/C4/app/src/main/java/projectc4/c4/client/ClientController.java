@@ -76,7 +76,7 @@ public class ClientController {
 
     public void connect() {
         client = new Client(this);
-//          client.connect("10.2.25.13", 3450);
+          client.connect("10.2.10.38", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
@@ -88,8 +88,7 @@ public class ClientController {
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
 //        client.connect("172.20.10.2", 3450); // Kalles hemmadator
-//        client.connect("192.168.0.10", 3450);
-        client.connect("192.168.1.225", 3450);
+        client.connect("192.168.0.10", 3450);
 
     }
 

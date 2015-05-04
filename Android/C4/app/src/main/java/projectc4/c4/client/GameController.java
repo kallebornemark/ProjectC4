@@ -25,12 +25,13 @@ public class GameController {
     private Timer timer;
     private int time;
     private Powerup powerup;
+    private Boolean extraTurn = false;
 
     public GameController(ClientController clientController) {
         this.playerTurn = PLAYER1;
         this.clientController = clientController;
         this.gameBoard = new int[6][7];
-        this.powerup = new Powerup(this);
+
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
@@ -47,6 +48,7 @@ public class GameController {
         this.gameGridForeground = gameGridForeground;
         this.gameGridForeground.setGameController(this);
 
+        this.powerup = new Powerup(this, gameGridView);
     }
 
     public int getBoardWidth() {
@@ -90,9 +92,15 @@ public class GameController {
         return gameMode;
     }
 
+    public void dropPowerup(int[] powerupAndCol) {
+        int powerup = powerupAndCol[0], col = powerupAndCol[1];
+        gameGridView.dropPowerup(powerup, col, colSize);
+    }
+
     public void startTimer(int time) {
         if (timer != null) {
             timer.cancel();
+            timer = null;
         }
         this.time = time;
         timer = new Timer();
@@ -109,6 +117,7 @@ public class GameController {
         if (time == 0) {
             System.out.println("TIDEN SLUT");
             timer.cancel();
+            timer = null;
             changePlayer(false);
             clientController.newOutgoingMove(EMPTYMOVE);
         }
@@ -116,6 +125,7 @@ public class GameController {
 
     public void cancelTimer() {
         timer.cancel();
+        timer = null;
     }
 
     public void changePointerpos(int pointerCol) {
@@ -127,27 +137,40 @@ public class GameController {
     }
 
     public void changePlayer(boolean isIncoming) {
-        if (playerTurn == PLAYER1) {
-            playerTurn = PLAYER2;
-
-        } else {
-            playerTurn = PLAYER1;
-        }
-        clientController.changeHighlightedPlayer(playerTurn);
-        if (isIncoming) {
-            if(timer == null) {
-                startTimer(30);
-            }
-            clientController.animateBlackArrow(PLAYER1); // <--
-        } else {
+        if(!extraTurn) {
             if (playerTurn == PLAYER1) {
+                playerTurn = PLAYER2;
+
+            } else {
+                playerTurn = PLAYER1;
+            }
+            clientController.changeHighlightedPlayer(playerTurn);
+            if (isIncoming) {
+                if (timer == null) {
+                    startTimer(30);
+                }
                 clientController.animateBlackArrow(PLAYER1); // <--
             } else {
-                clientController.animateBlackArrow(PLAYER2); // -->
+                if (playerTurn == PLAYER1) {
+                    clientController.animateBlackArrow(PLAYER1); // <--
+                } else {
+                    clientController.animateBlackArrow(PLAYER2); // -->
+                }
             }
-        }
-        if (!isIncoming && timer != null) {
-            timer.cancel();
+            if (!isIncoming && timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+        } else {
+            setExtraTurn(false);
+            clientController.changeHighlightedPlayer(playerTurn);
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+            if(!isIncoming && timer == null) {
+                startTimer(30);
+            }
         }
     }
 
@@ -155,8 +178,19 @@ public class GameController {
         gameGridView.setWinningTiles(winningTiles, gameBoard);
     }
 
+    public int[][] getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setExtraTurn(Boolean extraTurn) {
+        this.extraTurn = extraTurn;
+    }
+
     public void newGame(int gameMode) {
-       // resetGameBoard();
+        if(gameMode == LOCAL) {
+          resetGameBoard();
+        }
+
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
             gameGridView.newGame();
             gameGridShowPointer.changePointerPos(-1);
@@ -171,21 +205,37 @@ public class GameController {
             clientController.setPlayer(PLAYER1);
             clientController.changeHighlightedPlayer(PLAYER1);
         }
-
     }
 
     public void checkIfPowerup(int tile, boolean isIncoming) {
-        if(tile == POWERUP_TIME) {
+        if (tile == POWERUP_TIME) {
             if(isIncoming) {
                 System.out.println("POWERUP TIME");
                 powerup.powerupTime();
             }
            clientController.setTimeLimit(true);
         }
+        if (tile == POWERUP_COLORBLIND) {
+            if(isIncoming) {
+                powerup.powerupColorblind();
+            }
+        }
+        if (tile == POWERUP_BOMB) {
+            powerup.powerupBomb(playedRow, playedCol);
+        }
+        if (tile == POWERUP_EXTRATURN) {
+            powerup.powerupExtraTurn();
+        }
+    }
+
+    public void reDraw() {
+        System.out.println("ReDraw");
+//        gameGridForeground.paintForeground(gameBoard);
     }
 
 
     public void newMove(int col, boolean isIncoming) {
+//        gameGridForeground.removeIcon(3,0);
         System.out.println("GameController - newMove(" + col + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[col] < getBoardHeight()) {
             System.out.println(getElement((getBoardHeight() - 1) - (colSize[col]),col));
@@ -231,6 +281,7 @@ public class GameController {
             if (gameMode == MATCHMAKING) {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, false);
+                clientController.getGameInfo().setRematch(true);
                 clientController.setOkayToLeave(true);
             }
         } else if (playedTiles == 42) {
@@ -305,6 +356,7 @@ public class GameController {
     }
 
     public void setPowerups(int[][] gameBoard) {
+        this.gameBoard = null;
         this.gameBoard = gameBoard;
     }
 

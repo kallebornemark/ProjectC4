@@ -72,8 +72,9 @@ import static projectc4.c4.util.C4Constants.*;
 
         initGraphics(view);
         initListeners();
-
-        clientController.newGame(gameMode);
+        if (gameMode == LOCAL) {
+            clientController.newGame(gameMode);
+        }
 
         return view;
     }
@@ -326,6 +327,7 @@ import static projectc4.c4.util.C4Constants.*;
     public void highlightPlayer(final int player) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
+            //TODO stoppa och göra om animationen på extra runda
             public void run() {
                 if (player == PLAYER1) {
                     if(gameMode == MATCHMAKING) {
