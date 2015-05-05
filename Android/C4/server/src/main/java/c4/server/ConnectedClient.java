@@ -149,6 +149,11 @@ public class ConnectedClient extends Thread implements Serializable {
                 } else if (obj instanceof User) {
                     User user = (User)obj;
                     Object result = server.newUser(user);
+                    if (result instanceof User) {
+                        this.username = user.getUsername();
+                        this.firstName = user.getFirstName();
+                        this.lastName = user.getLastName();
+                    }
                     oos.writeObject(result);
                     oos.flush();
                 }
