@@ -1,5 +1,7 @@
 package projectc4.c4.client;
 
+import java.util.ArrayList;
+
 public class Powerup {
     private GameController gameController;
     private GameGridView gameGridView;
@@ -23,73 +25,15 @@ public class Powerup {
     }
 
     public void powerupBomb(int playedRow, int playedCol) {
-        if (playedCol == 0 && playedRow == 0) {
-            gameController.setElement(playedRow, playedCol+1, 0);
-            gameController.setElement(playedRow+1,playedCol+1, 0);
-            gameController.setElement(playedRow-1,playedCol , 0);
-            gameController.setElement(playedRow, playedCol, 0);
+        ArrayList<Integer> posList = new ArrayList<Integer>();
 
-        } else if (playedCol == 6 && playedRow == 5) {
-            gameController.setElement(playedRow-1,playedCol, 0);
-            gameController.setElement(playedRow-1,playedCol-1,0);
-            gameController.setElement(playedRow+1,playedCol-1,0);
-            gameController.setElement(playedRow, playedCol, 0);
-
-        } else if (playedCol == 6 && playedRow == 0) {
-            gameController.setElement(playedRow,playedCol-1, 0);
-            gameController.setElement(playedRow+1,playedCol-1, 0);
-            gameController.setElement(playedRow+1,playedCol, 0);
-            gameController.setElement(playedRow, playedCol, 0);
-
-        } else if (playedCol == 0 && playedRow == 5) {
-            gameController.setElement(playedRow-1,playedCol, 0);
-            gameController.setElement(playedRow-1,playedCol+1, 0);
-            gameController.setElement(playedRow,playedCol+1, 0);
-            gameController.setElement(playedRow, playedCol, 0);
-
-        } else if (playedCol == 0) {
-            gameController.setElement(playedRow-1,playedCol, 0);
-            gameController.setElement(playedRow-1,playedCol+1, 0);
-            gameController.setElement(playedRow,playedCol+1, 0);
-            gameController.setElement(playedRow+1,playedCol+1, 0);
-            gameController.setElement(playedRow+1,playedCol, 0);
-            gameController.setElement(playedRow, playedCol, 0);
-
-        } else if (playedCol == 6) {
-            gameController.setElement(playedRow-1,playedCol, 0);
-            gameController.setElement(playedRow-1,playedCol-1, 0);
-            gameController.setElement(playedRow,playedCol-1, 0);
-            gameController.setElement(playedRow+1,playedCol-1, 0);
-            gameController.setElement(playedRow+1,playedCol, 0);
-            gameController.setElement(playedRow, playedCol, 0);
-
-        } else if (playedRow == 0) {
-           gameController.setElement(playedRow,playedCol-1, 0);
-           gameController.setElement(playedRow+1,playedCol-1, 0);
-           gameController.setElement(playedRow+1,playedCol, 0);
-           gameController.setElement(playedRow+1,playedCol+1, 0);
-           gameController.setElement(playedRow,playedCol+1, 0);
-           gameController.setElement(playedRow, playedCol, 0);
-
-        } else if (playedRow == 5) {
-          gameController.setElement(playedRow,playedCol-1, 0);
-          gameController.setElement(playedRow-1,playedCol-1, 0);
-          gameController.setElement(playedRow-1,playedCol, 0);
-          gameController.setElement(playedRow-1,playedCol+1, 0);
-          gameController.setElement(playedRow,playedCol+1, 0);
-          gameController.setElement(playedRow, playedCol, 0);
-
-        } else {
-           gameController.setElement(playedRow,playedCol-1, 0);
-           gameController.setElement(playedRow-1,playedCol-1, 0);
-           gameController.setElement(playedRow-1,playedCol, 0);
-           gameController.setElement(playedRow-1,playedCol+1, 0);
-           gameController.setElement(playedRow,playedCol+1, 0);
-           gameController.setElement(playedRow+1,playedCol-1, 0);
-           gameController.setElement(playedRow+1,playedCol, 0);
-           gameController.setElement(playedRow+1,playedCol+1, 0);
-           gameController.setElement(playedRow, playedCol, 0);
+        for (int i = playedRow; i < gameController.getGameBoard().length; i++) {
+            posList.add(i);
+            gameController.getGameBoard()[i][playedCol] = 0;
+            if(gameController.getColSize()[playedCol] > 0) {
+                gameController.getColSize()[playedCol]--;
+            }
         }
-        gameGridView.bombTiles(playedRow, playedCol);
+        gameGridView.setBombTiles(true, posList, playedCol);
     }
 }
