@@ -37,6 +37,7 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.gameResults = new int[4];
     }
 
     /*public void setActiveGame(ActiveGame activeGame) {

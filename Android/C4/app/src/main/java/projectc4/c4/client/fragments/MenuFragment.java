@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.net.Socket;
+
 import c4.utils.C4Color;
 import c4.utils.C4Constants;
 import projectc4.c4.R;
@@ -87,6 +89,10 @@ public class MenuFragment extends Fragment {
                         transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
                     } else {
                         System.out.println("Ändrar till Login");
+                        Socket socket = ((MainActivity)getActivity()).getClientController().getClient().getSocket();
+                        if ((socket != null && !socket.isConnected()) || socket == null) {
+                            ((MainActivity)getActivity()).getClientController().connect();
+                        }
                         transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
                     }
                     break;

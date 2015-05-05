@@ -207,7 +207,6 @@ public class Client implements Runnable, Serializable {
     }
 
     public void startCommunication() {
-        clientController.login();
         try {
             System.out.println("Client communication started");
             while (!Thread.interrupted()) {

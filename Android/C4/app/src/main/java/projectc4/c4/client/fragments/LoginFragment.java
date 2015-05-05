@@ -145,6 +145,7 @@ public class LoginFragment extends Fragment {
             public void run() {
                 buttonLogin.setEnabled(true);
                 buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                editTextUsername.setText("");
             }
         });
     }
