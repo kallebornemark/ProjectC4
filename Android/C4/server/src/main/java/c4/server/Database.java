@@ -237,12 +237,12 @@ public class Database {
                 resultSet = statement.executeQuery("select * from User where password = '" + password + "'");
                 if (!resultSet.next()) {
 
-                    statement.executeUpdate("insert into User (username, firstname, lastname, email, password) values ('" +
-                                            username + ", ('" +
-                                            firstname + ", ('" +
-                                            lastname + ", ('" +
-                                            email + ", ('" +
-                                            password + ");");
+                    statement.executeUpdate("insert into User (username, firstname, lastname, email, password) values + (" +
+                                            "'" + username + "', " +
+                                            "'" + firstname + "', " +
+                                            "'" + lastname + "', " +
+                                            "'" + email + "', " +
+                                            "'" + password + "');");
 
 
                     System.out.println("Database: new user created (" + username + ")");
