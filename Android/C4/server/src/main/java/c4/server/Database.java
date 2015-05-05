@@ -150,12 +150,8 @@ public class Database {
     }
 
     public synchronized void updateUser(User user) {
-        if (user.getFirstName() != "") {
-            setFirstname(user.getUsername(), user.getFirstName());
-        }
-        if (user.getLastName() != "") {
-            setLastname(user.getUsername(), user.getLastName());
-        }
+        setFirstname(user.getUsername(), user.getFirstName());
+        setLastname(user.getUsername(), user.getLastName());
     }
 
     public synchronized void setFirstname(String username, String firstname) {

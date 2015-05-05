@@ -81,7 +81,7 @@ import projectc4.c4.client.*;
 
         rlBelowLine = (RelativeLayout)view.findViewById(R.id.belowLine);
         ivBlackArrow = (ImageView)view.findViewById(R.id.ivBlackArrow);
-        textViewPlayer1 = (TextView)view.findViewById(R.id.rush);
+        textViewPlayer1 = (TextView)view.findViewById(R.id.textViewPlayer1);
         textViewPlayer2 = (TextView)view.findViewById(R.id.textViewPlayer2);
         TextView textViewVs = (TextView)view.findViewById(R.id.textViewVs);
 

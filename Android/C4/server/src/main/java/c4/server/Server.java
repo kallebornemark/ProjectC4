@@ -129,6 +129,7 @@ public class Server implements Runnable {
      */
     public void updateUser(User user) {
         database.updateUser(user);
+        System.out.println("User \"" + user.getUsername() + "\" updated through profile");
     }
 
     public void rematch(ConnectedClient c1, ConnectedClient c2, int[][] powerups) {
