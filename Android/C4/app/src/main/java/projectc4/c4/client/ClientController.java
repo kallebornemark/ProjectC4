@@ -96,7 +96,7 @@ public class ClientController {
         client.connect("10.2.20.240", 3450);
 //        client.connect("172.20.10.2", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
-//        client.connect("192.168.1.225", 3450);
+        client.connect("192.168.1.225", 3450);
 
     }
 

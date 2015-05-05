@@ -98,6 +98,10 @@ public class GameController {
         gameGridView.dropPowerup(powerup, col, colSize);
     }
 
+    public int[] getColSize() {
+        return colSize;
+    }
+
     public void startTimer(int time) {
         if (timer != null) {
             timer.cancel();
@@ -200,7 +204,7 @@ public class GameController {
         }
     }
 
-    public void checkIfPowerup(int tile, boolean isIncoming) {
+    public void checkIfPowerup(int tile, int playedRow, int playedCol, boolean isIncoming) {
         if (tile == C4Constants.POWERUP_TIME) {
             if(isIncoming) {
                 System.out.println("POWERUP TIME");
@@ -231,11 +235,11 @@ public class GameController {
 //        gameGridForeground.removeIcon(3,0);
         System.out.println("GameController - newMove(" + col + ") [ isIncoming = " + isIncoming + " ]");
         if (colSize[col] < getBoardHeight()) {
-            System.out.println(getElement((getBoardHeight() - 1) - (colSize[col]),col));
-            checkIfPowerup(getElement((getBoardHeight() - 1) - (colSize[col]),col), isIncoming);
-            setButtonEnable(false);
             this.playedCol = col;
-            this.playedRow = (getBoardHeight() - 1) - (colSize[playedCol]++);
+            this.playedRow = (getBoardHeight() - 1) - (colSize[playedCol]);
+            System.out.println(getElement((getBoardHeight() - 1) - (colSize[col]),col));
+            checkIfPowerup(getElement((getBoardHeight() - 1) - (colSize[col]++),col), playedRow, playedCol, isIncoming);
+            setButtonEnable(false);
             setElement(playedRow, playedCol, playerTurn);
             playedTiles++;
             gameGridShowPointer.changePointerPos(playedCol);

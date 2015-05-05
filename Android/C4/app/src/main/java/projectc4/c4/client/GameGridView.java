@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import c4.utils.C4Color;
@@ -37,7 +39,9 @@ public class GameGridView extends View {
     private Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
     private boolean noColor = false, drawColor = false;
     private Bitmap bitmap;
-    private boolean newGame = true, create = true;
+    private boolean newGame = true, create = true, bombTiles = false;
+    private ArrayList<Integer> tempPosList;
+    private int tempPlayedCol;
 
     public GameGridView(Context context) {
         super(context);
@@ -169,6 +173,9 @@ public class GameGridView extends View {
             drawTilesGray();
             drawColor = true;
         }
+        if(bombTiles) {
+            bombTiles(tempPosList, tempPlayedCol);
+        }
         updateDisplay();
     }
 
@@ -285,39 +292,22 @@ public class GameGridView extends View {
         setMeasuredDimension(width, height);
     }
 
-    public void bombTiles(int playedRow, int playedCol) {
+    public void bombTiles(ArrayList<Integer> list, int playedCol) {
 
+        int posX = (playedCol * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
         paint.setColor(C4Color.LIGHTGRAY);
 
-        int posX = ((playedCol-1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-        int posY = ((playedRow-1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-
-        posX = ((playedCol-1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-        posY = ((playedRow) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-
-        posX = ((playedCol+1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-        posY = ((playedRow) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-
-        posX = ((playedCol+1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-        posY = ((playedRow-1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-        c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-
-
-        if (playedRow != 6) {
-            posX = ((playedCol-1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-            posY = ((playedRow +1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-
-            posX = ((playedCol+1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-            posY = ((playedRow+1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-            c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
-
-            posX = ((playedCol) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
-            posY = ((playedRow+1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
+        for (int i = 0; i < list.size(); i ++) {
+            int posY = ((list.get(i)) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
             c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
         }
+        bombTiles = false;
+        tempPosList = null;
+    }
+
+    public void setBombTiles(Boolean bombTiles, ArrayList<Integer> posList, int playedCol) {
+        this.tempPosList = posList;
+        this.tempPlayedCol = playedCol;
+        this.bombTiles = bombTiles;
     }
 }

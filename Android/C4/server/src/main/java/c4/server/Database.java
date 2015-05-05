@@ -212,6 +212,13 @@ public class Database {
         return results;
     }
 
+    /**
+     * Gets requested user info from client and checks if username and email is available.
+     * If available, inserts new user into table and returns the user object.
+     * If not, returns an error message.
+     * @param user Requested user info
+     * @return Error message or created user object
+     */
     public synchronized Object newUser(User user) {
         String username = user.getUsername();
         String firstname = user.getFirstName();
@@ -221,21 +228,22 @@ public class Database {
 
         try {
             connect();
-            resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
 
             // Create user if username available
+            resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
             if (!resultSet.next()) {
-                resultSet = statement.executeQuery("select * from User where password = '" + password + "'");
 
-                // Create user if username available
+                // Create email if username available
+                resultSet = statement.executeQuery("select * from User where password = '" + password + "'");
                 if (!resultSet.next()) {
 
-                    statement.executeUpdate("insert into User (username, firstname, lastname, password)" +
-                            "values ('" + username + "', " +
-                            "values ('" + firstname + "', " +
-                            "values ('" + lastname + "', " +
-                            "values ('" + email + "', " +
-                            "values ('" + password + "');");
+                    statement.executeUpdate("insert into User (username, firstname, lastname, email, password) values + (" +
+                                            "'" + username + "', " +
+                                            "'" + firstname + "', " +
+                                            "'" + lastname + "', " +
+                                            "'" + email + "', " +
+                                            "'" + password + "');");
+
 
                     System.out.println("Database: new user created (" + username + ")");
 
