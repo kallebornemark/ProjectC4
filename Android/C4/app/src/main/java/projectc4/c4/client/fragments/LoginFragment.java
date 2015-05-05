@@ -138,6 +138,16 @@ public class LoginFragment extends Fragment {
         return text;
     }
 
+    public void enableLoginButton() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buttonLogin.setEnabled(true);
+                buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorred));
+            }
+        });
+    }
+
     /**
      * Private class to handel the buttons in the LoginFragment.
      */
@@ -162,7 +172,8 @@ public class LoginFragment extends Fragment {
 
                             inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
-                            if (((MainActivity) getActivity()).getClientController().getClient() == null) {
+                            if (((MainActivity) getActivity()).getClientController().getClient() == null
+                                    || ((MainActivity) getActivity()).getClientController().getClient().getUser() == null) {
                                 try {
                                     ((MainActivity) getActivity()).getClientController().connect();
                                 } catch (Exception e) {

@@ -83,8 +83,13 @@ public class MenuFragment extends Fragment {
 
                 case R.id.buttonPlayOnline:
                     if ((((MainActivity)getActivity()).getClientController().getClient() != null)){
-                        System.out.println("Ändrar till matchmaking");
-                        transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
+                        if ((((MainActivity)getActivity()).getClientController().getClient().getUser() != null)) {
+                            System.out.println("Ändrar till matchmaking");
+                            transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
+                        } else {
+                            System.out.println("Ändrar till Login");
+                            transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
+                        }
                     } else {
                         System.out.println("Ändrar till Login");
                         transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
