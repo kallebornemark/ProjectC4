@@ -32,11 +32,11 @@ public class GameGridView extends View {
     private Paint strokePaint;
     private Canvas c;
     private int rows, cols;
-    private Drawable clock = getResources().getDrawable(R.drawable.clock);
-    private Drawable bomb = getResources().getDrawable(R.drawable.bomb);
-    private Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
-    private Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
-    private Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
+    private Drawable clock = getResources().getDrawable(R.drawable.timenew);
+    private Drawable bomb = getResources().getDrawable(R.drawable.bombnew);
+    private Drawable colorblind = getResources().getDrawable(R.drawable.blindnew);
+    private Drawable extraturn = getResources().getDrawable(R.drawable.extranew);
+    private Drawable shuffle = getResources().getDrawable(R.drawable.shufflenew);
     private boolean noColor = false, drawColor = false;
     private Bitmap bitmap;
     private boolean newGame = true, create = true, bombTiles = false;
@@ -96,7 +96,14 @@ public class GameGridView extends View {
     }
 
     public void resetGameBoard(int[][] array){
-          if(create) {
+        System.out.println();
+        for (int row = 0; row < rows; row++) {
+            System.out.println();
+            for (int col = 0; col < cols; col++) {
+                System.out.print(array[row][col] + "  ");
+            }
+        }
+                if(create) {
               createBitmap();
               create = false;
           }
@@ -121,9 +128,16 @@ public class GameGridView extends View {
                 } else if (array[row][col] == C4Constants.POWERUP_SHUFFLE){
                     shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                     shuffle.draw(c);
-                }
+                } else if (array[row][col] == C4Constants.PLAYER1) {
+                    paint.setColor(C4Color.RED);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                } else if (array[row][col] == C4Constants.PLAYER2){
+                    paint.setColor(C4Color.YELLOW);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
             }
+          }
         }
+        paint.setColor(C4Color.LIGHTGRAY);
         updateDisplay();
     }
 
