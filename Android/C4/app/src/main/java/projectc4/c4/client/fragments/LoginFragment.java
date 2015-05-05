@@ -174,13 +174,7 @@ public class LoginFragment extends Fragment {
 
                             inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
-                            if (((MainActivity) getActivity()).getClientController().getClient() == null
-                                    || ((MainActivity) getActivity()).getClientController().getClient().getUser() == null) {
-                                try {
-                                    ((MainActivity) getActivity()).getClientController().connect();
-                                } catch (Exception e) {
-                                }
-                            }
+                            login();
                         } else {
                             // Om användarnamnet/lösenordet inte innehåller några tecken
                             if(editTextUsername.getText().length() == 0) {
@@ -215,6 +209,7 @@ public class LoginFragment extends Fragment {
                             if ( editTextEmail.getText().toString().equals(editTextEmailAgain.getText().toString()) ) {
 
                                 if ( editTextPassword.getText().toString().equals(editTextPasswordAgain.getText().toString()) ) {
+                                    //New user sent to server.
                                     clientController.newUser( new User(
                                             editTextUsername.getText().toString(),
                                             editTextFirstName.getText().toString(),

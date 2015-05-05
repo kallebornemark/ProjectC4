@@ -29,6 +29,7 @@ public class Client implements Runnable, Serializable {
     private User user;
     private User opponentUser;
     private ClientController clientController;
+    private Thread thread;
 
     public Client(ClientController clientController) {
         this.clientController = clientController;
@@ -36,14 +37,14 @@ public class Client implements Runnable, Serializable {
 
     public void connect(String ip, int port) {
         user = null;
+        thread = null;
         this.ip = ip;
         this.port = port;
         System.out.println("Innan tråden skapas");
-        if (client == null) {
-            client = new Thread(this);
-            client.start();
-            System.out.println("Tråden har startats");
-        }
+        thread = new Thread(this);
+        thread.start();
+        System.out.println("Tråden har startats");
+
     }
 
     public Socket getSocket() {
@@ -51,18 +52,15 @@ public class Client implements Runnable, Serializable {
     }
 
     public void disconnect() {
-        if (client != null) {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            client.interrupt();
-            clientController.setClient(null);
-            client = null;
-
-            System.out.println("Client Disconnected");
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        this.user = null;
+        this.thread.interrupt();
+        this.thread = null;
+        System.out.println("Client Disconnected");
     }
 
     public void setUsername(User user) {
@@ -109,8 +107,12 @@ public class Client implements Runnable, Serializable {
     }
 
     public void newUser(User user) {
-
-
+        try {
+            oos.writeObject(user);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public User getUser() {
