@@ -223,6 +223,9 @@ public class GameController {
         if (tile == C4Constants.POWERUP_EXTRATURN) {
             powerup.powerupExtraTurn();
         }
+        if (tile == C4Constants.POWERUP_SHUFFLE) {
+            powerup.powerupShuffle();
+        }
     }
 
     public void reDraw() {
