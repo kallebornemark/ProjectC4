@@ -216,7 +216,8 @@ public class LoginFragment extends Fragment {
                                             editTextFirstName.getText().toString(),
                                             editTextLastName.getText().toString(),
                                             editTextEmail.getText().toString(),
-                                            editTextPassword.getText().toString())
+                                            editTextPassword.getText().toString(),
+                                            true)
                                     );
                                 } else {
                                     toast = Toast.makeText(getActivity().getApplicationContext(),

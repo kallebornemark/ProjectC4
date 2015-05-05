@@ -79,7 +79,7 @@ public class ConnectedClient extends Thread implements Serializable {
                     int[] gameResults = {Integer.parseInt(res[5]), Integer.parseInt(res[6]), Integer.parseInt(res[7])};
 
                     // Re-create User with username, firstname, lastname, elo and gameresults
-                    User returnUser = new User(res[1], res[2], res[3], Double.parseDouble(res[4]), gameResults);
+                    User returnUser = new User(res[1], res[2], res[3], Double.parseDouble(res[4]), gameResults, false);
                     oos.writeObject(returnUser);
                     oos.flush();
                     this.username = username;
@@ -148,14 +148,22 @@ public class ConnectedClient extends Thread implements Serializable {
 
                 } else if (obj instanceof User) {
                     User user = (User)obj;
-                    Object result = server.newUser(user);
-                    if (result instanceof User) {
-                        this.username = user.getUsername();
-                        this.firstName = user.getFirstName();
-                        this.lastName = user.getLastName();
+
+                    if (user.isNewUser()) {
+                        // Register new user
+                        Object result = server.newUser(user);
+                        if (result instanceof User) {
+                            this.username = user.getUsername();
+                            this.firstName = user.getFirstName();
+                            this.lastName = user.getLastName();
+                        }
+                        oos.writeObject(result);
+                        oos.flush();
+                    } else {
+                        // Update profile settings
+                        server.updateUser(user);
                     }
-                    oos.writeObject(result);
-                    oos.flush();
+
                 }
                 else if (obj instanceof String) {
                     username = (String)obj;

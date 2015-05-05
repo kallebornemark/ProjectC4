@@ -15,29 +15,32 @@ public class User implements Serializable {
     private static final long serialVersionUID = -253471345465050L;
     private final String username;
     private int[] gameResults;
-    private String firstName;
-    private String lastName;
+    private String firstName = "";
+    private String lastName = "";
     private double elo = 1000;
     private Intent profileImage;
     private String email;
     private String password;
+    private boolean newUser = false;
 //    private ActiveGame activeGame;
 
-    public User(String username, String firstName, String lastName, double elo, int[] gameResults){
+    public User(String username, String firstName, String lastName, double elo, int[] gameResults, boolean newUser){
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.elo = elo;
         this.gameResults = gameResults;
+        this.newUser = newUser;
     }
 
-    public User(String username, String firstName, String lastName, String email, String password){
+    public User(String username, String firstName, String lastName, String email, String password, boolean newUser){
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.gameResults = new int[4];
+        this.newUser = newUser;
     }
 
     /*public void setActiveGame(ActiveGame activeGame) {
@@ -127,5 +130,9 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isNewUser() {
+        return newUser;
     }
 }
