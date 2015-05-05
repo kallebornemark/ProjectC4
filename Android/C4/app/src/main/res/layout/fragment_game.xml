@@ -16,97 +16,18 @@
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="false">
 
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconButtons"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignLeft="@+id/textViewPlayer1"
-            android:layout_marginLeft="7dp"
-            android:visibility="invisible">
-
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/ibPlayer1Profile"
-                android:adjustViewBounds="false"
-                android:background="@drawable/c4_profile"
-                android:layout_column="1"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
-                android:cropToPadding="false"
-                />
-
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/ibPlayer1Settings"
-                android:adjustViewBounds="false"
-                android:background="@drawable/c4_settings"
-                android:layout_column="2"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
-                android:cropToPadding="false"
-                />
-
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/ibPlayer1Friends"
-                android:adjustViewBounds="false"
-                android:background="@drawable/c4_friends"
-                android:layout_column="3"
-                android:scaleType="fitCenter"
-                android:cropToPadding="false"
-                android:layout_marginRight="10dp"/>
-
-            <ImageButton
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ibPlayer1Chat"
-                android:layout_column="4"
-                android:background="@drawable/c4_chat"/>
+                android:id="@+id/tvPlayerElo"
+                android:layout_marginLeft="6dp"/>
 
-        </GridLayout>
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iconButtons2"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentLeft="false"
-            android:layout_marginTop="0dp"
-            android:layout_alignLeft="@+id/textViewPlayer2"
-            android:layout_marginLeft="7dp"
-            android:visibility="invisible">
-
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:id="@+id/ibPlayer2Profile"
-                android:adjustViewBounds="false"
-                android:background="@drawable/c4_profile"
-                android:layout_column="1"
-                android:scaleType="fitCenter"
-                android:cropToPadding="false"
-                android:layout_marginRight="10dp"/>
-
-            <ImageButton
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ibPlayer2Chat"
-                android:layout_column="4"
-                android:background="@drawable/c4_chat"/>
+                android:id="@+id/tvOpponentElo" android:layout_alignLeft="@+id/textViewPlayer2"
+                android:layout_marginLeft="6dp"/>
 
-        </GridLayout>
         <TextView
             android:layout_width="140dp"
             android:layout_height="35dp"
@@ -141,8 +62,7 @@
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:layout_centerHorizontal="true"
             android:textSize="15sp"
-            android:layout_below="@+id/iconButtons"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="30dp"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -203,27 +123,28 @@
         android:id="@+id/gameBoard"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/relativeLayoutPlayers">
+        android:layout_below="@+id/relativeLayoutPlayers" android:keepScreenOn="false"
+        android:alwaysDrawnWithCache="false">
 
         <projectc4.c4.client.GameGridView
             android:id="@+id/gameGridView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" android:keepScreenOn="false" android:saveEnabled="false"/>
 
         <projectc4.c4.client.GameGridShowPointer
             android:id="@+id/gameGridShowPointer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" android:saveEnabled="false" android:keepScreenOn="false"/>
 
         <projectc4.c4.client.GameGridAnimation
             android:id="@+id/gameGridAnimation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" android:saveEnabled="false" android:keepScreenOn="false"/>
 
         <projectc4.c4.client.GameGridForeground
             android:id="@+id/gameGridForeground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" android:saveEnabled="false" android:keepScreenOn="false"/>
     </RelativeLayout>
 
     <RelativeLayout

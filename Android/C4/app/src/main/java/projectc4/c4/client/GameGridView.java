@@ -196,8 +196,10 @@ public class GameGridView extends View {
     protected void onDraw(Canvas canvas) {
 //        if (bitmap==null){
         if(newGame) {
-            resetGameBoard(gameController.getGameBoard());
-            newGame = false;
+            if (!isInEditMode()) {
+                resetGameBoard(gameController.getGameBoard());
+                newGame = false;
+            }
         }
 //        if (bitmap != null && gameController != null){
         if(!newGame) {

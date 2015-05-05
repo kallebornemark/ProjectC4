@@ -91,12 +91,12 @@ public class ClientController {
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("172.20.10.2", 3450); // Kalles hotspot
+        client.connect("192.168.1.210", 3450); // Kalles macbook hemma
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
-        client.connect("172.20.10.2", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
-//        client.connect("192.168.1.225", 3450);
 
     }
 
@@ -279,6 +279,11 @@ public class ClientController {
             getUser().newGameResult(C4Constants.DRAW, gameInfo.getOpponentElo());
             client.updateUser(C4Constants.DRAW);
         }
+        gameFragment.setElos();
+    }
+
+    public void setElos() {
+        gameFragment.setElos();
     }
 
     public String getPlayerStats(boolean opponent) {

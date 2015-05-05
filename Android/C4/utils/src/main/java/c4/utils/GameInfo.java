@@ -21,7 +21,7 @@ public class GameInfo implements Serializable {
         this.opponentFirstName = opponentFirstName;
         this.opponentLastName = opponentLastName;
         this.opponentElo = opponentElo;
-        this. opponentGameResults = opponentGameResults;
+        this.opponentGameResults = opponentGameResults;
         this.playerTurn = playerTurn;
     }
 

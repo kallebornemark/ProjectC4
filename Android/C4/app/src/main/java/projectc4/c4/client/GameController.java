@@ -284,6 +284,7 @@ public class GameController {
                 clientController.getGameInfo().setRematch(true);
                 clientController.setOkayToLeave(true);
             }
+
         } else if (playedTiles == 42) {
             // Draw
             clientController.draw();
