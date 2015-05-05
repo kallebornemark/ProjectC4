@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import c4.utils.C4Color;
+import c4.utils.User;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MainActivity;
@@ -34,7 +35,7 @@ public class LoginFragment extends Fragment {
     private ProgressBar progressBar;
     private EditText editTextUsername;
     private EditText editTextFirstName;
-    private EditText editTextSurname;
+    private EditText editTextLastName;
     private EditText editTextEmail;
     private EditText editTextEmailAgain;
     private EditText editTextPassword;
@@ -73,8 +74,8 @@ public class LoginFragment extends Fragment {
         //TableRows
         editTextFirstName = (EditText)view.findViewById(R.id.editTextFirstName);
         editTextFirstName.setVisibility(View.GONE);
-        editTextSurname = (EditText)view.findViewById(R.id.editTextSurname);
-        editTextSurname.setVisibility(View.GONE);
+        editTextLastName = (EditText)view.findViewById(R.id.editTextLastName);
+        editTextLastName.setVisibility(View.GONE);
         editTextEmail = (EditText)view.findViewById(R.id.editTextEmail);
         editTextEmail.setVisibility(View.GONE);
         editTextEmailAgain = (EditText)view.findViewById(R.id.editTextEmailAgain);
@@ -157,6 +158,7 @@ public class LoginFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.buttonLogin:
+                    Toast toast;
                     if (buttonLogin.getText().equals("LOGIN")) {
                         //Checks that the username doesn't contain spaces in the end.
                         editTextUsername.setText(deleteSpacesAfter( editTextUsername.getText().toString() ));
@@ -181,7 +183,6 @@ public class LoginFragment extends Fragment {
                             }
                         } else {
                             // Om användarnamnet/lösenordet inte innehåller några tecken
-                            Toast toast;
                             if(editTextUsername.getText().length() == 0) {
                                 toast = Toast.makeText(getActivity().getApplicationContext(), "Username can't be empty!", Toast.LENGTH_SHORT);
                             } else if  (editTextPassword.getText().length() == 0) {
@@ -195,14 +196,58 @@ public class LoginFragment extends Fragment {
                     } else if (buttonLogin.getText().equals("CREATE NEW ACCOUNT")) {
                         System.out.println("SKAPA NYTT KONTO");
 
+                        //Checks that the fields doesn't contain spaces in the end.
+                        editTextUsername.setText(deleteSpacesAfter( editTextUsername.getText().toString() ));
+                        editTextFirstName.setText(deleteSpacesAfter( editTextFirstName.getText().toString() ));
+                        editTextLastName.setText(deleteSpacesAfter(editTextLastName.getText().toString()));
+                        editTextEmail.setText(deleteSpacesAfter( editTextEmail.getText().toString() ));
+                        editTextEmailAgain.setText(deleteSpacesAfter( editTextEmailAgain.getText().toString() ));
+
+                        //checks that necessary fields contains text.
+                        if (editTextUsername.getText().length() > 0 &&
+                                editTextEmail.getText().length() > 0 &&
+                                editTextEmailAgain.getText().length() > 0 &&
+                                editTextPassword.getText().length() > 0 &&
+                                editTextPasswordAgain.getText().length() > 0
+                                ) {
+
+                            //Checks that the emails are the same.
+                            if ( editTextEmail.getText().toString().equals(editTextEmailAgain.getText().toString()) ) {
+
+                                if ( editTextPassword.getText().toString().equals(editTextPasswordAgain.getText().toString()) ) {
+                                    clientController.newUser( new User(
+                                            editTextUsername.getText().toString(),
+                                            editTextFirstName.getText().toString(),
+                                            editTextLastName.getText().toString(),
+                                            editTextEmail.getText().toString(),
+                                            editTextPassword.getText().toString())
+                                    );
+                                } else {
+                                    toast = Toast.makeText(getActivity().getApplicationContext(),
+                                            "Password doesn't match\nTry again", Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                    toast.show();
+                                }
+
+                            } else {
+                                toast = Toast.makeText(getActivity().getApplicationContext(),
+                                        "Email-adresses doesn't match\nTry again", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
+                        } else {
+                            toast = Toast.makeText(getActivity().getApplicationContext(),
+                                    "Fields with (*) must contain text\nTry again", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
                     }
                     break;
-
                 case R.id.textViewNewAccount:
                     if (textViewNewAccount.getText().equals("Create a new account?")){
                         textViewNewAccount.setText("Back to login");
                         editTextFirstName.setVisibility(View.VISIBLE);
-                        editTextSurname.setVisibility(View.VISIBLE);
+                        editTextLastName.setVisibility(View.VISIBLE);
                         editTextEmail.setVisibility(View.VISIBLE);
                         editTextEmailAgain.setVisibility(View.VISIBLE);
                         editTextPasswordAgain.setVisibility(View.VISIBLE);
@@ -210,7 +255,7 @@ public class LoginFragment extends Fragment {
                     } else if (textViewNewAccount.getText().equals("Back to login")){
                         textViewNewAccount.setText("Create a new account?");
                         editTextFirstName.setVisibility(View.GONE);
-                        editTextSurname.setVisibility(View.GONE);
+                        editTextLastName.setVisibility(View.GONE);
                         editTextEmail.setVisibility(View.GONE);
                         editTextEmailAgain.setVisibility(View.GONE);
                         editTextPasswordAgain.setVisibility(View.GONE);

@@ -31,6 +31,14 @@ public class User implements Serializable {
         this.gameResults = gameResults;
     }
 
+    public User(String username, String firstName, String lastName, String email, String password){
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
     /*public void setActiveGame(ActiveGame activeGame) {
         this.activeGame = activeGame;
     }*/
