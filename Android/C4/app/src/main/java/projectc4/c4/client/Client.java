@@ -120,7 +120,7 @@ public class Client implements Runnable, Serializable {
     }
 
     public void createOpponentUser(GameInfo gameInfo) {
-        opponentUser = new User(gameInfo.getOpponentUserName(), gameInfo.getOpponentFirstName(), gameInfo.getOpponentLastName(), gameInfo.getOpponentElo(), gameInfo.getOpponentGameResults());
+        opponentUser = new User(gameInfo.getOpponentUserName(), gameInfo.getOpponentFirstName(), gameInfo.getOpponentLastName(), gameInfo.getOpponentElo(), gameInfo.getOpponentGameResults(), false);
     }
 
     public User getOpponentUser() {

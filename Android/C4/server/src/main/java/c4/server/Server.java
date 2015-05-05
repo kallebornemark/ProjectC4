@@ -123,6 +123,14 @@ public class Server implements Runnable {
         return database.newUser(user);
     }
 
+    /**
+     * Update an existing user in the database
+     * @param user User object with updated info to be inserted into the database
+     */
+    public void updateUser(User user) {
+        database.updateUser(user);
+    }
+
     public void rematch(ConnectedClient c1, ConnectedClient c2, int[][] powerups) {
         System.out.println("Rematch : Server");
         c1.sendPowerups(powerups);
