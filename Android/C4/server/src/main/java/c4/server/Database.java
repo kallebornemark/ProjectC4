@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import c4.utils.C4Constants;
 import c4.utils.Elo;
+import c4.utils.User;
 
 
 /**
@@ -45,22 +46,6 @@ public class Database {
         try { if (resultSet != null) resultSet.close(); } catch (SQLException e) {}
         try { if (statement != null) statement.close(); } catch (SQLException e) {}
         try { if (connection != null) connection.close(); } catch (SQLException e) {}
-    }
-
-    public synchronized boolean newUser(String username, String password) {
-        try {
-            connect();
-            statement.executeUpdate("insert into User ('username', 'password')" +
-                    "values ('" + username + "', '" + password + "')");
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try { if (resultSet != null) {resultSet.close();} } catch (SQLException e) {}
-            try { if (statement != null) {statement.close();} } catch (SQLException e) {}
-            try { if (connection != null) {connection.close();} } catch (SQLException e) {}
-        }
-        return true;
     }
 
     /**
@@ -225,5 +210,49 @@ public class Database {
             closeAll();
         }
         return results;
+    }
+
+    public synchronized Object newUser(User user) {
+        String username = user.getUsername();
+        String firstname = user.getFirstName();
+        String lastname = user.getLastName();
+        String email = user.getEmail();
+        String password = user.getPassword();
+
+        try {
+            connect();
+            resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
+
+            // Create user if username available
+            if (!resultSet.next()) {
+                resultSet = statement.executeQuery("select * from User where password = '" + password + "'");
+
+                // Create user if username available
+                if (!resultSet.next()) {
+
+                    statement.executeUpdate("insert into User (username, firstname, lastname, password)" +
+                            "values ('" + username + "', " +
+                            "values ('" + firstname + "', " +
+                            "values ('" + lastname + "', " +
+                            "values ('" + email + "', " +
+                            "values ('" + password + "');");
+
+                    System.out.println("Database: new user created (" + username + ")");
+
+                } else {
+                    return "Email address already taken!";
+                }
+
+            } else {
+                System.out.println("newUser called - USERNAME ALREADY TAKEN");
+                return "Username already taken!";
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return user;
     }
 }

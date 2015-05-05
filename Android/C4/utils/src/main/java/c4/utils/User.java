@@ -19,6 +19,8 @@ public class User implements Serializable {
     private String lastName;
     private double elo = 1000;
     private Intent profileImage;
+    private String email;
+    private String password;
 //    private ActiveGame activeGame;
 
     public User(String username, String firstName, String lastName, double elo, int[] gameResults){
@@ -27,6 +29,14 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.elo = elo;
         this.gameResults = gameResults;
+    }
+
+    public User(String username, String firstName, String lastName, String email, String password){
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
     /*public void setActiveGame(ActiveGame activeGame) {
@@ -100,5 +110,21 @@ public class User implements Serializable {
 
     public int[] getGameResults() {
         return gameResults;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

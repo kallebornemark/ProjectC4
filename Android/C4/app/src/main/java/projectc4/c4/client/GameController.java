@@ -168,14 +168,6 @@ public class GameController {
             }
         } else {
             setExtraTurn(false);
-            clientController.changeHighlightedPlayer(playerTurn);
-            if (timer != null) {
-                timer.cancel();
-                timer = null;
-            }
-            if(!isIncoming && timer == null) {
-                startTimer(30);
-            }
         }
     }
 

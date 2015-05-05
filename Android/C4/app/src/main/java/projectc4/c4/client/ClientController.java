@@ -61,6 +61,10 @@ public class ClientController {
         this.matchmakingFragment = matchmakingFragment;
     }
 
+    public void newUser(User user) {
+        client.newUser(user);
+    }
+
     public void setLoginFragment(LoginFragment loginFragment) {
         this.loginFragment = loginFragment;
     }
@@ -71,6 +75,10 @@ public class ClientController {
 
     public GamePopupFragment getGamePopupFragment() {
         return this.gamePopupFragment;
+    }
+
+    public void enableLoginButton() {
+        loginFragment.enableLoginButton();
     }
 
     public void connect() {
@@ -86,9 +94,9 @@ public class ClientController {
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
-//        client.connect("172.20.10.2", 3450); // Kalles hemmadator
+        client.connect("172.20.10.2", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
-        client.connect("10.2.10.36", 3450);
+        client.connect("192.168.1.225", 3450);
 
     }
 

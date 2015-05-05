@@ -146,12 +146,11 @@ public class ConnectedClient extends Thread implements Serializable {
 
                     }
 
-                    // Hantera Users //Emil - Updatera userobjektet med bild etc från profilen
                 } else if (obj instanceof User) {
-                    // TODO Uppdatera databasen när någon uppdaterat sin profil
-//                    this.username = (User)obj;
-//                    server.newGameResult(this.username);
-//                    System.out.println("Server: User-object updated");
+                    User user = (User)obj;
+                    Object result = server.newUser(user);
+                    oos.writeObject(result);
+                    oos.flush();
                 }
                 else if (obj instanceof String) {
                     username = (String)obj;

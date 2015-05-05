@@ -108,6 +108,11 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void newUser(User user) {
+
+
+    }
+
     public User getUser() {
         return user;
     }
@@ -172,6 +177,7 @@ public class Client implements Runnable, Serializable {
         } else if (obj instanceof String) {
             // Login attempt failed on server side, display error in login fragment
             clientController.loginErrorMessage((String) obj);
+            clientController.enableLoginButton();
         } else if (obj instanceof int[][]){
             int[][] gameBoard = (int[][])obj;
             clientController.getGameController().setPowerups(gameBoard);
