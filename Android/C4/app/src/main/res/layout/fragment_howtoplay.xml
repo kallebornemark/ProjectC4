@@ -15,48 +15,6 @@
         android:layout_height="fill_parent"
         android:layout_margin="30dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TAP"
-            android:id="@+id/textViewTap"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#FF716D61"
-            android:textSize="25sp"
-            android:layout_marginBottom="20dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView6"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/c4_star_red"
-            android:layout_marginBottom="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OR SWIPE"
-            android:id="@+id/textViewSwipe"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#FF716D61"
-            android:textSize="25sp"
-            android:layout_marginBottom="20dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView7"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/c4_star_yellow"
-            android:layout_marginBottom="20dp" />
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@drawable/colorblack"
-            android:id="@+id/line"
-            android:layout_marginBottom="20dp" />
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -71,41 +29,139 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="YOU / PLAYER ONE"
-                android:id="@+id/textViewPlayer1"
-                android:layout_gravity="center_vertical"
+                android:text="POWERUPS"
+                android:id="@+id/textViewTap"
                 android:textColor="#FF716D61"
-                android:textSize="16sp"
-                android:layout_marginTop="5dp" />
+                android:textSize="25sp"
+                android:layout_marginBottom="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OPPONENT / PLAYER TWO"
-                android:id="@+id/textViewPlayer2"
+                android:text="Rush"
+                android:id="@+id/rush"
                 android:layout_gravity="center_vertical"
                 android:textColor="#FF716D61"
-                android:textSize="16sp"
-                android:layout_marginTop="30dp" />
+                android:textSize="21sp"
+                android:layout_marginTop="5dp" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Your opponent has 10 seconds to make the next move."
+                android:id="@+id/rushdesc"
+                android:textSize="17sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colorblind"
+                android:id="@+id/color"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FF716D61"
+                android:textSize="21sp"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Your opponent can&apos;t see color."
+                android:id="@+id/colordesc"
+                android:textSize="17sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bomb"
+                android:id="@+id/bomb"
+                android:layout_marginTop="20dp"
+                android:textSize="21sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="The whole column explode."
+                android:id="@+id/bombdesc"
+                android:textSize="17sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Extra Turn"
+                android:id="@+id/extra"
+                android:layout_marginTop="20dp"
+                android:textSize="21sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="You get an extra turn."
+                android:id="@+id/extradesc"
+                android:textSize="17sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Swap"
+                android:id="@+id/swap"
+                android:layout_marginTop="20dp"
+                android:textSize="21sp"
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="You and your opponent swap tiles."
+                android:id="@+id/swapdesc"
+                android:textSize="17sp"
+                android:textColor="#FF716D61"/>
 
         </LinearLayout>
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="end" >
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/colorred" />
+                android:background="@drawable/timenew"
+                android:layout_gravity="center"
+                android:layout_marginBottom="42dp"
+                android:layout_marginTop="80dp" />
 
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/coloryellow"
-                android:layout_marginTop="10dp" />
+                android:background="@drawable/blindnew"
+                android:layout_gravity="center"
+                android:layout_marginBottom="42dp" />
+            <View
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/bombnew"
+                android:layout_gravity="center"
+                android:layout_marginBottom="42dp" />
+            <View
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/extraturn"
+                android:layout_gravity="center"
+                android:layout_marginBottom="42dp" />
+            <View
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/shufflenew"
+                android:layout_gravity="center"
+                android:layout_marginBottom="42dp" />
+
 
         </LinearLayout>
     </LinearLayout>

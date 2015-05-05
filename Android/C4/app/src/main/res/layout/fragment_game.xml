@@ -123,28 +123,27 @@
         android:id="@+id/gameBoard"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/relativeLayoutPlayers" android:keepScreenOn="false"
-        android:alwaysDrawnWithCache="false">
+        android:layout_below="@+id/relativeLayoutPlayers">
 
         <projectc4.c4.client.GameGridView
             android:id="@+id/gameGridView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:keepScreenOn="false" android:saveEnabled="false"/>
+            android:layout_height="match_parent" />
 
         <projectc4.c4.client.GameGridShowPointer
             android:id="@+id/gameGridShowPointer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:saveEnabled="false" android:keepScreenOn="false"/>
+            android:layout_height="match_parent" />
 
         <projectc4.c4.client.GameGridAnimation
             android:id="@+id/gameGridAnimation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:saveEnabled="false" android:keepScreenOn="false"/>
+            android:layout_height="match_parent" />
 
         <projectc4.c4.client.GameGridForeground
             android:id="@+id/gameGridForeground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:saveEnabled="false" android:keepScreenOn="false"/>
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
     <RelativeLayout
