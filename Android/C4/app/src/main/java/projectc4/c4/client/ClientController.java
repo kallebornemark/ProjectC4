@@ -61,6 +61,10 @@ public class ClientController {
         this.matchmakingFragment = matchmakingFragment;
     }
 
+    public void newUser(User user) {
+        client.newUser(user);
+    }
+
     public void setLoginFragment(LoginFragment loginFragment) {
         this.loginFragment = loginFragment;
     }

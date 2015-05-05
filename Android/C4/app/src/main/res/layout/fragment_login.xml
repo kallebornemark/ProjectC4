@@ -39,7 +39,7 @@
                     android:layout_column="0"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:hint="Username"/>
+                    android:hint="*Username"/>
 
             </TableRow>
 
@@ -72,7 +72,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:id="@+id/editTextSurname"
+                    android:id="@+id/editTextLastName"
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
@@ -94,7 +94,7 @@
                     android:layout_gravity="center_horizontal"
                     android:inputType="textEmailAddress"
                     android:layout_weight="1"
-                    android:hint="Email" />
+                    android:hint="*Email" />
             </TableRow>
 
             <TableRow
@@ -112,7 +112,7 @@
                     android:layout_gravity="center_horizontal"
                     android:inputType="textEmailAddress"
                     android:layout_weight="1"
-                    android:hint="Repeat email"/>
+                    android:hint="*Repeat email"/>
             </TableRow>
 
             <TableRow
@@ -129,7 +129,7 @@
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:hint="Password"
+                    android:hint="*Password"
                     android:inputType="textPassword" />
             </TableRow>
 
@@ -147,7 +147,7 @@
                     android:layout_column="0"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:hint="Repeat password"
+                    android:hint="*Repeat password"
                     android:inputType="textPassword" />
             </TableRow>
 

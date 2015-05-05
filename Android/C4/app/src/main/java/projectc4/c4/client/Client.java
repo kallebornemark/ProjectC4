@@ -108,6 +108,11 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void newUser(User user) {
+
+
+    }
+
     public User getUser() {
         return user;
     }
