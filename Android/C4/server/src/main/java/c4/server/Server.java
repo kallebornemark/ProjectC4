@@ -40,9 +40,6 @@ public class Server implements Runnable {
         System.out.println("Server started");
     }
 
-    public void addUser(User user) {
-    }
-
     public synchronized void addConnectedClient(ConnectedClient connectedClient) {
         connectedClientHashMap.put(connectedClient.getUsername(), connectedClient);
     }
@@ -120,6 +117,10 @@ public class Server implements Runnable {
 
         c1.newGame();
         c2.newGame();
+    }
+
+    public Object newUser(User user) {
+        return database.newUser(user);
     }
 
     public void rematch(ConnectedClient c1, ConnectedClient c2, int[][] powerups) {
