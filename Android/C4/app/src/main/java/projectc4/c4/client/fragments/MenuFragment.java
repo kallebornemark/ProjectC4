@@ -98,7 +98,7 @@ public class MenuFragment extends Fragment {
                     break;
 
                 case R.id.buttonSettings:
-                    transaction.replace(R.id.activity_layout_fragmentpos, new SettingsFragment()).addToBackStack(null).commit();
+                    transaction.replace(R.id.activity_layout_fragmentpos, new GameSettingsFragment()).addToBackStack(null).commit();
                     break;
 
                 case R.id.buttonHowToPlay:

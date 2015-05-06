@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFCED"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/boardsize"
+            android:text="BOARD SIZE"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/sixseven"
+                android:text="6x7"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/colorred"
+                android:layout_marginRight="15dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/nineten"
+                android:text="9x10"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/colorred" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/twelethirteen"
+                android:text="12x13"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/colorred"
+                android:layout_marginLeft="15dp" />
+
+            </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rounds"
+            android:text="ROUNDS"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp" />
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/one"
+                android:text="best of 1"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/coloryellow"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="15dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/three"
+                android:text="best of 3"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/coloryellow" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/six"
+                android:text="best of 6"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/coloryellow"
+                android:layout_gravity="right"
+                android:layout_marginLeft="15dp" />
+
+        </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/startingplayer"
+            android:text="STARTING PLAYER"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/startplayer1"
+                android:text="player 1"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/colorblack"
+                android:layout_marginRight="15dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/startrandom"
+                android:text="random"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/colorblack"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/startplayer2"
+                android:text="player 2"
+                android:textColor="#FFFFFCED"
+                android:background="@drawable/colorblack"
+                android:layout_marginLeft="15dp" />
+
+        </GridLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
