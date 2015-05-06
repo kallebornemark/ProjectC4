@@ -209,7 +209,19 @@ public class GameGridView extends View {
         }
     }
 
+    public void printArray(int[][] array) {
+        System.out.println();
+        for (int row = 0; row < array.length; row++) {
+            System.out.println();
+            for (int col = 0; col < array[0].length; col++) {
+                System.out.print(array[row][col] + "  ");
+            }
+        }
+    }
+
     public void setWinningTiles(HashSet<Integer> winningTiles, int[][] gameBoard) {
+        printArray(gameBoard);
+
         int tmpCounter = 0;
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
@@ -309,6 +321,7 @@ public class GameGridView extends View {
     }
 
     public void bombTiles(ArrayList<Integer> list, int playedCol) {
+        printArray(gameController.getGameBoard());
 
         int posX = (playedCol * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
         paint.setColor(C4Color.LIGHTGRAY);
@@ -317,6 +330,7 @@ public class GameGridView extends View {
             int posY = ((list.get(i)) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
             c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
         }
+        gameController.getGameBoard()[gameController.getPlayedRow()][playedCol] = 0;
         bombTiles = false;
         tempPosList = null;
     }
