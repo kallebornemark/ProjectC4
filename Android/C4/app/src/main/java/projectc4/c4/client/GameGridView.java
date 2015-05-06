@@ -32,11 +32,11 @@ public class GameGridView extends View {
     private Paint strokePaint;
     private Canvas c;
     private int rows, cols;
-    private Drawable clock = getResources().getDrawable(R.drawable.timenew);
-    private Drawable bomb = getResources().getDrawable(R.drawable.bombnew);
-    private Drawable colorblind = getResources().getDrawable(R.drawable.blindnew);
-    private Drawable extraturn = getResources().getDrawable(R.drawable.extranew);
-    private Drawable shuffle = getResources().getDrawable(R.drawable.shufflenew);
+    private Drawable clock = getResources().getDrawable(R.drawable.c4_rush);
+    private Drawable bomb = getResources().getDrawable(R.drawable.c4_bomb);
+    private Drawable colorblind = getResources().getDrawable(R.drawable.c4_blind);
+    private Drawable extraturn = getResources().getDrawable(R.drawable.c4_extra);
+    private Drawable shuffle = getResources().getDrawable(R.drawable.c4_switch);
     private boolean noColor = false, drawColor = false;
     private Bitmap bitmap;
     private boolean newGame = true, create = true, bombTiles = false;

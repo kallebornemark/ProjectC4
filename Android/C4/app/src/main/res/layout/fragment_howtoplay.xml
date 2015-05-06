@@ -132,7 +132,7 @@
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/timenew"
+                android:background="@drawable/c4_rush"
                 android:layout_gravity="center"
                 android:layout_marginBottom="42dp"
                 android:layout_marginTop="80dp" />
@@ -140,25 +140,25 @@
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/blindnew"
+                android:background="@drawable/c4_blind"
                 android:layout_gravity="center"
                 android:layout_marginBottom="42dp" />
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/bombnew"
+                android:background="@drawable/c4_bomb"
                 android:layout_gravity="center"
                 android:layout_marginBottom="42dp" />
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/extraturn"
+                android:background="@drawable/c4_extra"
                 android:layout_gravity="center"
                 android:layout_marginBottom="42dp" />
             <View
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/shufflenew"
+                android:background="@drawable/c4_switch"
                 android:layout_gravity="center"
                 android:layout_marginBottom="42dp" />
 
