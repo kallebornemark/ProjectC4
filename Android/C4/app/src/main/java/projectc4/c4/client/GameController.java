@@ -30,7 +30,7 @@ public class GameController {
     private Boolean extraTurn = false;
     private int rows = 6, cols = 7;
     private int winsSize = 4;
-    private int rounds;
+    private int rounds = 1;
     private int player1Points, player2Points;
 
     public GameController(ClientController clientController) {

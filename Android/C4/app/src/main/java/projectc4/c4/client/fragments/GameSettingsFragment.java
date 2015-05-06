@@ -103,6 +103,10 @@ public class GameSettingsFragment extends Fragment {
                     ((MainActivity)getActivity()).getGameController().setRounds(3);
                     break;
 
+                case R.id.five:
+                    ((MainActivity)getActivity()).getGameController().setRounds(5);
+                    break;
+
                 case R.id.startplayer1:
                     ((MainActivity)getActivity()).getGameController().setStartingPlayer(C4Constants.PLAYER1);
                     break;
