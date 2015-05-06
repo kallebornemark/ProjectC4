@@ -80,13 +80,13 @@ public class MenuFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.buttonPlayLocal:
                     ((MainActivity)getActivity()).getClientController().setGameMode(C4Constants.LOCAL);
-                    transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack(null).commit();
+                    transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack("Local").commit();
                     break;
 
                 case R.id.buttonPlayOnline:
                     if ((((MainActivity)getActivity()).getClientController().getClient().getUser() != null)) {
                         System.out.println("Ändrar till matchmaking");
-                        transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack(null).commit();
+                        transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
                     } else {
                         System.out.println("Ändrar till Login");
                         Socket socket = ((MainActivity)getActivity()).getClientController().getClient().getSocket();
