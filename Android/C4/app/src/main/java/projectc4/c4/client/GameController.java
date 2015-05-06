@@ -19,6 +19,7 @@ public class GameController {
     private int[][] gameBoard;
     private int[] colSize;
     private int playerTurn;
+    private int startingPlayer;
     private int playedRow, playedCol;
     private int playedTiles;
     private int gameMode;
@@ -27,12 +28,15 @@ public class GameController {
     private int time;
     private Powerup powerup;
     private Boolean extraTurn = false;
+    private int rows = 6, cols = 7;
+    private int winsSize = 4;
+    private int rounds;
+    private int player1Points, player2Points;
 
     public GameController(ClientController clientController) {
         this.playerTurn = C4Constants.PLAYER1;
         this.clientController = clientController;
-        this.gameBoard = new int[6][7];
-
+        this.gameBoard = new int[rows][cols];
     }
 
     public void setViews(GameGridView gameGridView, GameGridAnimation gameGridAnimation, GameGridShowPointer gameGridShowPointer, GameGridForeground gameGridForeground) {
@@ -72,13 +76,42 @@ public class GameController {
         return playedTiles;
     }
 
+    public void setArraySize(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        if(rows < 10) {
+            setWinsSize(4);
+        } else if(rows >= 10) {
+            setWinsSize(5);
+        }
+    }
+
+    public void setWinsSize(int winsSize) {
+        this.winsSize = winsSize;
+    }
+
+    public void setRounds(int rounds) {
+        this.rounds = rounds;
+    }
+
+    public void setPlayer1Points(int player1Points) {
+        this.player1Points = player1Points;
+    }
+
+    public void setPlayer2Points(int player2Points) {
+        this.player2Points = player2Points;
+    }
+
+    public void setStartingPlayer(int startingPlayer) {
+        this.startingPlayer = startingPlayer;
+    }
     public int getPlayedRow() {
         return playedRow;
     }
 
     public void resetGameBoard() {
         System.out.println("RESET GAMEBOARD");
-        this.gameBoard = new int[6][7];
+        this.gameBoard = new int[rows][cols];
     }
 
     public int getPlayerTurn() {
@@ -202,9 +235,20 @@ public class GameController {
         winningTiles.clear();
         this.gameMode = gameMode;
         if(gameMode == C4Constants.LOCAL) {
-            setPlayerTurn(C4Constants.PLAYER1);
-            clientController.setPlayer(C4Constants.PLAYER1);
-            clientController.changeHighlightedPlayer(C4Constants.PLAYER1);
+            if(player1Points == 0 && player2Points == 0) {
+                setPlayerTurn(startingPlayer);
+                clientController.setPlayer(startingPlayer);
+                clientController.changeHighlightedPlayer(startingPlayer);
+            } else if (playerTurn == C4Constants.PLAYER1) {
+                setPlayerTurn(C4Constants.PLAYER2);
+                clientController.setPlayer(C4Constants.PLAYER2);
+                clientController.changeHighlightedPlayer(C4Constants.PLAYER2);
+            } else {
+                setPlayerTurn(C4Constants.PLAYER1);
+                clientController.setPlayer(C4Constants.PLAYER1);
+                clientController.changeHighlightedPlayer(C4Constants.PLAYER1);
+            }
+
         }
     }
 
@@ -274,13 +318,34 @@ public class GameController {
             if(timer != null) {
                 timer.cancel();
             }
-            clientController.enableGameButton();
             clientController.disableBlackArrow();
             setButtonEnable(false);
             highlightTiles();
             // Put a star next to the player who won
-            clientController.highlightWinnerPlayerStar(playerTurn);
-            clientController.setWinner(playerTurn);
+            if (gameMode == C4Constants.LOCAL) {
+                if (player1Points == (rounds / 2 +1) || player2Points == (rounds / 2 +1)) {
+                    clientController.enableGameButton(false);
+                    clientController.highlightWinnerPlayerStar(playerTurn);
+                    clientController.setWinner(playerTurn);
+                    player1Points = 0;
+                    player2Points = 0;
+                    //Switch to selectFragment or just run the same game again
+                } else {
+                    if(playerTurn == C4Constants.PLAYER1) {
+                        player1Points++;
+                        clientController.enableGameButton(true);
+                        //Öka poängen i UI-med +1
+                    } else {
+                        player2Points++;
+                        clientController.enableGameButton(true);
+                        //Öka poängen i UI-med +1
+                    }
+                }
+            } else {
+                clientController.enableGameButton(false);
+                clientController.highlightWinnerPlayerStar(playerTurn);
+                clientController.setWinner(playerTurn);
+            }
 
             if (gameMode == C4Constants.MATCHMAKING) {
                 clientController.stopAnimation();
@@ -289,9 +354,9 @@ public class GameController {
                 clientController.setOkayToLeave(true);
             }
 
-        } else if (playedTiles == 42) {
+        } else if (playedTiles == rows*cols) {
             // Draw
-            clientController.draw();
+            clientController.draw(true);
             if (gameMode == C4Constants.MATCHMAKING) {
                 clientController.stopAnimation();
                 clientController.updateUser(playerTurn, true);
@@ -317,14 +382,14 @@ public class GameController {
                         counter++;
                         winningTiles.add(calculate(playedRow, colMinus));
                     } else {
-                        return counter >= 4;
+                        return counter >= winsSize;
                     }
 
                 }
-                return counter >= 4;
+                return counter >= winsSize;
             }
         }
-        return counter >= 4;
+        return counter >= winsSize;
     }
 
     private boolean checkVertical(){
@@ -335,10 +400,10 @@ public class GameController {
                 counter++;
                 winningTiles.add(calculate(row, playedCol));
             } else {
-                return counter >= 4;
+                return counter >= winsSize;
             }
         }
-        return counter >= 4;
+        return counter >= winsSize;
     }
 
     private boolean checkDiagonalRight() {
@@ -351,13 +416,13 @@ public class GameController {
                         counter++;
                         winningTiles.add(calculate(rowMinus, colMinus));
                     } else {
-                        return counter >= 4;
+                        return counter >= winsSize;
                     }
                 }
-                return counter >= 4;
+                return counter >= winsSize;
             }
         }
-        return counter >= 4;
+        return counter >= winsSize;
     }
 
     public void setPowerups(int[][] gameBoard) {
@@ -375,12 +440,12 @@ public class GameController {
                         counter++;
                         winningTiles.add(calculate(rowMinus, colPlus));
                     } else {
-                        return counter >= 4;
+                        return counter >= winsSize;
                     }
                 }
-                return counter >= 4;
+                return counter >= winsSize;
             }
         }
-        return counter >= 4;
+        return counter >= winsSize;
     }
 }

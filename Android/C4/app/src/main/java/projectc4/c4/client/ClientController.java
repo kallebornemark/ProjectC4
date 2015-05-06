@@ -129,11 +129,11 @@ public class ClientController {
         gameFragment.highlightWinnerPlayerStar(player);
     }
 
-    public void enableGameButton() {
+    public void enableGameButton(boolean gameInProgress) {
         if (gameMode == C4Constants.MATCHMAKING) {
             gameFragment.promptRematch();
         } else if (gameMode == C4Constants.LOCAL) {
-            gameFragment.setNewGame();
+            gameFragment.setNewGame(gameInProgress);
         }
     }
 
@@ -153,11 +153,11 @@ public class ClientController {
         gameFragment.animateArrow(direction);
     }
 
-    public void draw() {
+    public void draw(boolean gameInProgress) {
 //        gameFragment.setTextViewWinner("It's a draw!");
         highlightWinnerPlayerStar(C4Constants.DRAW);
         changeHighlightedPlayer(C4Constants.DRAW);
-        enableGameButton();
+        enableGameButton(gameInProgress);
     }
 
     public void newGame(int gamemode) {

@@ -444,11 +444,16 @@ import projectc4.c4.client.*;
 
     }
 
-    public void setNewGame() {
+    public void setNewGame(final boolean gameInProgress) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 final Button buttonNewGame = (Button)view.findViewById(R.id.buttonNewGame);
+                if (gameInProgress) {
+                    buttonNewGame.setText("Next round");
+                } else {
+                    buttonNewGame.setText("New game");
+                }
                 buttonNewGame.setEnabled(true);
                 buttonNewGame.setVisibility(View.VISIBLE);
                 buttonNewGame.setOnClickListener(new View.OnClickListener() {
