@@ -32,6 +32,7 @@ public class LoginFragment extends Fragment {
     private Button buttonLogin;
     private ClientController clientController;
     private TextView textViewNewAccount;
+    private TextView textViewError;
     private ProgressBar progressBar;
     private EditText editTextUsername;
     private EditText editTextFirstName;
@@ -70,6 +71,7 @@ public class LoginFragment extends Fragment {
 
         //TextViews
         textViewNewAccount = (TextView)view.findViewById(R.id.textViewNewAccount);
+        textViewError = (TextView)view.findViewById(R.id.textViewError);
 
         //TableRows
         editTextFirstName = (EditText)view.findViewById(R.id.editTextFirstName);
@@ -102,8 +104,7 @@ public class LoginFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView error = (TextView)view.findViewById(R.id.textViewError);
-                error.setText(msg);
+                textViewError.setText(msg);
                 progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge2);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -145,7 +146,7 @@ public class LoginFragment extends Fragment {
             public void run() {
                 buttonLogin.setEnabled(true);
                 buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorred));
-                editTextUsername.setText("");
+                editTextPassword.setText("");
             }
         });
     }
@@ -189,7 +190,6 @@ public class LoginFragment extends Fragment {
                             toast.show();
                         }
                     } else if (buttonLogin.getText().equals("CREATE NEW ACCOUNT")) {
-                        System.out.println("SKAPA NYTT KONTO");
 
                         //Checks that the fields doesn't contain spaces in the end.
                         editTextUsername.setText(deleteSpacesAfter( editTextUsername.getText().toString() ));
@@ -210,6 +210,10 @@ public class LoginFragment extends Fragment {
                             if ( editTextEmail.getText().toString().equals(editTextEmailAgain.getText().toString()) ) {
 
                                 if ( editTextPassword.getText().toString().equals(editTextPasswordAgain.getText().toString()) ) {
+                                    //Shows the progressbar and disables the button
+                                    progressBar.setEnabled(true);
+                                    progressBar.setVisibility(View.VISIBLE);
+                                    buttonLogin.setEnabled(false);
                                     //New user sent to server.
                                     clientController.newUser( new User(
                                             editTextUsername.getText().toString(),
@@ -242,35 +246,31 @@ public class LoginFragment extends Fragment {
                     break;
                 case R.id.textViewNewAccount:
                     if (textViewNewAccount.getText().equals("Create a new account?")){
+                        editTextUsername.setHint("Username *");
+                        editTextPassword.setHint("Password *");
                         textViewNewAccount.setText("Back to login");
                         editTextFirstName.setVisibility(View.VISIBLE);
                         editTextLastName.setVisibility(View.VISIBLE);
                         editTextEmail.setVisibility(View.VISIBLE);
                         editTextEmailAgain.setVisibility(View.VISIBLE);
                         editTextPasswordAgain.setVisibility(View.VISIBLE);
+                        textViewError.setText("");
                         buttonLogin.setText("CREATE NEW ACCOUNT");
                     } else if (textViewNewAccount.getText().equals("Back to login")){
+                        editTextUsername.setHint("Username");
+                        editTextPassword.setHint("Password");
                         textViewNewAccount.setText("Create a new account?");
                         editTextFirstName.setVisibility(View.GONE);
                         editTextLastName.setVisibility(View.GONE);
                         editTextEmail.setVisibility(View.GONE);
                         editTextEmailAgain.setVisibility(View.GONE);
                         editTextPasswordAgain.setVisibility(View.GONE);
+                        textViewError.setText("");
                         buttonLogin.setText("LOGIN");
                     } else {
                         System.out.println("något fel loginfragment.");
                     }
                     break;
-//
-//                case R.id.??:
-//                    break;
-//
-//                case R.id.??:
-//                    break;
-//
-//                case R.id.??:
-//
-//                    break;
             }
 
         }

@@ -3,9 +3,11 @@ package projectc4.c4.client;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.Highscore;
 import c4.utils.User;
 import projectc4.c4.client.fragments.GameFragment;
 import projectc4.c4.client.fragments.GamePopupFragment;
+import projectc4.c4.client.fragments.HighscoreFragment;
 import projectc4.c4.client.fragments.LoginFragment;
 import projectc4.c4.client.fragments.MatchmakingFragment;
 
@@ -21,6 +23,7 @@ public class ClientController {
     private MatchmakingFragment matchmakingFragment;
     private LoginFragment loginFragment;
     private GamePopupFragment gamePopupFragment;
+    private HighscoreFragment highscoreFragment;
     private String opponentName;
     private GameInfo gameInfo;
     private boolean okayToLeave = false;
@@ -90,13 +93,13 @@ public class ClientController {
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.1.17.111", 3450);
-        client.connect("192.168.1.74", 3450); // Kalles hemmadator
-//        client.connect("172.20.10.2", 3450); // Kalles hotspot
-//        client.connect("192.168.1.210", 3450); // Kalles macbook hemma
+//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("192.168.0.10", 3450);
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
-//        client.connect("192.168.0.10", 3450);
+//        client.connect("172.20.10.2", 3450); // Kalles hemmadator
+//        client.connect("192.168.0.100", 3450);
+        client.connect("192.168.1.225", 3450);
 
     }
 
@@ -219,6 +222,14 @@ public class ClientController {
 
     public void login(String username, String password) {
         client.login(username, password);
+    }
+
+    public void setHighscoreFragment(HighscoreFragment highscoreFragment){
+        this.highscoreFragment = highscoreFragment;
+    }
+
+    public void showHighscore(Highscore highscore){
+        highscoreFragment.setHighscore(highscore);
     }
 
     public User getUser() {

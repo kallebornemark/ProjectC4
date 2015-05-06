@@ -8,11 +8,13 @@ import java.sql.Statement;
 
 import c4.utils.C4Constants;
 import c4.utils.Elo;
+import c4.utils.Highscore;
 import c4.utils.User;
 
 
 /**
- * @author Kalle Bornemark
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Database {
     private Connection connection;
@@ -163,6 +165,90 @@ public class Database {
         } finally {
             closeAll();
         }
+    }
+
+    //För test. Att skriva ut highscore
+    public void print (String[][] tmpArray) {
+        System.out.println("-------------------------");
+        for (int i = 0; i < tmpArray.length; i++) {
+            for (int j = 0; j < tmpArray[i].length; j++) {
+                System.out.print(tmpArray[i][j] + " - ");
+            }
+            System.out.println();
+        }
+    }
+
+    public synchronized Highscore getHighscore() {
+        Highscore highscore = new Highscore();
+        try {
+            connect();
+
+            // Highscore, top 10 based on elo.
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by elo desc limit 10");
+            String[][] tmpArray = new String[10][5];
+            int tmprow = 0;
+            while(resultSet.next()) {
+                tmpArray[tmprow][0] = resultSet.getString(1);
+                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
+                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
+                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
+                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmprow++;
+            }
+//            print(tmpArray);
+            highscore.setTop10Elo(tmpArray);
+
+            // Highscore, top 10 based on wins.
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by wins desc limit 10");
+            tmpArray = new String[10][5];
+            tmprow = 0;
+            while(resultSet.next()) {
+                tmpArray[tmprow][0] = resultSet.getString(1);
+                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
+                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
+                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
+                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmprow++;
+            }
+//            print(tmpArray);
+            highscore.setTop10Wins(tmpArray);
+
+            // Highscore, top 10 based on losses.
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by losses desc limit 10");
+            tmpArray = new String[10][5];
+            tmprow = 0;
+            while(resultSet.next()) {
+                tmpArray[tmprow][0] = resultSet.getString(1);
+                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
+                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
+                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
+                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmprow++;
+            }
+//            print(tmpArray);
+            highscore.setTop10Losses(tmpArray);
+
+            // Highscore, top 10 based on draws.
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by draws desc limit 10");
+            tmpArray = new String[10][5];
+            tmprow = 0;
+            while(resultSet.next()) {
+                tmpArray[tmprow][0] = resultSet.getString(1);
+                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
+                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
+                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
+                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmprow++;
+            }
+//            print(tmpArray);
+            highscore.setTop10draws(tmpArray);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return highscore;
     }
 
     public synchronized void setLastname(String username, String lastname) {

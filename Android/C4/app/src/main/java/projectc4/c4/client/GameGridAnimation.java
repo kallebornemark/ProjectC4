@@ -26,7 +26,7 @@ public class GameGridAnimation extends RelativeLayout {
     private int offsetX;
     private int offsetY;
 
-    TranslateAnimation animate;
+    private TranslateAnimation animate;
 
     private BounceInterpolator bounce;
 

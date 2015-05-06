@@ -9,9 +9,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.Highscore;
 import c4.utils.User;
 
 
@@ -155,6 +157,15 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void requestHighscore(int highscore) {
+        try {
+            oos.writeObject(highscore);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void checkNumberAndSend(int number) {
         if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
@@ -203,6 +214,10 @@ public class Client implements Runnable, Serializable {
             clientController.setPlayerTurn(gameInfo.getPlayerTurn());
             clientController.setOpponentName(gameInfo.getOpponentUserName());
             System.out.println("New GameInfo received! ------- Opponent: " + clientController.getGameInfo().getOpponentUserName());
+        } else if (obj instanceof Highscore){
+            Highscore highscore = (Highscore)obj;
+            System.out.println(" HIGHSCORE RECIEVED");
+            clientController.showHighscore(highscore);
         }
     }
 
