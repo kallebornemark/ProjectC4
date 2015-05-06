@@ -220,6 +220,10 @@ public class ClientController {
         return gameController;
     }
 
+    public GameFragment getGameFragment() {
+        return gameFragment;
+    }
+
     public void login(String username, String password) {
         client.login(username, password);
     }

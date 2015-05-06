@@ -229,6 +229,8 @@ public class GameController {
     public void newGame(int gameMode) {
         if(gameMode == C4Constants.LOCAL) {
           resetGameBoard();
+        } else {
+            setWinsSize(4);
         }
 
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
@@ -245,14 +247,17 @@ public class GameController {
                 setPlayerTurn(startingPlayer);
                 clientController.setPlayer(startingPlayer);
                 clientController.changeHighlightedPlayer(startingPlayer);
+                clientController.getGameFragment().animateArrow(playerTurn);
             } else if (playerTurn == C4Constants.PLAYER1) {
                 setPlayerTurn(C4Constants.PLAYER2);
                 clientController.setPlayer(C4Constants.PLAYER2);
                 clientController.changeHighlightedPlayer(C4Constants.PLAYER2);
+                clientController.getGameFragment().animateArrow(C4Constants.PLAYER2);
             } else {
                 setPlayerTurn(C4Constants.PLAYER1);
                 clientController.setPlayer(C4Constants.PLAYER1);
                 clientController.changeHighlightedPlayer(C4Constants.PLAYER1);
+                clientController.getGameFragment().animateArrow(C4Constants.PLAYER1);
             }
 
         }
