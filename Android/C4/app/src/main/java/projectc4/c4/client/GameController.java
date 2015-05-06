@@ -72,6 +72,10 @@ public class GameController {
         return playedTiles;
     }
 
+    public int getPlayedRow() {
+        return playedRow;
+    }
+
     public void resetGameBoard() {
         System.out.println("RESET GAMEBOARD");
         this.gameBoard = new int[6][7];

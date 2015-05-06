@@ -28,7 +28,7 @@ public class Powerup {
     }
 
     public void powerupBomb(int playedRow, int playedCol) {
-        ArrayList<Integer> posList = new ArrayList<Integer>();
+        ArrayList<Integer> posList = new ArrayList<>();
 
         for (int i = playedRow; i < gameController.getGameBoard().length; i++) {
             posList.add(i);
