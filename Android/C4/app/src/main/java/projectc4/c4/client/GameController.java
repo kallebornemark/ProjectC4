@@ -229,6 +229,8 @@ public class GameController {
     public void newGame(int gameMode) {
         if(gameMode == C4Constants.LOCAL) {
           resetGameBoard();
+        } else {
+            setWinsSize(4);
         }
 
         if (gameGridView != null && gameGridShowPointer != null && gameGridForeground != null) {
