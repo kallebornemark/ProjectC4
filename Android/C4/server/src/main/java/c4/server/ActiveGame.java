@@ -21,12 +21,14 @@ public class ActiveGame implements Serializable {
     private GameInfo gameInfo;
     private Server server;
     private int[][] gameboard;
+    private boolean isActive;
 
     public ActiveGame(Server server, ConnectedClient c1, ConnectedClient c2) {
         this.server = server;
         this.c1 = c1;
         this.c2 = c2;
         server.newGame(c1, c2);
+        this.isActive = true;
     }
 
     public ConnectedClient getOpponent(ConnectedClient connectedClient) {
@@ -38,6 +40,14 @@ public class ActiveGame implements Serializable {
 
     public GameInfo getGameInfo() {
         return gameInfo;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
     }
 
     public void setGameInfo(GameInfo gameInfo) {
@@ -72,6 +82,7 @@ public class ActiveGame implements Serializable {
     public void rematch() {
         System.out.println("Rematch : ActiveGame");
         server.rematch(c1, c2, getGameBoard());
+        isActive = true;
     }
 
     public void setReady(ConnectedClient connectedClient) {
