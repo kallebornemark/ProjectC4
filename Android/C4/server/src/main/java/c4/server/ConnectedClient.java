@@ -130,6 +130,7 @@ public class ConnectedClient extends Thread implements Serializable {
                         System.out.println("CANCEL SEARCH !!!!");
                         server.cancelSearch(this);
                     } else if (value == C4Constants.WIN || value == C4Constants.LOSS || value == C4Constants.DRAW || value == C4Constants.SURRENDER) {
+                        activeGame.setIsActive(false);
                         if (value == C4Constants.WIN) {
                             server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), value);
 //                            server.updateUser(this, value);
@@ -180,8 +181,19 @@ public class ConnectedClient extends Thread implements Serializable {
             e.printStackTrace();
             // Hantera om någon dissar
             System.out.println("Server: Client '" + this.username + "' disconnected");
+
+            if(activeGame != null && activeGame.getIsActive() ) {
+                System.out.println("Server: En klient har SURRENDERAT, skicka vinst till han andra");
+                server.newGameResult(this.getUsername(), this.getActiveGame().getOpponent(this).getUsername(), C4Constants.LOSS);
+
+                // Skicka SURRENDER till den andra klienten
+                activeGame.newMove(this, C4Constants.SURRENDER);
+                System.out.println("Skickat SURRENDER till klient 2");
+                activeGame.setIsActive(false);
+            }
             server.removeConnectedClient(this);
             System.out.println("Server: Client '" + this.username + "' removed from connected client list");
+
         } catch (ClassNotFoundException e2) {
             e2.printStackTrace();
         }
