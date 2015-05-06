@@ -44,14 +44,14 @@
                 android:id="@+id/nineten"
                 android:text="9x10"
                 android:textColor="#FFFFFCED"
-                android:background="@drawable/colorred" />
+                android:background="@drawable/colorredpressed" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:id="@+id/twelethirteen"
                 android:text="12x13"
                 android:textColor="#FFFFFCED"
-                android:background="@drawable/colorred"
+                android:background="@drawable/colorredpressed"
                 android:layout_marginLeft="15dp" />
 
             </GridLayout>
@@ -86,14 +86,14 @@
                 android:id="@+id/three"
                 android:text="best of 3"
                 android:textColor="#FFFFFCED"
-                android:background="@drawable/coloryellow" />
+                android:background="@drawable/coloryellowpressed" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:id="@+id/five"
                 android:text="best of 5"
                 android:textColor="#FFFFFCED"
-                android:background="@drawable/coloryellow"
+                android:background="@drawable/coloryellowpressed"
                 android:layout_gravity="right"
                 android:layout_marginLeft="15dp" />
 
@@ -128,14 +128,14 @@
                 android:id="@+id/startrandom"
                 android:text="random"
                 android:textColor="#FFFFFCED"
-                android:background="@drawable/colorblack"/>
+                android:background="@drawable/colorblackpressed"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:id="@+id/startplayer2"
                 android:text="player 2"
                 android:textColor="#FFFFFCED"
-                android:background="@drawable/colorblack"
+                android:background="@drawable/colorblackpressed"
                 android:layout_marginLeft="15dp" />
 
         </GridLayout>
