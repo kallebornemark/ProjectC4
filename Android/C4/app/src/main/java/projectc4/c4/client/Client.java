@@ -211,8 +211,10 @@ public class Client implements Runnable, Serializable {
             gameInfo = (GameInfo)obj;
             createOpponentUser(gameInfo);
             clientController.setGameInfo(gameInfo);
+            clientController.setPlayer(C4Constants.PLAYER1);
             clientController.setPlayerTurn(gameInfo.getPlayerTurn());
             clientController.setOpponentName(gameInfo.getOpponentUserName());
+
             System.out.println("New GameInfo received! ------- Opponent: " + clientController.getGameInfo().getOpponentUserName());
         } else if (obj instanceof Highscore){
             Highscore highscore = (Highscore)obj;
