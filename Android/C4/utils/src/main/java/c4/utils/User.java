@@ -33,6 +33,11 @@ public class User implements Serializable {
         this.newUser = newUser;
     }
 
+    public User(String username, String firstName, String lastName, double elo, int[] gameResults, boolean newUser, String email){
+        this(username, firstName, lastName, elo, gameResults, newUser);
+        this.email = email;
+    }
+
     public User(String username, String firstName, String lastName, String email, String password, boolean newUser){
         this.username = username;
         this.firstName = firstName;

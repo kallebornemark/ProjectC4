@@ -78,8 +78,8 @@ public class ConnectedClient extends Thread implements Serializable {
                 if (res[0] == null) {
                     int[] gameResults = {Integer.parseInt(res[5]), Integer.parseInt(res[6]), Integer.parseInt(res[7])};
 
-                    // Re-create User with username, firstname, lastname, elo and gameresults
-                    User returnUser = new User(res[1], res[2], res[3], Double.parseDouble(res[4]), gameResults, false);
+                    // Re-create User with username, firstname, lastname, elo, gameresults and email
+                    User returnUser = new User(res[1], res[2], res[3], Double.parseDouble(res[4]), gameResults, false, res[8]);
                     oos.writeObject(returnUser);
                     oos.flush();
                     this.username = username;

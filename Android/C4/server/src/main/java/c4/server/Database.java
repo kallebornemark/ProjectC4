@@ -65,7 +65,7 @@ public class Database {
      * 7: Draws
      */
     public synchronized String[] attemptLogin(String username, String password) {
-        String[] res = new String[8];
+        String[] res = new String[9];
         try {
             connect();
             resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
@@ -83,6 +83,7 @@ public class Database {
                     res[5] = Integer.toString(wins);
                     res[6] = Integer.toString(losses);
                     res[7] = Integer.toString(draws);
+                    res[8] = resultSet.getString("email");                  // Email
                 } else {
                     res[0] = "Wrong password for user: " + username;
                 }
@@ -149,26 +150,15 @@ public class Database {
         }
     }
 
-    public synchronized void updateUser(User user) {
-        setFirstname(user.getUsername(), user.getFirstName());
-        setLastname(user.getUsername(), user.getLastName());
-    }
 
-    public synchronized void setFirstname(String username, String firstname) {
+    public synchronized void updateUser(String username, String firstname, String lastname, String email) {
         try {
             connect();
-            statement.executeUpdate("update User set firstname = '" + firstname + "' where username = '" + username + "';");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeAll();
-        }
-    }
-
-    public synchronized void setLastname(String username, String lastname) {
-        try {
-            connect();
-            statement.executeUpdate("update User set lastname = '" + lastname + "' where username = '" + username + "';");
+            statement.executeUpdate("update User set " +
+                    "firstname = '" + firstname + "', " +
+                    "lastname = '" + lastname + "', " +
+                    "email = '" + email + "' " +
+                    "where username = '" + username + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
