@@ -66,6 +66,17 @@ public class ConnectedClient extends Thread implements Serializable {
         return activeGame;
     }
 
+    public void requestHighscore() {
+        try {
+            oos.writeObject(server.requestHighscore());
+            oos.flush();
+            System.out.println("Sent Highscore from server");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void validateUser(String username, String password) {
         try {
             // Check if username is online
@@ -143,7 +154,8 @@ public class ConnectedClient extends Thread implements Serializable {
                             activeGame.newMove(this, C4Constants.SURRENDER);
                             System.out.println("Skickat SURRENDER till klient 2");
                         }
-
+                    } else if  (value == C4Constants.HIGHSCORE) {
+                        requestHighscore();
                     }
 
                 } else if (obj instanceof User) {

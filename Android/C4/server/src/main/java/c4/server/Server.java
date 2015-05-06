@@ -3,11 +3,13 @@ package c4.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.Highscore;
 import c4.utils.User;
 
 
@@ -52,6 +54,10 @@ public class Server implements Runnable {
         return database.attemptLogin(name, password);
     }
 
+    public synchronized Highscore requestHighscore() {
+        return database.getHighscore();
+    }
+
     public void newGameResult(String username, String opponentUsername, int result) {
         database.newGameResult(username, opponentUsername, result);
     }
@@ -73,7 +79,7 @@ public class Server implements Runnable {
         }
     }
 
-    /**
+    /*
      * Update User's database with new result,
      * send new GameInfo object to opponent with updated ELO:s and game statistics
      * @param c1 The ConnectedClient to update in database
@@ -156,4 +162,5 @@ public class Server implements Runnable {
     public static void main(String[] args) {
         new Server(3450);
     }
+
 }

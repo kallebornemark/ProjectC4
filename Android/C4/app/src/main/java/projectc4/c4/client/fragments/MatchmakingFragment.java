@@ -114,7 +114,7 @@ public class MatchmakingFragment extends Fragment {
                     break;
 
                 case R.id.buttonLeaderboard:
-
+                    transaction.replace(R.id.activity_layout_fragmentpos, new HighscoreFragment()).addToBackStack("Profilefragment").commit();
                     break;
 
                 case R.id.buttonLogout:

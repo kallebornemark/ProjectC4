@@ -6,7 +6,8 @@ import c4.utils.C4Constants;
 
 
 /**
- * Created by Emil on 2015-04-28.
+ *
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Powerups {
     /**
