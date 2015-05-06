@@ -134,7 +134,7 @@ public class Server implements Runnable {
      * @param user User object with updated info to be inserted into the database
      */
     public void updateUser(User user) {
-        database.updateUser(user);
+        database.updateUser(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail());
         System.out.println("User \"" + user.getUsername() + "\" updated through profile");
     }
 

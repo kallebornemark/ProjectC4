@@ -26,6 +26,7 @@ public class ProfileFragment extends Fragment {
     private ClientController clientController;
     private ImageView imageViewProfile;
     private boolean clicked = false;
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,48 +34,52 @@ public class ProfileFragment extends Fragment {
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
         clientController = ((MainActivity)getActivity()).getClientController();
 
-        TextView textViewProfileName = (TextView)view.findViewById(R.id.textViewProfileName);
-        final TextView textViewFirstName = (TextView)view.findViewById(R.id.textViewFirstName);
-        final TextView textViewLastName = (TextView)view.findViewById(R.id.textViewLastName);
-        final EditText editText = (EditText)view.findViewById(R.id.editText);
-        final EditText editText2 = (EditText)view.findViewById(R.id.editText2);
-        final View blackLine2 = (View)view.findViewById(R.id.lineBlack2);
-        final View blackLine3 = (View)view.findViewById(R.id.lineBlack3);
-        /*
-            The 2 if-else checks if the first and last name is null or not.
-         */
-        if (clientController.getUser().getFirstName() == null) {
-            textViewFirstName.setText(" - ");
-            editText.setText("");
-        } else {
-            textViewFirstName.setText(clientController.getUser().getFirstName());
-            editText.setText(clientController.getUser().getFirstName());
-        }
-
-        if (clientController.getUser().getLastName() == null) {
-            textViewLastName.setText(" - ");
-            editText2.setText("");
-        } else {
-            textViewLastName.setText(clientController.getUser().getLastName());
-            editText2.setText(clientController.getUser().getLastName());
-        }
-
-        textViewProfileName.setText(clientController.getUser().getUsername());
-        textViewProfileName.setTypeface(type, Typeface.BOLD);
-        textViewFirstName.setTypeface(type, Typeface.BOLD);
-        textViewLastName.setTypeface(type,Typeface.BOLD);
-        editText.setTypeface(type,Typeface.BOLD);
-        editText2.setTypeface(type,Typeface.BOLD);
-
         TextView tvHeader = (TextView)view.findViewById(R.id.tvHeader);
-        tvHeader.setTypeface(type,Typeface.BOLD);
-
         TextView tvContent = (TextView)view.findViewById(R.id.tvContent);
-        tvContent.setText(clientController.getPlayerStats(false));
+
+        final TextView tvFirstname = (TextView)view.findViewById(R.id.tvFirstName);
+        final TextView tvLastname = (TextView)view.findViewById(R.id.tvLastName);
+        final TextView tvEmail = (TextView)view.findViewById(R.id.tvEmail);
+
+        final EditText etFirstname = (EditText)view.findViewById(R.id.etFirstname);
+        final EditText etLastname = (EditText)view.findViewById(R.id.etLastname);
+        final EditText etEmail = (EditText)view.findViewById(R.id.etEmail);
+
+        final ImageView tvWrench = (ImageView)view.findViewById(R.id.ivWrench);
+        final ImageView tvCheck = (ImageView)view.findViewById(R.id.ivCheck);
+
+
+        user = clientController.getUser();
+
+
+        // Style texts
+        tvHeader.setTypeface(type, Typeface.BOLD);
         tvContent.setTypeface(type, Typeface.BOLD);
 
+        tvFirstname.setTypeface(type, Typeface.BOLD);
+        tvLastname.setTypeface(type, Typeface.BOLD);
+        tvEmail.setTypeface(type, Typeface.BOLD);
+
+        etFirstname.setTypeface(type);
+        etLastname.setTypeface(type);
+        etEmail.setTypeface(type);
+
+
+        // Set texts
+        tvHeader.setText(user.getUsername().toUpperCase());
+        tvContent.setText(clientController.getPlayerStats(false));
+
+        tvFirstname.setText(user.getFirstName());
+        tvLastname.setText(user.getLastName());
+        tvEmail.setText(user.getEmail());
+
+        etFirstname.setText(user.getFirstName());
+        etLastname.setText(user.getLastName());
+        etEmail.setText(user.getEmail());
+
+
         imageViewProfile = (ImageView)view.findViewById(R.id.imageViewProfile);
-        //Detta är välja bild
+        // Detta är välja bild
       /*  imageViewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,57 +88,134 @@ public class ProfileFragment extends Fragment {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select profile-picture"), 1);
             }
-        });
-*/
-        final Button button = (Button)view.findViewById(R.id.button);
-        button.setTypeface(type, Typeface.BOLD|Typeface.ITALIC);
-        button.setOnClickListener(new View.OnClickListener() {
+        });*/
+
+        tvHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!clicked) {
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    textViewFirstName.setVisibility(View.INVISIBLE);
-                    textViewLastName.setVisibility(View.INVISIBLE);
-                    editText2.setVisibility(View.VISIBLE);
-                    editText.setVisibility(View.VISIBLE);
-                    button.setText("SAVE");
-                    blackLine2.setVisibility(View.INVISIBLE);
-                    blackLine3.setVisibility(View.INVISIBLE);
-                    button.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
-                    editText.requestFocus();
-                    editText.setSelection(editText.getText().length());
-                    editText2.setSelection(editText2.getText().length());
-                    imm.showSoftInput(editText,InputMethodManager.SHOW_IMPLICIT);
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    etFirstname.setVisibility(View.VISIBLE);
+                    etLastname.setVisibility(View.VISIBLE);
+                    etEmail.setVisibility(View.VISIBLE);
+
+                    tvFirstname.setVisibility(View.INVISIBLE);
+                    tvLastname.setVisibility(View.INVISIBLE);
+                    tvEmail.setVisibility(View.INVISIBLE);
+
+                    etFirstname.requestFocus();
+                    etFirstname.setSelection(etFirstname.getText().length());
+                    etLastname.setSelection(etLastname.getText().length());
+                    etEmail.setSelection(etEmail.getText().length());
+                    imm.showSoftInput(etFirstname, InputMethodManager.SHOW_IMPLICIT);
+
+                    tvWrench.setVisibility(View.INVISIBLE);
+                    tvCheck.setVisibility(View.VISIBLE);
+
                     clicked = true;
 
                 } else {
-                    User user = clientController.getUser();
-                    if (!editText.getText().toString().equals(user.getFirstName()) || !editText2.getText().toString().equals(user.getLastName())) {
-                        user.setFirstName(editText.getText().toString());
-                        user.setLastName(editText2.getText().toString());
-                        clientController.getClient().updateUserObject(user);
-                        textViewFirstName.setText(user.getFirstName());
-                        textViewLastName.setText(user.getLastName());
-                    }
-                    textViewFirstName.setVisibility(View.VISIBLE);
-                    textViewLastName.setVisibility(View.VISIBLE);
-                    editText.setVisibility(View.INVISIBLE);
-                    editText2.setVisibility(View.INVISIBLE);
-                    clicked = false;
-                    button.setText("EDIT");
-                    blackLine2.setVisibility(View.VISIBLE);
-                    blackLine3.setVisibility(View.VISIBLE);
-                    button.setBackground(getActivity().getDrawable(R.drawable.colorblack));
 
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    imm.hideSoftInputFromWindow(editText2.getWindowToken(), 0);
+                    if (!etFirstname.getText().toString().equals(user.getFirstName()) ||
+                            !etLastname.getText().toString().equals(user.getLastName()) ||
+                            !etEmail.getText().toString().equals(user.getEmail())) {
+                        user.setFirstName(etFirstname.getText().toString());
+                        user.setLastName(etLastname.getText().toString());
+                        user.setEmail(etEmail.getText().toString());
+                        tvFirstname.setText(user.getFirstName());
+                        tvLastname.setText(user.getLastName());
+                        tvEmail.setText(user.getEmail());
+
+                        // Send update to server/database
+                        clientController.getClient().updateUserObject(user);
+                    }
+
+                    etFirstname.setVisibility(View.INVISIBLE);
+                    etLastname.setVisibility(View.INVISIBLE);
+                    etEmail.setVisibility(View.INVISIBLE);
+
+                    tvFirstname.setVisibility(View.VISIBLE);
+                    tvLastname.setVisibility(View.VISIBLE);
+                    tvEmail.setVisibility(View.VISIBLE);
+
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etFirstname.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(etLastname.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(etEmail.getWindowToken(), 0);
+
+                    tvCheck.setVisibility(View.INVISIBLE);
+                    tvWrench.setVisibility(View.VISIBLE);
+
+                    clicked = false;
                 }
             }
         });
 
+        /*tvWrench.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                etFirstname.setVisibility(View.VISIBLE);
+                etLastname.setVisibility(View.VISIBLE);
+                etEmail.setVisibility(View.VISIBLE);
+
+                tvFirstname.setVisibility(View.INVISIBLE);
+                tvLastname.setVisibility(View.INVISIBLE);
+                tvEmail.setVisibility(View.INVISIBLE);
+
+                etFirstname.requestFocus();
+                etFirstname.setSelection(etFirstname.getText().length());
+                etLastname.setSelection(etLastname.getText().length());
+                etEmail.setSelection(etEmail.getText().length());
+                imm.showSoftInput(etFirstname, InputMethodManager.SHOW_IMPLICIT);
+
+                tvWrench.setVisibility(View.INVISIBLE);
+                tvCheck.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        tvCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!etFirstname.getText().toString().equals(user.getFirstName()) || !etEmail.getText().toString().equals(user.getLastName())) {
+                    user.setFirstName(etFirstname.getText().toString());
+                    user.setLastName(etLastname.getText().toString());
+                    user.setEmail(etEmail.getText().toString());
+                    tvFirstname.setText(user.getFirstName());
+                    tvLastname.setText(user.getLastName());
+                    tvEmail.setText(user.getEmail());
+
+                    // Send update to server/database
+                    clientController.getClient().updateUserObject(user);
+                }
+
+                etFirstname.setVisibility(View.INVISIBLE);
+                etLastname.setVisibility(View.INVISIBLE);
+                etEmail.setVisibility(View.INVISIBLE);
+
+                tvFirstname.setVisibility(View.VISIBLE);
+                tvLastname.setVisibility(View.VISIBLE);
+                tvEmail.setVisibility(View.VISIBLE);
+
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(etFirstname.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(etLastname.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(etEmail.getWindowToken(), 0);
+
+                tvCheck.setVisibility(View.INVISIBLE);
+                tvWrench.setVisibility(View.VISIBLE);
+            }
+        });*/
+
+
+
         return view;
-    }
+     }
+
+
     //Detta är välja bild med kameran
    /* public void onActivityResult(int reqCode, int resCode, Intent data) {
        if (data == null) {

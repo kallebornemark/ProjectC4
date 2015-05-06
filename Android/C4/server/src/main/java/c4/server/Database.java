@@ -13,8 +13,7 @@ import c4.utils.User;
 
 
 /**
- *
- * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
+ * @author Kalle Bornemark
  */
 public class Database {
     private Connection connection;
@@ -67,7 +66,7 @@ public class Database {
      * 7: Draws
      */
     public synchronized String[] attemptLogin(String username, String password) {
-        String[] res = new String[8];
+        String[] res = new String[9];
         try {
             connect();
             resultSet = statement.executeQuery("select * from User where username = '" + username + "'");
@@ -85,6 +84,7 @@ public class Database {
                     res[5] = Integer.toString(wins);
                     res[6] = Integer.toString(losses);
                     res[7] = Integer.toString(draws);
+                    res[8] = resultSet.getString("email");                  // Email
                 } else {
                     res[0] = "Wrong password for user: " + username;
                 }
@@ -151,22 +151,6 @@ public class Database {
         }
     }
 
-    public synchronized void updateUser(User user) {
-        setFirstname(user.getUsername(), user.getFirstName());
-        setLastname(user.getUsername(), user.getLastName());
-    }
-
-    public synchronized void setFirstname(String username, String firstname) {
-        try {
-            connect();
-            statement.executeUpdate("update User set firstname = '" + firstname + "' where username = '" + username + "';");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeAll();
-        }
-    }
-
     //För test. Att skriva ut highscore
     public void print (String[][] tmpArray) {
         System.out.println("-------------------------");
@@ -177,12 +161,10 @@ public class Database {
             System.out.println();
         }
     }
-
     public synchronized Highscore getHighscore() {
         Highscore highscore = new Highscore();
         try {
             connect();
-
             // Highscore, top 10 based on elo.
             resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by elo desc limit 10");
             String[][] tmpArray = new String[10][5];
@@ -197,7 +179,6 @@ public class Database {
             }
 //            print(tmpArray);
             highscore.setTop10Elo(tmpArray);
-
             // Highscore, top 10 based on wins.
             resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by wins desc limit 10");
             tmpArray = new String[10][5];
@@ -212,7 +193,6 @@ public class Database {
             }
 //            print(tmpArray);
             highscore.setTop10Wins(tmpArray);
-
             // Highscore, top 10 based on losses.
             resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by losses desc limit 10");
             tmpArray = new String[10][5];
@@ -227,7 +207,6 @@ public class Database {
             }
 //            print(tmpArray);
             highscore.setTop10Losses(tmpArray);
-
             // Highscore, top 10 based on draws.
             resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by draws desc limit 10");
             tmpArray = new String[10][5];
@@ -242,7 +221,6 @@ public class Database {
             }
 //            print(tmpArray);
             highscore.setTop10draws(tmpArray);
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -251,10 +229,15 @@ public class Database {
         return highscore;
     }
 
-    public synchronized void setLastname(String username, String lastname) {
+
+    public synchronized void updateUser(String username, String firstname, String lastname, String email) {
         try {
             connect();
-            statement.executeUpdate("update User set lastname = '" + lastname + "' where username = '" + username + "';");
+            statement.executeUpdate("update User set " +
+                    "firstname = '" + firstname + "', " +
+                    "lastname = '" + lastname + "', " +
+                    "email = '" + email + "' " +
+                    "where username = '" + username + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -401,14 +401,20 @@ import projectc4.c4.client.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
-                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+//                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+//                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+                ImageView ivGoldStar = (ImageView)view.findViewById(R.id.goldStar);
+                ImageView ivGoldStar2 = (ImageView)view.findViewById(R.id.goldStar2);
                 if (player == C4Constants.PLAYER1) {
-                    ivRedStar.setEnabled(true);
-                    ivRedStar.setVisibility(View.VISIBLE);
+//                    ivRedStar.setEnabled(true);
+//                    ivRedStar.setVisibility(View.VISIBLE);
+                    ivGoldStar.setEnabled(true);
+                    ivGoldStar.setVisibility(View.VISIBLE);
                 } else if (player == C4Constants.PLAYER2) {
-                    ivYellowStar.setEnabled(true);
-                    ivYellowStar.setVisibility(View.VISIBLE);
+//                    ivYellowStar.setEnabled(true);
+//                    ivYellowStar.setVisibility(View.VISIBLE);
+                    ivGoldStar2.setEnabled(true);
+                    ivGoldStar2.setVisibility(View.VISIBLE);
                 } else if (player == C4Constants.DRAW) {
                     highlightWinnerPlayerStar(C4Constants.PLAYER1);
                     highlightWinnerPlayerStar(C4Constants.PLAYER2);
@@ -421,27 +427,16 @@ import projectc4.c4.client.*;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
-                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
-                ivRedStar.setVisibility(View.INVISIBLE);
-                ivYellowStar.setVisibility(View.INVISIBLE);
+//                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
+//                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
+//                ivRedStar.setVisibility(View.INVISIBLE);
+//                ivYellowStar.setVisibility(View.INVISIBLE);
+                ImageView ivGoldStar = (ImageView)view.findViewById(R.id.goldStar);
+                ImageView ivGoldStar2 = (ImageView)view.findViewById(R.id.goldStar2);
+                ivGoldStar.setVisibility(View.INVISIBLE);
+                ivGoldStar2.setVisibility(View.INVISIBLE);
             }
         });
-    }
-
-    public void dehighlightWinners() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ImageView ivRedStar = (ImageView)view.findViewById(R.id.redStar);
-                ImageView ivYellowStar = (ImageView)view.findViewById(R.id.yellowStar);
-                ivRedStar.setEnabled(false);
-                ivRedStar.setVisibility(View.INVISIBLE);
-                ivYellowStar.setEnabled(false);
-                ivYellowStar.setVisibility(View.INVISIBLE);
-            }
-        });
-
     }
 
     public void setNewGame(final boolean gameInProgress) {
@@ -459,7 +454,7 @@ import projectc4.c4.client.*;
                 buttonNewGame.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dehighlightWinners();
+                        disableStars();
                         clientController.newGame(C4Constants.LOCAL);
                         buttonNewGame.setEnabled(false);
                         buttonNewGame.setVisibility(View.INVISIBLE);

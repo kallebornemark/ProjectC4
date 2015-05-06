@@ -44,8 +44,8 @@ public class GameGridShowPointer extends View {
 
     public void init(){
         paint = new Paint();
-        pointerRed = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow_red);
-        pointerYellow = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow_yellow);
+        pointerRed = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow_red2);
+        pointerYellow = BitmapFactory.decodeResource(getResources(), R.drawable.c4_arrow_yellow2);
     }
 
     public void setGameController(GameController gameController) {
