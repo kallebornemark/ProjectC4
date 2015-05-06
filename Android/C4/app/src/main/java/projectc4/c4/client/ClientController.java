@@ -172,6 +172,7 @@ public class ClientController {
     }
 
     public void rematch() {
+        gameController.swapPlayerTurn();
         newGame(C4Constants.MATCHMAKING);
         unpromptRematch();
         changeHighlightedPlayer(gameController.getPlayerTurn());

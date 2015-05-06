@@ -184,14 +184,17 @@ public class GameController {
         return (row * getBoardWidth()) + col;
     }
 
+    public void swapPlayerTurn() {
+        if (playerTurn == C4Constants.PLAYER1) {
+            playerTurn = C4Constants.PLAYER2;
+        } else {
+            playerTurn = C4Constants.PLAYER1;
+        }
+    }
+
     public void changePlayer(boolean isIncoming) {
         if(!extraTurn) {
-            if (playerTurn == C4Constants.PLAYER1) {
-                playerTurn = C4Constants.PLAYER2;
-
-            } else {
-                playerTurn = C4Constants.PLAYER1;
-            }
+            swapPlayerTurn();
             clientController.changeHighlightedPlayer(playerTurn);
             if (isIncoming) {
                 if (timer == null) {
