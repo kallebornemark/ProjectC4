@@ -20,9 +20,9 @@
             android:id="@+id/textViewProject"
             android:layout_gravity="center_horizontal"
             android:textColor="#FF716D61"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_marginBottom="20dp"
-            android:text="We are C4 , a group of four software developers working on a project at Malmö University" />
+            android:text="We are C4 , a group of four software developers working on a project at Malmö University. This isn&apos;t a final version of the application." />
 
         <View
             android:layout_width="wrap_content"
