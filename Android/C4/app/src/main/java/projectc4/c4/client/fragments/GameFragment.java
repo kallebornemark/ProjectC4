@@ -444,11 +444,16 @@ import projectc4.c4.client.*;
 
     }
 
-    public void setNewGame() {
+    public void setNewGame(final boolean gameInProgress) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 final Button buttonNewGame = (Button)view.findViewById(R.id.buttonNewGame);
+                if (gameInProgress) {
+                    buttonNewGame.setText("Next round");
+                } else {
+                    buttonNewGame.setText("New game");
+                }
                 buttonNewGame.setEnabled(true);
                 buttonNewGame.setVisibility(View.VISIBLE);
                 buttonNewGame.setOnClickListener(new View.OnClickListener() {
@@ -460,7 +465,11 @@ import projectc4.c4.client.*;
                         buttonNewGame.setVisibility(View.INVISIBLE);
                         RelativeLayout relativeLayoutPlayers = (RelativeLayout) view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
-                        highlightPlayer(C4Constants.PLAYER1);
+                        if(buttonNewGame.getText() == "New game") {
+                            highlightPlayer(((MainActivity) getActivity()).getGameController().getStartingPlayer());
+                        } else {
+                            highlightPlayer(((MainActivity) getActivity()).getGameController().getPlayerTurn());
+                        }
                         if (winner == C4Constants.PLAYER2) {
                             animateArrow(C4Constants.PLAYER1);
                         }
