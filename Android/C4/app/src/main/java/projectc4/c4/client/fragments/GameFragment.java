@@ -97,7 +97,7 @@ import projectc4.c4.client.*;
         startup = true;
         highlightPlayer(clientController.getPlayerTurn());
         if (gameMode == C4Constants.LOCAL) {
-            animateArrowDelayed(C4Constants.PLAYER1);
+//            animateArrowDelayed(C4Constants.PLAYER1);
         } else {
             animateArrowDelayed(clientController.getPlayerTurn());
         }
