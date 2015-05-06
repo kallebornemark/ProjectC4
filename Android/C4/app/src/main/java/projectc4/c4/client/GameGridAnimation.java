@@ -61,18 +61,20 @@ public class GameGridAnimation extends RelativeLayout {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        sideOfTile = Math.min((((getWidth() - C4Constants.GRIDSPACING) / gameController.getBoardWidth()) - C4Constants.GRIDSPACING),
-                (((getHeight() - C4Constants.GRIDSPACING) / gameController.getBoardHeight()) - C4Constants.GRIDSPACING));
-        offsetX = (getWidth() - (gameController.getBoardWidth() * (sideOfTile + C4Constants.GRIDSPACING) - C4Constants.GRIDSPACING)) / 2;
-        offsetY = (getHeight() - (gameController.getBoardHeight() * (sideOfTile + C4Constants.GRIDSPACING)));
+        if (!isInEditMode()) {
+            sideOfTile = Math.min((((getWidth() - C4Constants.GRIDSPACING) / gameController.getBoardWidth()) - C4Constants.GRIDSPACING),
+                    (((getHeight() - C4Constants.GRIDSPACING) / gameController.getBoardHeight()) - C4Constants.GRIDSPACING));
+            offsetX = (getWidth() - (gameController.getBoardWidth() * (sideOfTile + C4Constants.GRIDSPACING) - C4Constants.GRIDSPACING)) / 2;
+            offsetY = (getHeight() - (gameController.getBoardHeight() * (sideOfTile + C4Constants.GRIDSPACING)));
 
-        System.out.println("AMIN: w:" + getWidth() + " h: " + getHeight()+ " sideoftile: " + sideOfTile);
+            System.out.println("AMIN: w:" + getWidth() + " h: " + getHeight()+ " sideoftile: " + sideOfTile);
 
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = getChildAt(i);
-            if ( child instanceof Tile){
-                child.layout(0, 0, sideOfTile, sideOfTile);
+            int childCount = getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = getChildAt(i);
+                if ( child instanceof Tile){
+                    child.layout(0, 0, sideOfTile, sideOfTile);
+                }
             }
         }
     }

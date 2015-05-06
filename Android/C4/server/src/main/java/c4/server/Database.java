@@ -151,10 +151,15 @@ public class Database {
         }
     }
 
+    public synchronized void updateUser(User user) {
+        setFirstname(user.getUsername(), user.getFirstName());
+        setLastname(user.getUsername(), user.getLastName());
+    }
+
     public synchronized void setFirstname(String username, String firstname) {
         try {
             connect();
-            statement.executeUpdate("update User set firstname = " + firstname + " where username = " + username + ";");
+            statement.executeUpdate("update User set firstname = '" + firstname + "' where username = '" + username + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -249,7 +254,7 @@ public class Database {
     public synchronized void setLastname(String username, String lastname) {
         try {
             connect();
-            statement.executeUpdate("update User set lastname = " + lastname + " where username = " + username + ";");
+            statement.executeUpdate("update User set lastname = '" + lastname + "' where username = '" + username + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -260,7 +265,7 @@ public class Database {
     public synchronized void setElo(double elo, String username) {
         try {
             connect();
-            statement.executeUpdate("update User set elo = " + elo + " where username = " + username + ";");
+            statement.executeUpdate("update User set elo = '" + elo + "' where username = '" + username + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

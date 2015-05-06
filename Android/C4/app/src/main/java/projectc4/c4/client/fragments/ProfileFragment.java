@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import c4.utils.User;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
 import projectc4.c4.client.MainActivity;
@@ -105,11 +107,14 @@ public class ProfileFragment extends Fragment {
                     clicked = true;
 
                 } else {
-                    clientController.getUser().setFirstName(editText.getText().toString());
-                    clientController.getUser().setLastName(editText2.getText().toString());
-                    clientController.getClient().updateUserObject(clientController.getUser());
-                    textViewFirstName.setText(clientController.getUser().getFirstName());
-                    textViewLastName.setText(clientController.getUser().getLastName());
+                    User user = clientController.getUser();
+                    if (!editText.getText().toString().equals(user.getFirstName()) || !editText2.getText().toString().equals(user.getLastName())) {
+                        user.setFirstName(editText.getText().toString());
+                        user.setLastName(editText2.getText().toString());
+                        clientController.getClient().updateUserObject(user);
+                        textViewFirstName.setText(user.getFirstName());
+                        textViewLastName.setText(user.getLastName());
+                    }
                     textViewFirstName.setVisibility(View.VISIBLE);
                     textViewLastName.setVisibility(View.VISIBLE);
                     editText.setVisibility(View.INVISIBLE);

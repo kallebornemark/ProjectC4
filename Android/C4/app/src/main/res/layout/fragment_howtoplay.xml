@@ -1,113 +1,328 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFCED"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="30dp">
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TAP"
-            android:id="@+id/textViewTap"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#FF716D61"
-            android:textSize="25sp"
-            android:layout_marginBottom="20dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView6"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/c4_star_red"
-            android:layout_marginBottom="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OR SWIPE"
-            android:id="@+id/textViewSwipe"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#FF716D61"
-            android:textSize="25sp"
-            android:layout_marginBottom="20dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView7"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/c4_star_yellow"
-            android:layout_marginBottom="20dp" />
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@drawable/colorblack"
-            android:id="@+id/line"
-            android:layout_marginBottom="20dp" />
-
+        >
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="30dp">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/local"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="LOCAL GAME"
+                        android:textSize="25sp"
+                        android:textColor="#FF716D61"/>
+
+                    <TextView
+                        android:id="@+id/localdesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Player 1 always start."
+                        android:textSize="17sp"
+                        android:textColor="#FF716D61"/>
+
+                    <TextView
+                        android:id="@+id/localdesc2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Player 2 goes second."
+                        android:textSize="17sp"
+                        android:textColor="#FF716D61"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewColorYellow"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="50dp"
+                        android:background="@drawable/colorred" />
+
+                    <TextView
+                        android:id="@+id/textViewColorRed"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/coloryellow" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/nopowerups"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="YOU / PLAYER ONE"
-                android:id="@+id/textViewPlayer1"
-                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="50dp"
+                android:text="There are no powerups in a local game."
+                android:textSize="17sp"
                 android:textColor="#FF716D61"
-                android:textSize="16sp"
                 android:layout_marginTop="5dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OPPONENT / PLAYER TWO"
-                android:id="@+id/textViewPlayer2"
-                android:layout_gravity="center_vertical"
-                android:textColor="#FF716D61"
-                android:textSize="16sp"
-                android:layout_marginTop="30dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MULTIPLAYER"
+                        android:id="@+id/multiplayer"
+                        android:textSize="25sp"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="#FF716D61"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="There is a 50/50 chance\nof you starting."
+                        android:id="@+id/multidesc"
+                        android:layout_marginTop="5dp"
+                        android:textSize="17sp"
+                        android:textColor="#FF716D61"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="You win or loose rating when\nplaying multiplayer matches."
+                        android:id="@+id/multidesc2"
+                        android:layout_marginTop="20dp"
+                        android:textSize="17sp"
+                        android:textColor="#FF716D61"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="There are powerups in\nmultiplayer."
+                        android:id="@+id/multidesc3"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="50dp"
+                        android:textSize="17sp"
+                        android:textColor="#FF716D61"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="4dp">
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/textviewred2"
+                        android:background="@drawable/colorred"
+                        android:layout_marginTop="55dp" />
+                </LinearLayout>
+            </LinearLayout>
+
 
         </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
+
+
+            <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="end" >
+            android:orientation="horizontal">
 
-            <View
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/colorred" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/coloryellow"
-                android:layout_marginTop="10dp" />
+                <TextView
+                    android:id="@+id/textViewPowerups"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="POWERUPS"
+                    android:textColor="#FF716D61"
+                    android:textSize="25sp" />
 
+                <TextView
+                    android:id="@+id/rush"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:text="Rush"
+                    android:textColor="#FF716D61"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/rushdesc"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Your opponent has 10 seconds to make the next move."
+                    android:textColor="#FF716D61"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:text="Colorblind"
+                    android:textColor="#FF716D61"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/colordesc"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Your opponent can&apos;t see color."
+                    android:textColor="#FF716D61"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/bomb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Bomb"
+                    android:textColor="#FF716D61"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/bombdesc"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="The whole column explode."
+                    android:textColor="#FF716D61"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/extra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Extra Turn"
+                    android:textColor="#FF716D61"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/extradesc"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="You get an extra turn."
+                    android:textColor="#FF716D61"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/swap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Swap"
+                    android:textColor="#FF716D61"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/swapdesc"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="You and your opponent swap tiles."
+                    android:textColor="#FF716D61"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="42dp"
+                    android:layout_marginTop="75dp"
+                    android:background="@drawable/c4_rush" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="42dp"
+                    android:background="@drawable/c4_blind" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="42dp"
+                    android:background="@drawable/c4_bomb" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="42dp"
+                    android:background="@drawable/c4_extra" />
+
+                <View
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="42dp"
+                    android:background="@drawable/c4_switch" />
+
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

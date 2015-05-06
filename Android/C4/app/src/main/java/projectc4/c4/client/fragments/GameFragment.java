@@ -45,6 +45,8 @@ import projectc4.c4.client.*;
     private TranslateAnimation blackarrow_left;
     private TextView textViewPlayer1;
     private TextView textViewPlayer2;
+    private TextView tvPlayerElo;
+    private TextView tvOpponentElo;
     private int winner;
     private boolean startup, timeLimit;
 
@@ -60,9 +62,6 @@ import projectc4.c4.client.*;
         GameGridAnimation ggAmination = (GameGridAnimation)view.findViewById(R.id.gameGridAnimation);
 
         clientController.getGameController().setViews(ggView, ggAmination, ggShowPointer , ggForeground);
-
-//        GameGridViewGroup ggViewGroup = (GameGridViewGroup)view.findViewById(R.id.gameGridViewGroup);
-//        ggViewGroup.setGameController(clientController.getGameController());
 
         clientController.setGameFragment(this);
         System.out.println(clientController.getPlayerTurn());
@@ -89,6 +88,9 @@ import projectc4.c4.client.*;
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
         textViewPlayer1.setTypeface(type, Typeface.BOLD);
         textViewPlayer2.setTypeface(type, Typeface.BOLD);
+
+        tvPlayerElo = (TextView)view.findViewById(R.id.tvPlayerElo);
+        tvOpponentElo = (TextView)view.findViewById(R.id.tvOpponentElo);
 
         // Place black arrow on current player side
         textViewVs.setTextColor(C4Color.BLACK);
@@ -120,25 +122,9 @@ import projectc4.c4.client.*;
         buttonRematch.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
 
-        // Load icon panels if gamemode is matchmaking
+        // Display ELO
         if (gameMode == C4Constants.MATCHMAKING) {
-            GridLayout glIcons1 = (GridLayout)view.findViewById(R.id.iconButtons);
-            GridLayout glIcons2 = (GridLayout)view.findViewById(R.id.iconButtons2);
-
-            glIcons1.setEnabled(true);
-            glIcons1.setVisibility(View.VISIBLE);
-            glIcons2.setEnabled(true);
-            glIcons2.setVisibility(View.VISIBLE);
-
-            // Player 1
-            ibPlayer1Profile = (ImageButton)view.findViewById(R.id.ibPlayer1Profile);
-            ibPlayer1Settings = (ImageButton)view.findViewById(R.id.ibPlayer1Settings);
-            ibPlayer1Friends = (ImageButton)view.findViewById(R.id.ibPlayer1Friends);
-            ibPlayer1Chat = (ImageButton)view.findViewById(R.id.ibPlayer1Chat);
-
-            // Player 2
-            ibPlayer2Profile = (ImageButton)view.findViewById(R.id.ibPlayer2Profile);
-            ibPlayer2Chat = (ImageButton)view.findViewById(R.id.ibPlayer2Chat);
+            setElos();
         }
     }
 
@@ -154,8 +140,8 @@ import projectc4.c4.client.*;
         // Set listeners if MM
         if (gameMode == C4Constants.MATCHMAKING) {
 
-            // Profile Button
-            ibPlayer1Profile.setOnClickListener(new View.OnClickListener() {
+            // Player 1
+            textViewPlayer1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fragmentManager = getFragmentManager();
@@ -166,7 +152,19 @@ import projectc4.c4.client.*;
                 }
             });
 
-            // Settings Button
+            // Player 2
+            textViewPlayer2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(android.R.id.content, new GamePopupFragment().newInstance(5));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            /*// Settings Button
             ibPlayer1Settings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -224,22 +222,10 @@ import projectc4.c4.client.*;
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }
-            });
+            });*/
 
         }
     }
-
-    // Används inte längre eftersom vi inte visar vinnaren med text
-
-    /*public void setTextViewWinner(final String winner) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView textViewWinner = (TextView)findViewById(R.id.textViewWinner);
-                textViewWinner.setText(enableGameButton);
-            }
-        });
-    }*/
 
     public void animateArrow(final int direction) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -258,6 +244,18 @@ import projectc4.c4.client.*;
                     ivBlackArrow.startAnimation(blackarrow_right);
                     System.out.println("Animation blackarrow_left used");
                 }
+            }
+        });
+    }
+
+    public void setElos() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                double playerElo = clientController.getUser().getElo();
+                double opponentElo = clientController.getOpponentUser().getElo();
+                tvPlayerElo.setText("Rating: " + String.format("%.2f", playerElo));
+                tvOpponentElo.setText("Rating: " + String.format("%.2f", opponentElo));
             }
         });
     }
@@ -304,23 +302,6 @@ import projectc4.c4.client.*;
             }
         });
     }
-
-    /*public void setArrowPosition(final int player) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (player == PLAYER1) {
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)view.getLayoutParams();
-                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                    rlBelowLine.addView(ivBlackArrow, params);
-                } else {
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)view.getLayoutParams();
-                    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    rlBelowLine.addView(ivBlackArrow, params);
-                }
-            }
-        });
-    }*/
 
     public void highlightPlayer(final int player) {
         getActivity().runOnUiThread(new Runnable() {
@@ -463,11 +444,16 @@ import projectc4.c4.client.*;
 
     }
 
-    public void setNewGame() {
+    public void setNewGame(final boolean gameInProgress) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 final Button buttonNewGame = (Button)view.findViewById(R.id.buttonNewGame);
+                if (gameInProgress) {
+                    buttonNewGame.setText("Next round");
+                } else {
+                    buttonNewGame.setText("New game");
+                }
                 buttonNewGame.setEnabled(true);
                 buttonNewGame.setVisibility(View.VISIBLE);
                 buttonNewGame.setOnClickListener(new View.OnClickListener() {

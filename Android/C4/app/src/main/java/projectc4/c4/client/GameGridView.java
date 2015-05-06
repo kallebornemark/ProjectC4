@@ -32,11 +32,11 @@ public class GameGridView extends View {
     private Paint strokePaint;
     private Canvas c;
     private int rows, cols;
-    private Drawable clock = getResources().getDrawable(R.drawable.clock);
-    private Drawable bomb = getResources().getDrawable(R.drawable.bomb);
-    private Drawable colorblind = getResources().getDrawable(R.drawable.colorblind);
-    private Drawable extraturn = getResources().getDrawable(R.drawable.extraturn);
-    private Drawable shuffle = getResources().getDrawable(R.drawable.shuffle);
+    private Drawable clock = getResources().getDrawable(R.drawable.c4_rush);
+    private Drawable bomb = getResources().getDrawable(R.drawable.c4_bomb);
+    private Drawable colorblind = getResources().getDrawable(R.drawable.c4_blind);
+    private Drawable extraturn = getResources().getDrawable(R.drawable.c4_extra);
+    private Drawable shuffle = getResources().getDrawable(R.drawable.c4_switch);
     private boolean noColor = false, drawColor = false;
     private Bitmap bitmap;
     private boolean newGame = true, create = true, bombTiles = false;
@@ -96,7 +96,14 @@ public class GameGridView extends View {
     }
 
     public void resetGameBoard(int[][] array){
-          if(create) {
+        System.out.println();
+        for (int row = 0; row < rows; row++) {
+            System.out.println();
+            for (int col = 0; col < cols; col++) {
+                System.out.print(array[row][col] + "  ");
+            }
+        }
+                if(create) {
               createBitmap();
               create = false;
           }
@@ -121,9 +128,16 @@ public class GameGridView extends View {
                 } else if (array[row][col] == C4Constants.POWERUP_SHUFFLE){
                     shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                     shuffle.draw(c);
-                }
+                } else if (array[row][col] == C4Constants.PLAYER1) {
+                    paint.setColor(C4Color.RED);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
+                } else if (array[row][col] == C4Constants.PLAYER2){
+                    paint.setColor(C4Color.YELLOW);
+                    c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
             }
+          }
         }
+        paint.setColor(C4Color.LIGHTGRAY);
         updateDisplay();
     }
 
@@ -182,8 +196,10 @@ public class GameGridView extends View {
     protected void onDraw(Canvas canvas) {
 //        if (bitmap==null){
         if(newGame) {
-            resetGameBoard(gameController.getGameBoard());
-            newGame = false;
+            if (!isInEditMode()) {
+                resetGameBoard(gameController.getGameBoard());
+                newGame = false;
+            }
         }
 //        if (bitmap != null && gameController != null){
         if(!newGame) {
@@ -193,7 +209,19 @@ public class GameGridView extends View {
         }
     }
 
+    public void printArray(int[][] array) {
+        System.out.println();
+        for (int row = 0; row < array.length; row++) {
+            System.out.println();
+            for (int col = 0; col < array[0].length; col++) {
+                System.out.print(array[row][col] + "  ");
+            }
+        }
+    }
+
     public void setWinningTiles(HashSet<Integer> winningTiles, int[][] gameBoard) {
+        printArray(gameBoard);
+
         int tmpCounter = 0;
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard[row].length; col++) {
@@ -293,6 +321,7 @@ public class GameGridView extends View {
     }
 
     public void bombTiles(ArrayList<Integer> list, int playedCol) {
+        printArray(gameController.getGameBoard());
 
         int posX = (playedCol * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
         paint.setColor(C4Color.LIGHTGRAY);
@@ -301,6 +330,7 @@ public class GameGridView extends View {
             int posY = ((list.get(i)) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
             c.drawRoundRect(posX, posY, (sideOfTile + posX), (sideOfTile + posY), 20, 20, paint);
         }
+        gameController.getGameBoard()[gameController.getPlayedRow()][playedCol] = 0;
         bombTiles = false;
         tempPosList = null;
     }

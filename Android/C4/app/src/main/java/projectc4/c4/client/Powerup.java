@@ -1,6 +1,9 @@
 package projectc4.c4.client;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import c4.utils.C4Constants;
 
 public class Powerup {
     private GameController gameController;
@@ -25,7 +28,7 @@ public class Powerup {
     }
 
     public void powerupBomb(int playedRow, int playedCol) {
-        ArrayList<Integer> posList = new ArrayList<Integer>();
+        ArrayList<Integer> posList = new ArrayList<>();
 
         for (int i = playedRow; i < gameController.getGameBoard().length; i++) {
             posList.add(i);
@@ -35,5 +38,20 @@ public class Powerup {
             }
         }
         gameGridView.setBombTiles(true, posList, playedCol);
+    }
+
+    public void powerupShuffle() {
+        for(int i = 0; i < gameController.getGameBoard()[0].length; i ++) {
+            for(int j = 0; j < gameController.getGameBoard().length; j ++) {
+
+                if(gameController.getElement(j,i) == C4Constants.PLAYER1) {
+                    gameController.getGameBoard()[j][i] = C4Constants.PLAYER2;
+                }
+                else if(gameController.getElement(j,i) == C4Constants.PLAYER2) {
+                    gameController.getGameBoard()[j][i] = C4Constants.PLAYER1;
+                }
+            }
+        }
+        gameGridView.resetGameBoard(gameController.getGameBoard());
     }
 }
