@@ -94,4 +94,8 @@ public class MainActivity extends FragmentActivity {
     public ClientController getClientController() {
         return clientController;
     }
+
+    public GameController getGameController() {
+        return gameController;
+    }
 }

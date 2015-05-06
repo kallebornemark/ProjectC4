@@ -73,6 +73,11 @@ public class GameGridView extends View {
         cols = gameController.getBoardWidth();
     }
 
+    public void setRowsCols(int rows,int cols) {
+        this.rows = rows;
+        this.cols = cols;
+    }
+
     public void updateDisplay() {
         this.post(new Runnable() {
             public void run() {

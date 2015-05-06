@@ -79,6 +79,8 @@ public class GameController {
     public void setArraySize(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
+        if(gameGridView != null)
+            gameGridView.setRowsCols(rows, cols);
         if(rows < 10) {
             setWinsSize(4);
         } else if(rows >= 10) {
@@ -88,6 +90,10 @@ public class GameController {
 
     public void setWinsSize(int winsSize) {
         this.winsSize = winsSize;
+    }
+
+    public int getStartingPlayer() {
+        return startingPlayer;
     }
 
     public void setRounds(int rounds) {
@@ -323,6 +329,13 @@ public class GameController {
             highlightTiles();
             // Put a star next to the player who won
             if (gameMode == C4Constants.LOCAL) {
+                if(playerTurn == C4Constants.PLAYER1) {
+                    player1Points++;
+                    //Öka poängen i UI-med +1
+                } else {
+                    player2Points++;
+                    //Öka poängen i UI-med +1
+                }
                 if (player1Points == (rounds / 2 +1) || player2Points == (rounds / 2 +1)) {
                     clientController.enableGameButton(false);
                     clientController.highlightWinnerPlayerStar(playerTurn);
@@ -331,15 +344,7 @@ public class GameController {
                     player2Points = 0;
                     //Switch to selectFragment or just run the same game again
                 } else {
-                    if(playerTurn == C4Constants.PLAYER1) {
-                        player1Points++;
-                        clientController.enableGameButton(true);
-                        //Öka poängen i UI-med +1
-                    } else {
-                        player2Points++;
-                        clientController.enableGameButton(true);
-                        //Öka poängen i UI-med +1
-                    }
+                    clientController.enableGameButton(true);
                 }
             } else {
                 clientController.enableGameButton(false);
