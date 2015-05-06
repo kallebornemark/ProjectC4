@@ -18,18 +18,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewProject"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textColor="#FF716D61"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"
-            android:text="We are C4 , a group of four software developers working on a project at Malmö University. This isn&apos;t a final version of the application." />
+            android:text="We are C4, a group of four software developers working on a project at Malmö University. Support us with 5 stars on the Android Market!"
+            android:gravity="center_vertical|center_horizontal"/>
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/colorblack"
             android:id="@+id/line"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"
+            />
 
         <LinearLayout
             android:orientation="vertical"
@@ -42,53 +44,101 @@
                 android:layout_height="35dp"
                 android:text="EMIL SANDGREN"
                 android:id="@+id/emil"
-                android:textSize="15sp"
-                android:textColor="#FFFFFCED"
+                android:textSize="20sp"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@drawable/colorblack"
-                android:layout_marginTop="5dp" />
+                android:textColor="#FF716D61"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="UI-master"
+                android:id="@+id/emildesc"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#FF716D61"/>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
                 android:text="KALLE BORNEMARK"
                 android:id="@+id/kalle"
-                android:textSize="15sp"
-                android:textColor="#FFFFFCED"
+                android:textSize="20sp"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@drawable/colororange"
                 android:layout_marginTop="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Server prodigy"
+                android:id="@+id/kalledesc"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#FF716D61" />
+
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
                 android:text="JIMMY MAKSYMIW"
                 android:id="@+id/jimmy"
-                android:textSize="15sp"
-                android:textColor="#FFFFFCED"
+                android:textSize="20sp"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@drawable/coloryellow"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:textColor="#FF716D61" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Database expert"
+                android:id="@+id/jimmydesc"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#FF716D61" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
                 android:text="ERIK SANDGREN"
                 android:id="@+id/erik"
-                android:textSize="15sp"
-                android:textColor="#FFFFFCED"
+                android:textSize="20sp"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@drawable/colorred"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:textColor="#FF716D61" />
 
-            <ImageView
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="King of powerups"
+                android:id="@+id/erikdesc"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#FF716D61" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@drawable/colorblack"
+                android:id="@+id/line2"
+                android:layout_marginBottom="20dp"
+                android:textColor="#FF716D61" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView8"
+                android:text="Flat icons designed by Freepick"
+                android:id="@+id/freepick"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher"
-                android:layout_marginTop="15dp" />
+                android:layout_marginBottom="10dp"
+                android:textColor="#FF716D61" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version 5.0"
+                android:id="@+id/textViewversion"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#FF716D61" />
 
         </LinearLayout>
         </LinearLayout>

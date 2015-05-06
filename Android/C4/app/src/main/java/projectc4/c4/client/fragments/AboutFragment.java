@@ -29,7 +29,13 @@ public class AboutFragment extends Fragment {
         TextView kalle = (TextView)view.findViewById(R.id.kalle);
         TextView jimmy = (TextView)view.findViewById(R.id.jimmy);
         TextView erik = (TextView)view.findViewById(R.id.erik);
+        TextView emildesc = (TextView)view.findViewById(R.id.emildesc);
+        TextView erikdesc = (TextView)view.findViewById(R.id.erikdesc);
+        TextView jimmydesc = (TextView)view.findViewById(R.id.jimmydesc);
+        TextView kalledesc = (TextView)view.findViewById(R.id.kalledesc);
+        TextView freepick = (TextView)view.findViewById(R.id.freepick);
         TextView project = (TextView)view.findViewById(R.id.textViewProject);
+        TextView version = (TextView)view.findViewById(R.id.textViewversion);
 
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
@@ -38,6 +44,12 @@ public class AboutFragment extends Fragment {
         jimmy.setTypeface(type,Typeface.BOLD);
         erik.setTypeface(type,Typeface.BOLD);
         project.setTypeface(type,Typeface.BOLD);
+        emildesc.setTypeface(type,Typeface.BOLD|Typeface.ITALIC);
+        erikdesc.setTypeface(type,Typeface.BOLD|Typeface.ITALIC);
+        jimmydesc.setTypeface(type,Typeface.BOLD|Typeface.ITALIC);
+        kalledesc.setTypeface(type,Typeface.BOLD|Typeface.ITALIC);
+        freepick.setTypeface(type,Typeface.BOLD);
+        version.setTypeface(type,Typeface.BOLD);
 
         return view;
     }

@@ -29,6 +29,15 @@ public class HowToPlayFragment extends Fragment{
         TextView extradesc = (TextView)view.findViewById(R.id.extradesc);
         TextView swap = (TextView)view.findViewById(R.id.swap);
         TextView swapdesc = (TextView)view.findViewById(R.id.swapdesc);
+        TextView localdesc = (TextView)view.findViewById(R.id.localdesc);
+        TextView localdesc2 = (TextView)view.findViewById(R.id.localdesc2);
+        TextView nopowerups = (TextView)view.findViewById(R.id.nopowerups);
+        TextView multidesc = (TextView)view.findViewById(R.id.multidesc);
+        TextView multidesc2 = (TextView)view.findViewById(R.id.multidesc2);
+        TextView multidesc3 = (TextView)view.findViewById(R.id.multidesc3);
+        TextView multi = (TextView)view.findViewById(R.id.multiplayer);
+        TextView local = (TextView)view.findViewById(R.id.local);
+        TextView powerup = (TextView)view.findViewById(R.id.textViewPowerups);
 
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
 
@@ -42,6 +51,15 @@ public class HowToPlayFragment extends Fragment{
         extradesc.setTypeface(type, Typeface.BOLD);
         swap.setTypeface(type, Typeface.BOLD);
         swapdesc.setTypeface(type, Typeface.BOLD);
+        localdesc.setTypeface(type, Typeface.BOLD);
+        localdesc2.setTypeface(type, Typeface.BOLD);
+        nopowerups.setTypeface(type, Typeface.BOLD);
+        multidesc.setTypeface(type, Typeface.BOLD);
+        multidesc2.setTypeface(type, Typeface.BOLD);
+        multidesc3.setTypeface(type, Typeface.BOLD);
+        multi.setTypeface(type, Typeface.BOLD);
+        local.setTypeface(type, Typeface.BOLD);
+        powerup.setTypeface(type, Typeface.BOLD);
         return view;
     }
 }
