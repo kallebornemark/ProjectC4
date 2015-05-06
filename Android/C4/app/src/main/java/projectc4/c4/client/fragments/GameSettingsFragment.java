@@ -23,24 +23,34 @@ import projectc4.c4.client.MainActivity;
  */
 public class GameSettingsFragment extends Fragment {
     private Random rand = new Random();
+    private Button sixgrid;
+    private Button nine;
+    private Button thirteen;
+    private Button one;
+    private Button three;
+    private Button five;
+    private Button player1;
+    private Button player2;
+    private Button random;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gamesettings, container, false);
 
-
-        Button sixgrid  = (Button)view.findViewById(R.id.sixseven);
-        Button nine  = (Button)view.findViewById(R.id.nineten);
-        Button thirteen  = (Button)view.findViewById(R.id.twelethirteen);
-        Button one  = (Button)view.findViewById(R.id.one);
-        Button three  = (Button)view.findViewById(R.id.three);
-        Button five  = (Button)view.findViewById(R.id.five);
-        Button player1 = (Button)view.findViewById(R.id.startplayer1);
-        Button player2  = (Button)view.findViewById(R.id.startplayer2);
-        Button random  = (Button)view.findViewById(R.id.startrandom);
+        sixgrid  = (Button)view.findViewById(R.id.sixseven);
+        nine  = (Button)view.findViewById(R.id.nineten);
+        thirteen  = (Button)view.findViewById(R.id.twelethirteen);
+        one  = (Button)view.findViewById(R.id.one);
+        three  = (Button)view.findViewById(R.id.three);
+        five  = (Button)view.findViewById(R.id.five);
+        player1 = (Button)view.findViewById(R.id.startplayer1);
+        player2  = (Button)view.findViewById(R.id.startplayer2);
+        random  = (Button)view.findViewById(R.id.startrandom);
         TextView board  = (TextView)view.findViewById(R.id.boardsize);
         TextView rounds = (TextView)view.findViewById(R.id.rounds);
         TextView startingplayer  = (TextView)view.findViewById(R.id.startingplayer);
+
+
 
         ButtonClickListener buttonClickListener = new ButtonClickListener();
 
@@ -84,38 +94,65 @@ public class GameSettingsFragment extends Fragment {
 
             switch (v.getId()) {
                 case R.id.sixseven:
+                    sixgrid.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    nine.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    thirteen.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
                     ((MainActivity)getActivity()).getGameController().setArraySize(6, 7);
                     break;
 
                 case R.id.nineten:
+                    sixgrid.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    nine.setBackground(getActivity().getDrawable(R.drawable.colorred));
+                    thirteen.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
                     ((MainActivity)getActivity()).getGameController().setArraySize(9, 10);
                     break;
 
                 case R.id.twelethirteen:
+                    sixgrid.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    nine.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
+                    thirteen.setBackground(getActivity().getDrawable(R.drawable.colorred));
                     ((MainActivity)getActivity()).getGameController().setArraySize(12, 13);
                     break;
 
                 case R.id.one:
+                    one.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                    three.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
+                    five.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
                     ((MainActivity)getActivity()).getGameController().setRounds(1);
                     break;
 
                 case R.id.three:
+                    one.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
+                    three.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
+                    five.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
                     ((MainActivity)getActivity()).getGameController().setRounds(3);
                     break;
 
                 case R.id.five:
+                    one.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
+                    three.setBackground(getActivity().getDrawable(R.drawable.coloryellowpressed));
+                    five.setBackground(getActivity().getDrawable(R.drawable.coloryellow));
                     ((MainActivity)getActivity()).getGameController().setRounds(5);
                     break;
 
                 case R.id.startplayer1:
+                    player1.setBackground(getActivity().getDrawable(R.drawable.colorblack));
+                    player2.setBackground(getActivity().getDrawable(R.drawable.colorblackpressed));
+                    random.setBackground(getActivity().getDrawable(R.drawable.colorblackpressed));
                     ((MainActivity)getActivity()).getGameController().setStartingPlayer(C4Constants.PLAYER1);
                     break;
 
                 case R.id.startplayer2:
+                    player1.setBackground(getActivity().getDrawable(R.drawable.colorblackpressed));
+                    player2.setBackground(getActivity().getDrawable(R.drawable.colorblack));
+                    random.setBackground(getActivity().getDrawable(R.drawable.colorblackpressed));
                     ((MainActivity)getActivity()).getGameController().setStartingPlayer(C4Constants.PLAYER2);
                     break;
 
                 case R.id.startrandom:
+                    player1.setBackground(getActivity().getDrawable(R.drawable.colorblackpressed));
+                    player2.setBackground(getActivity().getDrawable(R.drawable.colorblackpressed));
+                    random.setBackground(getActivity().getDrawable(R.drawable.colorblack));
                     if(rand.nextInt(1) == 0) {
                         ((MainActivity) getActivity()).getGameController().setStartingPlayer(C4Constants.PLAYER1);
                     } else {
