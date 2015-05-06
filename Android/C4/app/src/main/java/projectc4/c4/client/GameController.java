@@ -19,7 +19,7 @@ public class GameController {
     private int[][] gameBoard;
     private int[] colSize;
     private int playerTurn;
-    private int startingPlayer;
+    private int startingPlayer = C4Constants.PLAYER1;
     private int playedRow, playedCol;
     private int playedTiles;
     private int gameMode;
