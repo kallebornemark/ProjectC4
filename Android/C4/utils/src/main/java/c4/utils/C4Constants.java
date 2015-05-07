@@ -6,6 +6,12 @@ package c4.utils;
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class C4Constants {
+    public static final String POSITION_COLUMN = "Position";
+    public static final String USERNAME_COLUMN = "Username";
+    public static final String ELO_COLUMN = "Elo";
+    public static final String WINS_COLUMN = "W";
+    public static final String LOSSES_COLUMN = "L";
+    public static final String DRAWS_COLUMN = "D";
     public static final int HIGHSCORE = -100;
     public static final int HEARTBEAT = 30;
     public static final int EMPTYMOVE = 20;

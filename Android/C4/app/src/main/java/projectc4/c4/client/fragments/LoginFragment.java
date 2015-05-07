@@ -46,13 +46,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        clientController = ((MainActivity)getActivity()).getClientController();
+        clientController.setLoginFragment(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
-        clientController = ((MainActivity)getActivity()).getClientController();
-        clientController.setLoginFragment(this);
 
         initComponents();
         styleComponents();
@@ -200,6 +200,7 @@ public class LoginFragment extends Fragment {
 
                         //checks that necessary fields contains text.
                         if (editTextUsername.getText().length() > 0 &&
+                                editTextUsername.getText().length() <= 14 &&
                                 editTextEmail.getText().length() > 0 &&
                                 editTextEmailAgain.getText().length() > 0 &&
                                 editTextPassword.getText().length() > 0 &&
@@ -237,8 +238,14 @@ public class LoginFragment extends Fragment {
                                 toast.show();
                             }
                         } else {
-                            toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Fields with (*) must contain text\nTry again", Toast.LENGTH_SHORT);
+
+                            if (editTextUsername.getText().length() > 14) {
+                                toast = Toast.makeText(getActivity().getApplicationContext(),
+                                        "Maximum length of username is 14 chars\nTry again", Toast.LENGTH_SHORT);
+                            } else {
+                                toast = Toast.makeText(getActivity().getApplicationContext(),
+                                        "Fields with (*) must contain text\nTry again", Toast.LENGTH_SHORT);
+                            }
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                         }

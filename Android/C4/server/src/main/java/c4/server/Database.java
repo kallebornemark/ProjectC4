@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import c4.utils.C4Constants;
 import c4.utils.Elo;
@@ -151,76 +153,79 @@ public class Database {
         }
     }
 
-    //För test. Att skriva ut highscore
-    public void print (String[][] tmpArray) {
-        System.out.println("-------------------------");
-        for (int i = 0; i < tmpArray.length; i++) {
-            for (int j = 0; j < tmpArray[i].length; j++) {
-                System.out.print(tmpArray[i][j] + " - ");
-            }
-            System.out.println();
-        }
-    }
     public synchronized Highscore getHighscore() {
         Highscore highscore = new Highscore();
         try {
             connect();
             // Highscore, top 10 based on elo.
-            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by elo desc limit 10");
-            String[][] tmpArray = new String[10][5];
-            int tmprow = 0;
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by elo desc limit 15");
+            ArrayList<HashMap<String,String>> tmpArray = new ArrayList<HashMap<String,String>>();
+            HashMap<String, String> tmpHashmap;
+            int tmprow = 1;
             while(resultSet.next()) {
-                tmpArray[tmprow][0] = resultSet.getString(1);
-                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
-                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
-                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
-                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmpHashmap = new HashMap<>();
+                tmpHashmap.put(C4Constants.POSITION_COLUMN, Integer.toString(tmprow));
+                tmpHashmap.put(C4Constants.USERNAME_COLUMN, resultSet.getString(1));
+                tmpHashmap.put(C4Constants.ELO_COLUMN, String.format("%.2f", resultSet.getDouble(2)));
+                tmpHashmap.put(C4Constants.WINS_COLUMN, Integer.toString(resultSet.getInt(3)));
+                tmpHashmap.put(C4Constants.LOSSES_COLUMN, Integer.toString(resultSet.getInt(4)));
+                tmpHashmap.put(C4Constants.DRAWS_COLUMN, Integer.toString(resultSet.getInt(5)));
+                tmpArray.add(tmpHashmap);
                 tmprow++;
             }
-//            print(tmpArray);
-            highscore.setTop10Elo(tmpArray);
+            highscore.setHighScoreElo(tmpArray);
+
             // Highscore, top 10 based on wins.
-            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by wins desc limit 10");
-            tmpArray = new String[10][5];
-            tmprow = 0;
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by wins desc limit 15");
+            tmpArray = new ArrayList<HashMap<String,String>>();
+            tmprow = 1;
             while(resultSet.next()) {
-                tmpArray[tmprow][0] = resultSet.getString(1);
-                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
-                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
-                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
-                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmpHashmap = new HashMap<>();
+                tmpHashmap.put(C4Constants.POSITION_COLUMN, Integer.toString(tmprow));
+                tmpHashmap.put(C4Constants.USERNAME_COLUMN, resultSet.getString(1));
+                tmpHashmap.put(C4Constants.ELO_COLUMN, String.format("%.2f", resultSet.getDouble(2)));
+                tmpHashmap.put(C4Constants.WINS_COLUMN, Integer.toString(resultSet.getInt(3)));
+                tmpHashmap.put(C4Constants.LOSSES_COLUMN, Integer.toString(resultSet.getInt(4)));
+                tmpHashmap.put(C4Constants.DRAWS_COLUMN, Integer.toString(resultSet.getInt(5)));
+                tmpArray.add(tmpHashmap);
                 tmprow++;
             }
-//            print(tmpArray);
-            highscore.setTop10Wins(tmpArray);
+            highscore.setHighscoreWins(tmpArray);
             // Highscore, top 10 based on losses.
-            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by losses desc limit 10");
-            tmpArray = new String[10][5];
-            tmprow = 0;
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by losses desc limit 15");
+
+            tmpArray = new ArrayList<HashMap<String,String>>();
+            tmprow = 1;
             while(resultSet.next()) {
-                tmpArray[tmprow][0] = resultSet.getString(1);
-                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
-                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
-                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
-                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmpHashmap = new HashMap<>();
+                tmpHashmap.put(C4Constants.POSITION_COLUMN, Integer.toString(tmprow));
+                tmpHashmap.put(C4Constants.USERNAME_COLUMN, resultSet.getString(1));
+                tmpHashmap.put(C4Constants.ELO_COLUMN, String.format("%.2f", resultSet.getDouble(2)));
+                tmpHashmap.put(C4Constants.WINS_COLUMN, Integer.toString(resultSet.getInt(3)));
+                tmpHashmap.put(C4Constants.LOSSES_COLUMN, Integer.toString(resultSet.getInt(4)));
+                tmpHashmap.put(C4Constants.DRAWS_COLUMN, Integer.toString(resultSet.getInt(5)));
+                tmpArray.add(tmpHashmap);
                 tmprow++;
             }
-//            print(tmpArray);
-            highscore.setTop10Losses(tmpArray);
+            highscore.setHighScoreLosses(tmpArray);
             // Highscore, top 10 based on draws.
-            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by draws desc limit 10");
-            tmpArray = new String[10][5];
-            tmprow = 0;
+            resultSet = statement.executeQuery("select username, elo, wins, losses, draws from User order by draws desc limit 15");
+
+            tmpArray = new ArrayList<HashMap<String,String>>();
+            tmprow = 1;
             while(resultSet.next()) {
-                tmpArray[tmprow][0] = resultSet.getString(1);
-                tmpArray[tmprow][1] = String.format("%.2f", resultSet.getDouble(2));
-                tmpArray[tmprow][2] = Integer.toString(resultSet.getInt(3));
-                tmpArray[tmprow][3] = Integer.toString(resultSet.getInt(4));
-                tmpArray[tmprow][4] = Integer.toString(resultSet.getInt(5));
+                tmpHashmap = new HashMap<>();
+                tmpHashmap.put(C4Constants.POSITION_COLUMN, Integer.toString(tmprow));
+                tmpHashmap.put(C4Constants.USERNAME_COLUMN, resultSet.getString(1));
+                tmpHashmap.put(C4Constants.ELO_COLUMN, String.format("%.2f", resultSet.getDouble(2)));
+                tmpHashmap.put(C4Constants.WINS_COLUMN, Integer.toString(resultSet.getInt(3)));
+                tmpHashmap.put(C4Constants.LOSSES_COLUMN, Integer.toString(resultSet.getInt(4)));
+                tmpHashmap.put(C4Constants.DRAWS_COLUMN, Integer.toString(resultSet.getInt(5)));
+                tmpArray.add(tmpHashmap);
                 tmprow++;
             }
-//            print(tmpArray);
-            highscore.setTop10draws(tmpArray);
+            highscore.setHighScoreDraws(tmpArray);
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
