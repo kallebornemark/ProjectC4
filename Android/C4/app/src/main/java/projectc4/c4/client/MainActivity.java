@@ -27,7 +27,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            clientController = new ClientController();
+            clientController = new ClientController(this);
             gameController = new GameController(clientController);
             clientController.setGameController(gameController);
 

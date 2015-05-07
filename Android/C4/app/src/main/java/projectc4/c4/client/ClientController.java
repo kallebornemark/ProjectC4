@@ -27,6 +27,19 @@ public class ClientController {
     private String opponentName;
     private GameInfo gameInfo;
     private boolean okayToLeave = false;
+    private MainActivity context;
+
+    public ClientController(MainActivity context) {
+        this.context = context;
+    }
+
+    public MainActivity getContext() {
+        return context;
+    }
+
+    public void setContext(MainActivity context) {
+        this.context = context;
+    }
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
@@ -285,6 +298,7 @@ public class ClientController {
                 highlightWinnerPlayerStar(C4Constants.PLAYER1);
                 stopAnimation();
                 getUser().newGameResult(C4Constants.WIN, gameInfo.getOpponentElo());
+                getOpponentUser().newGameResult(C4Constants.LOSS, getUser().getElo());
                 setOkayToLeave(true);
 
             } else {

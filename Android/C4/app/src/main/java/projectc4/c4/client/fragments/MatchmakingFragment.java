@@ -123,7 +123,7 @@ public class MatchmakingFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    fragmentManager.popBackStackImmediate("Menu", 0);
+//                    fragmentManager.popBackStackImmediate("Menu", 0);
 
                     break;
             }

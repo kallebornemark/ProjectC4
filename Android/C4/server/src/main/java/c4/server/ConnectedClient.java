@@ -27,10 +27,28 @@ public class ConnectedClient extends Thread implements Serializable {
     private Server server;
     private ActiveGame activeGame;
     private int startPos;
+    private Thread heartbeatReader;
+    private long heartbeatTimeoutInterval = 2000;
+    private long lastRead;
+    private int nbrOfTries;
 
     public ConnectedClient(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
+    }
+
+    public void startHeartbeat() {
+        if (heartbeatReader == null) {
+            heartbeatReader = new Thread(new Heartbeat());
+            heartbeatReader.start();
+        }
+    }
+
+    public void stopHeartbeat() {
+        if (heartbeatReader != null) {
+            heartbeatReader.interrupt();
+            heartbeatReader = null;
+        }
     }
 
     public void setUsername(String username) {
@@ -121,9 +139,9 @@ public class ConnectedClient extends Thread implements Serializable {
                 Object obj = ois.readObject();
 
                 if (obj instanceof Integer) {
+                    // Hantera ints
                     value = (Integer)obj;
 
-                    // Hantera ints
                     if (value == C4Constants.MATCHMAKING) {
                         // New incoming MM game
                         System.out.println("Server: New incoming MM game");
@@ -157,6 +175,9 @@ public class ConnectedClient extends Thread implements Serializable {
                         }
                     } else if  (value == C4Constants.HIGHSCORE) {
                         requestHighscore();
+                    } else if (value == C4Constants.HEARTBEAT) {
+                        lastRead = System.currentTimeMillis();
+                        System.out.println("Heartbeat received, lastRead set to " + lastRead);
                     }
 
                 } else if (obj instanceof User) {
@@ -203,6 +224,7 @@ public class ConnectedClient extends Thread implements Serializable {
                 System.out.println("Skickat SURRENDER till klient 2");
                 activeGame.setIsActive(false);
             }
+            stopHeartbeat();
             server.removeConnectedClient(this);
             System.out.println("Server: Client '" + this.username + "' removed from connected client list");
 
@@ -273,10 +295,45 @@ public class ConnectedClient extends Thread implements Serializable {
             oos.flush();
             ois = new ObjectInputStream(socket.getInputStream());
 
+            nbrOfTries = 0;
+            lastRead = System.currentTimeMillis();
+
+            startHeartbeat();
+
             // Start listening to inputstream
             startCommunication();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private class Heartbeat extends Thread {
+        public void run() {
+            while (!Thread.interrupted()) {
+                try {
+                    Thread.sleep(heartbeatTimeoutInterval);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if ((System.currentTimeMillis() - lastRead) > heartbeatTimeoutInterval)
+                {
+                    nbrOfTries++;
+                    System.out.println("Wait time longer than allowed, nbrOfTries set to " + nbrOfTries);
+                    if (nbrOfTries > 2) {
+                        try {
+                            stopHeartbeat();
+                            socket.close();
+                            server.removeConnectedClient(ConnectedClient.this);
+                            System.out.println("Client's socket closed and removed from server list");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
 }

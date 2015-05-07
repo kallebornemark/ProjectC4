@@ -7,7 +7,7 @@ package c4.utils;
  */
 public class C4Constants {
     public static final int HIGHSCORE = -100;
-    public static final int LOGINFAILED = 30;
+    public static final int HEARTBEAT = 30;
     public static final int EMPTYMOVE = 20;
     public static final int GRIDSPACING = 10;
     public static final int LOCAL = -1;
