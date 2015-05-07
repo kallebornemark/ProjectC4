@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewPosition"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="0.30"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textViewUsername"
+        android:text="Username"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textViewElo"
+        android:text="Elo"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textViewWins"
+        android:text="W"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textViewLosses"
+        android:text="L"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textViewDraws"
+        android:text="D"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:textSize="15sp" />
+
+</LinearLayout>
