@@ -1,46 +1,48 @@
 package c4.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Highscore implements Serializable {
     private static final long serialVersionUID = -423423424550L;
-    private String[][] top10Elo;
-    private String[][] top10Wins;
-    private String[][] top10Losses;
-    private String[][] top10draws;
+    private ArrayList<HashMap<String,String>> highScoreElo;
+    private ArrayList<HashMap<String,String>> highscoreWins;
+    private ArrayList<HashMap<String,String>> highScoreLosses;
+    private ArrayList<HashMap<String,String>> highScoreDraws;
 
-    public void setTop10Elo(String[][] top10Elo) {
-        this.top10Elo = top10Elo;
+    public ArrayList<HashMap<String, String>> getHighScoreDraws() {
+        return highScoreDraws;
     }
 
-    public String[][] getTop10Elo() {
-        return top10Elo;
+    public void setHighScoreDraws(ArrayList<HashMap<String, String>> highScoreDraws) {
+        this.highScoreDraws = highScoreDraws;
     }
 
-    public String[][] getTop10Wins() {
-        return top10Wins;
+    public ArrayList<HashMap<String, String>> getHighScoreElo() {
+        return highScoreElo;
     }
 
-    public void setTop10Wins(String[][] top10Wins) {
-        this.top10Wins = top10Wins;
+    public void setHighScoreElo(ArrayList<HashMap<String, String>> highScoreElo) {
+        this.highScoreElo = highScoreElo;
     }
 
-    public String[][] getTop10Losses() {
-        return top10Losses;
+    public ArrayList<HashMap<String, String>> getHighScoreLosses() {
+        return highScoreLosses;
     }
 
-    public void setTop10Losses(String[][] top10Losses) {
-        this.top10Losses = top10Losses;
+    public void setHighScoreLosses(ArrayList<HashMap<String, String>> highScoreLosses) {
+        this.highScoreLosses = highScoreLosses;
     }
 
-    public String[][] getTop10draws() {
-        return top10draws;
+    public ArrayList<HashMap<String, String>> getHighscoreWins() {
+        return highscoreWins;
     }
 
-    public void setTop10draws(String[][] top10draws) {
-        this.top10draws = top10draws;
+    public void setHighscoreWins(ArrayList<HashMap<String, String>> highscoreWins) {
+        this.highscoreWins = highscoreWins;
     }
 }
