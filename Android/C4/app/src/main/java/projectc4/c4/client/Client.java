@@ -1,5 +1,7 @@
 package projectc4.c4.client;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -9,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
@@ -27,42 +28,51 @@ public class Client implements Runnable, Serializable {
     private ObjectOutputStream oos;
     private String ip;
     private int port;
-    private Thread client;
     private User user;
     private User opponentUser;
     private ClientController clientController;
-    private Thread thread;
+    private Thread client;
+    private Thread heartbeat;
 
     public Client(ClientController clientController) {
         this.clientController = clientController;
     }
 
     public void connect(String ip, int port) {
-        user = null;
-        thread = null;
-        this.ip = ip;
-        this.port = port;
-        System.out.println("Innan tråden skapas");
-        thread = new Thread(this);
-        thread.start();
-        System.out.println("Tråden har startats");
+        if (client == null) {
+            this.ip = ip;
+            this.port = port;
+            System.out.println("Innan tråden skapas");
+            client = new Thread(this);
+            client.start();
+            System.out.println("Tråden har startats");
+        }
+    }
 
+    public void disconnect() {
+        stopHeartbeat();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                FragmentManager fragmentManager = clientController.getContext().getFragmentManager();
+//                fragmentManager.beginTransaction();
+                fragmentManager.popBackStackImmediate("Menu", 0);
+            }
+        });
+        if (user != null) { this.user = null; }
+        if (client != null) { this.client.interrupt(); this.client = null; }
+        try {
+            if (ois != null) { this.ois.close(); this.ois = null; }
+            if (oos != null) { this.oos.close(); this.oos = null; }
+            if (socket != null) { this.socket.close(); this.socket = null; }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Client Disconnected");
     }
 
     public Socket getSocket() {
         return socket;
-    }
-
-    public void disconnect() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.user = null;
-        this.thread.interrupt();
-        this.thread = null;
-        System.out.println("Client Disconnected");
     }
 
     public void setUsername(User user) {
@@ -166,6 +176,20 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void startHeartbeat() {
+        if (heartbeat == null) {
+            heartbeat = new Thread(new Heartbeat());
+            heartbeat.start();
+        }
+    }
+
+    public void stopHeartbeat() {
+        if (heartbeat != null) {
+            heartbeat.interrupt();
+            heartbeat = null;
+        }
+    }
+
     public void checkNumberAndSend(int number) {
         if (number >= 0 && number <= 20) {
             System.out.println(this.toString() + " får ett inkommande move: " + number);
@@ -226,7 +250,7 @@ public class Client implements Runnable, Serializable {
     public void startCommunication() {
         try {
             System.out.println("Client communication started");
-            while (!Thread.interrupted()) {
+            while (!client.interrupted()) {
                 final Object obj = ois.readObject();
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
@@ -253,17 +277,35 @@ public class Client implements Runnable, Serializable {
             oos.flush();
             System.out.println("Objectoutputstream skapad");
 
-            // User from server
-//            obj = ois.readObject();
-//            setUsername((User)obj);
+            // Start listening to heartbeats
+            startHeartbeat();
 
             // Start listening
             startCommunication();
         } catch (IOException e) {
-            clientController.loginErrorMessage("Server offline");
-            disconnect();
+//            clientController.loginErrorMessage("Server offline");
+//            disconnect();
 //        } catch (ClassNotFoundException e2) {
 //            e2.printStackTrace();
+        }
+    }
+
+    private class Heartbeat extends Thread {
+        public void run() {
+            while (!heartbeat.interrupted()) {
+                if (heartbeat != null) {
+                    try {
+                        oos.writeObject(C4Constants.HEARTBEAT);
+                        oos.flush();
+                        System.out.println("Heartbeat sent to server, sleeping 1000ms...");
+                        Thread.sleep(1000);
+                    } catch (IOException e) {
+                        disconnect();
+                    } catch (InterruptedException e) {
+                    }
+                }
+
+            }
         }
     }
 }
