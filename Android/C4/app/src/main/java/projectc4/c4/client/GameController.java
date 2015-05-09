@@ -32,6 +32,7 @@ public class GameController {
     private int winsSize = 4;
     private int rounds = 1;
     private int player1Points, player2Points;
+    private boolean random = false;
 
     public GameController(ClientController clientController) {
         this.playerTurn = C4Constants.PLAYER1;
@@ -76,9 +77,18 @@ public class GameController {
         return playedTiles;
     }
 
+    public void setRandom(boolean random) {
+        this.random = random;
+    }
+
+    public boolean getRandom() {
+        return random;
+    }
+
     public void setArraySize(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
+        resetGameBoard();
         if(gameGridView != null)
             gameGridView.setRowsCols(rows, cols);
         if(rows < 10) {
@@ -92,12 +102,24 @@ public class GameController {
         this.winsSize = winsSize;
     }
 
+    public int getWinsSize() {
+        return winsSize;
+    }
+
     public int getStartingPlayer() {
         return startingPlayer;
     }
 
     public void setRounds(int rounds) {
         this.rounds = rounds;
+    }
+
+    public int getRounds() {
+        return rounds;
+    }
+
+    public int getRows() {
+        return rows;
     }
 
     public void setPlayer1Points(int player1Points) {

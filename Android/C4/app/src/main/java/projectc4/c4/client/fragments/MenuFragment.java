@@ -79,8 +79,8 @@ public class MenuFragment extends Fragment {
 
             switch (v.getId()) {
                 case R.id.buttonPlayLocal:
-                    ((MainActivity)getActivity()).getClientController().setGameMode(C4Constants.LOCAL);
-                    transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack("Local").commit();
+                    transaction.replace(R.id.activity_layout_fragmentpos, new GameSettingsFragment()).addToBackStack("LocalSettings").commit();
+
                     break;
 
                 case R.id.buttonPlayOnline:
@@ -98,7 +98,7 @@ public class MenuFragment extends Fragment {
                     break;
 
                 case R.id.buttonSettings:
-                    transaction.replace(R.id.activity_layout_fragmentpos, new GameSettingsFragment()).addToBackStack(null).commit();
+//                    transaction.replace(R.id.activity_layout_fragmentpos, new GameSettingsFragment()).addToBackStack(null).commit();
                     break;
 
                 case R.id.buttonHowToPlay:
