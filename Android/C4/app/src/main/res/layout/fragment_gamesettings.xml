@@ -140,6 +140,17 @@
 
         </GridLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Start Game"
+            android:textColor="#FFFFFCED"
+            android:id="@+id/startGame"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="65dp"
+            android:background="@drawable/colororange"
+            android:textSize="15sp"/>
+
 
     </LinearLayout>
 </RelativeLayout>

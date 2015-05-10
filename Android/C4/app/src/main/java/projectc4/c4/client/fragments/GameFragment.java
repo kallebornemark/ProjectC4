@@ -97,6 +97,10 @@ import projectc4.c4.client.*;
         startup = true;
         highlightPlayer(clientController.getPlayerTurn());
         if (gameMode == C4Constants.LOCAL) {
+            tvPlayerElo.setVisibility(View.VISIBLE);
+            tvOpponentElo.setVisibility(View.VISIBLE);
+            tvPlayerElo.setText("0");
+            tvOpponentElo.setText("0");
 //            animateArrowDelayed(C4Constants.PLAYER1);
         } else {
             animateArrowDelayed(clientController.getPlayerTurn());
@@ -461,6 +465,8 @@ import projectc4.c4.client.*;
                         RelativeLayout relativeLayoutPlayers = (RelativeLayout) view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
                         if(buttonNewGame.getText() == "New game") {
+                            setPlayer1Points("0");
+                            setPlayer2Points("0");
                             highlightPlayer(((MainActivity) getActivity()).getGameController().getStartingPlayer());
                         } else {
                             highlightPlayer(((MainActivity) getActivity()).getGameController().getPlayerTurn());
@@ -481,5 +487,23 @@ import projectc4.c4.client.*;
     public void stopAnimation() {
         if(animation != null)
             animation.stop();
+    }
+
+    public void setPlayer1Points(final String point) {
+//       getActivity().runOnUiThread(new Runnable() {
+//           @Override
+//           public void run() {
+                tvPlayerElo.setText(point);
+//           }
+//       });
+    }
+
+    public void setPlayer2Points(final String point) {
+//        getActivity().runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+                tvOpponentElo.setText(point);
+//            }
+//        });
     }
 }

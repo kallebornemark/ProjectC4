@@ -101,17 +101,10 @@ public class GameGridView extends View {
     }
 
     public void resetGameBoard(int[][] array){
-        System.out.println();
-        for (int row = 0; row < rows; row++) {
-            System.out.println();
-            for (int col = 0; col < cols; col++) {
-                System.out.print(array[row][col] + "  ");
-            }
+        if(create) {
+          createBitmap();
+          create = false;
         }
-                if(create) {
-              createBitmap();
-              create = false;
-          }
         paint.setColor(C4Color.LIGHTGRAY);
         c.drawRoundRect(offsetX, offsetY, getWidth()-offsetX, getHeight(), 20, 20, paint);
         for (int row = 0; row < rows; row++) {

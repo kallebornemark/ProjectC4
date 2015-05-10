@@ -1,5 +1,8 @@
 package projectc4.c4.client.fragments;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import c4.utils.C4Color;
 import c4.utils.C4Constants;
 import c4.utils.Highscore;
 import projectc4.c4.R;
@@ -32,6 +37,7 @@ public class HighscoreFragment extends Fragment {
     private TextView textViewWins;
     private TextView textViewLosses;
     private TextView textViewDraws;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -48,7 +54,11 @@ public class HighscoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_highscore, container, false);
 
+        progressBar = (ProgressBar)view.findViewById(R.id.progressBarLoadingHighscore);
+        progressBar.setVisibility(View.VISIBLE);
+
         listView = (ListView) view.findViewById(R.id.listViewHighscore);
+        listView.setVisibility(View.GONE);
         TextView textViewUsername = (TextView) view.findViewById(R.id.textViewUsername);
         textViewUsername.setTextSize(18);
         textViewElo = (TextView) view.findViewById(R.id.textViewElo);
@@ -73,7 +83,9 @@ public class HighscoreFragment extends Fragment {
     public void setHighscore(Highscore highscore) {
         this.highscore = highscore;
         this.elo = new ListViewAdapter(highscore.getHighScoreElo());
+        this.progressBar.setVisibility(View.GONE);
         this.listView.setAdapter(elo);
+        this.listView.setVisibility(View.VISIBLE);
         this.wins = new ListViewAdapter(highscore.getHighscoreWins());
         this.losses  = new ListViewAdapter(highscore.getHighScoreLosses());
         this.draws = new ListViewAdapter(highscore.getHighScoreDraws());
