@@ -30,6 +30,7 @@ public class MainActivity extends FragmentActivity {
             clientController = new ClientController(this);
             gameController = new GameController(clientController);
             clientController.setGameController(gameController);
+            clientController.setClient(new Client(clientController));
 
             this.menuFragment = new MenuFragment();
             getFragmentManager().beginTransaction().add(R.id.activity_layout_fragmentpos, menuFragment).addToBackStack("Menu").commit();

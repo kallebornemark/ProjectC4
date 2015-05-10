@@ -50,7 +50,6 @@ public class Client implements Runnable, Serializable {
     }
 
     public void disconnect() {
-        stopHeartbeat();
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -59,15 +58,19 @@ public class Client implements Runnable, Serializable {
                 fragmentManager.popBackStackImmediate("Menu", 0);
             }
         });
-        if (user != null) { this.user = null; }
-        if (client != null) { this.client.interrupt(); this.client = null; }
+
+        stopHeartbeat();
+
         try {
-            if (ois != null) { this.ois.close(); this.ois = null; }
-            if (oos != null) { this.oos.close(); this.oos = null; }
-            if (socket != null) { this.socket.close(); this.socket = null; }
+            if (ois     != null) { ois.close();     ois = null; }
+            if (oos     != null) { oos.close();     oos = null; }
+            if (socket  != null) { socket.close();  socket = null; }
+            if (user    != null) { this.user = null; }
+            if (client  != null) { client.interrupt(); client = null; }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         System.out.println("Client Disconnected");
     }
 
@@ -180,6 +183,7 @@ public class Client implements Runnable, Serializable {
         if (heartbeat == null) {
             heartbeat = new Thread(new Heartbeat());
             heartbeat.start();
+            System.out.println("Heartbeat started!");
         }
     }
 
@@ -187,6 +191,7 @@ public class Client implements Runnable, Serializable {
         if (heartbeat != null) {
             heartbeat.interrupt();
             heartbeat = null;
+            System.out.println("Heartbeat stopped!");
         }
     }
 
@@ -215,6 +220,7 @@ public class Client implements Runnable, Serializable {
             // Login attempt failed on server side, display error in login fragment
             clientController.loginErrorMessage((String) obj);
             clientController.enableLoginButton();
+            if (client != null) { client.interrupt(); client = null; }
         } else if (obj instanceof int[][]){
             int[][] gameBoard = (int[][])obj;
             clientController.getGameController().setPowerups(gameBoard);
@@ -250,7 +256,7 @@ public class Client implements Runnable, Serializable {
     public void startCommunication() {
         try {
             System.out.println("Client communication started");
-            while (!client.interrupted()) {
+            while (true) {
                 final Object obj = ois.readObject();
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
@@ -277,34 +283,32 @@ public class Client implements Runnable, Serializable {
             oos.flush();
             System.out.println("Objectoutputstream skapad");
 
-            // Start listening to heartbeats
-            startHeartbeat();
-
-            // Start listening
-            startCommunication();
         } catch (IOException e) {
-//            clientController.loginErrorMessage("Server offline");
-//            disconnect();
-//        } catch (ClassNotFoundException e2) {
-//            e2.printStackTrace();
+            e.printStackTrace();
         }
+
+        clientController.login();
+
+        // Start sending heartbeats
+        startHeartbeat();
+
+        // Start listening on ois
+        startCommunication();
     }
 
     private class Heartbeat extends Thread {
         public void run() {
-            while (!heartbeat.interrupted()) {
-                if (heartbeat != null) {
-                    try {
-                        oos.writeObject(C4Constants.HEARTBEAT);
-                        oos.flush();
-                        System.out.println("Heartbeat sent to server, sleeping 1000ms...");
-                        Thread.sleep(1000);
-                    } catch (IOException e) {
-                        disconnect();
-                    } catch (InterruptedException e) {
-                    }
+            while (heartbeat != null) {
+                try {
+                    oos.writeObject(C4Constants.HEARTBEAT);
+                    oos.flush();
+                    System.out.println("Heartbeat sent to server, sleeping 1000ms...");
+                    Thread.sleep(1000);
+                } catch (IOException e) {
+                    // If server doesn't respond
+                    disconnect();
+                } catch (InterruptedException e) {
                 }
-
             }
         }
     }

@@ -105,10 +105,14 @@ public class LoginFragment extends Fragment {
             @Override
             public void run() {
                 textViewError.setText(msg);
-                progressBar = (ProgressBar)view.findViewById(R.id.progressBarLarge2);
+                progressBar = (ProgressBar) view.findViewById(R.id.progressBarLarge2);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void connect() {
+        clientController.connect();
     }
 
     public void login() {
@@ -176,7 +180,7 @@ public class LoginFragment extends Fragment {
 
                             inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
-                            login();
+                            connect();
                         } else {
                             // Om användarnamnet/lösenordet inte innehåller några tecken
                             if(editTextUsername.getText().length() == 0) {

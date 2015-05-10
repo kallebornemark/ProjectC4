@@ -28,9 +28,10 @@ public class ConnectedClient extends Thread implements Serializable {
     private ActiveGame activeGame;
     private int startPos;
     private Thread heartbeatReader;
-    private long heartbeatTimeoutInterval = 2000;
+    private long heartbeatTimeoutInterval;
     private long lastRead;
     private int nbrOfTries;
+    private boolean heartbeat;
 
     public ConnectedClient(Server server, Socket socket) {
         this.server = server;
@@ -39,6 +40,9 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void startHeartbeat() {
         if (heartbeatReader == null) {
+            heartbeat = true;
+            heartbeatTimeoutInterval = 2000;
+            lastRead = System.currentTimeMillis();
             heartbeatReader = new Thread(new Heartbeat());
             heartbeatReader.start();
         }
@@ -46,9 +50,26 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void stopHeartbeat() {
         if (heartbeatReader != null) {
+            heartbeat = false;
             heartbeatReader.interrupt();
             heartbeatReader = null;
         }
+    }
+
+    public void disconnect() {
+        stopHeartbeat();
+        try {
+            if (socket != null) { socket.close(); socket = null; }
+            if (ois != null) { ois.close(); ois = null; }
+            if (oos != null) { oos.close(); oos = null; }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (server.isUserOnline(username)) {
+            server.removeConnectedClient(ConnectedClient.this);
+        }
+        System.out.println("Connected Client disconnected");
+        this.interrupt();
     }
 
     public void setUsername(String username) {
@@ -224,7 +245,7 @@ public class ConnectedClient extends Thread implements Serializable {
                 System.out.println("Skickat SURRENDER till klient 2");
                 activeGame.setIsActive(false);
             }
-            stopHeartbeat();
+            heartbeatReader.interrupt();
             server.removeConnectedClient(this);
             System.out.println("Server: Client '" + this.username + "' removed from connected client list");
 
@@ -292,7 +313,7 @@ public class ConnectedClient extends Thread implements Serializable {
         try {
             // Start streams
             oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.flush();
+//            oos.flush();
             ois = new ObjectInputStream(socket.getInputStream());
 
             nbrOfTries = 0;
@@ -309,26 +330,18 @@ public class ConnectedClient extends Thread implements Serializable {
 
     private class Heartbeat extends Thread {
         public void run() {
-            while (!Thread.interrupted()) {
+            while (heartbeat) {
                 try {
-                    Thread.sleep(heartbeatTimeoutInterval);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if ((System.currentTimeMillis() - lastRead) > heartbeatTimeoutInterval)
-                {
-                    nbrOfTries++;
-                    System.out.println("Wait time longer than allowed, nbrOfTries set to " + nbrOfTries);
-                    if (nbrOfTries > 2) {
-                        try {
-                            stopHeartbeat();
-                            socket.close();
-                            server.removeConnectedClient(ConnectedClient.this);
-                            System.out.println("Client's socket closed and removed from server list");
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    heartbeatReader.sleep(heartbeatTimeoutInterval);
+                    if ((System.currentTimeMillis() - lastRead) > heartbeatTimeoutInterval) {
+                        nbrOfTries++;
+                        System.out.println("Wait time longer than allowed, nbrOfTries set to " + nbrOfTries);
+                        if (nbrOfTries > 2) {
+                            disconnect();
                         }
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }

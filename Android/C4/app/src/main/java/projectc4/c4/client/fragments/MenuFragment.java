@@ -85,14 +85,12 @@ public class MenuFragment extends Fragment {
 
                 case R.id.buttonPlayOnline:
                     if ((((MainActivity)getActivity()).getClientController().getClient().getUser() != null)) {
-                        System.out.println("Ändrar till matchmaking");
                         transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
                     } else {
-                        System.out.println("Ändrar till Login");
-                        Socket socket = ((MainActivity)getActivity()).getClientController().getClient().getSocket();
-                        if ((socket != null && !socket.isConnected()) || socket == null) {
-                            ((MainActivity)getActivity()).getClientController().connect();
-                        }
+//                        Socket socket = ((MainActivity)getActivity()).getClientController().getClient().getSocket();
+//                        if ((socket != null && !socket.isConnected()) || socket == null) {
+//                            ((MainActivity)getActivity()).getClientController().connect();
+//                        }
                         transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
                     }
                     break;
