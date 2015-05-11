@@ -93,8 +93,8 @@ import projectc4.c4.client.*;
         if (gameMode == C4Constants.LOCAL) {
             tvPlayerElo.setVisibility(View.VISIBLE);
             tvOpponentElo.setVisibility(View.VISIBLE);
-            tvPlayerElo.setText("0");
-            tvOpponentElo.setText("0");
+            tvPlayerElo.setText("Score: 0");
+            tvOpponentElo.setText("Score: 0");
 //            animateArrowDelayed(C4Constants.PLAYER1);
         } else {
             animateArrowDelayed(clientController.getPlayerTurn());
@@ -459,8 +459,8 @@ import projectc4.c4.client.*;
                         RelativeLayout relativeLayoutPlayers = (RelativeLayout) view.findViewById(R.id.relativeLayoutPlayers);
                         relativeLayoutPlayers.setVisibility(View.VISIBLE);
                         if(buttonNewGame.getText() == "New game") {
-                            setPlayer1Points("0");
-                            setPlayer2Points("0");
+                            setPlayer1Points("Score: 0");
+                            setPlayer2Points("Score: 0");
                             highlightPlayer(((MainActivity) getActivity()).getGameController().getStartingPlayer());
                         } else {
                             highlightPlayer(((MainActivity) getActivity()).getGameController().getPlayerTurn());

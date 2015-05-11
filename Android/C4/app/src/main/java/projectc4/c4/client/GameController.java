@@ -361,12 +361,12 @@ public class GameController {
             if (gameMode == C4Constants.LOCAL) {
                 if(playerTurn == C4Constants.PLAYER1) {
                     player1Points++;
-                    String point = "" + player1Points;
+                    String point = "Score: " + player1Points;
                     clientController.getGameFragment().setPlayer1Points(point);
                     //Öka poängen i UI-med +1
                 } else {
                     player2Points++;
-                    String point = "" + player2Points;
+                    String point = "Score: " + player2Points;
                     clientController.getGameFragment().setPlayer2Points(point);
                     //Öka poängen i UI-med +1
                 }
