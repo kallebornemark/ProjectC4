@@ -12,6 +12,7 @@ public class C4Constants {
     public static final String WINS_COLUMN = "W";
     public static final String LOSSES_COLUMN = "L";
     public static final String DRAWS_COLUMN = "D";
+    public static final int GAMERESULT = -110;
     public static final int HIGHSCORE = -100;
     public static final int HEARTBEAT = 30;
     public static final int EMPTYMOVE = 20;

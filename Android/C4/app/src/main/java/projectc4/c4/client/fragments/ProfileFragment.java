@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import c4.utils.GameResult;
 import c4.utils.User;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -27,15 +28,16 @@ public class ProfileFragment extends Fragment {
     private ImageView imageViewProfile;
     private boolean clicked = false;
     private User user;
-
+    private TextView tvContent;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
         clientController = ((MainActivity)getActivity()).getClientController();
+        clientController.setProfileFragment(this);
 
         TextView tvHeader = (TextView)view.findViewById(R.id.tvHeader);
-        TextView tvContent = (TextView)view.findViewById(R.id.tvContent);
+        tvContent = (TextView)view.findViewById(R.id.tvContent);
 
         final TextView tvFirstname = (TextView)view.findViewById(R.id.tvFirstName);
         final TextView tvLastname = (TextView)view.findViewById(R.id.tvLastName);
@@ -60,14 +62,13 @@ public class ProfileFragment extends Fragment {
         tvLastname.setTypeface(type, Typeface.BOLD);
         tvEmail.setTypeface(type, Typeface.BOLD);
 
-        etFirstname.setTypeface(type);
-        etLastname.setTypeface(type);
-        etEmail.setTypeface(type);
+        etFirstname.setTypeface(type, Typeface.BOLD);
+        etLastname.setTypeface(type, Typeface.BOLD);
+        etEmail.setTypeface(type, Typeface.BOLD);
 
 
         // Set texts
         tvHeader.setText(user.getUsername().toUpperCase());
-        tvContent.setText(clientController.getPlayerStats(false));
 
         tvFirstname.setText(user.getFirstName());
         tvLastname.setText(user.getLastName());
@@ -210,11 +211,19 @@ public class ProfileFragment extends Fragment {
             }
         });*/
 
-
+        clientController.requestGameResult();
 
         return view;
      }
 
+    public void newGameResult(final String gameResult) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvContent.setText(gameResult);
+            }
+        });
+    }
 
     //Detta är välja bild med kameran
    /* public void onActivityResult(int reqCode, int resCode, Intent data) {

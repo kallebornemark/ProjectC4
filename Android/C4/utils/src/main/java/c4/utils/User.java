@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
     private static final long serialVersionUID = -253471345465050L;
-    private final String username;
+    private String username;
     private int[] gameResults;
     private String firstName = "";
     private String lastName = "";
@@ -44,7 +44,6 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.gameResults = new int[4];
         this.newUser = newUser;
     }
 

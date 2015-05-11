@@ -8,6 +8,7 @@ import java.net.Socket;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.GameResult;
 import c4.utils.User;
 
 
@@ -197,6 +198,15 @@ public class ConnectedClient extends Thread implements Serializable {
                     } else if (value == C4Constants.HEARTBEAT) {
                         lastRead = System.currentTimeMillis();
                         System.out.println("Heartbeat received, lastRead set to " + lastRead);
+                    } else if (value == C4Constants.GAMERESULT) {
+                        System.out.println("GAMERESULT received");
+                        GameResult gr = server.getGameResults(this.username);
+                        try {
+                            oos.writeObject(gr);
+                            oos.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 } else if (obj instanceof User) {
