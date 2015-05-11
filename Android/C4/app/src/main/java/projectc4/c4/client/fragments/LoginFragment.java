@@ -42,6 +42,7 @@ public class LoginFragment extends Fragment {
     private EditText editTextPassword;
     private EditText editTextPasswordAgain;
 
+    private boolean newUser = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,7 +120,19 @@ public class LoginFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                clientController.login(editTextUsername.getText().toString(), editTextPassword.getText().toString());
+                if (newUser) {
+                    clientController.newUser( new User(
+                                    editTextUsername.getText().toString(),
+                                    editTextFirstName.getText().toString(),
+                                    editTextLastName.getText().toString(),
+                                    editTextEmail.getText().toString(),
+                                    editTextPassword.getText().toString(),
+                                    true)
+                    );
+                    newUser = false;
+                } else {
+                    clientController.login(editTextUsername.getText().toString(), editTextPassword.getText().toString());
+                }
             }
         });
     }
@@ -220,14 +233,8 @@ public class LoginFragment extends Fragment {
                                     progressBar.setVisibility(View.VISIBLE);
                                     buttonLogin.setEnabled(false);
                                     //New user sent to server.
-                                    clientController.newUser( new User(
-                                            editTextUsername.getText().toString(),
-                                            editTextFirstName.getText().toString(),
-                                            editTextLastName.getText().toString(),
-                                            editTextEmail.getText().toString(),
-                                            editTextPassword.getText().toString(),
-                                            true)
-                                    );
+                                    clientController.connect();
+                                    newUser = true;
                                 } else {
                                     toast = Toast.makeText(getActivity().getApplicationContext(),
                                             "Password doesn't match\nTry again", Toast.LENGTH_SHORT);
