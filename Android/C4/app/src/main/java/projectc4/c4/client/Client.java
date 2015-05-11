@@ -234,6 +234,10 @@ public class Client implements Runnable, Serializable {
         } else if (obj instanceof User) {
             user = (User)obj;
             System.out.println("Client: User set to " + user.getUsername());
+
+            // Start sending heartbeats
+            startHeartbeat();
+
             clientController.goToMatchmaking();
 
         } else if (obj instanceof GameInfo) {
@@ -288,9 +292,6 @@ public class Client implements Runnable, Serializable {
         }
 
         clientController.login();
-
-        // Start sending heartbeats
-        startHeartbeat();
 
         // Start listening on ois
         startCommunication();

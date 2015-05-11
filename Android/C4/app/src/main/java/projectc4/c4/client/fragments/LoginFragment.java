@@ -121,6 +121,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void run() {
                 if (newUser) {
+                    newUser = false;
                     clientController.newUser( new User(
                                     editTextUsername.getText().toString(),
                                     editTextFirstName.getText().toString(),
@@ -129,7 +130,6 @@ public class LoginFragment extends Fragment {
                                     editTextPassword.getText().toString(),
                                     true)
                     );
-                    newUser = false;
                 } else {
                     clientController.login(editTextUsername.getText().toString(), editTextPassword.getText().toString());
                 }
