@@ -35,15 +35,6 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="SETTINGS"
-            android:id="@+id/buttonSettings"
-            android:textSize="20sp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/colororange"/>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:text="HOW TO PLAY"
             android:id="@+id/buttonHowToPlay"
             android:textSize="20sp"
