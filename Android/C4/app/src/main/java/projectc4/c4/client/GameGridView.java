@@ -145,23 +145,31 @@ public class GameGridView extends View {
             int row = (gameController.getBoardHeight() - 1) - (colSize[col]);
             int posX = (col * (sideOfTile + C4Constants.GRIDSPACING)) + offsetX;
             int posY = (row * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-            if (gameController.getGameBoard()[row][col] == 0 && powerup == 30) { //Time icon draw
+            if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_TIME) { //Time icon draw
                 clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 clock.draw(c);
                 gameController.setElement(row,col,C4Constants.POWERUP_TIME);
-            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 31){
-                bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
-                bomb.draw(c);
-                gameController.setElement(row,col,31);
-            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 32){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_BOMB){
+
+                if (row == 5) {
+                    bomb.setBounds(posX, posY -1, sideOfTile + posX, sideOfTile + posY);
+                    bomb.draw(c);
+                    gameController.setElement(row -1,col,31);
+                } else {
+                    bomb.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
+                    bomb.draw(c);
+                    gameController.setElement(row,col,31);
+                }
+
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_COLORBLIND){
                 colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 colorblind.draw(c);
                 gameController.setElement(row,col,32);
-            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 33){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_EXTRATURN){
                 extraturn.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 extraturn.draw(c);
                 gameController.setElement(row,col,33);
-            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == 34){
+            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_SHUFFLE){
                 shuffle.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 shuffle.draw(c);
                 gameController.setElement(row,col,34);
