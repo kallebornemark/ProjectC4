@@ -39,7 +39,6 @@ public class HighscoreFragment extends Fragment {
     private TextView textViewDraws;
     private ProgressBar progressBar;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

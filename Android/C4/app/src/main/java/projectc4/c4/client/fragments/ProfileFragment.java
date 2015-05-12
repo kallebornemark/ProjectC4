@@ -8,12 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import c4.utils.GameResult;
 import c4.utils.User;
 import projectc4.c4.R;
 import projectc4.c4.client.ClientController;
@@ -25,16 +24,29 @@ import projectc4.c4.client.MainActivity;
  */
 public class ProfileFragment extends Fragment {
     private ClientController clientController;
-    private ImageView imageViewProfile;
     private boolean clicked = false;
     private User user;
     private TextView tvContent;
+    private ProgressBar progressBar;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        clientController = ((MainActivity)getActivity()).getClientController();
+        user = clientController.getUser();
+        clientController.setProfileFragment(this);
+        clientController.requestGameResult();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fonts/msyi.ttf");
-        clientController = ((MainActivity)getActivity()).getClientController();
-        clientController.setProfileFragment(this);
+
+        progressBar = (ProgressBar)view.findViewById(R.id.progressBarLoadingProfile);
+        progressBar.setVisibility(View.VISIBLE);
 
         TextView tvHeader = (TextView)view.findViewById(R.id.tvHeader);
         tvContent = (TextView)view.findViewById(R.id.tvContent);
@@ -49,10 +61,6 @@ public class ProfileFragment extends Fragment {
 
         final ImageView tvWrench = (ImageView)view.findViewById(R.id.ivWrench);
         final ImageView tvCheck = (ImageView)view.findViewById(R.id.ivCheck);
-
-
-        user = clientController.getUser();
-
 
         // Style texts
         tvHeader.setTypeface(type, Typeface.BOLD);
@@ -78,32 +86,19 @@ public class ProfileFragment extends Fragment {
         etLastname.setText(user.getLastName());
         etEmail.setText(user.getEmail());
 
-
-        imageViewProfile = (ImageView)view.findViewById(R.id.imageViewProfile);
-        // Detta är välja bild
-      /*  imageViewProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image*//*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select profile-picture"), 1);
-            }
-        });*/
-
         tvHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (!clicked) {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
                     etFirstname.setVisibility(View.VISIBLE);
                     etLastname.setVisibility(View.VISIBLE);
                     etEmail.setVisibility(View.VISIBLE);
 
-                    tvFirstname.setVisibility(View.INVISIBLE);
-                    tvLastname.setVisibility(View.INVISIBLE);
-                    tvEmail.setVisibility(View.INVISIBLE);
+                    tvFirstname.setVisibility(View.GONE);
+                    tvLastname.setVisibility(View.GONE);
+                    tvEmail.setVisibility(View.GONE);
 
                     etFirstname.requestFocus();
                     etFirstname.setSelection(etFirstname.getText().length());
@@ -111,7 +106,7 @@ public class ProfileFragment extends Fragment {
                     etEmail.setSelection(etEmail.getText().length());
                     imm.showSoftInput(etFirstname, InputMethodManager.SHOW_IMPLICIT);
 
-                    tvWrench.setVisibility(View.INVISIBLE);
+                    tvWrench.setVisibility(View.GONE);
                     tvCheck.setVisibility(View.VISIBLE);
 
                     clicked = true;
@@ -132,105 +127,31 @@ public class ProfileFragment extends Fragment {
                         clientController.getClient().updateUserObject(user);
                     }
 
-                    etFirstname.setVisibility(View.INVISIBLE);
-                    etLastname.setVisibility(View.INVISIBLE);
-                    etEmail.setVisibility(View.INVISIBLE);
+                    etFirstname.setVisibility(View.GONE);
+                    etLastname.setVisibility(View.GONE);
+                    etEmail.setVisibility(View.GONE);
 
                     tvFirstname.setVisibility(View.VISIBLE);
                     tvLastname.setVisibility(View.VISIBLE);
                     tvEmail.setVisibility(View.VISIBLE);
 
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(etFirstname.getWindowToken(), 0);
                     imm.hideSoftInputFromWindow(etLastname.getWindowToken(), 0);
                     imm.hideSoftInputFromWindow(etEmail.getWindowToken(), 0);
 
-                    tvCheck.setVisibility(View.INVISIBLE);
+                    tvCheck.setVisibility(View.GONE);
                     tvWrench.setVisibility(View.VISIBLE);
 
                     clicked = false;
                 }
             }
         });
-
-        /*tvWrench.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                etFirstname.setVisibility(View.VISIBLE);
-                etLastname.setVisibility(View.VISIBLE);
-                etEmail.setVisibility(View.VISIBLE);
-
-                tvFirstname.setVisibility(View.INVISIBLE);
-                tvLastname.setVisibility(View.INVISIBLE);
-                tvEmail.setVisibility(View.INVISIBLE);
-
-                etFirstname.requestFocus();
-                etFirstname.setSelection(etFirstname.getText().length());
-                etLastname.setSelection(etLastname.getText().length());
-                etEmail.setSelection(etEmail.getText().length());
-                imm.showSoftInput(etFirstname, InputMethodManager.SHOW_IMPLICIT);
-
-                tvWrench.setVisibility(View.INVISIBLE);
-                tvCheck.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-        tvCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!etFirstname.getText().toString().equals(user.getFirstName()) || !etEmail.getText().toString().equals(user.getLastName())) {
-                    user.setFirstName(etFirstname.getText().toString());
-                    user.setLastName(etLastname.getText().toString());
-                    user.setEmail(etEmail.getText().toString());
-                    tvFirstname.setText(user.getFirstName());
-                    tvLastname.setText(user.getLastName());
-                    tvEmail.setText(user.getEmail());
-
-                    // Send update to server/database
-                    clientController.getClient().updateUserObject(user);
-                }
-
-                etFirstname.setVisibility(View.INVISIBLE);
-                etLastname.setVisibility(View.INVISIBLE);
-                etEmail.setVisibility(View.INVISIBLE);
-
-                tvFirstname.setVisibility(View.VISIBLE);
-                tvLastname.setVisibility(View.VISIBLE);
-                tvEmail.setVisibility(View.VISIBLE);
-
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(etFirstname.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(etLastname.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(etEmail.getWindowToken(), 0);
-
-                tvCheck.setVisibility(View.INVISIBLE);
-                tvWrench.setVisibility(View.VISIBLE);
-            }
-        });*/
-
-        clientController.requestGameResult();
-
         return view;
      }
 
-    public void newGameResult(final String gameResult) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tvContent.setText(gameResult);
-            }
-        });
+    public void newGameResult(String gameResult) {
+        progressBar.setVisibility(View.GONE);
+        tvContent.setText(gameResult);
     }
-
-    //Detta är välja bild med kameran
-   /* public void onActivityResult(int reqCode, int resCode, Intent data) {
-       if (data == null) {
-           getActivity().getFragmentManager().popBackStackImmediate("Profilefragment" , 0);
-       } else if (reqCode == 1) {
-           imageViewProfile.setImageURI(clientController.getUsername().getProfilePicture().getProfileImage());
-       }
-    }*/
 }
