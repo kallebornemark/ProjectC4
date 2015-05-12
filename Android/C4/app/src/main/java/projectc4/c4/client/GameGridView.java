@@ -152,7 +152,8 @@ public class GameGridView extends View {
             } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_BOMB){
 
                 if (row == 5) {
-                    bomb.setBounds(posX, posY -1, sideOfTile + posX, sideOfTile + posY);
+                    int posYtemp = ((row -1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
+                    bomb.setBounds(posX, posYtemp, sideOfTile + posX, sideOfTile + posY);
                     bomb.draw(c);
                     gameController.setElement(row -1,col,31);
                 } else {
