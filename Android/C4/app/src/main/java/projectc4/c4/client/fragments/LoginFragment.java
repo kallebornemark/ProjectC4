@@ -140,7 +140,8 @@ public class LoginFragment extends Fragment {
     public void goToMatchmaking() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+//        transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+        transaction.setCustomAnimations(R.anim.in, R.anim.out, R.anim.out2, R.anim.in2);
         transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
     }
 
@@ -168,6 +169,16 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    public void hideKeyboard(){
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) getActivity().
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
     /**
      * Private class to handel the buttons in the LoginFragment.
      */
@@ -177,7 +188,6 @@ public class LoginFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.buttonLogin:
-                    Toast toast;
                     if (buttonLogin.getText().equals("LOGIN")) {
                         //Checks that the username doesn't contain spaces in the end.
                         editTextUsername.setText(deleteSpacesAfter( editTextUsername.getText().toString() ));
@@ -188,23 +198,17 @@ public class LoginFragment extends Fragment {
                             progressBar.setVisibility(View.VISIBLE);
                             buttonLogin.setEnabled(false);
                             buttonLogin.setBackground(getActivity().getDrawable(R.drawable.colorredpressed));
-                            InputMethodManager inputManager = (InputMethodManager) getActivity().
-                                    getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                                    InputMethodManager.HIDE_NOT_ALWAYS);
+                            hideKeyboard();
                             connect();
                         } else {
                             // Om användarnamnet/lösenordet inte innehåller några tecken
                             if(editTextUsername.getText().length() == 0) {
-                                toast = Toast.makeText(getActivity().getApplicationContext(), "Username can't be empty!", Toast.LENGTH_SHORT);
+                                clientController.getContext().showToast("Username can't be empty!");
                             } else if  (editTextPassword.getText().length() == 0) {
-                                toast = Toast.makeText(getActivity().getApplicationContext(), "Password can't be empty!", Toast.LENGTH_SHORT);
+                                clientController.getContext().showToast("Password can't be empty!");
                             } else {
-                                toast = Toast.makeText(getActivity().getApplicationContext(), "Username/Password can't be empty!", Toast.LENGTH_SHORT);
+                                clientController.getContext().showToast("Username/Password can't be empty!");
                             }
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
                         }
                     } else if (buttonLogin.getText().equals("CREATE NEW ACCOUNT")) {
 
@@ -236,29 +240,23 @@ public class LoginFragment extends Fragment {
                                     clientController.connect();
                                     newUser = true;
                                 } else {
-                                    toast = Toast.makeText(getActivity().getApplicationContext(),
-                                            "Password doesn't match\nTry again", Toast.LENGTH_SHORT);
-                                    toast.setGravity(Gravity.CENTER, 0, 0);
-                                    toast.show();
+                                    editTextPassword.setText("");
+                                    editTextPasswordAgain.setText("");
+                                    clientController.getContext().showToast("Password doesn't match\nTry again");
                                 }
 
                             } else {
-                                toast = Toast.makeText(getActivity().getApplicationContext(),
-                                        "Email-adresses doesn't match\nTry again", Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                toast.show();
+                                editTextEmailAgain.setText("");
+                                clientController.getContext().showToast("Email-adresses doesn't match\nTry again");
                             }
                         } else {
 
                             if (editTextUsername.getText().length() > 14) {
-                                toast = Toast.makeText(getActivity().getApplicationContext(),
-                                        "Maximum length of username is 14 chars\nTry again", Toast.LENGTH_SHORT);
+                                editTextUsername.setText("");
+                                clientController.getContext().showToast("Maximum length of username is 14 chars\nTry again");
                             } else {
-                                toast = Toast.makeText(getActivity().getApplicationContext(),
-                                        "Fields with (*) must contain text\nTry again", Toast.LENGTH_SHORT);
+                                clientController.getContext().showToast("Fields with (*) must contain text\nTry again");
                             }
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
                         }
                     }
                     break;

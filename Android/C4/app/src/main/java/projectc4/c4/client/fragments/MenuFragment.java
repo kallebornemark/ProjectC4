@@ -73,7 +73,8 @@ public class MenuFragment extends Fragment {
         public void onClick(View v) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+//            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+            transaction.setCustomAnimations(R.anim.in, R.anim.out, R.anim.out2, R.anim.in2);
 
             switch (v.getId()) {
                 case R.id.buttonPlayLocal:
