@@ -100,11 +100,11 @@ public class ClientController {
     public void connect() {
 //          client.connect("10.2.10.38", 3450);
 //        client.connect("10.2.10.36", 3450);
-        client.connect("10.2.10.36", 3450);
+//        client.connect("10.2.10.36", 3450);
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
-//        client.connect("10.1.17.111", 3450);
+        client.connect("10.1.4.73", 3450);
 //        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("172.20.10.2", 3450); // Kalles hotspot
 //        client.connect("192.168.2.74", 3450); // Kalles macbook hemma
@@ -112,7 +112,7 @@ public class ClientController {
 //        client.connect("10.1.17.111", 3450);
 //        client.connect("10.2.20.240", 3450);
 //        client.connect("192.168.0.10", 3450);
-//        client.connect("192.168.1.225", 3450);
+//        client.connect("192.168.1.210", 3450);
 
     }
 
@@ -287,11 +287,11 @@ public class ClientController {
                 getUser().newGameResult(C4Constants.WIN, getOpponentUser().getElo());
                 getOpponentUser().newGameResult(C4Constants.LOSS, getUser().getElo());
 
-                client.updateUser(C4Constants.WIN);
+                client.updateUserWithResult(C4Constants.WIN);
             } else if (playerTurn == C4Constants.SURRENDER) { // Force Loss
                 System.out.println("FORCE LOSS");
                 getUser().newGameResult(C4Constants.LOSS, gameInfo.getOpponentElo());
-                client.updateUser(C4Constants.SURRENDER);
+                client.updateUserWithResult(C4Constants.SURRENDER);
             } else if (playerTurn == C4Constants.WIN) { //Force win
                 System.out.println("FORCE WIN");
                 gameController.setButtonEnable(false);
@@ -307,7 +307,7 @@ public class ClientController {
             }
         } else {
             getUser().newGameResult(C4Constants.DRAW, gameInfo.getOpponentElo());
-            client.updateUser(C4Constants.DRAW);
+            client.updateUserWithResult(C4Constants.DRAW);
         }
         gameFragment.setElos();
     }

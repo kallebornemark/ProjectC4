@@ -20,7 +20,7 @@ import projectc4.c4.client.GameController;
 import projectc4.c4.client.MainActivity;
 
 /**
- * Created by Emil on 2015-05-06.
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class GameSettingsFragment extends Fragment {
     private Random rand = new Random();

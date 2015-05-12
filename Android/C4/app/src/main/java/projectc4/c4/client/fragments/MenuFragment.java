@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.net.Socket;
-
 import c4.utils.C4Color;
 import c4.utils.C4Constants;
 import projectc4.c4.R;

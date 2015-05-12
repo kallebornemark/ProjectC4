@@ -62,24 +62,16 @@ public class Client implements Runnable, Serializable {
         stopHeartbeat();
 
         try {
-            if (ois     != null) { ois.close();     ois = null; }
-            if (oos     != null) { oos.close();     oos = null; }
-            if (socket  != null) { socket.close();  socket = null; }
+            if (ois     != null) { ois.close();         ois = null; }
+            if (oos     != null) { oos.close();         oos = null; }
+            if (socket  != null) { socket.close();      socket = null; }
             if (user    != null) { this.user = null; }
-            if (client  != null) { client.interrupt(); client = null; }
+            if (client  != null) { client.interrupt();  client = null; }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         System.out.println("Client Disconnected");
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setUsername(User user) {
-        this.user = user;
     }
 
     public void newMove(int value) {
@@ -135,14 +127,20 @@ public class Client implements Runnable, Serializable {
     }
 
     public void createOpponentUser(GameInfo gameInfo) {
-        opponentUser = new User(gameInfo.getOpponentUserName(), gameInfo.getOpponentFirstName(), gameInfo.getOpponentLastName(), gameInfo.getOpponentElo(), gameInfo.getOpponentGameResults(), false);
+        opponentUser = new User(
+                gameInfo.getOpponentUserName(),
+                gameInfo.getOpponentFirstName(),
+                gameInfo.getOpponentLastName(),
+                gameInfo.getOpponentElo(),
+                gameInfo.getOpponentGameResults(),
+                false);
     }
 
     public User getOpponentUser() {
         return opponentUser;
     }
 
-    public void updateUser(int result) {
+    public void updateUserWithResult(int result) {
         try {
             oos.writeObject(result);
             oos.flush();
@@ -281,7 +279,7 @@ public class Client implements Runnable, Serializable {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
-            System.out.println("Objectoutputstream skapad");
+            System.out.println("Streams skapad");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -297,6 +295,7 @@ public class Client implements Runnable, Serializable {
     }
 
     private class Heartbeat extends Thread {
+        int nbrOfTries = 0;
         public void run() {
             while (heartbeat != null) {
                 try {
@@ -304,10 +303,23 @@ public class Client implements Runnable, Serializable {
                     oos.flush();
                     System.out.println("Heartbeat sent to server, sleeping 1000ms...");
                     Thread.sleep(1000);
+
                 } catch (IOException e) {
                     // If server doesn't respond
-                    disconnect();
+
+                    while (true) {
+                        nbrOfTries++;
+                        if (nbrOfTries > 3) {
+                            disconnect();
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e2) {
+                            e2.printStackTrace();
+                        }
+                    }
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }

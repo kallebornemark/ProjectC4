@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import projectc4.c4.R;
 
 /**
- * The ProjectC4 logo.
- *
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class LogoFragment extends Fragment {

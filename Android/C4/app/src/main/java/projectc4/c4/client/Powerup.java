@@ -1,10 +1,12 @@
 package projectc4.c4.client;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import c4.utils.C4Constants;
 
+/**
+ * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
+ */
 public class Powerup {
     private GameController gameController;
     private GameGridView gameGridView;

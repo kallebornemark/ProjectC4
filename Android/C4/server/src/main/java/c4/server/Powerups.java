@@ -6,7 +6,6 @@ import c4.utils.C4Constants;
 
 
 /**
- *
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
  */
 public class Powerups {
