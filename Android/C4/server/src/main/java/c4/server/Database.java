@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import c4.utils.C4Constants;
 import c4.utils.Elo;
+import c4.utils.GameResult;
 import c4.utils.Highscore;
 import c4.utils.User;
 
@@ -275,20 +276,27 @@ public class Database {
         return elo;
     }
 
-    public synchronized int[] getGameResults(String username) {
-        int[] results = new int[3];
+    public synchronized GameResult getGameResults(String username) {
+        int[] gameResults = new int[4];
+        Double elo = 0.0;
         try {
             connect();
-            resultSet = statement.executeQuery("select wins, losses, draws from User where username = '" + username + "'");
-            for (int i = 1; i <= 3; i++) {
-                results[i-1] = resultSet.getInt(i);
+            resultSet = statement.executeQuery("select wins, losses, draws, elo from User where username = '" + username + "'");
+            for (int i = 1; i <= 2; i++) {
+                gameResults[i-1] = resultSet.getInt(i);
             }
+            elo = resultSet.getDouble("elo");
+            resultSet = statement.executeQuery("select count(*)+1 as rank from" +
+                    "(select elo from User order by elo) " +
+                    "where elo > " +
+                    "(select elo from User where username = '" + username + "');");
+            gameResults[3] = resultSet.getInt("rank");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAll();
         }
-        return results;
+        return new GameResult(gameResults[0], gameResults[1], gameResults[2], elo, gameResults[3]);
     }
 
     /**

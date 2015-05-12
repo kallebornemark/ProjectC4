@@ -9,6 +9,7 @@ import java.util.Random;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.GameResult;
 import c4.utils.Highscore;
 import c4.utils.User;
 
@@ -92,6 +93,10 @@ public class Server implements Runnable {
         opponent.newGameInfo(new GameInfo(database.getElo(user2), database.getElo(user1), true));
     }*/
 
+    public GameResult getGameResults(String username) {
+        return database.getGameResults(username);
+    }
+
 
     public void newGame(ConnectedClient c1, ConnectedClient c2) {
         // Assign random startpos to clients
@@ -115,8 +120,13 @@ public class Server implements Runnable {
 
         int[][] gameBoard = new Powerups().spawnPowerupTier3();
 
-        c1.newGameInfo(new GameInfo(user2, c2.getFirstName(), c2.getLastName(), database.getElo(user2), database.getGameResults(user2), c1.getStartPos()));
-        c2.newGameInfo(new GameInfo(user1, c1.getFirstName(), c1.getLastName(), database.getElo(user1), database.getGameResults(user1), c2.getStartPos()));
+        GameResult gr1 = database.getGameResults(user1);
+        GameResult gr2 = database.getGameResults(user2);
+        int[] intGr1 = {gr1.getWins(), gr1.getLosses(), gr1.getDraws()};
+        int[] intGr2 = {gr2.getWins(), gr2.getLosses(), gr2.getDraws()};
+
+        c1.newGameInfo(new GameInfo(user2, c2.getFirstName(), c2.getLastName(), database.getElo(user2), intGr2, c1.getStartPos()));
+        c2.newGameInfo(new GameInfo(user1, c1.getFirstName(), c1.getLastName(), database.getElo(user1), intGr1, c2.getStartPos()));
 
         c1.sendPowerups(gameBoard);
         c2.sendPowerups(gameBoard);

@@ -70,7 +70,7 @@
                 android:orientation="horizontal"
                 android:layout_alignParentEnd="false"
                 android:id="@+id/llTop"
-                android:layout_marginTop="15dp">
+                android:paddingTop="15dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -91,7 +91,9 @@
                 <TableLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    >
 
                     <TableRow
                         android:layout_width="fill_parent"
@@ -106,12 +108,15 @@
                             <EditText
                                 android:id="@+id/etFirstname"
                                 android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:ems="13"
+                                android:layout_height="wrap_content"
                                 android:hint="First name"
                                 android:inputType="textPersonName"
                                 android:textSize="18dp"
-                                android:visibility="invisible" />
+                                android:visibility="invisible"
+                                android:editable="false"
+                                android:ems="13"
+                                android:background="@null"
+                                android:textColor="#FF716D61"/>
 
                             <TextView
                                 android:id="@+id/tvFirstName"
@@ -138,17 +143,20 @@
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
 
                             <EditText
                                 android:id="@+id/etLastname"
                                 android:layout_width="wrap_content"
-                                android:layout_height="30dp"
+                                android:layout_height="wrap_content"
                                 android:ems="13"
                                 android:hint="Lastname"
                                 android:inputType="textPersonName"
                                 android:textSize="18dp"
-                                android:visibility="invisible" />
+                                android:visibility="invisible"
+                                android:background="@null"
+                                android:textColor="#FF716D61"/>
 
                             <TextView
                                 android:id="@+id/tvLastName"
@@ -156,36 +164,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="Lastname"
                                 android:textColor="#FF716D61"
-                                android:textSize="18dp" />
-
-                        </RelativeLayout>
-                    </TableRow>
-
-                    <TableRow android:layout_height="fill_parent"
-                              android:layout_width="fill_parent"
-                        >
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" >
-
-                            <EditText
-                                android:id="@+id/etEmail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:ems="13"
-                                android:hint="Email Address"
                                 android:textSize="18dp"
-                                android:visibility="invisible"
-                                android:inputType="textEmailAddress"/>
-
-                            <TextView
-                                android:id="@+id/tvEmail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Email Address"
-                                android:textColor="#FF716D61"
-                                android:textSize="18dp" />
+                                android:layout_marginTop="0dp"/>
 
                         </RelativeLayout>
                     </TableRow>
@@ -195,16 +175,6 @@
             </LinearLayout>
 
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_below="@+id/llTop"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/colorblack" />
-
             <TextView
                 android:id="@+id/tvContent"
                 android:layout_width="wrap_content"
@@ -213,8 +183,49 @@
                 android:text="&lt;GAME STATS>"
                 android:textColor="#FF716D61"
                 android:textSize="18dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/line"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llTop"
+                android:id="@+id/rlEmail"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="14"
+                    android:hint="Email Address"
+                    android:textSize="18dp"
+                    android:visibility="invisible"
+                    android:inputType="textEmailAddress"
+                    android:background="@null"
+                    android:textColor="#FF716D61"
+                    />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email Address"
+                    android:textColor="#FF716D61"
+                    android:textSize="18dp"
+                    android:layout_marginTop="0dp"/>
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/colorblack"
+                android:layout_below="@+id/rlEmail"/>
         </RelativeLayout>
 
     </RelativeLayout>

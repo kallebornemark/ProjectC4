@@ -1,7 +1,6 @@
 package projectc4.c4.client;
 
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -14,6 +13,7 @@ import java.net.Socket;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.GameResult;
 import c4.utils.Highscore;
 import c4.utils.User;
 
@@ -158,6 +158,15 @@ public class Client implements Runnable, Serializable {
         }
     }
 
+    public void requestGameResults() {
+        try {
+            oos.writeObject(C4Constants.GAMERESULT);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void requestGame(int gamemode) {
         try {
             oos.writeObject(gamemode);
@@ -232,6 +241,10 @@ public class Client implements Runnable, Serializable {
         } else if (obj instanceof User) {
             user = (User)obj;
             System.out.println("Client: User set to " + user.getUsername());
+
+            // Start sending heartbeats
+            startHeartbeat();
+
             clientController.goToMatchmaking();
 
         } else if (obj instanceof GameInfo) {
@@ -248,6 +261,9 @@ public class Client implements Runnable, Serializable {
             Highscore highscore = (Highscore)obj;
             System.out.println(" HIGHSCORE RECIEVED");
             clientController.showHighscore(highscore);
+        } else if (obj instanceof GameResult) {
+            GameResult gr = (GameResult)obj;
+            clientController.newGameResult(gr);
         }
     }
 
@@ -286,9 +302,6 @@ public class Client implements Runnable, Serializable {
         }
 
         clientController.login();
-
-        // Start sending heartbeats
-        startHeartbeat();
 
         // Start listening on ois
         startCommunication();

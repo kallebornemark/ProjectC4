@@ -28,6 +28,7 @@ public class ClientController {
     private GameInfo gameInfo;
     private boolean okayToLeave = false;
     private MainActivity context;
+    private ProfileFragment profileFragment;
 
     public ClientController(MainActivity context) {
         this.context = context;
@@ -72,6 +73,11 @@ public class ClientController {
     public void setGameFragment(GameFragment gameFragment) {
         this.gameFragment = gameFragment;
     }
+
+    public void setProfileFragment(ProfileFragment profileFragment) {
+        this.profileFragment = profileFragment;
+    }
+
 
     public void setMatchmakingFragment(MatchmakingFragment matchmakingFragment) {
         this.matchmakingFragment = matchmakingFragment;
@@ -316,6 +322,19 @@ public class ClientController {
         gameFragment.setElos();
     }
 
+    public void requestGameResult() {
+        client.requestGameResults();
+    }
+
+    public void newGameResult(GameResult gr) {
+        String gameResult =
+                "Wins: " + gr.getWins() +"\n" +
+                "Losses: " + gr.getLosses() +"\n" +
+                "Draws: " + gr.getDraws() +"\n" +
+                "Ranking: " + String.format("%.2f", gr.getElo()) + " (Rank: #" + gr.getRank() + ")";
+        profileFragment.newGameResult(gameResult);
+    }
+
     public String getPlayerStats(boolean opponent) {
         int[] stats;
         double elo;
@@ -333,7 +352,7 @@ public class ClientController {
                     "Games won: " + stats[0] + "\n" +
                     "Games lost: " + stats[1] + "\n" +
                     "Games drawn: " + stats[2] + "\n\n" +
-                    "Rating: " + eloString;
+                    "Rating: " + eloString + " (Rank #" + stats[3] + ")";
 
         return resString;
     }

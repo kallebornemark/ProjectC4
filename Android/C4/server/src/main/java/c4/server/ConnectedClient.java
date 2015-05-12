@@ -8,6 +8,7 @@ import java.net.Socket;
 
 import c4.utils.C4Constants;
 import c4.utils.GameInfo;
+import c4.utils.GameResult;
 import c4.utils.User;
 
 
@@ -118,18 +119,17 @@ public class ConnectedClient extends Thread implements Serializable {
 
     public void validateUser(String username, String password) {
         try {
-            // Check if username is online
-            if (!server.isUserOnline(username)) {
-                System.out.println("Server: No users with username '" + username + "' online, validating...");
+            String returnMsg = "";
+            String[] res = server.attemptLogin(username, password);
+            if (res[0] == null) {
+                if (!server.isUserOnline(username)) {
+                    System.out.println("Server: No users with username '" + username + "' online, validating...");
 
-                // Check if username is registered
-                // If successful, re-create User object from given info, then send back to client
-                String[] res = server.attemptLogin(username, password);
-                if (res[0] == null) {
                     int[] gameResults = {Integer.parseInt(res[5]), Integer.parseInt(res[6]), Integer.parseInt(res[7])};
 
                     // Re-create User with username, firstname, lastname, elo, gameresults and email
                     User returnUser = new User(res[1], res[2], res[3], Double.parseDouble(res[4]), gameResults, false, res[8]);
+                    startHeartbeat();
                     oos.writeObject(returnUser);
                     oos.flush();
                     this.username = username;
@@ -137,15 +137,14 @@ public class ConnectedClient extends Thread implements Serializable {
                     this.lastName = res[3];
                     server.addConnectedClient(this);
                 } else {
-                    String error = res[0];
-                    oos.writeObject(error);
-                    oos.flush();
+                    returnMsg = "User " + username + " already online!";
+                    System.out.println("Server: User " + username + " already online!");
                 }
             } else {
-                oos.writeObject("User " + username + " already online!");
-                oos.flush();
-                System.out.println("Server: User " + username + " already online!");
+                returnMsg = res[0];
             }
+            oos.writeObject(returnMsg);
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -199,6 +198,15 @@ public class ConnectedClient extends Thread implements Serializable {
                     } else if (value == C4Constants.HEARTBEAT) {
                         lastRead = System.currentTimeMillis();
                         System.out.println("Heartbeat received, lastRead set to " + lastRead);
+                    } else if (value == C4Constants.GAMERESULT) {
+                        System.out.println("GAMERESULT received");
+                        GameResult gr = server.getGameResults(this.username);
+                        try {
+                            oos.writeObject(gr);
+                            oos.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 } else if (obj instanceof User) {
@@ -318,8 +326,6 @@ public class ConnectedClient extends Thread implements Serializable {
 
             nbrOfTries = 0;
             lastRead = System.currentTimeMillis();
-
-            startHeartbeat();
 
             // Start listening to inputstream
             startCommunication();
