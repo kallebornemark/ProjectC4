@@ -255,6 +255,8 @@ public class ConnectedClient extends Thread implements Serializable {
                 activeGame.newMove(this, C4Constants.SURRENDER);
                 System.out.println("Skickat SURRENDER till klient 2");
                 activeGame.setIsActive(false);
+            } else if (activeGame != null) {
+                activeGame.newMove(this, C4Constants.LEFT_REMATCH);
             }
             heartbeatReader.interrupt();
             server.removeConnectedClient(this);

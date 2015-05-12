@@ -60,9 +60,11 @@ public class ClientController {
     }
 
     public void disableRematch() {
-        gameFragment.getButtonRematch().setEnabled(false);
-        gameFragment.getButtonRematch().getBackground().setAlpha(40);
-        gameFragment.setPlayer2Points("Opponent left...");
+        if(gameFragment.getButtonRematch()!= null && gameFragment.getButtonRematch().isEnabled()) {
+            gameFragment.getButtonRematch().setEnabled(false);
+            gameFragment.getButtonRematch().getBackground().setAlpha(40);
+            gameFragment.setPlayer2Points("Opponent left...");
+        }
     }
 
     public void cancelTimer() {
