@@ -50,6 +50,7 @@ public class Client implements Runnable, Serializable {
     }
 
     public void disconnect() {
+        System.out.println("Disconnected called!");
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -322,8 +323,10 @@ public class Client implements Runnable, Serializable {
 
                     while (true) {
                         nbrOfTries++;
+                        System.out.println("Heartbeat try " + nbrOfTries);
                         if (nbrOfTries > 3) {
                             disconnect();
+                            break;
                         }
                         try {
                             Thread.sleep(1000);
