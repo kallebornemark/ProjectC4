@@ -57,6 +57,8 @@ public class MainActivity extends FragmentActivity {
                         if(!clientController.isOkayToLeave()) {
                             System.out.println("Gå till matchmaking från gameGrid och du förlorade");
                             clientController.updateUser(C4Constants.SURRENDER, false);
+                        } else {
+                            clientController.sendLeftRematch();
                         }
                         clientController.setOkayToLeave(false);
 

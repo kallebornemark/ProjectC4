@@ -195,9 +195,12 @@ public class ConnectedClient extends Thread implements Serializable {
                         }
                     } else if  (value == C4Constants.HIGHSCORE) {
                         requestHighscore();
+                    } else if (value == C4Constants.LEFT_REMATCH) {
+                        System.out.println("     FÅTT EMOT LEFT REMATCH ERIK");
+                        activeGame.leftRematch(this);
                     } else if (value == C4Constants.HEARTBEAT) {
                         lastRead = System.currentTimeMillis();
-                        System.out.println("Heartbeat received, lastRead set to " + lastRead);
+//                        System.out.println("Heartbeat received, lastRead set to " + lastRead);
                     } else if (value == C4Constants.GAMERESULT) {
                         System.out.println("GAMERESULT received");
                         GameResult gr = server.getGameResults(this.username);

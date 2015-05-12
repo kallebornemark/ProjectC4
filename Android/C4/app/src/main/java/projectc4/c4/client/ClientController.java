@@ -19,7 +19,7 @@ public class ClientController {
     private HighscoreFragment highscoreFragment;
     private String opponentName;
     private GameInfo gameInfo;
-    private boolean okayToLeave = false;
+    private boolean okayToLeave = false, surrender = false;
     private MainActivity context;
     private ProfileFragment profileFragment;
 
@@ -59,6 +59,12 @@ public class ClientController {
         loginFragment.loginErrorMessage(msg);
     }
 
+    public void disableRematch() {
+        gameFragment.getButtonRematch().setEnabled(false);
+        gameFragment.getButtonRematch().getBackground().setAlpha(40);
+        gameFragment.setPlayer2Points("Opponent left...");
+    }
+
     public void cancelTimer() {
         gameController.cancelTimer();
     }
@@ -69,6 +75,13 @@ public class ClientController {
 
     public void setProfileFragment(ProfileFragment profileFragment) {
         this.profileFragment = profileFragment;
+    }
+
+    public void sendLeftRematch() {
+        if (gameFragment.getButtonRematch().isEnabled()) {
+            System.out.println("LEFT REMATCH");
+            client.sendLeftRematch();
+        }
     }
 
 
@@ -103,8 +116,8 @@ public class ClientController {
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
-        client.connect("10.1.4.73", 3450);
-//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("10.1.4.73", 3450);
+        client.connect("192.168.1.74", 3450); // Kalles hemmadator
 //        client.connect("172.20.10.2", 3450); // Kalles hotspot
 //        client.connect("192.168.2.74", 3450); // Kalles macbook hemma
 //        client.connect("192.168.0.10", 3450);
@@ -299,6 +312,7 @@ public class ClientController {
                 getUser().newGameResult(C4Constants.WIN, gameInfo.getOpponentElo());
                 getOpponentUser().newGameResult(C4Constants.LOSS, getUser().getElo());
                 setOkayToLeave(true);
+                surrender = true;
 
             } else {
                 getUser().newGameResult(C4Constants.LOSS, getOpponentUser().getElo());
@@ -308,11 +322,16 @@ public class ClientController {
             getUser().newGameResult(C4Constants.DRAW, gameInfo.getOpponentElo());
             client.updateUserWithResult(C4Constants.DRAW);
         }
-        gameFragment.setElos();
+        if(surrender) {
+            gameFragment.setElos(surrender);
+            surrender = false;
+        } else {
+            gameFragment.setElos(false);
+        }
     }
 
     public void setElos() {
-        gameFragment.setElos();
+        gameFragment.setElos(false);
     }
 
     public void requestGameResult() {
