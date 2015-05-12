@@ -1,15 +1,8 @@
 package projectc4.c4.client;
 
 
-import c4.utils.C4Constants;
-import c4.utils.GameInfo;
-import c4.utils.Highscore;
-import c4.utils.User;
-import projectc4.c4.client.fragments.GameFragment;
-import projectc4.c4.client.fragments.GamePopupFragment;
-import projectc4.c4.client.fragments.HighscoreFragment;
-import projectc4.c4.client.fragments.LoginFragment;
-import projectc4.c4.client.fragments.MatchmakingFragment;
+import c4.utils.*;
+import projectc4.c4.client.fragments.*;
 
 /**
  * @author Kalle Bornemark, Jimmy Maksymiw, Erik Sandgren, Emil Sandgren.
