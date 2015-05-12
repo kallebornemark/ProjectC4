@@ -223,6 +223,9 @@ public class Client implements Runnable, Serializable {
         } else if (number == C4Constants.SURRENDER) {
             System.out.println(":                Han andra SURRENDERA, du ska VINNA");
             clientController.updateUser(C4Constants.WIN, false);
+        } else if (number == C4Constants.LEFT_REMATCH) {
+            System.out.println("TAR EMOT LEFT REMATCH");
+            clientController.disableRematch();
         }
     }
 
@@ -316,6 +319,14 @@ public class Client implements Runnable, Serializable {
         startCommunication();
     }
 
+    public void sendLeftRematch() {
+        try {
+            oos.writeObject(C4Constants.LEFT_REMATCH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private class Heartbeat extends Thread {
         int nbrOfTries = 0;
         public void run() {
@@ -323,7 +334,7 @@ public class Client implements Runnable, Serializable {
                 try {
                     oos.writeObject(C4Constants.HEARTBEAT);
                     oos.flush();
-                    System.out.println("Heartbeat sent to server, sleeping 1000ms...");
+//                    System.out.println("Heartbeat sent to server, sleeping 1000ms...");
                     Thread.sleep(1000);
 
                 } catch (IOException e) {
