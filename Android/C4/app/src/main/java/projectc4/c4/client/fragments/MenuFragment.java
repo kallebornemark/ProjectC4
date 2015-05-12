@@ -33,7 +33,6 @@ public class MenuFragment extends Fragment {
         // init buttons
         Button buttonPlayLocal = (Button)view.findViewById(R.id.buttonPlayLocal);
         Button buttonPlayOnline = (Button)view.findViewById(R.id.buttonPlayOnline);
-        Button buttonSettings = (Button)view.findViewById(R.id.buttonSettings);
         Button buttonHowToPlay = (Button)view.findViewById(R.id.buttonHowToPlay);
         Button buttonAbout = (Button)view.findViewById(R.id.buttonAbout);
 
@@ -42,13 +41,11 @@ public class MenuFragment extends Fragment {
 
         buttonPlayLocal.setTypeface(type,Typeface.BOLD);
         buttonPlayOnline.setTypeface(type,Typeface.BOLD);
-        buttonSettings.setTypeface(type, Typeface.BOLD);
         buttonHowToPlay.setTypeface(type, Typeface.BOLD);
         buttonAbout.setTypeface(type, Typeface.BOLD);
 
         buttonPlayLocal.setTextColor(C4Color.WHITE);
         buttonPlayOnline.setTextColor(C4Color.WHITE);
-        buttonSettings.setTextColor(C4Color.WHITE);
         buttonHowToPlay.setTextColor(C4Color.WHITE);
         buttonAbout.setTextColor(C4Color.WHITE);
 
@@ -57,7 +54,6 @@ public class MenuFragment extends Fragment {
 
         buttonPlayLocal.setOnClickListener(buttonClickListener);
         buttonPlayOnline.setOnClickListener(buttonClickListener);
-        buttonSettings.setOnClickListener(buttonClickListener);
         buttonHowToPlay.setOnClickListener(buttonClickListener);
         buttonAbout.setOnClickListener(buttonClickListener);
 
@@ -73,7 +69,8 @@ public class MenuFragment extends Fragment {
         public void onClick(View v) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+//            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+            transaction.setCustomAnimations(R.anim.in, R.anim.out, R.anim.out2, R.anim.in2);
 
             switch (v.getId()) {
                 case R.id.buttonPlayLocal:
@@ -85,16 +82,8 @@ public class MenuFragment extends Fragment {
                     if ((((MainActivity)getActivity()).getClientController().getClient().getUser() != null)) {
                         transaction.replace(R.id.activity_layout_fragmentpos, new MatchmakingFragment()).addToBackStack("Matchmaking").commit();
                     } else {
-//                        Socket socket = ((MainActivity)getActivity()).getClientController().getClient().getSocket();
-//                        if ((socket != null && !socket.isConnected()) || socket == null) {
-//                            ((MainActivity)getActivity()).getClientController().connect();
-//                        }
                         transaction.replace(R.id.activity_layout_fragmentpos, new LoginFragment()).addToBackStack("LogIn").commit();
                     }
-                    break;
-
-                case R.id.buttonSettings:
-//                    transaction.replace(R.id.activity_layout_fragmentpos, new GameSettingsFragment()).addToBackStack(null).commit();
                     break;
 
                 case R.id.buttonHowToPlay:

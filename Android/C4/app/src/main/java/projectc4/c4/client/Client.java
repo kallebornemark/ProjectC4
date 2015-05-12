@@ -111,6 +111,10 @@ public class Client implements Runnable, Serializable {
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e1) {
+            e1.printStackTrace();
+            disconnect();
+            clientController.getContext().showToast("Server Offline\nTry Again");
         }
     }
 
@@ -120,6 +124,10 @@ public class Client implements Runnable, Serializable {
             oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e1) {
+            e1.printStackTrace();
+            disconnect();
+            clientController.getContext().showToast("Server Offline\nTry Again");
         }
     }
 

@@ -5,6 +5,9 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Toast;
 
 import c4.utils.C4Constants;
 import projectc4.c4.R;
@@ -35,6 +38,13 @@ public class MainActivity extends FragmentActivity {
             this.menuFragment = new MenuFragment();
             getFragmentManager().beginTransaction().add(R.id.activity_layout_fragmentpos, menuFragment).addToBackStack("Menu").commit();
         }
+    }
+
+    public void showToast(String msg){
+        Toast toast;
+        toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
