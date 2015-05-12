@@ -56,6 +56,7 @@ public class ActiveGame implements Serializable {
 
     public void leftRematch(ConnectedClient c1) {
         newMove(c1, C4Constants.LEFT_REMATCH);
+        stopRematchListener();
         System.out.println("LEFT REMATCH");
     }
 
@@ -110,6 +111,7 @@ public class ActiveGame implements Serializable {
         if (rematchListener != null) {
             rematchListener.interrupt();
             rematchListener = null;
+            System.out.println("Rematchlistener stopped");
         }
     }
 
@@ -126,14 +128,19 @@ public class ActiveGame implements Serializable {
         public void run() {
             try {
                 setGameboard(new Powerups().spawnPowerupTier3());
+                int counter = 0;
                 while (!Thread.interrupted()) {
                     System.out.println("ActiveGame: One player ready for rematch, waiting for second...");
+                    counter++;
                     if (c1isReady && c2isReady) {
                         System.out.println("ActiveGame: Two players ready for rematch - starting!");
                         rematch();
                         stopRematchListener();
+
+                    } else if (counter == 60) {
+                        stopRematchListener();
                     }
-                    rematchListener.sleep(500);
+                    Thread.sleep(500);
                 }
             } catch (InterruptedException e) {
                 c1isReady = false;
