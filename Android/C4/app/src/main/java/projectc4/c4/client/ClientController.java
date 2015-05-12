@@ -103,8 +103,8 @@ public class ClientController {
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
-        client.connect("10.1.4.73", 3450);
-//        client.connect("192.168.1.57", 3450); // Kalles hemmadator
+//        client.connect("10.1.4.73", 3450);
+        client.connect("192.168.1.57", 3450); // Kalles hemmadator
 //        client.connect("172.20.10.2", 3450); // Kalles hotspot
 //        client.connect("192.168.2.74", 3450); // Kalles macbook hemma
 //        client.connect("192.168.0.10", 3450);
@@ -345,7 +345,7 @@ public class ClientController {
                     "Games won: " + stats[0] + "\n" +
                     "Games lost: " + stats[1] + "\n" +
                     "Games drawn: " + stats[2] + "\n\n" +
-                    "Rating: " + eloString + " (Rank #" + stats[3] + ")";
+                    "Rating: " + eloString;
 
         return resString;
     }

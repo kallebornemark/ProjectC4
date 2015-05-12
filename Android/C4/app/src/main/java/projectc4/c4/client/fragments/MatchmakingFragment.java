@@ -70,7 +70,8 @@ public class MatchmakingFragment extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         System.out.println("Gör transaktion");
 //        fragmentManager.popBackStack();
-        transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+//        transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+        transaction.setCustomAnimations(R.anim.in, R.anim.out, R.anim.out2, R.anim.in2);
         transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack("multi-game").commit();
         System.out.println("Har gjort transaktion");
 
@@ -86,7 +87,8 @@ public class MatchmakingFragment extends Fragment {
         public void onClick(View v) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+//            transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+            transaction.setCustomAnimations(R.anim.in, R.anim.out, R.anim.out2, R.anim.in2);
 
             switch (v.getId()) {
                 case R.id.buttonFindOpponent:
