@@ -54,6 +54,11 @@ public class ActiveGame implements Serializable {
         this.gameInfo = gameInfo;
     }
 
+    public void leftRematch(ConnectedClient c1) {
+        newMove(c1, C4Constants.LEFT_REMATCH);
+        System.out.println("LEFT REMATCH");
+    }
+
     public void newMove(ConnectedClient sender, int column) {
 
         if (sender == c1) {

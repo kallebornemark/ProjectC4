@@ -32,4 +32,5 @@ public class C4Constants {
     public static final int POWERUP_COLORBLIND = 32;
     public static final int POWERUP_EXTRATURN = 33;
     public static final int POWERUP_SHUFFLE = 34;
+    public static final int LEFT_REMATCH = -400;
 }

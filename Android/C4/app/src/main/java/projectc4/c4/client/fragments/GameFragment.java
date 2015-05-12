@@ -43,6 +43,7 @@ import projectc4.c4.client.*;
     private TextView tvOpponentElo;
     private int winner;
     private boolean startup, timeLimit;
+    private Button buttonRematch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,15 +116,19 @@ import projectc4.c4.client.*;
         buttonNewgame.setTypeface(type, Typeface.BOLD);
         buttonNewgame.setTextColor(C4Color.WHITE);
 
-        Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
+        buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
         buttonRematch.setBackground(getActivity().getDrawable(R.drawable.altbutton));
         buttonRematch.setTypeface(type, Typeface.BOLD);
         buttonRematch.setTextColor(C4Color.WHITE);
 
         // Display ELO
         if (gameMode == C4Constants.MATCHMAKING) {
-            setElos();
+            setElos(false);
         }
+    }
+
+    public Button getButtonRematch() {
+        return buttonRematch;
     }
 
     @Override
@@ -246,14 +251,18 @@ import projectc4.c4.client.*;
         });
     }
 
-    public void setElos() {
+    public void setElos(final boolean surrender) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 double playerElo = clientController.getUser().getElo();
                 double opponentElo = clientController.getOpponentUser().getElo();
                 tvPlayerElo.setText("Rating: " + String.format("%.2f", playerElo));
-                tvOpponentElo.setText("Rating: " + String.format("%.2f", opponentElo));
+                if(surrender) {
+                    tvOpponentElo.setText("Surrendered!");
+                } else {
+                    tvOpponentElo.setText("Rating: " + String.format("%.2f", opponentElo));
+                }
             }
         });
     }
@@ -376,7 +385,7 @@ import projectc4.c4.client.*;
             @Override
             public void run() {
                 startup = true;
-                final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
+//                final Button buttonRematch = (Button)view.findViewById(R.id.buttonRematch);
                 buttonRematch.getBackground().setAlpha(255);
                 buttonRematch.setEnabled(true);
                 buttonRematch.setVisibility(View.VISIBLE);
@@ -484,20 +493,20 @@ import projectc4.c4.client.*;
     }
 
     public void setPlayer1Points(final String point) {
-//       getActivity().runOnUiThread(new Runnable() {
-//           @Override
-//           public void run() {
+       getActivity().runOnUiThread(new Runnable() {
+           @Override
+           public void run() {
                 tvPlayerElo.setText(point);
-//           }
-//       });
+           }
+       });
     }
 
     public void setPlayer2Points(final String point) {
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 tvOpponentElo.setText(point);
-//            }
-//        });
+            }
+        });
     }
 }
