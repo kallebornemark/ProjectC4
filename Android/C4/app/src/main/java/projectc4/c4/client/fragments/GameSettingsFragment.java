@@ -231,7 +231,8 @@ public class GameSettingsFragment extends Fragment {
                     ((MainActivity)getActivity()).getClientController().setGameMode(C4Constants.LOCAL);
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+//                    transaction.setCustomAnimations(R.anim.transition1, R.anim.transition2, R.anim.transition1, R.anim.transition2);
+                    transaction.setCustomAnimations(R.anim.in, R.anim.out, R.anim.out2, R.anim.in2);
                     transaction.replace(R.id.activity_layout_fragmentpos, new GameFragment()).addToBackStack("Local").commit();
                     gameController.setPlayer2Points(0);
                     gameController.setPlayer1Points(0);

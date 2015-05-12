@@ -346,7 +346,7 @@ public class ClientController {
                     "Games won: " + stats[0] + "\n" +
                     "Games lost: " + stats[1] + "\n" +
                     "Games drawn: " + stats[2] + "\n\n" +
-                    "Rating: " + eloString + " (Rank #" + stats[3] + ")";
+                    "Rating: " + eloString;
 
         return resString;
     }
