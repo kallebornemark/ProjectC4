@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
-            builder.setMessage("Do you want to cancel the game?");
+            builder.setMessage("Cancel current match?");
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
