@@ -94,7 +94,7 @@ public class GameController {
         if(rows < 10) {
             setWinsSize(4);
         } else if(rows >= 10) {
-            setWinsSize(5);
+            setWinsSize(4);
         }
     }
 
