@@ -118,8 +118,8 @@ public class ClientController {
 //        client.connect("10.1.8.135", 3450);
 //        client.connect("10.2.25.13", 3450);
 //        client.connect("10.1.8.135", 3450);
-//        client.connect("10.1.4.73", 3450);
-        client.connect("192.168.1.74", 3450); // Kalles hemmadator
+        client.connect("10.2.14.55", 3450);
+//        client.connect("192.168.1.74", 3450); // Kalles hemmadator
 //        client.connect("172.20.10.2", 3450); // Kalles hotspot
 //        client.connect("192.168.2.74", 3450); // Kalles macbook hemma
 //        client.connect("192.168.0.10", 3450);

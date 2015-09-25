@@ -149,11 +149,15 @@ public class GameGridView extends View {
                 clock.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 clock.draw(c);
                 gameController.setElement(row,col,C4Constants.POWERUP_TIME);
-            } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_BOMB){
+            }
+            /*
+                Här ligger buggen för ikonen bomb, bug
+            */
+            else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_BOMB){
 
                 if (row == 5) {
                     int posYtemp = ((row -1) * (sideOfTile + C4Constants.GRIDSPACING)) + offsetY;
-                    bomb.setBounds(posX, posYtemp, sideOfTile + posX, sideOfTile + posY);
+                    bomb.setBounds(posX, posYtemp, sideOfTile + posX, sideOfTile + posYtemp); //Förmodligen här på y
                     bomb.draw(c);
                     gameController.setElement(row -1,col,31);
                 } else {
@@ -161,7 +165,7 @@ public class GameGridView extends View {
                     bomb.draw(c);
                     gameController.setElement(row,col,31);
                 }
-
+// -------------------------------------------------------------------------------------------------------
             } else if (gameController.getGameBoard()[row][col] == 0 && powerup == C4Constants.POWERUP_COLORBLIND){
                 colorblind.setBounds(posX, posY, sideOfTile + posX, sideOfTile + posY);
                 colorblind.draw(c);
